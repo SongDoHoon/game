@@ -21,9 +21,19 @@ public class AuctionUIController : MonoBehaviour
 
     [Header("Manager")]
     public AuctionManager auctionManager;
+    public WaveManager waveManager;
 
     private EvolutionItemType currentLeftItem;
     private EvolutionItemType currentRightItem;
+    private bool isProcessingBid;
+
+    private void Awake()
+    {
+        BindButtonEvents();
+
+        if (waveManager == null)
+            waveManager = FindFirstObjectByType<WaveManager>();
+    }
 
     private void Start()
     {
@@ -32,11 +42,16 @@ public class AuctionUIController : MonoBehaviour
 
     public void OpenAuctionUI(EvolutionItemType leftItem, EvolutionItemType rightItem)
     {
+        BindButtonEvents();
+
         currentLeftItem = leftItem;
         currentRightItem = rightItem;
+        isProcessingBid = false;
 
         if (auctionPanel != null)
             auctionPanel.SetActive(true);
+
+        SetBidButtonsInteractable(true);
 
         if (leftItemText != null)
             leftItemText.text = leftItem.ToString();
@@ -45,47 +60,53 @@ public class AuctionUIController : MonoBehaviour
             rightItemText.text = rightItem.ToString();
 
         if (resultText != null)
-            resultText.text = "ÀÔÂûÇÒ ¾ÆÀÌÅÛÀ» ¼±ÅÃÇÏ¼¼¿ä.";
+            resultText.text = "Choose an item to bid on.";
     }
 
     public void CloseAuctionUI()
     {
+        isProcessingBid = false;
+        SetBidButtonsInteractable(false);
+
         if (auctionPanel != null)
             auctionPanel.SetActive(false);
     }
 
     public void BidLeft()
     {
-        TryBid(currentLeftItem, true);
+        TryBid(true);
     }
 
     public void BidRight()
     {
-        TryBid(currentRightItem, false);
+        TryBid(false);
     }
 
-    private void TryBid(EvolutionItemType itemType, bool isLeft)
+    private void TryBid(bool isLeft)
     {
+        if (isProcessingBid)
+            return;
+
         if (auctionManager == null)
         {
-            if (resultText != null)
-                resultText.text = "AuctionManager ¿¬°á ¾È µÊ";
+            SetResultText("AuctionManager is not assigned");
             return;
         }
 
         if (bidInputField == null)
         {
-            if (resultText != null)
-                resultText.text = "ÀÔÂû ÀÔ·ÂÄ­ ¿¬°á ¾È µÊ";
+            SetResultText("Bid input field is not assigned");
             return;
         }
 
         if (!int.TryParse(bidInputField.text, out int playerBid))
         {
-            if (resultText != null)
-                resultText.text = "¼ýÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
+            SetResultText("Enter a valid number.");
             return;
         }
+
+        isProcessingBid = true;
+        SetBidButtonsInteractable(false);
 
         bool result;
         int npcBid;
@@ -95,16 +116,46 @@ public class AuctionUIController : MonoBehaviour
         else
             result = auctionManager.TryBidRight(playerBid, out npcBid);
 
-        if (resultText != null)
-        {
-            if (result)
-                resultText.text = $"³«Âû ¼º°ø! NPC ÀÔÂû°¡: {npcBid}";
-            else
-                resultText.text = $"³«Âû ½ÇÆÐ... NPC ÀÔÂû°¡: {npcBid}";
-        }
+        if (result)
+            SetResultText($"Bid won! NPC bid: {npcBid}");
+        else
+            SetResultText($"Bid lost... NPC bid: {npcBid}");
 
-        Debug.Log(resultText != null ? resultText.text : "°æ¸Å °á°ú Ãâ·Â");
+        Debug.Log(resultText != null ? resultText.text : "Auction result");
 
         CloseAuctionUI();
+
+        if (waveManager != null)
+            waveManager.ResumeAfterAuction();
+    }
+
+    private void BindButtonEvents()
+    {
+        if (leftBidButton != null)
+        {
+            leftBidButton.onClick.RemoveListener(BidLeft);
+            leftBidButton.onClick.AddListener(BidLeft);
+        }
+
+        if (rightBidButton != null)
+        {
+            rightBidButton.onClick.RemoveListener(BidRight);
+            rightBidButton.onClick.AddListener(BidRight);
+        }
+    }
+
+    private void SetBidButtonsInteractable(bool interactable)
+    {
+        if (leftBidButton != null)
+            leftBidButton.interactable = interactable;
+
+        if (rightBidButton != null)
+            rightBidButton.interactable = interactable;
+    }
+
+    private void SetResultText(string message)
+    {
+        if (resultText != null)
+            resultText.text = message;
     }
 }

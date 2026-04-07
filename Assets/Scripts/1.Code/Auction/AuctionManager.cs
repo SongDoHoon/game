@@ -6,8 +6,8 @@ public class AuctionManager : MonoBehaviour
     public int npcMinBid = 50;
     public int npcMaxBid = 150;
 
-    [Header("Player Gold")]
-    public int playerGold = 500;
+    [Header("Gold")]
+    public GoldManager goldManager;
 
     [Header("Reward Inventory")]
     public EvolutionItemInventory itemInventory;
@@ -15,6 +15,12 @@ public class AuctionManager : MonoBehaviour
     [Header("Current Auction Options")]
     public AuctionRewardOption leftOption;
     public AuctionRewardOption rightOption;
+
+    private void Awake()
+    {
+        if (goldManager == null)
+            goldManager = FindFirstObjectByType<GoldManager>();
+    }
 
     public void SetAuctionOptions(EvolutionItemType item1, EvolutionItemType item2)
     {
@@ -48,24 +54,38 @@ public class AuctionManager : MonoBehaviour
         if (option == null || option.rewardItemType == EvolutionItemType.None)
             return false;
 
-        if (playerBid <= 0) return false;
-        if (playerGold < playerBid) return false;
+        if (goldManager == null)
+        {
+            Debug.LogWarning("AuctionManager: GoldManager is not assigned");
+            return false;
+        }
 
-        playerGold -= playerBid;
+        if (playerBid <= 0)
+        {
+            Debug.Log("Auction failed: bid must be at least 1");
+            return false;
+        }
+
+        if (!goldManager.UseGold(playerBid))
+        {
+            Debug.Log("Auction failed: not enough gold");
+            return false;
+        }
+
         npcBid = Random.Range(npcMinBid, npcMaxBid + 1);
 
-        Debug.Log($"플레이어 입찰가: {playerBid}, NPC 입찰가: {npcBid}");
+        Debug.Log($"Player bid: {playerBid}, NPC bid: {npcBid}");
 
         if (playerBid > npcBid)
         {
             if (itemInventory != null)
                 itemInventory.AddItem(option.rewardItemType, 1);
 
-            Debug.Log($"경매 성공! 획득 아이템: {option.rewardItemType}");
+            Debug.Log($"Auction won! Reward item: {option.rewardItemType}");
             return true;
         }
 
-        Debug.Log("경매 실패!");
+        Debug.Log("Auction failed!");
         return false;
     }
 }

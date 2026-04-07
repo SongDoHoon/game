@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: New Summon Table
   m_EditorClassIdentifier: Assembly-CSharp::SummonTable
   summonCost: 30
-  normalChance: 0
-  epicChance: 0
-  verureChance: 100
+  normalChance: 75
+  epicChance: 25
+  verureChance: 5
   normalUnits:
   - unitData: {fileID: 11400000, guid: 59869357116b164459c23a475405609b, type: 2}
     weight: 10

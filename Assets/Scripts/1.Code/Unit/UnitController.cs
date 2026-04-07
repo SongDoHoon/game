@@ -17,6 +17,8 @@ public class UnitController : MonoBehaviour
     private float attackTimer;
     private float activeSkillTimer;
     private MonsterController currentTarget;
+    private SpriteRenderer spriteRenderer;
+    private TextMesh nameTextMesh;
 
     private readonly List<BuffInstance> buffs = new();
 
@@ -32,6 +34,7 @@ public class UnitController : MonoBehaviour
         RecalculateStats();
         UnitSkillHandler.ApplyPassiveOnStart(this);
         RecalculateStats();
+        ApplyVisualIdentity();
     }
 
     private void Update()
@@ -212,5 +215,141 @@ public class UnitController : MonoBehaviour
             CurrentTile.ClearTile();
 
         newTile.PlaceExistingUnit(this);
+    }
+
+    private void ApplyVisualIdentity()
+    {
+        if (Data == null)
+            return;
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+            spriteRenderer.color = GetUnitColor();
+
+        transform.localScale = Vector3.one * GetUnitScale();
+
+        EnsureNameText();
+        RefreshNameText();
+    }
+
+    private void EnsureNameText()
+    {
+        if (nameTextMesh != null)
+            return;
+
+        Transform existing = transform.Find("UnitNameText");
+        if (existing != null)
+        {
+            nameTextMesh = existing.GetComponent<TextMesh>();
+            if (nameTextMesh != null)
+                return;
+        }
+
+        GameObject labelObject = new GameObject("UnitNameText");
+        labelObject.transform.SetParent(transform, false);
+        labelObject.transform.localPosition = new Vector3(0f, 0.85f, 0f);
+
+        nameTextMesh = labelObject.AddComponent<TextMesh>();
+        nameTextMesh.anchor = TextAnchor.MiddleCenter;
+        nameTextMesh.alignment = TextAlignment.Center;
+        nameTextMesh.fontSize = 48;
+        nameTextMesh.characterSize = 0.06f;
+        nameTextMesh.color = Color.white;
+
+        MeshRenderer meshRenderer = labelObject.GetComponent<MeshRenderer>();
+        if (meshRenderer != null)
+            meshRenderer.sortingOrder = 20;
+    }
+
+    private void RefreshNameText()
+    {
+        if (nameTextMesh == null || Data == null)
+            return;
+
+        nameTextMesh.text = GetDisplayName();
+        nameTextMesh.color = GetLabelColor();
+    }
+
+    private string GetDisplayName()
+    {
+        if (!string.IsNullOrWhiteSpace(Data.unitName))
+            return Data.unitName;
+
+        return Data.name;
+    }
+
+    private Color GetUnitColor()
+    {
+        if (Data.specialLogicType == SpecialUnitLogicType.Uriel)
+            return new Color(1f, 0.55f, 0.15f, 1f);
+
+        switch (Data.grade)
+        {
+            case UnitGrade.Normal:
+                return new Color(0.65f, 0.8f, 1f, 1f);
+
+            case UnitGrade.Epic:
+                return new Color(0.75f, 0.55f, 1f, 1f);
+
+            case UnitGrade.Verure:
+                return new Color(1f, 0.35f, 0.35f, 1f);
+
+            case UnitGrade.ArchAngel:
+                return new Color(1f, 0.84f, 0.35f, 1f);
+
+            case UnitGrade.GreatDemon:
+                return new Color(0.55f, 0.15f, 0.15f, 1f);
+
+            default:
+                return Color.white;
+        }
+    }
+
+    private Color GetLabelColor()
+    {
+        switch (Data.grade)
+        {
+            case UnitGrade.Normal:
+                return Color.white;
+
+            case UnitGrade.Epic:
+                return new Color(0.95f, 0.8f, 1f, 1f);
+
+            case UnitGrade.Verure:
+                return new Color(1f, 0.9f, 0.9f, 1f);
+
+            case UnitGrade.ArchAngel:
+                return new Color(1f, 0.95f, 0.7f, 1f);
+
+            case UnitGrade.GreatDemon:
+                return new Color(1f, 0.7f, 0.7f, 1f);
+
+            default:
+                return Color.white;
+        }
+    }
+
+    private float GetUnitScale()
+    {
+        switch (Data.grade)
+        {
+            case UnitGrade.Normal:
+                return 1f;
+
+            case UnitGrade.Epic:
+                return 1.08f;
+
+            case UnitGrade.Verure:
+                return 1.14f;
+
+            case UnitGrade.ArchAngel:
+            case UnitGrade.GreatDemon:
+                return 1.22f;
+
+            default:
+                return 1f;
+        }
     }
 }

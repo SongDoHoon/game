@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
   m_Name: Verure_Flame
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 
-  unitName: 
-  grade: 0
+  unitId: 2
+  unitName: Verure
+  grade: 2
   specialLogicType: 0
   attackPower: 90
   attackSpeed: 1.3
