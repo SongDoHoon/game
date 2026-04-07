@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 784ce7c337bab4f49885f9c251a7fcbf, type: 3}
+  m_Name: New Summon Table
+  m_EditorClassIdentifier: Assembly-CSharp::SummonTable
+  summonCost: 30
+  normalChance: 0
+  epicChance: 0
+  verureChance: 100
+  normalUnits:
+  - unitData: {fileID: 11400000, guid: 59869357116b164459c23a475405609b, type: 2}
+    weight: 10
+  epicUnits:
+  - unitData: {fileID: 11400000, guid: b8b64d9fad8c30d4b96b995f4a728410, type: 2}
+    weight: 10
+  verureUnits:
+  - unitData: {fileID: 11400000, guid: 04355f2e229277e4789ce8c354721909, type: 2}
+    weight: 3

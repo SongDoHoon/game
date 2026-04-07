@@ -1,0 +1,25 @@
+using UnityEngine;
+
+public class GoldManager : MonoBehaviour
+{
+    public int currentGold = 300;
+
+    public void AddGold(int amount)
+    {
+        currentGold += amount;
+        Debug.Log($"°ñµå È¹µæ: +{amount} / ÇöÀç °ñµå: {currentGold}");
+    }
+
+    public bool UseGold(int amount)
+    {
+        if (currentGold < amount)
+        {
+            Debug.Log($"°ñµå ºÎÁ·! ÇÊ¿ä: {amount}, º¸À¯: {currentGold}");
+            return false;
+        }
+
+        currentGold -= amount;
+        Debug.Log($"°ñµå »ç¿ë: -{amount} / ÇöÀç °ñµå: {currentGold}");
+        return true;
+    }
+}
