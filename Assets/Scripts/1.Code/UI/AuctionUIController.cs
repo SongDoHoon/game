@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -121,8 +121,6 @@ public class AuctionUIController : MonoBehaviour
         else
             SetResultText($"Bid lost... NPC bid: {npcBid}");
 
-        Debug.Log(resultText != null ? resultText.text : "Auction result");
-
         CloseAuctionUI();
 
         if (waveManager != null)
@@ -159,4 +157,3 @@ public class AuctionUIController : MonoBehaviour
             resultText.text = message;
     }
 }
-

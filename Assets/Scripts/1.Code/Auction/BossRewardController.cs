@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class BossRewardController : MonoBehaviour
 {
@@ -35,10 +35,7 @@ public class BossRewardController : MonoBehaviour
 
         auctionManager.SetAuctionOptions(first, second);
 
-        Debug.Log($"Auction opened: {first}, {second}");
-
         if (auctionUIController != null)
             auctionUIController.OpenAuctionUI(first, second);
     }
 }
-

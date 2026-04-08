@@ -333,24 +333,7 @@ public class UnitController : MonoBehaviour
 
     private float GetUnitScale()
     {
-        switch (Data.grade)
-        {
-            case UnitGrade.Normal:
-                return 0.5f;
-
-            case UnitGrade.Epic:
-                return 0.54f;
-
-            case UnitGrade.Verure:
-                return 0.57f;
-
-            case UnitGrade.ArchAngel:
-            case UnitGrade.GreatDemon:
-                return 0.61f;
-
-            default:
-                return 0.5f;
-        }
+        return 0.5f;
     }
 }
 

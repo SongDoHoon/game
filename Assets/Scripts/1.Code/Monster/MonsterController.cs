@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -109,8 +109,6 @@ public class MonsterController : MonoBehaviour
         OnDamageTaken?.Invoke(this, appliedDamage);
         NotifyHpChanged();
 
-        Debug.Log($"[{gameObject.name}] Damaged: {appliedDamage:F1} / HP: {currentHp:F1}/{maxHp}");
-
         if (currentHp <= 0f)
         {
             Die();
@@ -178,8 +176,6 @@ public class MonsterController : MonoBehaviour
 
     private void ReachGoal()
     {
-        Debug.Log($"{gameObject.name} reached the goal");
-
         gameObject.SetActive(false);
 
         if (destroyOnGoal)
@@ -210,8 +206,6 @@ public class MonsterController : MonoBehaviour
             }
         }
 
-        Debug.Log($"{gameObject.name} died");
-
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
@@ -221,4 +215,3 @@ public class MonsterController : MonoBehaviour
         OnHpChanged?.Invoke(this, currentHp, maxHp);
     }
 }
-

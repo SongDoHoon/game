@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class AuctionManager : MonoBehaviour
 {
@@ -55,38 +55,24 @@ public class AuctionManager : MonoBehaviour
             return false;
 
         if (goldManager == null)
-        {
-            Debug.LogWarning("AuctionManager: GoldManager is not assigned");
             return false;
-        }
 
         if (playerBid <= 0)
-        {
-            Debug.Log("Auction failed: bid must be at least 1");
             return false;
-        }
 
         if (!goldManager.UseGold(playerBid))
-        {
-            Debug.Log("Auction failed: not enough gold");
             return false;
-        }
 
         npcBid = Random.Range(npcMinBid, npcMaxBid + 1);
-
-        Debug.Log($"Player bid: {playerBid}, NPC bid: {npcBid}");
 
         if (playerBid > npcBid)
         {
             if (itemInventory != null)
                 itemInventory.AddItem(option.rewardItemType, 1);
 
-            Debug.Log($"Auction won! Reward item: {option.rewardItemType}");
             return true;
         }
 
-        Debug.Log("Auction failed!");
         return false;
     }
 }
-

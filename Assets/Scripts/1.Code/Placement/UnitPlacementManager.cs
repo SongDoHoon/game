@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class UnitPlacementManager : MonoBehaviour
 {
@@ -14,14 +14,7 @@ public class UnitPlacementManager : MonoBehaviour
         UnitData summonedData = summonManager.SummonUnit();
         if (summonedData == null) return false;
 
-        bool success = tile.PlaceNewUnit(unitPrefab, summonedData);
-
-        if (success)
-        {
-            Debug.Log($"타일 [{tile.name}] 에 [{summonedData.unitName}] 배치 완료");
-        }
-
-        return success;
+        return tile.PlaceNewUnit(unitPrefab, summonedData);
     }
 
     public bool TryPlaceSummonedUnitOnFirstEmptyTile()
@@ -34,7 +27,6 @@ public class UnitPlacementManager : MonoBehaviour
                 return TryPlaceSummonedUnitOnTile(tile);
         }
 
-        Debug.Log("빈 타일이 없음");
         return false;
     }
 

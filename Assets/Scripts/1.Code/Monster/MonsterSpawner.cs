@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
@@ -17,27 +17,19 @@ public class MonsterSpawner : MonoBehaviour
     public void SpawnNormalForWave(WaveManager waveManager)
     {
         if (monsterPrefab == null)
-        {
-            Debug.LogWarning("MonsterSpawner: monsterPrefab이 비어있음");
             return;
-        }
 
         if (waypointPath == null)
-        {
-            Debug.LogWarning("MonsterSpawner: waypointPath가 비어있음");
             return;
-        }
 
         Vector3 spawnPosition = GetSpawnPosition();
 
         GameObject obj = Instantiate(monsterPrefab, spawnPosition, Quaternion.identity);
+        obj.transform.localScale = Vector3.one * 0.5f;
         MonsterController monster = obj.GetComponent<MonsterController>();
 
         if (monster == null)
-        {
-            Debug.LogWarning("MonsterSpawner: 일반 몬스터 프리팹에 MonsterController가 없음");
             return;
-        }
 
         monster.rewardGold = 10;
         monster.isBoss = false;
@@ -45,34 +37,24 @@ public class MonsterSpawner : MonoBehaviour
         monster.SetWaveManager(waveManager);
 
         ApplyWaveStat(monster, waveManager.currentWave, false);
-
-        Debug.Log($"일반 몬스터 생성 / 웨이브 {waveManager.currentWave} / 체력 {monster.maxHp}");
     }
 
     public void SpawnBossForWave(WaveManager waveManager)
     {
         if (bossPrefab == null)
-        {
-            Debug.LogWarning("MonsterSpawner: bossPrefab이 비어있음");
             return;
-        }
 
         if (waypointPath == null)
-        {
-            Debug.LogWarning("MonsterSpawner: waypointPath가 비어있음");
             return;
-        }
 
         Vector3 spawnPosition = GetSpawnPosition();
 
         GameObject obj = Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
+        obj.transform.localScale = Vector3.one * 0.5f;
         MonsterController monster = obj.GetComponent<MonsterController>();
 
         if (monster == null)
-        {
-            Debug.LogWarning("MonsterSpawner: 보스 프리팹에 MonsterController가 없음");
             return;
-        }
 
         monster.rewardGold = 100;
         monster.isBoss = true;
@@ -80,8 +62,6 @@ public class MonsterSpawner : MonoBehaviour
         monster.SetWaveManager(waveManager);
 
         ApplyWaveStat(monster, waveManager.currentWave, true);
-
-        Debug.Log($"보스 등장! / 웨이브 {waveManager.currentWave} / 체력 {monster.maxHp}");
     }
 
     private void ApplyWaveStat(MonsterController monster, int wave, bool isBoss)

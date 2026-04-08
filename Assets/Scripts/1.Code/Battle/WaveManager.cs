@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
@@ -32,8 +32,6 @@ public class WaveManager : MonoBehaviour
         currentWave++;
         waitingForNextWave = false;
 
-        Debug.Log($"Wave {currentWave} started");
-
         if (currentWave % 10 == 0)
         {
             aliveMonsterCount = 1;
@@ -51,7 +49,6 @@ public class WaveManager : MonoBehaviour
     public void NotifyMonsterDead()
     {
         aliveMonsterCount--;
-        Debug.Log($"Alive monsters: {aliveMonsterCount}");
 
         if (aliveMonsterCount <= 0 && !waitingForNextWave && !isPausedForAuction)
         {
@@ -81,4 +78,3 @@ public class WaveManager : MonoBehaviour
         }
     }
 }
-

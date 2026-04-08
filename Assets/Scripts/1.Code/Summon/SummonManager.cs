@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SummonManager : MonoBehaviour
@@ -9,39 +9,21 @@ public class SummonManager : MonoBehaviour
     public UnitData SummonUnit()
     {
         if (summonTable == null)
-        {
-            Debug.LogWarning("SummonTable이 연결되지 않음");
             return null;
-        }
 
         if (goldManager == null)
-        {
-            Debug.LogWarning("GoldManager가 연결되지 않음");
             return null;
-        }
 
         if (!goldManager.UseGold(summonTable.summonCost))
-        {
             return null;
-        }
 
         UnitGrade selectedGrade = RollGrade();
         List<WeightedUnitEntry> pool = GetPool(selectedGrade);
 
         if (pool == null || pool.Count == 0)
-        {
-            Debug.LogWarning("해당 등급 풀에 유닛이 없음");
             return null;
-        }
 
-        UnitData result = RollUnit(pool);
-
-        if (result != null)
-        {
-            Debug.Log($"소환 결과: [{result.grade}] {result.unitName}");
-        }
-
-        return result;
+        return RollUnit(pool);
     }
 
     private UnitGrade RollGrade()
