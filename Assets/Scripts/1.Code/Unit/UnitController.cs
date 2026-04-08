@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitController : MonoBehaviour
@@ -336,20 +336,21 @@ public class UnitController : MonoBehaviour
         switch (Data.grade)
         {
             case UnitGrade.Normal:
-                return 1f;
+                return 0.5f;
 
             case UnitGrade.Epic:
-                return 1.08f;
+                return 0.54f;
 
             case UnitGrade.Verure:
-                return 1.14f;
+                return 0.57f;
 
             case UnitGrade.ArchAngel:
             case UnitGrade.GreatDemon:
-                return 1.22f;
+                return 0.61f;
 
             default:
-                return 1f;
+                return 0.5f;
         }
     }
 }
+

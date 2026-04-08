@@ -1,4 +1,4 @@
-public static class DamageSystem
+ï»¿public static class DamageSystem
 {
     public static void DealDamage(UnitController attacker, MonsterController target, float baseDamage, DamageType damageType)
     {
@@ -12,7 +12,7 @@ public static class DamageSystem
         string attackerName = attacker.Data != null ? attacker.Data.unitName : attacker.gameObject.name;
         string targetName = target.gameObject.name;
 
-        UnityEngine.Debug.Log($"[{attackerName}] -> [{targetName}] µ¥¹ÌÁö: {finalDamage:F1}");
+        UnityEngine.Debug.Log($"[{attackerName}] -> [{targetName}] ë°ë¯¸ì§€: {finalDamage:F1}");
 
         target.TakeDamage(finalDamage);
     }

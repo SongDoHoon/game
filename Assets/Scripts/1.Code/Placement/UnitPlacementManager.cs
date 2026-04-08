@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class UnitPlacementManager : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class UnitPlacementManager : MonoBehaviour
 
         if (success)
         {
-            Debug.Log($"Å¸ÀÏ [{tile.name}] ¿¡ [{summonedData.unitName}] ¹èÄ¡ ¿Ï·á");
+            Debug.Log($"íƒ€ì¼ [{tile.name}] ì— [{summonedData.unitName}] ë°°ì¹˜ ì™„ë£Œ");
         }
 
         return success;
@@ -34,7 +34,7 @@ public class UnitPlacementManager : MonoBehaviour
                 return TryPlaceSummonedUnitOnTile(tile);
         }
 
-        Debug.Log("ºó Å¸ÀÏÀÌ ¾øÀ½");
+        Debug.Log("ë¹ˆ íƒ€ì¼ì´ ì—†ìŒ");
         return false;
     }
 

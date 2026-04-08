@@ -1,8 +1,12 @@
+ï»¿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour
 {
+    public event Action<MonsterController, float> OnDamageTaken;
+    public event Action<MonsterController, float, float> OnHpChanged;
+
     [Header("Info")]
     public MonsterType monsterType = MonsterType.Normal;
 
@@ -24,10 +28,13 @@ public class MonsterController : MonoBehaviour
     private WaveManager waveManager;
 
     public bool IsAlive => currentHp > 0f;
+    public float CurrentHp => currentHp;
+    public float MaxHp => maxHp;
 
     private void Start()
     {
         currentHp = maxHp;
+        NotifyHpChanged();
 
         if (waypointPath != null)
         {
@@ -93,10 +100,16 @@ public class MonsterController : MonoBehaviour
     {
         if (!IsAlive) return;
 
-        currentHp -= damage;
+        float appliedDamage = Mathf.Max(0f, damage);
+        if (appliedDamage <= 0f) return;
+
+        currentHp -= appliedDamage;
         currentHp = Mathf.Max(0f, currentHp);
 
-        Debug.Log($"[{gameObject.name}] ÇÇÇØ ÀÔÀ½: {damage:F1} / ³²Àº Ã¼·Â: {currentHp:F1}/{maxHp}");
+        OnDamageTaken?.Invoke(this, appliedDamage);
+        NotifyHpChanged();
+
+        Debug.Log($"[{gameObject.name}] Damaged: {appliedDamage:F1} / HP: {currentHp:F1}/{maxHp}");
 
         if (currentHp <= 0f)
         {
@@ -165,7 +178,7 @@ public class MonsterController : MonoBehaviour
 
     private void ReachGoal()
     {
-        Debug.Log($"{gameObject.name} °¡ ¸ñÇ¥ ÁöÁ¡ µµÂø");
+        Debug.Log($"{gameObject.name} reached the goal");
 
         gameObject.SetActive(false);
 
@@ -197,9 +210,15 @@ public class MonsterController : MonoBehaviour
             }
         }
 
-        Debug.Log($"{gameObject.name} »ç¸Á");
+        Debug.Log($"{gameObject.name} died");
 
         gameObject.SetActive(false);
         Destroy(gameObject);
     }
+
+    private void NotifyHpChanged()
+    {
+        OnHpChanged?.Invoke(this, currentHp, maxHp);
+    }
 }
+

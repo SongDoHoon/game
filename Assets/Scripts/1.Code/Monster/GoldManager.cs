@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class GoldManager : MonoBehaviour
 {
@@ -7,19 +7,19 @@ public class GoldManager : MonoBehaviour
     public void AddGold(int amount)
     {
         currentGold += amount;
-        Debug.Log($"°ñµå È¹µæ: +{amount} / ÇöÀç °ñµå: {currentGold}");
+        Debug.Log($"ê³¨ë“œ íšë“: +{amount} / í˜„ì¬ ê³¨ë“œ: {currentGold}");
     }
 
     public bool UseGold(int amount)
     {
         if (currentGold < amount)
         {
-            Debug.Log($"°ñµå ºÎÁ·! ÇÊ¿ä: {amount}, º¸À¯: {currentGold}");
+            Debug.Log($"ê³¨ë“œ ë¶€ì¡±! í•„ìš”: {amount}, ë³´ìœ : {currentGold}");
             return false;
         }
 
         currentGold -= amount;
-        Debug.Log($"°ñµå »ç¿ë: -{amount} / ÇöÀç °ñµå: {currentGold}");
+        Debug.Log($"ê³¨ë“œ ì‚¬ìš©: -{amount} / í˜„ì¬ ê³¨ë“œ: {currentGold}");
         return true;
     }
 }

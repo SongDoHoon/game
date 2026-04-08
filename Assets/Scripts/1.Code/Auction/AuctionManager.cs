@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AuctionManager : MonoBehaviour
 {
@@ -89,3 +89,4 @@ public class AuctionManager : MonoBehaviour
         return false;
     }
 }
+
