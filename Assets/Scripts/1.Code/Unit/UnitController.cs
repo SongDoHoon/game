@@ -45,6 +45,7 @@ public class UnitController : MonoBehaviour
         UpdateTarget();
         UpdateAttack();
         UpdateActiveSkill();
+        UnitSkillHandler.UpdateContinuousEffects(this);
     }
 
     private void UpdateBuffs()
@@ -160,10 +161,55 @@ public class UnitController : MonoBehaviour
         if (passive == null || !passive.useStack) return;
 
         CurrentPassiveStack += amount;
-        CurrentPassiveStack = Mathf.Clamp(CurrentPassiveStack, 0, passive.maxStack);
+
+        if (passive.maxStack > 0)
+            CurrentPassiveStack = Mathf.Clamp(CurrentPassiveStack, 0, passive.maxStack);
+        else
+            CurrentPassiveStack = Mathf.Max(0, CurrentPassiveStack);
     }
 
     public MonsterController GetCurrentTarget() => currentTarget;
+
+    public int GetNearbyEnemyCount(float radius)
+    {
+        int count = 0;
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+
+            if (Vector3.Distance(transform.position, monster.transform.position) <= radius)
+                count++;
+        }
+
+        return count;
+    }
+
+    public int CountEnemiesWithDebuffs(params DebuffType[] debuffTypes)
+    {
+        if (debuffTypes == null || debuffTypes.Length == 0)
+            return 0;
+
+        int count = 0;
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+
+            foreach (DebuffType debuffType in debuffTypes)
+            {
+                if (monster.HasDebuff(debuffType))
+                {
+                    count++;
+                    break;
+                }
+            }
+        }
+
+        return count;
+    }
 
     public int GetTargetsInRangeCount()
     {
@@ -290,6 +336,9 @@ public class UnitController : MonoBehaviour
             case UnitGrade.Normal:
                 return new Color(0.65f, 0.8f, 1f, 1f);
 
+            case UnitGrade.Rare:
+                return new Color(0.35f, 0.9f, 0.55f, 1f);
+
             case UnitGrade.Epic:
                 return new Color(0.75f, 0.55f, 1f, 1f);
 
@@ -313,6 +362,9 @@ public class UnitController : MonoBehaviour
         {
             case UnitGrade.Normal:
                 return Color.white;
+
+            case UnitGrade.Rare:
+                return new Color(0.88f, 1f, 0.9f, 1f);
 
             case UnitGrade.Epic:
                 return new Color(0.95f, 0.8f, 1f, 1f);

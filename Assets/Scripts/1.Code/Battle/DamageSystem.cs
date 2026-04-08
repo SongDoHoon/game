@@ -8,8 +8,12 @@ public static class DamageSystem
 
         ApplyExecute(attacker, target, ref finalDamage);
         ApplySpecialDamageLogic(attacker, target, ref finalDamage);
+        finalDamage *= target.GetDamageTakenMultiplier();
 
         target.TakeDamage(finalDamage);
+
+        if (!target.IsAlive)
+            UnitSkillHandler.OnMonsterKilled(attacker, target);
     }
 
     private static void ApplyExecute(UnitController attacker, MonsterController target, ref float finalDamage)
@@ -36,6 +40,11 @@ public static class DamageSystem
             case SpecialUnitLogicType.Uriel:
                 if (attacker.IsUrielMaxStackReached)
                     finalDamage *= 1.2f;
+                break;
+
+            case SpecialUnitLogicType.Demon5:
+                if (target.HasDebuff(DebuffType.Stun))
+                    finalDamage *= 1.15f;
                 break;
         }
     }

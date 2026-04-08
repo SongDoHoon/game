@@ -119,21 +119,53 @@ public class MonsterController : MonoBehaviour
     {
         if (debuff == null) return;
 
+        DebuffInstance existing = debuffs.Find(d => d.debuffType == debuff.debuffType && d.source == debuff.source);
+
         if (debuff.debuffType == DebuffType.Burn)
         {
-            DebuffInstance existing = debuffs.Find(d => d.debuffType == DebuffType.Burn && d.source == debuff.source);
-
             if (existing != null && existing.maxStack > 1)
             {
                 existing.stack = Mathf.Clamp(existing.stack + 1, 1, existing.maxStack);
                 existing.value = debuff.value;
+                existing.duration = debuff.duration;
                 existing.remainTime = debuff.duration;
                 return;
             }
         }
 
+        if (existing != null)
+        {
+            existing.value = debuff.value;
+            existing.duration = debuff.duration;
+            existing.remainTime = debuff.duration;
+            existing.stack = Mathf.Max(1, debuff.stack);
+            existing.maxStack = Mathf.Max(1, debuff.maxStack);
+            return;
+        }
+
         debuff.remainTime = debuff.duration;
         debuffs.Add(debuff);
+    }
+
+    public bool HasDebuff(DebuffType debuffType, UnitController source = null)
+    {
+        return debuffs.Exists(d => d.debuffType == debuffType && (source == null || d.source == source) && d.remainTime > 0f);
+    }
+
+    public float GetDebuffValue(DebuffType debuffType, UnitController source = null)
+    {
+        float value = 0f;
+
+        foreach (DebuffInstance debuff in debuffs)
+        {
+            if (debuff.debuffType != debuffType) continue;
+            if (source != null && debuff.source != source) continue;
+            if (debuff.remainTime <= 0f) continue;
+
+            value += debuff.value;
+        }
+
+        return value;
     }
 
     private void UpdateDebuffs()
@@ -159,6 +191,10 @@ public class MonsterController : MonoBehaviour
                 case DebuffType.Stun:
                     isStunned = true;
                     break;
+
+                case DebuffType.DamageTakenUp:
+                case DebuffType.Silence:
+                    break;
             }
 
             if (d.remainTime <= 0f)
@@ -172,6 +208,11 @@ public class MonsterController : MonoBehaviour
     {
         if (maxHp <= 0f) return 0f;
         return currentHp / maxHp;
+    }
+
+    public float GetDamageTakenMultiplier()
+    {
+        return 1f + Mathf.Max(0f, GetDebuffValue(DebuffType.DamageTakenUp));
     }
 
     private void ReachGoal()

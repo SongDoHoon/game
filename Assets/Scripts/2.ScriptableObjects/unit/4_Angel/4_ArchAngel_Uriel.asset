@@ -10,31 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: Verure_Flame
+  m_Name: 4_ArchAngel_Uriel
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 2
-  unitName: Verure
-  grade: 2
-  specialLogicType: 0
-  attackPower: 90
-  attackSpeed: 1.3
-  attackRange: 2.2
+  unitId: 4
+  unitName: uriel
+  grade: 3
+  specialLogicType: 4
+  attackPower: 160
+  attackSpeed: 1.5
+  attackRange: 3.8
   attackRadius: 1.5
   multiTargetCount: 0
   pierceCount: 0
-  basicAttackType: 2
-  damageType: 0
+  basicAttackType: 3
+  damageType: 2
   targetType: 3
-  skillTriggerType: 0
+  skillTriggerType: 3
   passiveSkillData:
-    skillName: 
-    description: 
+    skillName: asd
+    description: asd
     passiveBuffType: 0
-    passiveDebuffType: 0
-    useStack: 0
-    maxStack: 0
-    value1: 0
-    value2: 0
+    passiveDebuffType: 1
+    useStack: 1
+    maxStack: 20
+    value1: 0.03
+    value2: 0.02
     value3: 0
     hasExecute: 0
     executeHpPercent: 0.05
@@ -44,16 +44,16 @@ MonoBehaviour:
     skillName: 
     description: 
     castType: 0
-    targetType: 0
-    cooldown: 10
+    targetType: 3
+    cooldown: 12
     duration: 3
     radius: 2
-    hitCount: 1
+    hitCount: 6
     interval: 0.5
-    value1: 0
+    value1: 1.8
     value2: 0
     value3: 0
-    canStackDebuff: 0
-    maxDebuffStack: 1
+    canStackDebuff: 1
+    maxDebuffStack: 20
   canEvolve: 0
   evolveKey: 

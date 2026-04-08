@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: New Summon Table
   m_EditorClassIdentifier: Assembly-CSharp::SummonTable
   summonCost: 30
-  normalChance: 75
-  epicChance: 25
+  normalChance: 65
+  rareChance: 25
+  epicChance: 15
   verureChance: 5
   normalUnits:
   - unitData: {fileID: 11400000, guid: 59869357116b164459c23a475405609b, type: 2}
     weight: 10
+  rareUnits:
+  - unitData: {fileID: 11400000, guid: 8cb694301e907b94a9041336eeff0c2f, type: 2}
+    weight: 0
   epicUnits:
   - unitData: {fileID: 11400000, guid: b8b64d9fad8c30d4b96b995f4a728410, type: 2}
     weight: 10

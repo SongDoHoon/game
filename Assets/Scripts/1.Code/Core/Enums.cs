@@ -1,10 +1,11 @@
 public enum UnitGrade
 {
-    Normal,
-    Epic,
-    Verure,
-    ArchAngel,
-    GreatDemon
+    Normal = 0,
+    Rare = 5,
+    Epic = 1,
+    Verure = 2,
+    ArchAngel = 3,
+    GreatDemon = 4
 }
 
 public enum BasicAttackType

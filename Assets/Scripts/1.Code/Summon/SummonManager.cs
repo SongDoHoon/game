@@ -14,26 +14,36 @@ public class SummonManager : MonoBehaviour
         if (goldManager == null)
             return null;
 
-        if (!goldManager.UseGold(summonTable.summonCost))
-            return null;
-
         UnitGrade selectedGrade = RollGrade();
         List<WeightedUnitEntry> pool = GetPool(selectedGrade);
 
         if (pool == null || pool.Count == 0)
             return null;
 
-        return RollUnit(pool);
+        UnitData summonedUnit = RollUnit(pool);
+        if (summonedUnit == null)
+            return null;
+
+        if (!goldManager.UseGold(summonTable.summonCost))
+            return null;
+
+        return summonedUnit;
     }
 
     private UnitGrade RollGrade()
     {
         float roll = Random.Range(0f, 100f);
+        float cumulativeChance = summonTable.normalChance;
 
-        if (roll < summonTable.normalChance)
+        if (roll < cumulativeChance)
             return UnitGrade.Normal;
 
-        if (roll < summonTable.normalChance + summonTable.epicChance)
+        cumulativeChance += summonTable.rareChance;
+        if (roll < cumulativeChance)
+            return UnitGrade.Rare;
+
+        cumulativeChance += summonTable.epicChance;
+        if (roll < cumulativeChance)
             return UnitGrade.Epic;
 
         return UnitGrade.Verure;
@@ -44,6 +54,7 @@ public class SummonManager : MonoBehaviour
         return grade switch
         {
             UnitGrade.Normal => summonTable.normalUnits,
+            UnitGrade.Rare => summonTable.rareUnits,
             UnitGrade.Epic => summonTable.epicUnits,
             UnitGrade.Verure => summonTable.verureUnits,
             _ => null
@@ -56,6 +67,9 @@ public class SummonManager : MonoBehaviour
 
         foreach (WeightedUnitEntry entry in pool)
             totalWeight += entry.weight;
+
+        if (totalWeight <= 0)
+            return null;
 
         int roll = Random.Range(0, totalWeight);
         int sum = 0;

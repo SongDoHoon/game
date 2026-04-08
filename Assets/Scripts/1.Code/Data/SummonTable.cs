@@ -8,11 +8,13 @@ public class SummonTable : ScriptableObject
 
     [Header("Grade Chance")]
     [Range(0, 100)] public float normalChance = 70;
+    [Range(0, 100)] public float rareChance = 0;
     [Range(0, 100)] public float epicChance = 25;
     [Range(0, 100)] public float verureChance = 5;
 
     [Header("Units")]
     public List<WeightedUnitEntry> normalUnits = new();
+    public List<WeightedUnitEntry> rareUnits = new();
     public List<WeightedUnitEntry> epicUnits = new();
     public List<WeightedUnitEntry> verureUnits = new();
 }

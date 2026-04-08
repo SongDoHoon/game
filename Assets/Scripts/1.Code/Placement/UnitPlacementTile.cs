@@ -1,12 +1,36 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UnitPlacementTile : MonoBehaviour
 {
     [SerializeField] private Transform unitAnchor;
     private UnitController placedUnit;
+    private UnitPlacementManager placementManager;
 
     public bool IsOccupied => placedUnit != null;
     public UnitController PlacedUnit => placedUnit;
+
+    private void Awake()
+    {
+        placementManager = FindFirstObjectByType<UnitPlacementManager>();
+    }
+
+    private void OnMouseDown()
+    {
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
+
+        if (IsOccupied)
+            return;
+
+        if (placementManager == null)
+            placementManager = FindFirstObjectByType<UnitPlacementManager>();
+
+        if (placementManager == null)
+            return;
+
+        placementManager.TryPlaceSummonedUnitOnTile(this);
+    }
 
     public Vector3 GetPlacePosition()
     {

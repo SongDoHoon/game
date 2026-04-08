@@ -6,6 +6,12 @@ public class UnitPlacementManager : MonoBehaviour
     public GameObject unitPrefab;
     public UnitPlacementTile[] placementTiles;
 
+    private void Awake()
+    {
+        if (placementTiles == null || placementTiles.Length == 0)
+            placementTiles = GetComponentsInChildren<UnitPlacementTile>(true);
+    }
+
     public bool TryPlaceSummonedUnitOnTile(UnitPlacementTile tile)
     {
         if (tile == null || tile.IsOccupied) return false;

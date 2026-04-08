@@ -3,6 +3,21 @@ using UnityEngine;
 
 public static class UnitSkillHandler
 {
+    public static void UpdateContinuousEffects(UnitController unit)
+    {
+        if (unit == null || unit.Data == null) return;
+
+        PassiveSkillData passive = unit.Data.passiveSkillData;
+        if (passive == null) return;
+
+        switch (unit.Data.specialLogicType)
+        {
+            case SpecialUnitLogicType.Demon7:
+                ApplyBelphegorAura(unit, passive);
+                break;
+        }
+    }
+
     public static void ApplyPassiveOnStart(UnitController unit)
     {
         PassiveSkillData passive = unit.Data.passiveSkillData;
@@ -49,6 +64,40 @@ public static class UnitSkillHandler
                     unit.AddOrRefreshRuntimeBuff(BuffType.AttackPowerUp, bonus, 0.1f);
                 }
                 break;
+
+            case SpecialUnitLogicType.Demon1:
+                if (passive.useStack)
+                    unit.AddOrRefreshRuntimeBuff(BuffType.AttackPowerUp, passive.value1 * unit.CurrentPassiveStack, 0.1f);
+                break;
+
+            case SpecialUnitLogicType.Demon2:
+                if (passive.useStack)
+                {
+                    unit.AddOrRefreshRuntimeBuff(BuffType.AttackPowerUp, passive.value1 * unit.CurrentPassiveStack, 0.1f);
+                    unit.AddOrRefreshRuntimeBuff(BuffType.AttackSpeedUp, passive.value2 * unit.CurrentPassiveStack, 0.1f);
+                }
+                break;
+
+            case SpecialUnitLogicType.Demon4:
+                int nearbyEnemyCount = unit.GetNearbyEnemyCount(unit.CurrentAttackRange);
+                int satanCountCap = passive.maxStack > 0 ? passive.maxStack : nearbyEnemyCount;
+                int satanAppliedCount = Mathf.Min(nearbyEnemyCount, satanCountCap);
+
+                if (satanAppliedCount > 0)
+                    unit.AddOrRefreshRuntimeBuff(BuffType.AttackPowerUp, passive.value1 * satanAppliedCount, 0.1f);
+
+                if (satanCountCap > 0 && satanAppliedCount >= satanCountCap && passive.value2 > 0f)
+                    unit.AddOrRefreshRuntimeBuff(BuffType.AttackSpeedUp, passive.value2, 0.1f);
+                break;
+
+            case SpecialUnitLogicType.Demon5:
+                int crowdControlledEnemyCount = unit.CountEnemiesWithDebuffs(DebuffType.Slow, DebuffType.Stun);
+                int asmodeusCountCap = passive.maxStack > 0 ? passive.maxStack : crowdControlledEnemyCount;
+                int asmodeusAppliedCount = Mathf.Min(crowdControlledEnemyCount, asmodeusCountCap);
+
+                if (asmodeusAppliedCount > 0)
+                    unit.AddOrRefreshRuntimeBuff(BuffType.AttackPowerUp, passive.value1 * asmodeusAppliedCount, 0.1f);
+                break;
         }
     }
 
@@ -63,17 +112,45 @@ public static class UnitSkillHandler
 
                 if (unit.IsUrielMaxStackReached)
                 {
-                    target.AddDebuff(new DebuffInstance
-                    {
-                        debuffType = DebuffType.Burn,
-                        value = Mathf.Max(1f, unit.CurrentAttackPower * 0.2f),
-                        duration = 3f,
-                        remainTime = 3f,
-                        stack = 1,
-                        maxStack = 20,
-                        source = unit
-                    });
+                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Burn, Mathf.Max(1f, unit.CurrentAttackPower * 0.2f), 3f, 20);
                 }
+                break;
+
+            case SpecialUnitLogicType.Demon2:
+                PassiveSkillData mammonPassive = unit.Data.passiveSkillData;
+                if (mammonPassive != null && Random.value <= Mathf.Clamp01(mammonPassive.value3))
+                    unit.AddPassiveStack(1);
+                break;
+
+            case SpecialUnitLogicType.Demon3:
+                PassiveSkillData leviathanPassive = unit.Data.passiveSkillData;
+                if (leviathanPassive != null)
+                {
+                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Slow, leviathanPassive.value1, leviathanPassive.value3);
+                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Burn, Mathf.Max(1f, unit.CurrentAttackPower * leviathanPassive.value2), leviathanPassive.value3);
+                }
+                break;
+
+            case SpecialUnitLogicType.Demon6:
+                PassiveSkillData beelzebubPassive = unit.Data.passiveSkillData;
+                if (beelzebubPassive != null)
+                {
+                    float poisonDamagePerSecond = target.MaxHp * beelzebubPassive.value1;
+                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Burn, poisonDamagePerSecond, beelzebubPassive.value2);
+                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.DamageTakenUp, beelzebubPassive.value3, beelzebubPassive.value2);
+                }
+                break;
+        }
+    }
+
+    public static void OnMonsterKilled(UnitController unit, MonsterController target)
+    {
+        if (unit == null || unit.Data == null || target == null) return;
+
+        switch (unit.Data.specialLogicType)
+        {
+            case SpecialUnitLogicType.Demon1:
+                unit.AddPassiveStack(target.monsterType == MonsterType.Boss || target.monsterType == MonsterType.Elite ? 2 : 1);
                 break;
         }
     }
@@ -210,6 +287,34 @@ public static class UnitSkillHandler
             case SpecialUnitLogicType.Sariel:
                 ExecuteSarielControl(unit, active);
                 break;
+
+            case SpecialUnitLogicType.Demon1:
+                ExecuteLuciferCleave(unit, active);
+                break;
+
+            case SpecialUnitLogicType.Demon2:
+                ExecuteMammonOverdrive(unit, active);
+                break;
+
+            case SpecialUnitLogicType.Demon3:
+                ExecuteLeviathanBurst(unit, active);
+                break;
+
+            case SpecialUnitLogicType.Demon4:
+                ExecuteSatanCollapse(unit, active);
+                break;
+
+            case SpecialUnitLogicType.Demon5:
+                unit.StartCoroutine(CoAsmodeusChain(unit, active));
+                break;
+
+            case SpecialUnitLogicType.Demon6:
+                ExecuteBeelzebubPlague(unit, active);
+                break;
+
+            case SpecialUnitLogicType.Demon7:
+                unit.StartCoroutine(CoBelphegorSloth(unit, active));
+                break;
         }
     }
 
@@ -259,14 +364,160 @@ public static class UnitSkillHandler
             {
                 float duration = monster.monsterType == MonsterType.Boss ? 1f : 2.5f;
 
-                monster.AddDebuff(new DebuffInstance
-                {
-                    debuffType = DebuffType.Stun,
-                    duration = duration,
-                    remainTime = duration,
-                    source = unit
-                });
+                MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Stun, 0f, duration);
             }
+        }
+    }
+
+    private static void ExecuteLuciferCleave(UnitController unit, ActiveSkillData active)
+    {
+        ApplyDamageInRadius(unit, active.radius, active.value1, unit.Data.damageType);
+    }
+
+    private static void ExecuteMammonOverdrive(UnitController unit, ActiveSkillData active)
+    {
+        unit.AddBuff(new BuffInstance
+        {
+            buffType = BuffType.AttackPowerUp,
+            value = active.value1,
+            duration = active.duration,
+            remainTime = active.duration,
+            source = unit,
+            isRuntime = false
+        });
+
+        unit.AddBuff(new BuffInstance
+        {
+            buffType = BuffType.AttackSpeedUp,
+            value = active.value2,
+            duration = active.duration,
+            remainTime = active.duration,
+            source = unit,
+            isRuntime = false
+        });
+    }
+
+    private static void ExecuteLeviathanBurst(UnitController unit, ActiveSkillData active)
+    {
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+            if (!monster.HasDebuff(DebuffType.Slow, unit)) continue;
+
+            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+            MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Slow, active.value2, active.duration);
+        }
+    }
+
+    private static void ExecuteSatanCollapse(UnitController unit, ActiveSkillData active)
+    {
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+            if (Vector3.Distance(unit.transform.position, monster.transform.position) > active.radius) continue;
+
+            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+
+            float stunDuration = monster.monsterType == MonsterType.Boss ? Mathf.Min(1f, active.duration) : active.duration;
+            MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Stun, 0f, stunDuration);
+        }
+    }
+
+    private static IEnumerator CoAsmodeusChain(UnitController unit, ActiveSkillData active)
+    {
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+            if (Vector3.Distance(unit.transform.position, monster.transform.position) > active.radius) continue;
+
+            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+            MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Stun, 0f, monster.monsterType == MonsterType.Boss ? Mathf.Min(1f, active.duration) : active.duration);
+        }
+
+        yield return new WaitForSeconds(active.duration);
+
+        monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+            if (Vector3.Distance(unit.transform.position, monster.transform.position) > active.radius) continue;
+
+            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value2), unit.Data.damageType);
+
+            if (active.value3 > 0f)
+            {
+                float secondaryStunDuration = monster.monsterType == MonsterType.Boss ? Mathf.Min(1f, active.value3) : active.value3;
+                MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Stun, 0f, secondaryStunDuration);
+            }
+        }
+    }
+
+    private static void ExecuteBeelzebubPlague(UnitController unit, ActiveSkillData active)
+    {
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+            if (Vector3.Distance(unit.transform.position, monster.transform.position) > active.radius) continue;
+
+            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+
+            if (monster.HasDebuff(DebuffType.Burn, unit))
+                monster.TakeDamage(monster.CurrentHp * Mathf.Max(0f, active.value2));
+        }
+    }
+
+    private static IEnumerator CoBelphegorSloth(UnitController unit, ActiveSkillData active)
+    {
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+            MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Slow, active.value1, active.duration);
+        }
+
+        yield return new WaitForSeconds(active.duration);
+
+        monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+            monster.TakeDamage(monster.CurrentHp * Mathf.Max(0f, active.value2));
+        }
+    }
+
+    private static void ApplyBelphegorAura(UnitController unit, PassiveSkillData passive)
+    {
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+
+            MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Slow, passive.value1, 0.25f);
+        }
+    }
+
+    private static void ApplyDamageInRadius(UnitController unit, float radius, float damageMultiplier, DamageType damageType)
+    {
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (!monster.IsAlive) continue;
+            if (Vector3.Distance(unit.transform.position, monster.transform.position) > radius) continue;
+
+            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, damageMultiplier), damageType);
         }
     }
 }
