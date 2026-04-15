@@ -10,50 +10,52 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 2_Epic_Mage
+  m_Name: 30_GreatDemon_Satan
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 2
-  unitName: epic
-  grade: 1
-  specialLogicType: 0
-  attackPower: 50
-  attackSpeed: 1.2
-  attackRange: 2
+  unitId: 30
+  unitName: GreatDemon_Satan
+  grade: 4
+  specialLogicType: 10
+  attackPower: 180
+  attackSpeed: 1.4
+  attackRange: 2.5
   attackRadius: 1.5
-  multiTargetCount: 0
-  pierceCount: 0
+  multiTargetCount: 1
+  pierceCount: 1
   basicAttackType: 2
-  damageType: 0
+  damageType: 4
   targetType: 3
-  skillTriggerType: 0
+  skillTriggerType: 3
   passiveSkillData:
-    skillName: 
-    description: 
+    skillName: zcswcz
+    description: cscz
     passiveBuffType: 0
     passiveDebuffType: 0
     useStack: 0
-    maxStack: 0
-    value1: 0
-    value2: 0
+    maxStack: 20
+    value1: 0.08
+    value2: 0.2
     value3: 0
     hasExecute: 0
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
-    skillName: 
-    description: 
-    castType: 0
-    targetType: 0
-    cooldown: 10
-    duration: 3
-    radius: 2
+    skillName: zcweadf
+    description: zcwadaz
+    castType: 4
+    targetType: 3
+    cooldown: 12
+    duration: 6
+    radius: 3
     hitCount: 1
     interval: 0.5
-    value1: 0
+    value1: 3.5
     value2: 0
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

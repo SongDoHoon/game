@@ -29,6 +29,29 @@ public enum DamageType
     Dark
 }
 
+public enum SkillEffectTrigger
+{
+    None,
+    OnInitialize,
+    OnStatRecalculation,
+    OnBasicAttack,
+    OnContinuous,
+    OnKill,
+    OnActiveCast,
+    OnActiveTick,
+    OnActiveEnd
+}
+
+public enum SkillEffectType
+{
+    None,
+    Buff,
+    Debuff,
+    Damage,
+    Execute,
+    AddPassiveStack
+}
+
 public enum SkillTriggerType
 {
     None,

@@ -10,50 +10,52 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 3_Verure_Flame
+  m_Name: 31_GreatDemon_Asmodeus
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 3
-  unitName: Verure
-  grade: 2
-  specialLogicType: 0
-  attackPower: 90
-  attackSpeed: 1.3
-  attackRange: 2.2
+  unitId: 31
+  unitName: GreatDemon_Asmodeus
+  grade: 4
+  specialLogicType: 11
+  attackPower: 160
+  attackSpeed: 1.5
+  attackRange: 3.8
   attackRadius: 1.5
-  multiTargetCount: 0
-  pierceCount: 0
-  basicAttackType: 2
-  damageType: 0
+  multiTargetCount: 3
+  pierceCount: 1
+  basicAttackType: 7
+  damageType: 4
   targetType: 3
-  skillTriggerType: 0
+  skillTriggerType: 3
   passiveSkillData:
-    skillName: 
+    skillName: zsczc
     description: 
     passiveBuffType: 0
     passiveDebuffType: 0
     useStack: 0
-    maxStack: 0
-    value1: 0
+    maxStack: 6
+    value1: 0.06
     value2: 0
     value3: 0
     hasExecute: 0
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
-    skillName: 
-    description: 
-    castType: 0
-    targetType: 0
-    cooldown: 10
-    duration: 3
-    radius: 2
+    skillName: srhdrth
+    description: dhds
+    castType: 4
+    targetType: 3
+    cooldown: 12
+    duration: 2.5
+    radius: 3.5
     hitCount: 1
     interval: 0.5
-    value1: 0
-    value2: 0
-    value3: 0
+    value1: 2.2
+    value2: 1.8
+    value3: 0.8
     canStackDebuff: 0
     maxDebuffStack: 1
-  canEvolve: 1
-  evolveKey: 0
+    effects: []
+  canEvolve: 0
+  evolveKey: 

@@ -10,6 +10,8 @@ public static class UnitSkillHandler
         PassiveSkillData passive = unit.Data.passiveSkillData;
         if (passive == null) return;
 
+        ApplyPassiveEffects(unit, passive, SkillEffectTrigger.OnContinuous);
+
         switch (unit.Data.specialLogicType)
         {
             case SpecialUnitLogicType.Demon7:
@@ -22,6 +24,8 @@ public static class UnitSkillHandler
     {
         PassiveSkillData passive = unit.Data.passiveSkillData;
         if (passive == null) return;
+
+        ApplyPassiveEffects(unit, passive, SkillEffectTrigger.OnInitialize);
 
         if (!passive.useStack && passive.passiveBuffType == BuffType.AttackPowerUp && passive.value1 > 0f)
         {
@@ -41,6 +45,8 @@ public static class UnitSkillHandler
     {
         PassiveSkillData passive = unit.Data.passiveSkillData;
         if (passive == null) return;
+
+        ApplyPassiveEffects(unit, passive, SkillEffectTrigger.OnStatRecalculation);
 
         switch (unit.Data.specialLogicType)
         {
@@ -105,6 +111,8 @@ public static class UnitSkillHandler
     {
         if (unit == null || target == null) return;
 
+        ApplyPassiveEffects(unit, unit.Data.passiveSkillData, SkillEffectTrigger.OnBasicAttack, target);
+
         switch (unit.Data.specialLogicType)
         {
             case SpecialUnitLogicType.Uriel:
@@ -147,6 +155,8 @@ public static class UnitSkillHandler
     {
         if (unit == null || unit.Data == null || target == null) return;
 
+        ApplyPassiveEffects(unit, unit.Data.passiveSkillData, SkillEffectTrigger.OnKill, target);
+
         switch (unit.Data.specialLogicType)
         {
             case SpecialUnitLogicType.Demon1:
@@ -159,6 +169,12 @@ public static class UnitSkillHandler
     {
         ActiveSkillData active = unit.Data.activeSkillData;
         if (active == null) return;
+
+        if (HasEffects(active.effects))
+        {
+            ExecuteExtendedActiveSkill(unit, active);
+            return;
+        }
 
         switch (active.castType)
         {
@@ -397,6 +413,41 @@ public static class UnitSkillHandler
         });
     }
 
+    private static void ExecuteExtendedActiveSkill(UnitController unit, ActiveSkillData active)
+    {
+        ApplyActiveEffects(unit, active, SkillEffectTrigger.OnActiveCast);
+
+        if (HasEffects(active.effects, SkillEffectTrigger.OnActiveTick) || HasEffects(active.effects, SkillEffectTrigger.OnActiveEnd))
+        {
+            unit.StartCoroutine(CoExtendedActiveSequence(unit, active));
+        }
+    }
+
+    private static IEnumerator CoExtendedActiveSequence(UnitController unit, ActiveSkillData active)
+    {
+        SkillEffectData tickTemplate = GetFirstEffect(active.effects, SkillEffectTrigger.OnActiveTick);
+        int tickCount = tickTemplate != null && tickTemplate.hitCount > 0 ? tickTemplate.hitCount : 1;
+        float tickInterval = tickTemplate != null && tickTemplate.interval > 0f ? tickTemplate.interval : 0.5f;
+
+        if (HasEffects(active.effects, SkillEffectTrigger.OnActiveTick))
+        {
+            for (int i = 0; i < tickCount; i++)
+            {
+                ApplyActiveEffects(unit, active, SkillEffectTrigger.OnActiveTick);
+
+                if (i < tickCount - 1)
+                    yield return new WaitForSeconds(tickInterval);
+            }
+        }
+
+        SkillEffectData endTemplate = GetFirstEffect(active.effects, SkillEffectTrigger.OnActiveEnd);
+        float endDelay = endTemplate != null && endTemplate.duration > 0f ? endTemplate.duration : 0f;
+        if (endDelay > 0f)
+            yield return new WaitForSeconds(endDelay);
+
+        ApplyActiveEffects(unit, active, SkillEffectTrigger.OnActiveEnd);
+    }
+
     private static void ExecuteLeviathanBurst(UnitController unit, ActiveSkillData active)
     {
         MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
@@ -519,5 +570,180 @@ public static class UnitSkillHandler
 
             DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, damageMultiplier), damageType);
         }
+    }
+
+    private static void ApplyPassiveEffects(UnitController unit, PassiveSkillData passive, SkillEffectTrigger trigger, MonsterController target = null)
+    {
+        if (unit == null || passive == null || !HasEffects(passive.effects, trigger))
+            return;
+
+        bool useRuntimeBuff = trigger == SkillEffectTrigger.OnStatRecalculation || trigger == SkillEffectTrigger.OnContinuous;
+
+        foreach (SkillEffectData effect in passive.effects)
+        {
+            if (effect == null || effect.trigger != trigger)
+                continue;
+
+            ApplyEffect(unit, effect, target, useRuntimeBuff);
+        }
+    }
+
+    private static void ApplyActiveEffects(UnitController unit, ActiveSkillData active, SkillEffectTrigger trigger)
+    {
+        if (unit == null || active == null || !HasEffects(active.effects, trigger))
+            return;
+
+        UnitController[] allies = null;
+        MonsterController[] monsters = null;
+
+        if (active.targetType == TargetType.AllAllies || active.targetType == TargetType.AreaAlly || active.targetType == TargetType.SingleAlly)
+            allies = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        else
+            monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (SkillEffectData effect in active.effects)
+        {
+            if (effect == null || effect.trigger != trigger)
+                continue;
+
+            switch (active.targetType)
+            {
+                case TargetType.Self:
+                    ApplyEffect(unit, effect, null, false);
+                    break;
+
+                case TargetType.AllAllies:
+                case TargetType.AreaAlly:
+                    if (allies == null) break;
+                    foreach (UnitController ally in allies)
+                    {
+                        if (active.targetType == TargetType.AreaAlly && !IsAllyInEffectRange(unit, ally, effect, active.radius))
+                            continue;
+
+                        ApplyEffectToAlly(unit, ally, effect);
+                    }
+                    break;
+
+                case TargetType.SingleAlly:
+                    ApplyEffectToAlly(unit, unit, effect);
+                    break;
+
+                case TargetType.SingleEnemy:
+                    ApplyEffect(unit, effect, unit.GetCurrentTarget(), false);
+                    break;
+
+                case TargetType.MultiEnemy:
+                case TargetType.AreaEnemy:
+                    if (monsters == null) break;
+                    foreach (MonsterController monster in monsters)
+                    {
+                        if (!IsMonsterInEffectRange(unit, monster, effect, active.radius))
+                            continue;
+
+                        ApplyEffect(unit, effect, monster, false);
+                    }
+                    break;
+            }
+        }
+    }
+
+    private static void ApplyEffect(UnitController sourceUnit, SkillEffectData effect, MonsterController targetMonster, bool asRuntimeBuff)
+    {
+        if (sourceUnit == null || effect == null)
+            return;
+
+        switch (effect.effectType)
+        {
+            case SkillEffectType.Buff:
+                sourceUnit.ApplyExtendedBuff(effect.buffType, effect.value, effect.duration, sourceUnit, asRuntimeBuff);
+                break;
+
+            case SkillEffectType.Debuff:
+                if (targetMonster != null)
+                    MonsterEffectHandler.ApplyEffectDebuff(sourceUnit, targetMonster, effect);
+                break;
+
+            case SkillEffectType.Damage:
+                if (targetMonster != null)
+                    DamageSystem.DealDamage(sourceUnit, targetMonster, sourceUnit.CurrentAttackPower * Mathf.Max(1f, effect.value), sourceUnit.Data.damageType);
+                break;
+
+            case SkillEffectType.Execute:
+                if (targetMonster != null && targetMonster.monsterType != MonsterType.Boss && targetMonster.GetHpPercent() <= effect.value)
+                    DamageSystem.DealDamage(sourceUnit, targetMonster, targetMonster.CurrentHp, sourceUnit.Data.damageType);
+                break;
+
+            case SkillEffectType.AddPassiveStack:
+                sourceUnit.AddPassiveStack(effect.stackAmount);
+                break;
+        }
+    }
+
+    private static void ApplyEffectToAlly(UnitController sourceUnit, UnitController ally, SkillEffectData effect)
+    {
+        if (sourceUnit == null || ally == null || effect == null)
+            return;
+
+        if (effect.effectType != SkillEffectType.Buff)
+            return;
+
+        ally.ApplyExtendedBuff(effect.buffType, effect.value, effect.duration, sourceUnit, false);
+    }
+
+    private static bool IsMonsterInEffectRange(UnitController unit, MonsterController monster, SkillEffectData effect, float fallbackRadius)
+    {
+        if (unit == null || monster == null || !monster.IsAlive)
+            return false;
+
+        float radius = effect != null && effect.radius > 0f ? effect.radius : fallbackRadius;
+        if (radius <= 0f)
+            radius = unit.CurrentAttackRange;
+
+        return Vector3.Distance(unit.transform.position, monster.transform.position) <= radius;
+    }
+
+    private static bool IsAllyInEffectRange(UnitController unit, UnitController ally, SkillEffectData effect, float fallbackRadius)
+    {
+        if (unit == null || ally == null)
+            return false;
+
+        float radius = effect != null && effect.radius > 0f ? effect.radius : fallbackRadius;
+        if (radius <= 0f)
+            return true;
+
+        return Vector3.Distance(unit.transform.position, ally.transform.position) <= radius;
+    }
+
+    private static bool HasEffects(System.Collections.Generic.List<SkillEffectData> effects)
+    {
+        return effects != null && effects.Count > 0;
+    }
+
+    private static bool HasEffects(System.Collections.Generic.List<SkillEffectData> effects, SkillEffectTrigger trigger)
+    {
+        if (effects == null)
+            return false;
+
+        foreach (SkillEffectData effect in effects)
+        {
+            if (effect != null && effect.trigger == trigger)
+                return true;
+        }
+
+        return false;
+    }
+
+    private static SkillEffectData GetFirstEffect(System.Collections.Generic.List<SkillEffectData> effects, SkillEffectTrigger trigger)
+    {
+        if (effects == null)
+            return null;
+
+        foreach (SkillEffectData effect in effects)
+        {
+            if (effect != null && effect.trigger == trigger)
+                return effect;
+        }
+
+        return null;
     }
 }

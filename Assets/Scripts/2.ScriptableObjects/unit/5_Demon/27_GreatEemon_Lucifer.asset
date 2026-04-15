@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
+  m_Name: 27_GreatEemon_Lucifer
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  unitId: 27
+  unitName: GreatDemon_Lucifer
+  grade: 4
+  specialLogicType: 7
+  attackPower: 180
+  attackSpeed: 1.4
+  attackRange: 2.5
+  attackRadius: 1.5
+  multiTargetCount: 1
+  pierceCount: 1
+  basicAttackType: 2
+  damageType: 4
+  targetType: 3
+  skillTriggerType: 3
+  passiveSkillData:
+    skillName: zsczs
+    description: 
+    passiveBuffType: 0
+    passiveDebuffType: 0
+    useStack: 1
+    maxStack: 0
+    value1: 0.002
+    value2: 0
+    value3: 0
+    hasExecute: 0
+    executeHpPercent: 0.05
+    affectsBossDifferently: 0
+    bossMultiplier: 1
+    effects: []
+  activeSkillData:
+    skillName: scszcswf
+    description: csszczsczx
+    castType: 3
+    targetType: 3
+    cooldown: 7
+    duration: 3
+    radius: 2
+    hitCount: 1
+    interval: 0.5
+    value1: 1
+    value2: 0
+    value3: 0
+    canStackDebuff: 0
+    maxDebuffStack: 1
+    effects: []
+  canEvolve: 0
+  evolveKey: 

@@ -10,50 +10,52 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 4_ArchAngel_Uriel
+  m_Name: 22_ArchAngel_Raphael
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 4
-  unitName: uriel
+  unitId: 22
+  unitName: ArchaAngel_Raphael
   grade: 3
-  specialLogicType: 4
+  specialLogicType: 3
   attackPower: 160
   attackSpeed: 1.5
   attackRange: 3.8
   attackRadius: 1.5
-  multiTargetCount: 0
-  pierceCount: 0
-  basicAttackType: 3
-  damageType: 2
-  targetType: 3
+  multiTargetCount: 1
+  pierceCount: 1
+  basicAttackType: 4
+  damageType: 3
+  targetType: 2
   skillTriggerType: 3
   passiveSkillData:
-    skillName: asd
-    description: asd
+    skillName: wda
+    description: sdfwa
     passiveBuffType: 0
-    passiveDebuffType: 1
-    useStack: 1
-    maxStack: 20
-    value1: 0.03
-    value2: 0.02
+    passiveDebuffType: 0
+    useStack: 0
+    maxStack: 0
+    value1: 0
+    value2: 0
     value3: 0
-    hasExecute: 0
+    hasExecute: 1
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
-    skillName: 
-    description: 
-    castType: 0
+    skillName: zscz
+    description: zsczsc
+    castType: 3
     targetType: 3
-    cooldown: 12
+    cooldown: 10
     duration: 3
-    radius: 2
-    hitCount: 6
+    radius: 2.5
+    hitCount: 1
     interval: 0.5
     value1: 1.8
     value2: 0
     value3: 0
-    canStackDebuff: 1
-    maxDebuffStack: 20
+    canStackDebuff: 0
+    maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

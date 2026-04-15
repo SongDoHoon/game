@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
+  m_Name: 1_AoEMeele
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  unitId: 1
+  unitName: N_AoEMeele
+  grade: 0
+  specialLogicType: 0
+  attackPower: 12
+  attackSpeed: 1
+  attackRange: 1.5
+  attackRadius: 1.3
+  multiTargetCount: 1
+  pierceCount: 1
+  basicAttackType: 2
+  damageType: 0
+  targetType: 0
+  skillTriggerType: 0
+  passiveSkillData:
+    skillName: 
+    description: 
+    passiveBuffType: 0
+    passiveDebuffType: 0
+    useStack: 0
+    maxStack: 0
+    value1: 0
+    value2: 0
+    value3: 0
+    hasExecute: 0
+    executeHpPercent: 0.05
+    affectsBossDifferently: 0
+    bossMultiplier: 1
+  activeSkillData:
+    skillName: 
+    description: 
+    castType: 0
+    targetType: 0
+    cooldown: 10
+    duration: 3
+    radius: 2
+    hitCount: 1
+    interval: 0.5
+    value1: 0
+    value2: 0
+    value3: 0
+    canStackDebuff: 0
+    maxDebuffStack: 1
+  canEvolve: 0
+  evolveKey: 

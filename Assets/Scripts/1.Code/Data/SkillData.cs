@@ -1,4 +1,28 @@
 using UnityEngine;
+using System.Collections.Generic;
+
+[System.Serializable]
+public class SkillEffectData
+{
+    public string label;
+    public SkillEffectTrigger trigger = SkillEffectTrigger.None;
+    public SkillEffectType effectType = SkillEffectType.None;
+
+    public BuffType buffType = BuffType.AttackPowerUp;
+    public DebuffType debuffType = DebuffType.None;
+
+    public float value;
+    public float duration;
+    public float interval;
+    public float radius;
+
+    public int hitCount = 1;
+    public int maxStack = 1;
+    public int stackAmount = 1;
+
+    public bool affectsBossDifferently;
+    public float bossMultiplier = 1f;
+}
 
 [System.Serializable]
 public class PassiveSkillData
@@ -21,6 +45,9 @@ public class PassiveSkillData
 
     public bool affectsBossDifferently;
     public float bossMultiplier = 1f;
+
+    [Header("Extended Effects")]
+    public List<SkillEffectData> effects = new();
 }
 
 [System.Serializable]
@@ -45,6 +72,9 @@ public class ActiveSkillData
 
     public bool canStackDebuff;
     public int maxDebuffStack = 1;
+
+    [Header("Extended Effects")]
+    public List<SkillEffectData> effects = new();
 }
 
 [System.Serializable]

@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
+  m_Name: 21_ArchAngel_Gabriel
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  unitId: 21
+  unitName: ArchAngel_Gabriel
+  grade: 3
+  specialLogicType: 2
+  attackPower: 180
+  attackSpeed: 1.4
+  attackRange: 2.5
+  attackRadius: 1.5
+  multiTargetCount: 1
+  pierceCount: 1
+  basicAttackType: 2
+  damageType: 3
+  targetType: 3
+  skillTriggerType: 3
+  passiveSkillData:
+    skillName: zzz
+    description: zzz
+    passiveBuffType: 0
+    passiveDebuffType: 0
+    useStack: 0
+    maxStack: 0
+    value1: 0
+    value2: 0
+    value3: 0
+    hasExecute: 0
+    executeHpPercent: 0.05
+    affectsBossDifferently: 0
+    bossMultiplier: 1
+    effects:
+    - label: 
+      trigger: 1
+      effectType: 1
+      buffType: 0
+      debuffType: 0
+      value: 0.2
+      duration: 99999
+      interval: 0
+      radius: 0
+      hitCount: 0
+      maxStack: 0
+      stackAmount: 0
+      affectsBossDifferently: 0
+      bossMultiplier: 0
+  activeSkillData:
+    skillName: zzzzzz
+    description: zzzzzz
+    castType: 3
+    targetType: 3
+    cooldown: 20
+    duration: 0
+    radius: 0
+    hitCount: 0
+    interval: 0
+    value1: 0
+    value2: 0
+    value3: 0
+    canStackDebuff: 0
+    maxDebuffStack: 1
+    effects:
+    - label: 
+      trigger: 6
+      effectType: 3
+      buffType: 0
+      debuffType: 0
+      value: 2.2
+      duration: 0
+      interval: 0
+      radius: 3
+      hitCount: 0
+      maxStack: 0
+      stackAmount: 0
+      affectsBossDifferently: 0
+      bossMultiplier: 0
+  canEvolve: 0
+  evolveKey: 

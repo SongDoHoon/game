@@ -132,6 +132,25 @@ public class UnitController : MonoBehaviour
         buffs.Add(buff);
     }
 
+    public void ApplyExtendedBuff(BuffType buffType, float value, float duration, UnitController source, bool isRuntime)
+    {
+        if (isRuntime)
+        {
+            AddOrRefreshRuntimeBuff(buffType, value, duration);
+            return;
+        }
+
+        buffs.Add(new BuffInstance
+        {
+            buffType = buffType,
+            value = value,
+            duration = duration,
+            remainTime = duration,
+            source = source,
+            isRuntime = false
+        });
+    }
+
     public void AddOrRefreshRuntimeBuff(BuffType buffType, float value, float duration)
     {
         BuffInstance existing = buffs.Find(b => b.isRuntime && b.buffType == buffType && b.source == this);

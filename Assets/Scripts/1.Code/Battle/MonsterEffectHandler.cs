@@ -2,6 +2,28 @@ using UnityEngine;
 
 public static class MonsterEffectHandler
 {
+    public static float GetEffectAdjustedValue(MonsterController target, SkillEffectData effect)
+    {
+        if (target == null || effect == null)
+            return 0f;
+
+        if (!effect.affectsBossDifferently || target.monsterType != MonsterType.Boss)
+            return effect.value;
+
+        return effect.value * effect.bossMultiplier;
+    }
+
+    public static float GetEffectAdjustedDuration(MonsterController target, SkillEffectData effect)
+    {
+        if (effect == null)
+            return 0f;
+
+        if (target == null || !effect.affectsBossDifferently || target.monsterType != MonsterType.Boss)
+            return effect.duration;
+
+        return effect.duration * effect.bossMultiplier;
+    }
+
     public static void ApplyDebuff(UnitController attacker, MonsterController target, DebuffType debuffType, float value, float duration, int maxStack = 1)
     {
         if (attacker == null || target == null) return;
@@ -45,5 +67,17 @@ public static class MonsterEffectHandler
         if (attacker == null || target == null || active == null) return;
 
         ApplyDebuff(attacker, target, DebuffType.Slow, active.value1, active.duration, active.maxDebuffStack <= 0 ? 1 : active.maxDebuffStack);
+    }
+
+    public static void ApplyEffectDebuff(UnitController attacker, MonsterController target, SkillEffectData effect)
+    {
+        if (attacker == null || target == null || effect == null || effect.effectType != SkillEffectType.Debuff)
+            return;
+
+        float value = GetEffectAdjustedValue(target, effect);
+        float duration = GetEffectAdjustedDuration(target, effect);
+        int maxStack = effect.maxStack > 0 ? effect.maxStack : 1;
+
+        ApplyDebuff(attacker, target, effect.debuffType, value, duration, maxStack);
     }
 }

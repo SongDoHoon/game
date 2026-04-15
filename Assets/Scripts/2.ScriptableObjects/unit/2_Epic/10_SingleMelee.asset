@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 1_RareArcher
+  m_Name: 10_SingleMelee
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 1
-  unitName: Rare
-  grade: 5
+  unitId: 10
+  unitName: E_SingleMelee
+  grade: 1
   specialLogicType: 0
-  attackPower: 22
+  attackPower: 50
   attackSpeed: 1.2
-  attackRange: 2.8
+  attackRange: 2
   attackRadius: 0
-  multiTargetCount: 0
-  pierceCount: 0
-  basicAttackType: 1
-  damageType: 0
-  targetType: 1
+  multiTargetCount: 1
+  pierceCount: 1
+  basicAttackType: 0
+  damageType: 3
+  targetType: 0
   skillTriggerType: 0
   passiveSkillData:
     skillName: 
