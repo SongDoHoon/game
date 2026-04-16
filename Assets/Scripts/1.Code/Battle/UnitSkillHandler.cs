@@ -167,6 +167,9 @@ public static class UnitSkillHandler
 
     public static void ExecuteActiveSkill(UnitController unit)
     {
+        if (unit == null || unit.Data == null)
+            return;
+
         ActiveSkillData active = unit.Data.activeSkillData;
         if (active == null) return;
 
@@ -176,6 +179,14 @@ public static class UnitSkillHandler
             return;
         }
 
+        if (TryExecuteSpecialActive(unit, active))
+            return;
+
+        ExecuteLegacyActiveSkill(unit, active);
+    }
+
+    private static void ExecuteLegacyActiveSkill(UnitController unit, ActiveSkillData active)
+    {
         switch (active.castType)
         {
             case ActiveSkillCastType.SelfBuff:
@@ -202,8 +213,6 @@ public static class UnitSkillHandler
                 ExecuteAreaDebuff(unit, active);
                 break;
         }
-
-        ApplySpecialActive(unit, active);
     }
 
     private static void ExecuteSelfBuff(UnitController unit, ActiveSkillData active)
@@ -280,58 +289,60 @@ public static class UnitSkillHandler
         }
     }
 
-    private static void ApplySpecialActive(UnitController unit, ActiveSkillData active)
+    private static bool TryExecuteSpecialActive(UnitController unit, ActiveSkillData active)
     {
         switch (unit.Data.specialLogicType)
         {
             case SpecialUnitLogicType.Michael:
                 ExecuteAllyBuff(unit, active);
-                break;
+                return true;
 
             case SpecialUnitLogicType.Gabriel:
                 unit.StartCoroutine(CoAreaDamage(unit, active));
-                break;
+                return true;
 
             case SpecialUnitLogicType.Raphael:
                 unit.StartCoroutine(CoAreaDamage(unit, active));
-                break;
+                return true;
 
             case SpecialUnitLogicType.Uriel:
                 unit.StartCoroutine(CoUrielFirePillar(unit, active));
-                break;
+                return true;
 
             case SpecialUnitLogicType.Sariel:
                 ExecuteSarielControl(unit, active);
-                break;
+                return true;
 
             case SpecialUnitLogicType.Demon1:
                 ExecuteLuciferCleave(unit, active);
-                break;
+                return true;
 
             case SpecialUnitLogicType.Demon2:
                 ExecuteMammonOverdrive(unit, active);
-                break;
+                return true;
 
             case SpecialUnitLogicType.Demon3:
                 ExecuteLeviathanBurst(unit, active);
-                break;
+                return true;
 
             case SpecialUnitLogicType.Demon4:
                 ExecuteSatanCollapse(unit, active);
-                break;
+                return true;
 
             case SpecialUnitLogicType.Demon5:
                 unit.StartCoroutine(CoAsmodeusChain(unit, active));
-                break;
+                return true;
 
             case SpecialUnitLogicType.Demon6:
                 ExecuteBeelzebubPlague(unit, active);
-                break;
+                return true;
 
             case SpecialUnitLogicType.Demon7:
                 unit.StartCoroutine(CoBelphegorSloth(unit, active));
-                break;
+                return true;
         }
+
+        return false;
     }
 
     private static IEnumerator CoUrielFirePillar(UnitController unit, ActiveSkillData active)
