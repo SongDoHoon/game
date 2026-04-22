@@ -199,7 +199,7 @@ MonoBehaviour:
   monsterType: 0
   maxHp: 100
   currentHp: 100
-  moveSpeed: 0.2
+  moveSpeed: 0.5
   rewardGold: 10
   isBoss: 0
   waypointPath: {fileID: 0}

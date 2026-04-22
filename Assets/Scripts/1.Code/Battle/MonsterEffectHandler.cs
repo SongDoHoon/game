@@ -56,10 +56,18 @@ public static class MonsterEffectHandler
     public static void ApplyCrowdControl(UnitController attacker, MonsterController target)
     {
         if (attacker == null || target == null) return;
+        if (attacker.Data == null) return;
 
-        float duration = target.monsterType == MonsterType.Boss ? 1f : 2.5f;
+        float slowAmount = Mathf.Clamp01(attacker.Data.crowdControlSlowAmount);
+        float duration = Mathf.Max(0f, attacker.Data.crowdControlDuration);
 
-        ApplyDebuff(attacker, target, DebuffType.Stun, 0f, duration);
+        if (target.monsterType == MonsterType.Boss)
+        {
+            slowAmount *= Mathf.Clamp01(attacker.Data.crowdControlBossSlowMultiplier);
+            duration *= Mathf.Max(0f, attacker.Data.crowdControlBossDurationMultiplier);
+        }
+
+        ApplyDebuff(attacker, target, DebuffType.Slow, slowAmount, duration);
     }
 
     public static void ApplySkillDebuff(UnitController attacker, MonsterController target, ActiveSkillData active)

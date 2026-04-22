@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 4_SingleRanged
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 4
-  unitName: N_CrowdControlRanged
+  unitName: N_SingleRanged
   grade: 0
   specialLogicType: 0
   attackPower: 10
@@ -40,6 +40,7 @@ MonoBehaviour:
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
     skillName: 
     description: 
@@ -55,5 +56,6 @@ MonoBehaviour:
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

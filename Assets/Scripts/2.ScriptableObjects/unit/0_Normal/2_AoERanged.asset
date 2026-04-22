@@ -18,13 +18,17 @@ MonoBehaviour:
   specialLogicType: 0
   attackPower: 10
   attackSpeed: 1.1
-  attackRange: 2.5
-  attackRadius: 1.4
+  attackRange: 2
+  attackRadius: 0.75
   multiTargetCount: 1
   pierceCount: 1
   basicAttackType: 3
   damageType: 2
   targetType: 0
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 0
   passiveSkillData:
     skillName: 
@@ -40,6 +44,7 @@ MonoBehaviour:
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
     skillName: 
     description: 
@@ -55,5 +60,6 @@ MonoBehaviour:
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

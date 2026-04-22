@@ -21,6 +21,12 @@ public class UnitData : ScriptableObject
     public DamageType damageType;
     public TargetType targetType;
 
+    [Header("Crowd Control Basic Attack")]
+    [Range(0f, 1f)] public float crowdControlSlowAmount = 0.15f;
+    public float crowdControlDuration = 2f;
+    [Range(0f, 1f)] public float crowdControlBossSlowMultiplier = 0.5f;
+    public float crowdControlBossDurationMultiplier = 0.6f;
+
     [Header("Skill")]
     public SkillTriggerType skillTriggerType = SkillTriggerType.None;
     public PassiveSkillData passiveSkillData;

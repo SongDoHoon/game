@@ -25,6 +25,10 @@ MonoBehaviour:
   basicAttackType: 7
   damageType: 1
   targetType: 0
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 0.5
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 0
   passiveSkillData:
     skillName: 
@@ -40,6 +44,7 @@ MonoBehaviour:
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
     skillName: 
     description: 
@@ -55,5 +60,6 @@ MonoBehaviour:
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

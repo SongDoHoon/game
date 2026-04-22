@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class WaveManager : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class WaveManager : MonoBehaviour
 
     [Header("Spawn Count Per Wave")]
     public int normalMonsterCount = 1;
+    public float normalSpawnSpacingDistance = 1f;
 
     private int aliveMonsterCount = 0;
+    private Coroutine spawnWaveCoroutine;
 
     public void StartFirstWave()
     {
@@ -29,6 +32,12 @@ public class WaveManager : MonoBehaviour
         if (monsterSpawner == null) return;
         if (isPausedForAuction) return;
 
+        if (spawnWaveCoroutine != null)
+        {
+            StopCoroutine(spawnWaveCoroutine);
+            spawnWaveCoroutine = null;
+        }
+
         currentWave++;
         waitingForNextWave = false;
 
@@ -40,9 +49,7 @@ public class WaveManager : MonoBehaviour
         else
         {
             aliveMonsterCount = normalMonsterCount;
-
-            for (int i = 0; i < normalMonsterCount; i++)
-                monsterSpawner.SpawnNormalForWave(this);
+            spawnWaveCoroutine = StartCoroutine(CoSpawnNormalWave());
         }
     }
 
@@ -62,6 +69,12 @@ public class WaveManager : MonoBehaviour
         isPausedForAuction = true;
         waitingForNextWave = false;
         CancelInvoke(nameof(StartNextWave));
+
+        if (spawnWaveCoroutine != null)
+        {
+            StopCoroutine(spawnWaveCoroutine);
+            spawnWaveCoroutine = null;
+        }
     }
 
     public void ResumeAfterAuction()
@@ -76,5 +89,29 @@ public class WaveManager : MonoBehaviour
             waitingForNextWave = true;
             Invoke(nameof(StartNextWave), 1.5f);
         }
+    }
+
+    private IEnumerator CoSpawnNormalWave()
+    {
+        float spacingDistance = Mathf.Max(0f, normalSpawnSpacingDistance);
+
+        for (int i = 0; i < normalMonsterCount; i++)
+        {
+            if (isPausedForAuction)
+                yield break;
+
+            MonsterController spawnedMonster = monsterSpawner.SpawnNormalForWave(this);
+
+            if (i < normalMonsterCount - 1)
+            {
+                float moveSpeed = spawnedMonster != null ? Mathf.Max(0.01f, spawnedMonster.moveSpeed) : 1f;
+                float spawnDelay = spacingDistance / moveSpeed;
+
+                if (spawnDelay > 0f)
+                    yield return new WaitForSeconds(spawnDelay);
+            }
+        }
+
+        spawnWaveCoroutine = null;
     }
 }

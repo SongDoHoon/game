@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
+    private const int CircleSegmentCount = 64;
+
     public UnitData Data { get; private set; }
 
     public float CurrentAttackPower { get; private set; }
@@ -19,6 +21,9 @@ public class UnitController : MonoBehaviour
     private MonsterController currentTarget;
     private SpriteRenderer spriteRenderer;
     private TextMesh nameTextMesh;
+    private LineRenderer attackRangeRenderer;
+    private LineRenderer splashRangeRenderer;
+    private bool selectionVisualActive;
 
     private readonly List<BuffInstance> buffs = new();
 
@@ -46,6 +51,7 @@ public class UnitController : MonoBehaviour
         UpdateAttack();
         UpdateActiveSkill();
         UnitSkillHandler.UpdateContinuousEffects(this);
+        UpdateSelectionVisual();
     }
 
     private void UpdateBuffs()
@@ -405,6 +411,154 @@ public class UnitController : MonoBehaviour
     private float GetUnitScale()
     {
         return 0.5f;
+    }
+
+    public void SetSelectionVisualActive(bool active)
+    {
+        selectionVisualActive = active;
+
+        if (!active)
+        {
+            SetLineRendererVisible(GetAttackRangeRenderer(), false);
+            SetLineRendererVisible(GetSplashRangeRenderer(), false);
+            return;
+        }
+
+        UpdateSelectionVisual();
+    }
+
+    private void UpdateSelectionVisual()
+    {
+        if (!selectionVisualActive)
+            return;
+
+        float attackRange = Application.isPlaying && Data != null ? CurrentAttackRange : GetPreviewAttackRange();
+        UpdateCircleRenderer(GetAttackRangeRenderer(), transform.position, attackRange, new Color(0.2f, 0.85f, 1f, 0.95f));
+
+        float splashRadius = GetPreviewSplashRadius();
+        Vector3? splashCenter = GetSplashPreviewCenter();
+        if (splashRadius > 0f && splashCenter.HasValue)
+            UpdateCircleRenderer(GetSplashRangeRenderer(), splashCenter.Value, splashRadius, new Color(1f, 0.6f, 0.2f, 0.9f));
+        else
+            SetLineRendererVisible(GetSplashRangeRenderer(), false);
+    }
+
+    private float GetPreviewAttackRange()
+    {
+        return Data != null ? Data.attackRange : 0f;
+    }
+
+    private float GetPreviewSplashRadius()
+    {
+        if (Data == null)
+            return 0f;
+
+        switch (Data.basicAttackType)
+        {
+            case BasicAttackType.AoEMelee:
+            case BasicAttackType.AoERanged:
+                return Data.attackRadius;
+
+            default:
+                return 0f;
+        }
+    }
+
+    private Vector3? GetSplashPreviewCenter()
+    {
+        if (Data == null)
+            return null;
+
+        switch (Data.basicAttackType)
+        {
+            case BasicAttackType.AoEMelee:
+            case BasicAttackType.AoERanged:
+                if (Application.isPlaying && currentTarget != null && currentTarget.IsAlive)
+                    return currentTarget.transform.position;
+
+                return null;
+
+            default:
+                return null;
+        }
+    }
+
+    private LineRenderer GetAttackRangeRenderer()
+    {
+        if (attackRangeRenderer == null)
+            attackRangeRenderer = CreateCircleRenderer("AttackRangeRenderer", 0.05f);
+
+        return attackRangeRenderer;
+    }
+
+    private LineRenderer GetSplashRangeRenderer()
+    {
+        if (splashRangeRenderer == null)
+            splashRangeRenderer = CreateCircleRenderer("SplashRangeRenderer", 0.04f);
+
+        return splashRangeRenderer;
+    }
+
+    private LineRenderer CreateCircleRenderer(string objectName, float width)
+    {
+        Transform existing = transform.Find(objectName);
+        LineRenderer lineRenderer = existing != null ? existing.GetComponent<LineRenderer>() : null;
+
+        if (lineRenderer == null)
+        {
+            GameObject rendererObject = existing != null ? existing.gameObject : new GameObject(objectName);
+            rendererObject.transform.SetParent(transform, false);
+            rendererObject.transform.localPosition = Vector3.zero;
+
+            lineRenderer = rendererObject.GetComponent<LineRenderer>();
+            if (lineRenderer == null)
+                lineRenderer = rendererObject.AddComponent<LineRenderer>();
+        }
+
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.loop = true;
+        lineRenderer.positionCount = CircleSegmentCount;
+        lineRenderer.startWidth = width;
+        lineRenderer.endWidth = width;
+        lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        lineRenderer.receiveShadows = false;
+        lineRenderer.textureMode = LineTextureMode.Stretch;
+        lineRenderer.alignment = LineAlignment.View;
+        lineRenderer.sortingOrder = 50;
+
+        if (lineRenderer.sharedMaterial == null)
+        {
+            Shader spriteShader = Shader.Find("Sprites/Default");
+            if (spriteShader != null)
+                lineRenderer.material = new Material(spriteShader);
+        }
+
+        lineRenderer.enabled = false;
+        return lineRenderer;
+    }
+
+    private void UpdateCircleRenderer(LineRenderer lineRenderer, Vector3 center, float radius, Color color)
+    {
+        if (lineRenderer == null || radius <= 0f)
+            return;
+
+        SetLineRendererVisible(lineRenderer, true);
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
+
+        float angleStep = Mathf.PI * 2f / CircleSegmentCount;
+        for (int i = 0; i < CircleSegmentCount; i++)
+        {
+            float angle = angleStep * i;
+            Vector3 point = center + new Vector3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0f);
+            lineRenderer.SetPosition(i, point);
+        }
+    }
+
+    private void SetLineRendererVisible(LineRenderer lineRenderer, bool visible)
+    {
+        if (lineRenderer != null)
+            lineRenderer.enabled = visible;
     }
 }
 

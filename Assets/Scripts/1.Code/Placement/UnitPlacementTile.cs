@@ -21,7 +21,15 @@ public class UnitPlacementTile : MonoBehaviour
             return;
 
         if (IsOccupied)
+        {
+            if (placementManager == null)
+                placementManager = FindFirstObjectByType<UnitPlacementManager>();
+
+            if (placementManager != null)
+                placementManager.InspectUnit(placedUnit);
+
             return;
+        }
 
         if (placementManager == null)
             placementManager = FindFirstObjectByType<UnitPlacementManager>();

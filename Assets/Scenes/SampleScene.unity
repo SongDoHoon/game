@@ -3675,6 +3675,47 @@ MonoBehaviour:
   spawnPoint: {fileID: 0}
   normalHpMultiplierPerWave: 0.1
   bossHpMultiplierPerWave: 0.2
+  bossWaveConfigs:
+  - waveNumber: 10
+    maxHp: 466
+    moveSpeed: 0.45
+    rewardGold: 150
+  - waveNumber: 20
+    maxHp: 1927
+    moveSpeed: 0.45
+    rewardGold: 250
+  - waveNumber: 30
+    maxHp: 8307
+    moveSpeed: 0.54
+    rewardGold: 350
+  - waveNumber: 40
+    maxHp: 45316
+    moveSpeed: 0.54
+    rewardGold: 450
+  - waveNumber: 50
+    maxHp: 1000
+    moveSpeed: 0.5
+    rewardGold: 100
+  - waveNumber: 60
+    maxHp: 1000
+    moveSpeed: 0.5
+    rewardGold: 100
+  - waveNumber: 70
+    maxHp: 1000
+    moveSpeed: 0.5
+    rewardGold: 100
+  - waveNumber: 80
+    maxHp: 1000
+    moveSpeed: 0.5
+    rewardGold: 100
+  - waveNumber: 90
+    maxHp: 1000
+    moveSpeed: 0.5
+    rewardGold: 100
+  - waveNumber: 100
+    maxHp: 1000
+    moveSpeed: 0.5
+    rewardGold: 100
 --- !u!4 &589766393
 Transform:
   m_ObjectHideFlags: 0
@@ -13126,7 +13167,8 @@ MonoBehaviour:
   waveStarted: 0
   waitingForNextWave: 0
   isPausedForAuction: 0
-  normalMonsterCount: 1
+  normalMonsterCount: 5
+  normalSpawnSpacingDistance: 0.5
 --- !u!4 &1864289198
 Transform:
   m_ObjectHideFlags: 0
