@@ -143,7 +143,7 @@ public static class UnitSkillHandler
                 PassiveSkillData beelzebubPassive = unit.Data.passiveSkillData;
                 if (beelzebubPassive != null)
                 {
-                    float poisonDamagePerSecond = target.MaxHp * beelzebubPassive.value1;
+                    float poisonDamagePerSecond = SafeDoubleToFloat(target.MaxHp * beelzebubPassive.value1);
                     MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Burn, poisonDamagePerSecond, beelzebubPassive.value2);
                     MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.DamageTakenUp, beelzebubPassive.value3, beelzebubPassive.value2);
                 }
@@ -769,5 +769,16 @@ public static class UnitSkillHandler
             finalMultiplier *= 1f + GameModifierState.AngelDemonSkillDamageBonus;
 
         return unit.CurrentAttackPower * finalMultiplier;
+    }
+
+    private static float SafeDoubleToFloat(double value)
+    {
+        if (value >= float.MaxValue)
+            return float.MaxValue;
+
+        if (value <= float.MinValue)
+            return float.MinValue;
+
+        return (float)value;
     }
 }

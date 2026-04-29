@@ -37,7 +37,7 @@ public class MonsterDamagePopupEmitter : MonoBehaviour
         targetMonster.OnDamageTaken -= HandleDamageTaken;
     }
 
-    private void HandleDamageTaken(MonsterController monster, float damageAmount)
+    private void HandleDamageTaken(MonsterController monster, double damageAmount)
     {
         if (damagePopupPrefab == null)
             return;

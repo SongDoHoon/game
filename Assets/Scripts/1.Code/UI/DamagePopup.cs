@@ -1,4 +1,5 @@
 using TMPro;
+using System;
 using UnityEngine;
 
 public class DamagePopup : MonoBehaviour
@@ -53,7 +54,7 @@ public class DamagePopup : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void Setup(float damageAmount, Color textColor)
+    public void Setup(double damageAmount, Color textColor)
     {
         if (damageText == null)
             damageText = GetComponentInChildren<TMP_Text>();
@@ -62,7 +63,7 @@ public class DamagePopup : MonoBehaviour
 
         if (damageText != null)
         {
-            damageText.text = Mathf.CeilToInt(damageAmount).ToString();
+            damageText.text = Math.Ceiling(damageAmount).ToString("N0");
             damageText.color = baseColor;
         }
     }

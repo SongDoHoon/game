@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class MonsterController : MonoBehaviour
 {
-    public event Action<MonsterController, float> OnDamageTaken;
-    public event Action<MonsterController, float, float> OnHpChanged;
+    public event Action<MonsterController, double> OnDamageTaken;
+    public event Action<MonsterController, double, double> OnHpChanged;
 
     [Header("Info")]
     public MonsterType monsterType = MonsterType.Normal;
 
     [Header("Stats")]
-    public float maxHp = 100f;
-    public float currentHp = 100f;
+    public double maxHp = 100.0;
+    public double currentHp = 100.0;
     public float moveSpeed = 2f;
     public int rewardGold = 10;
     public bool isBoss = false;
@@ -27,9 +27,9 @@ public class MonsterController : MonoBehaviour
     private bool isStunned;
     private WaveManager waveManager;
 
-    public bool IsAlive => currentHp > 0f;
-    public float CurrentHp => currentHp;
-    public float MaxHp => maxHp;
+    public bool IsAlive => currentHp > 0.0;
+    public double CurrentHp => currentHp;
+    public double MaxHp => maxHp;
 
     private void Start()
     {
@@ -97,20 +97,20 @@ public class MonsterController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(double damage)
     {
         if (!IsAlive) return;
 
-        float appliedDamage = Mathf.Max(0f, damage);
-        if (appliedDamage <= 0f) return;
+        double appliedDamage = Math.Max(0.0, damage);
+        if (appliedDamage <= 0.0) return;
 
         currentHp -= appliedDamage;
-        currentHp = Mathf.Max(0f, currentHp);
+        currentHp = Math.Max(0.0, currentHp);
 
         OnDamageTaken?.Invoke(this, appliedDamage);
         NotifyHpChanged();
 
-        if (currentHp <= 0f)
+        if (currentHp <= 0.0)
         {
             Die();
         }
@@ -207,8 +207,10 @@ public class MonsterController : MonoBehaviour
 
     public float GetHpPercent()
     {
-        if (maxHp <= 0f) return 0f;
-        return currentHp / maxHp;
+        if (maxHp <= 0.0) return 0f;
+
+        double percent = currentHp / maxHp;
+        return Mathf.Clamp01((float)percent);
     }
 
     public float GetDamageTakenMultiplier()
@@ -229,7 +231,7 @@ public class MonsterController : MonoBehaviour
     private void Die()
     {
         GoldManager goldManager = FindFirstObjectByType<GoldManager>();
-        if (goldManager != null)
+        if (goldManager != null && rewardGold > 0)
         {
             goldManager.AddGold(rewardGold);
         }
@@ -245,6 +247,11 @@ public class MonsterController : MonoBehaviour
             if (bossRewardController != null)
             {
                 bossRewardController.OpenBossAuction();
+            }
+
+            if (waveManager != null && waveManager.currentWave >= waveManager.finalWave)
+            {
+                // TODO: Connect final stage clear handling here when the game-end flow is implemented.
             }
         }
 

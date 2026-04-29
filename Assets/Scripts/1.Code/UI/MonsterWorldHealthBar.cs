@@ -1,4 +1,5 @@
 using TMPro;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,7 +64,7 @@ public class MonsterWorldHealthBar : MonoBehaviour
         targetMonster.OnHpChanged -= HandleHpChanged;
     }
 
-    private void HandleHpChanged(MonsterController monster, float currentHp, float maxHp)
+    private void HandleHpChanged(MonsterController monster, double currentHp, double maxHp)
     {
         Refresh(currentHp, maxHp);
     }
@@ -76,15 +77,15 @@ public class MonsterWorldHealthBar : MonoBehaviour
         Refresh(targetMonster.CurrentHp, targetMonster.MaxHp);
     }
 
-    private void Refresh(float currentHp, float maxHp)
+    private void Refresh(double currentHp, double maxHp)
     {
-        float normalized = maxHp > 0f ? currentHp / maxHp : 0f;
+        float normalized = maxHp > 0.0 ? Mathf.Clamp01((float)(currentHp / maxHp)) : 0f;
 
         if (hpSlider != null)
             hpSlider.value = normalized;
 
         if (hpText != null)
-            hpText.text = $"{Mathf.CeilToInt(currentHp)}/{Mathf.CeilToInt(maxHp)}";
+            hpText.text = $"{Math.Ceiling(currentHp):N0}/{Math.Ceiling(maxHp):N0}";
     }
 
     private void FaceCamera()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossWaveConfig
 {
     public int waveNumber = 10;
-    public float maxHp = 500f;
+    public double maxHp = 500.0;
     public float moveSpeed = 2f;
     public int rewardGold = 100;
 }
@@ -92,15 +92,22 @@ public class MonsterSpawner : MonoBehaviour
 
     private void ApplyWaveStat(MonsterController monster, int wave, bool isBoss)
     {
-        float multiplier;
+        if (monster == null)
+            return;
 
         if (isBoss)
-            multiplier = 1f + ((wave - 1) * bossHpMultiplierPerWave);
-        else
-            multiplier = 1f + ((wave - 1) * normalHpMultiplierPerWave);
+        {
+            monster.maxHp = MonsterBalanceCalculator.GetBossHp(wave);
+            monster.currentHp = monster.maxHp;
+            monster.moveSpeed = MonsterBalanceCalculator.GetBossMoveSpeed(wave);
+            monster.rewardGold = MonsterBalanceCalculator.GetBossClearGold(wave);
+            return;
+        }
 
-        monster.maxHp *= multiplier;
+        monster.maxHp = MonsterBalanceCalculator.GetNormalMonsterHp(wave);
         monster.currentHp = monster.maxHp;
+        monster.moveSpeed = MonsterBalanceCalculator.GetNormalMoveSpeed(wave);
+        monster.rewardGold = GameBalanceConfig.GetNormalKillGold();
     }
 
     private void ApplyBossStat(MonsterController monster, int wave)
@@ -108,19 +115,7 @@ public class MonsterSpawner : MonoBehaviour
         if (monster == null)
             return;
 
-        BossWaveConfig config = GetBossWaveConfig(wave);
-
-        if (config == null)
-        {
-            monster.rewardGold = GameBalanceConfig.GetBossClearGold(wave);
-            ApplyWaveStat(monster, wave, true);
-            return;
-        }
-
-        monster.maxHp = Mathf.Max(1f, config.maxHp);
-        monster.currentHp = monster.maxHp;
-        monster.moveSpeed = Mathf.Max(0.01f, config.moveSpeed);
-        monster.rewardGold = GameBalanceConfig.GetBossClearGold(wave);
+        ApplyWaveStat(monster, wave, true);
     }
 
     private BossWaveConfig GetBossWaveConfig(int wave)
@@ -171,7 +166,7 @@ public class MonsterSpawner : MonoBehaviour
         return new BossWaveConfig
         {
             waveNumber = (index + 1) * 10,
-            maxHp = bossTemplate != null ? bossTemplate.maxHp : 500f,
+            maxHp = bossTemplate != null ? bossTemplate.maxHp : 500.0,
             moveSpeed = bossTemplate != null ? bossTemplate.moveSpeed : 2f,
             rewardGold = bossTemplate != null ? bossTemplate.rewardGold : 100
         };

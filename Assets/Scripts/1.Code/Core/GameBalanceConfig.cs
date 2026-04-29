@@ -112,13 +112,16 @@ public static class GameBalanceConfig
 
     public static int GetBossClearGold(int stage)
     {
+        if (!MonsterBalanceCalculator.IsBossWave(stage))
+            return 0;
+
         int index = GetBossStageIndex(stage);
         return index >= 0 ? BossClearGoldByStage[index] : 0;
     }
 
     public static bool HasAuctionAtStage(int stage)
     {
-        return stage >= 10 && stage < 100 && stage % 10 == 0;
+        return stage >= 10 && stage <= 90 && stage % 10 == 0;
     }
 
     public static int GetAuctionBasePrice(int stage)

@@ -1,10 +1,10 @@
 public static class DamageSystem
 {
-    public static void DealDamage(UnitController attacker, MonsterController target, float baseDamage, DamageType damageType)
+    public static void DealDamage(UnitController attacker, MonsterController target, double baseDamage, DamageType damageType)
     {
         if (attacker == null || target == null || !target.IsAlive) return;
 
-        float finalDamage = baseDamage;
+        double finalDamage = baseDamage;
 
         ApplyExecute(attacker, target, ref finalDamage);
         ApplySpecialDamageLogic(attacker, target, ref finalDamage);
@@ -16,7 +16,7 @@ public static class DamageSystem
             UnitSkillHandler.OnMonsterKilled(attacker, target);
     }
 
-    private static void ApplyExecute(UnitController attacker, MonsterController target, ref float finalDamage)
+    private static void ApplyExecute(UnitController attacker, MonsterController target, ref double finalDamage)
     {
         PassiveSkillData passive = attacker.Data.passiveSkillData;
         if (passive == null || !passive.hasExecute) return;
@@ -28,7 +28,7 @@ public static class DamageSystem
             finalDamage = 9999999f;
     }
 
-    private static void ApplySpecialDamageLogic(UnitController attacker, MonsterController target, ref float finalDamage)
+    private static void ApplySpecialDamageLogic(UnitController attacker, MonsterController target, ref double finalDamage)
     {
         switch (attacker.Data.specialLogicType)
         {
