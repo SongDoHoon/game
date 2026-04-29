@@ -56,7 +56,7 @@ public class MonsterSpawner : MonoBehaviour
         if (monster == null)
             return null;
 
-        monster.rewardGold = 10;
+        monster.rewardGold = GameBalanceConfig.GetNormalKillGold();
         monster.isBoss = false;
         monster.SetPath(waypointPath);
         monster.SetWaveManager(waveManager);
@@ -112,7 +112,7 @@ public class MonsterSpawner : MonoBehaviour
 
         if (config == null)
         {
-            monster.rewardGold = 100;
+            monster.rewardGold = GameBalanceConfig.GetBossClearGold(wave);
             ApplyWaveStat(monster, wave, true);
             return;
         }
@@ -120,7 +120,7 @@ public class MonsterSpawner : MonoBehaviour
         monster.maxHp = Mathf.Max(1f, config.maxHp);
         monster.currentHp = monster.maxHp;
         monster.moveSpeed = Mathf.Max(0.01f, config.moveSpeed);
-        monster.rewardGold = Mathf.Max(0, config.rewardGold);
+        monster.rewardGold = GameBalanceConfig.GetBossClearGold(wave);
     }
 
     private BossWaveConfig GetBossWaveConfig(int wave)

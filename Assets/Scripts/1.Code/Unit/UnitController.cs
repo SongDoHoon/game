@@ -90,7 +90,11 @@ public class UnitController : MonoBehaviour
         if (Data.activeSkillData == null) return;
 
         activeSkillTimer += Time.deltaTime;
-        if (activeSkillTimer >= Data.activeSkillData.cooldown)
+        float cooldown = Data.activeSkillData.cooldown;
+        if (GameModifierState.IsEvolutionGrade(Data))
+            cooldown *= Mathf.Clamp01(1f - GameModifierState.AngelDemonCooldownReduction);
+
+        if (activeSkillTimer >= cooldown)
         {
             activeSkillTimer = 0f;
             UnitSkillHandler.ExecuteActiveSkill(this);
@@ -101,8 +105,14 @@ public class UnitController : MonoBehaviour
     {
         if (Data == null) return;
 
-        CurrentAttackPower = Data.attackPower;
-        CurrentAttackSpeed = Data.attackSpeed;
+        CurrentAttackPower = Data.attackPower
+            * GameModifierState.GetEnhancementAttackPowerMultiplier(Data.grade)
+            * (1f + GameModifierState.GlobalAttackPowerBonus);
+
+        CurrentAttackSpeed = Data.attackSpeed
+            * GameModifierState.GetEnhancementAttackSpeedMultiplier(Data.grade)
+            * (1f + GameModifierState.GlobalAttackSpeedBonus);
+
         CurrentAttackRange = Data.attackRange;
 
         foreach (BuffInstance buff in buffs)

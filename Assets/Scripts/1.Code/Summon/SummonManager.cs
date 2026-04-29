@@ -18,6 +18,9 @@ public class SummonManager : MonoBehaviour
         List<WeightedUnitEntry> pool = GetPool(selectedGrade);
 
         if (pool == null || pool.Count == 0)
+            pool = GetPool(UnitGrade.Normal);
+
+        if (pool == null || pool.Count == 0)
             return null;
 
         UnitData summonedUnit = RollUnit(pool);
@@ -36,7 +39,7 @@ public class SummonManager : MonoBehaviour
         float cumulativeChance = summonTable.normalChance;
 
         if (roll < cumulativeChance)
-            return UnitGrade.Normal;
+            return TryPromoteFromNormalByAuctionBonus();
 
         cumulativeChance += summonTable.rareChance;
         if (roll < cumulativeChance)
@@ -44,6 +47,27 @@ public class SummonManager : MonoBehaviour
 
         cumulativeChance += summonTable.epicChance;
         if (roll < cumulativeChance)
+            return UnitGrade.Epic;
+
+        return UnitGrade.Verure;
+    }
+
+    private UnitGrade TryPromoteFromNormalByAuctionBonus()
+    {
+        if (Random.value > GameModifierState.HigherGradeSummonChanceBonus)
+            return UnitGrade.Normal;
+
+        float higherGradeWeight = summonTable.rareChance + summonTable.epicChance + summonTable.verureChance;
+        if (higherGradeWeight <= 0f)
+            return UnitGrade.Rare;
+
+        float roll = Random.Range(0f, higherGradeWeight);
+
+        if (roll < summonTable.rareChance)
+            return UnitGrade.Rare;
+
+        roll -= summonTable.rareChance;
+        if (roll < summonTable.epicChance)
             return UnitGrade.Epic;
 
         return UnitGrade.Verure;

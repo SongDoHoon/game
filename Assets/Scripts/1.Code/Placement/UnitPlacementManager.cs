@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using TMPro;
+using UnityEngine.UI;
 
 public class UnitPlacementManager : MonoBehaviour
 {
@@ -12,6 +14,13 @@ public class UnitPlacementManager : MonoBehaviour
     public GameObject unitPrefab;
     public UnitPlacementTile[] placementTiles;
 
+    [Header("Merge UI")]
+    public GameObject mergeButtonRoot;
+    public Button mergeButton;
+    public TMP_Text mergeButtonText;
+    public bool positionMergeButtonNearSelectedUnit = true;
+    public Vector2 mergeButtonScreenOffset = new Vector2(0f, -70f);
+
     public static UnitPlacementManager Instance { get; private set; }
 
     private readonly List<UnitData> selectableUnits = new();
@@ -20,6 +29,7 @@ public class UnitPlacementManager : MonoBehaviour
     private bool showUnitSelectionUI = true;
     private bool showAllUnitRanges;
     private UnitController inspectedUnit;
+    private RectTransform mergeButtonRectTransform;
 
     private void Awake()
     {
@@ -30,6 +40,8 @@ public class UnitPlacementManager : MonoBehaviour
 
         RefreshSelectableUnits();
         RefreshRangeVisuals();
+        BindMergeButtonEvent();
+        RefreshMergeUI();
     }
 
     private void OnDestroy()
@@ -38,6 +50,11 @@ public class UnitPlacementManager : MonoBehaviour
 
         if (Instance == this)
             Instance = null;
+    }
+
+    private void LateUpdate()
+    {
+        UpdateMergeButtonPosition();
     }
 
     private void Update()
@@ -125,6 +142,7 @@ public class UnitPlacementManager : MonoBehaviour
 
         inspectedUnit = unit;
         RefreshRangeVisuals();
+        RefreshMergeUI();
     }
 
     public void ClearInspectedUnit()
@@ -134,6 +152,7 @@ public class UnitPlacementManager : MonoBehaviour
 
         inspectedUnit = null;
         RefreshRangeVisuals();
+        RefreshMergeUI();
     }
 
     public bool ShouldShowRangeFor(UnitController unit)
@@ -225,7 +244,6 @@ public class UnitPlacementManager : MonoBehaviour
     private void OnGUI()
     {
         DrawUnitSelectionToggle();
-        DrawSelectedUnitOverlay();
 
         if (!showUnitSelectionUI)
             return;
@@ -278,6 +296,31 @@ public class UnitPlacementManager : MonoBehaviour
         GUILayout.EndArea();
     }
 
+    public void TryMergeInspectedUnit()
+    {
+        if (inspectedUnit == null)
+        {
+            RefreshMergeUI();
+            return;
+        }
+
+        if (!TryGetMergeInfo(inspectedUnit, out UnitController materialUnit, out _, out _))
+        {
+            RefreshMergeUI();
+            return;
+        }
+
+        UnitData mergeResult = RollNextGradeMergeUnit(inspectedUnit.Data);
+        if (mergeResult == null)
+        {
+            RefreshMergeUI();
+            return;
+        }
+
+        if (TryMergeUnits(inspectedUnit, materialUnit, mergeResult))
+            RefreshMergeUI();
+    }
+
     private void DrawUnitSelectionToggle()
     {
         Rect toggleRect = new Rect(10f, 10f, 150f, 30f);
@@ -314,15 +357,13 @@ public class UnitPlacementManager : MonoBehaviour
         overlayRect.y = Mathf.Clamp(guiY, 0f, Mathf.Max(0f, Screen.height - overlayRect.height));
 
         GUILayout.BeginArea(overlayRect, GUI.skin.window);
-        GUILayout.Label(canMerge
-            ? $"Merge -> {GetUnitDisplayName(mergeResult)}"
-            : reason);
+        GUILayout.Label(canMerge ? "Merge" : reason);
 
         bool previousGuiEnabled = GUI.enabled;
-        GUI.enabled = canMerge && materialUnit != null && mergeResult != null;
+        GUI.enabled = canMerge && materialUnit != null;
 
         if (GUILayout.Button("Merge", GUILayout.Height(28f)))
-            TryMergeUnits(inspectedUnit, materialUnit, mergeResult);
+            TryMergeInspectedUnit();
 
         GUI.enabled = previousGuiEnabled;
         GUILayout.EndArea();
@@ -353,8 +394,7 @@ public class UnitPlacementManager : MonoBehaviour
             return false;
         }
 
-        mergeResult = RollNextGradeMergeUnit(baseUnit.Data);
-        if (mergeResult == null)
+        if (!HasNextGradeMergePool(baseUnit.Data))
         {
             reason = "No next-grade unit found";
             return false;
@@ -377,7 +417,8 @@ public class UnitPlacementManager : MonoBehaviour
 
         materialTile.RemoveUnitFromTile();
         baseUnit.Initialize(mergeResult);
-        InspectUnit(baseUnit);
+        RefreshRangeVisuals();
+        RefreshMergeUI();
         return true;
     }
 
@@ -405,7 +446,7 @@ public class UnitPlacementManager : MonoBehaviour
         if (currentUnit == null)
             return null;
 
-        UnitGrade? nextGrade = GetNextMergeGrade(currentUnit.grade);
+        UnitGrade? nextGrade = RollMergeResultGrade(currentUnit.grade);
         if (!nextGrade.HasValue)
             return null;
 
@@ -467,6 +508,19 @@ public class UnitPlacementManager : MonoBehaviour
         }
     }
 
+    private UnitGrade? RollMergeResultGrade(UnitGrade currentGrade)
+    {
+        UnitGrade? nextGrade = GetNextMergeGrade(currentGrade);
+        if (!nextGrade.HasValue)
+            return null;
+
+        if (UnityEngine.Random.value > GameModifierState.MergeTwoGradeUpChance)
+            return nextGrade;
+
+        UnitGrade? twoGradeUp = GetNextMergeGrade(nextGrade.Value);
+        return twoGradeUp ?? nextGrade;
+    }
+
     private List<WeightedUnitEntry> GetMergePool(UnitGrade grade)
     {
         if (summonManager == null || summonManager.summonTable == null)
@@ -521,6 +575,99 @@ public class UnitPlacementManager : MonoBehaviour
             bool shouldShow = !clearOnly && (showAllUnitRanges || unit == inspectedUnit);
             unit.SetSelectionVisualActive(shouldShow);
         }
+    }
+
+    private void BindMergeButtonEvent()
+    {
+        if (mergeButton == null)
+            return;
+
+        mergeButton.onClick.RemoveListener(TryMergeInspectedUnit);
+        mergeButton.onClick.AddListener(TryMergeInspectedUnit);
+    }
+
+    private void RefreshMergeUI()
+    {
+        if (mergeButtonRoot == null)
+            return;
+
+        bool hasInspectedUnit = inspectedUnit != null;
+        mergeButtonRoot.SetActive(hasInspectedUnit);
+
+        if (!hasInspectedUnit)
+            return;
+
+        bool canMerge = TryGetMergeInfo(inspectedUnit, out _, out _, out _);
+
+        if (mergeButton != null)
+            mergeButton.interactable = canMerge;
+
+        if (mergeButtonText != null)
+            mergeButtonText.text = "Merge";
+
+        UpdateMergeButtonPosition();
+    }
+
+    private bool HasNextGradeMergePool(UnitData currentUnit)
+    {
+        if (currentUnit == null)
+            return false;
+
+        UnitGrade? nextGrade = GetNextMergeGrade(currentUnit.grade);
+        if (!nextGrade.HasValue)
+            return false;
+
+        if (HasAvailableMergeUnitInPool(nextGrade.Value))
+            return true;
+
+        UnitGrade? twoGradeUp = GetNextMergeGrade(nextGrade.Value);
+        return twoGradeUp.HasValue && HasAvailableMergeUnitInPool(twoGradeUp.Value);
+    }
+
+    private bool HasAvailableMergeUnitInPool(UnitGrade grade)
+    {
+        List<WeightedUnitEntry> mergePool = GetMergePool(grade);
+        if (mergePool == null || mergePool.Count == 0)
+            return false;
+
+        foreach (WeightedUnitEntry entry in mergePool)
+        {
+            if (entry == null || entry.unitData == null)
+                continue;
+
+            if (IsRestrictedMergeUnit(entry.unitData))
+                continue;
+
+            if (entry.weight > 0)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void UpdateMergeButtonPosition()
+    {
+        if (!positionMergeButtonNearSelectedUnit)
+            return;
+
+        if (mergeButtonRoot == null || inspectedUnit == null)
+            return;
+
+        Camera targetCamera = Camera.main;
+        if (targetCamera == null)
+            return;
+
+        if (mergeButtonRectTransform == null)
+            mergeButtonRectTransform = mergeButtonRoot.GetComponent<RectTransform>();
+
+        if (mergeButtonRectTransform == null)
+            return;
+
+        Vector3 screenPosition = targetCamera.WorldToScreenPoint(inspectedUnit.transform.position);
+        if (screenPosition.z <= 0f)
+            return;
+
+        mergeButtonRectTransform.position = (Vector2)screenPosition + mergeButtonScreenOffset;
     }
 
 }

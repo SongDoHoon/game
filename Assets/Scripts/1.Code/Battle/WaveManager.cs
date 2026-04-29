@@ -15,6 +15,7 @@ public class WaveManager : MonoBehaviour
     [Header("Spawn Count Per Wave")]
     public int normalMonsterCount = 1;
     public float normalSpawnSpacingDistance = 1f;
+    public int finalWave = 100;
 
     private int aliveMonsterCount = 0;
     private Coroutine spawnWaveCoroutine;
@@ -31,6 +32,7 @@ public class WaveManager : MonoBehaviour
     {
         if (monsterSpawner == null) return;
         if (isPausedForAuction) return;
+        if (currentWave >= finalWave) return;
 
         if (spawnWaveCoroutine != null)
         {
@@ -40,6 +42,7 @@ public class WaveManager : MonoBehaviour
 
         currentWave++;
         waitingForNextWave = false;
+        GrantStageStartGold();
 
         if (currentWave % 10 == 0)
         {
@@ -57,7 +60,7 @@ public class WaveManager : MonoBehaviour
     {
         aliveMonsterCount--;
 
-        if (aliveMonsterCount <= 0 && !waitingForNextWave && !isPausedForAuction)
+        if (aliveMonsterCount <= 0 && !waitingForNextWave && !isPausedForAuction && currentWave < finalWave)
         {
             waitingForNextWave = true;
             Invoke(nameof(StartNextWave), 1.5f);
@@ -113,5 +116,15 @@ public class WaveManager : MonoBehaviour
         }
 
         spawnWaveCoroutine = null;
+    }
+
+    private void GrantStageStartGold()
+    {
+        if (GameModifierState.StageStartBonusGold <= 0)
+            return;
+
+        GoldManager goldManager = FindFirstObjectByType<GoldManager>();
+        if (goldManager != null)
+            goldManager.AddGold(GameModifierState.StageStartBonusGold);
     }
 }

@@ -82,7 +82,8 @@ public class MonsterController : MonoBehaviour
         Transform target = waypointPath.GetWaypoint(currentWaypointIndex);
         if (target == null) return;
 
-        float finalSpeed = moveSpeed * speedMultiplier;
+        float auctionSpeedMultiplier = Mathf.Clamp01(1f - GameModifierState.MonsterMoveSpeedReduction);
+        float finalSpeed = moveSpeed * speedMultiplier * auctionSpeedMultiplier;
         transform.position = Vector3.MoveTowards(transform.position, target.position, finalSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, target.position) <= 0.05f)

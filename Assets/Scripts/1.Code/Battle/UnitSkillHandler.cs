@@ -266,7 +266,7 @@ public static class UnitSkillHandler
 
                 if (Vector3.Distance(unit.transform.position, monster.transform.position) <= active.radius)
                 {
-                    DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+                    DamageSystem.DealDamage(unit, monster, GetSkillDamage(unit, active.value1), unit.Data.damageType);
                 }
             }
 
@@ -360,7 +360,7 @@ public static class UnitSkillHandler
 
                 if (Vector3.Distance(unit.transform.position, monster.transform.position) <= active.radius)
                 {
-                    DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), DamageType.Fire);
+                    DamageSystem.DealDamage(unit, monster, GetSkillDamage(unit, active.value1), DamageType.Fire);
 
                     monster.AddDebuff(new DebuffInstance
                     {
@@ -468,7 +468,7 @@ public static class UnitSkillHandler
             if (!monster.IsAlive) continue;
             if (!monster.HasDebuff(DebuffType.Slow, unit)) continue;
 
-            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+            DamageSystem.DealDamage(unit, monster, GetSkillDamage(unit, active.value1), unit.Data.damageType);
             MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Slow, active.value2, active.duration);
         }
     }
@@ -482,7 +482,7 @@ public static class UnitSkillHandler
             if (!monster.IsAlive) continue;
             if (Vector3.Distance(unit.transform.position, monster.transform.position) > active.radius) continue;
 
-            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+            DamageSystem.DealDamage(unit, monster, GetSkillDamage(unit, active.value1), unit.Data.damageType);
 
             float stunDuration = monster.monsterType == MonsterType.Boss ? Mathf.Min(1f, active.duration) : active.duration;
             MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Stun, 0f, stunDuration);
@@ -498,7 +498,7 @@ public static class UnitSkillHandler
             if (!monster.IsAlive) continue;
             if (Vector3.Distance(unit.transform.position, monster.transform.position) > active.radius) continue;
 
-            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+            DamageSystem.DealDamage(unit, monster, GetSkillDamage(unit, active.value1), unit.Data.damageType);
             MonsterEffectHandler.ApplyDebuff(unit, monster, DebuffType.Stun, 0f, monster.monsterType == MonsterType.Boss ? Mathf.Min(1f, active.duration) : active.duration);
         }
 
@@ -511,7 +511,7 @@ public static class UnitSkillHandler
             if (!monster.IsAlive) continue;
             if (Vector3.Distance(unit.transform.position, monster.transform.position) > active.radius) continue;
 
-            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value2), unit.Data.damageType);
+            DamageSystem.DealDamage(unit, monster, GetSkillDamage(unit, active.value2), unit.Data.damageType);
 
             if (active.value3 > 0f)
             {
@@ -530,7 +530,7 @@ public static class UnitSkillHandler
             if (!monster.IsAlive) continue;
             if (Vector3.Distance(unit.transform.position, monster.transform.position) > active.radius) continue;
 
-            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, active.value1), unit.Data.damageType);
+            DamageSystem.DealDamage(unit, monster, GetSkillDamage(unit, active.value1), unit.Data.damageType);
 
             if (monster.HasDebuff(DebuffType.Burn, unit))
                 monster.TakeDamage(monster.CurrentHp * Mathf.Max(0f, active.value2));
@@ -579,7 +579,7 @@ public static class UnitSkillHandler
             if (!monster.IsAlive) continue;
             if (Vector3.Distance(unit.transform.position, monster.transform.position) > radius) continue;
 
-            DamageSystem.DealDamage(unit, monster, unit.CurrentAttackPower * Mathf.Max(1f, damageMultiplier), damageType);
+            DamageSystem.DealDamage(unit, monster, GetSkillDamage(unit, damageMultiplier), damageType);
         }
     }
 
@@ -676,7 +676,7 @@ public static class UnitSkillHandler
 
             case SkillEffectType.Damage:
                 if (targetMonster != null)
-                    DamageSystem.DealDamage(sourceUnit, targetMonster, sourceUnit.CurrentAttackPower * Mathf.Max(1f, effect.value), sourceUnit.Data.damageType);
+                    DamageSystem.DealDamage(sourceUnit, targetMonster, GetSkillDamage(sourceUnit, effect.value), sourceUnit.Data.damageType);
                 break;
 
             case SkillEffectType.Execute:
@@ -756,5 +756,18 @@ public static class UnitSkillHandler
         }
 
         return null;
+    }
+
+    private static float GetSkillDamage(UnitController unit, float multiplier)
+    {
+        if (unit == null)
+            return 0f;
+
+        float finalMultiplier = Mathf.Max(1f, multiplier);
+
+        if (GameModifierState.IsEvolutionGrade(unit.Data))
+            finalMultiplier *= 1f + GameModifierState.AngelDemonSkillDamageBonus;
+
+        return unit.CurrentAttackPower * finalMultiplier;
     }
 }

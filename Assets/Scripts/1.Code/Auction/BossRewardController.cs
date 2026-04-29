@@ -18,24 +18,17 @@ public class BossRewardController : MonoBehaviour
     public void OpenBossAuction()
     {
         if (auctionManager == null) return;
-        if (possibleItems == null || possibleItems.Length < 2) return;
+
+        int stage = waveManager != null ? waveManager.currentWave : 0;
+        if (!GameBalanceConfig.HasAuctionAtStage(stage))
+            return;
 
         if (waveManager != null)
             waveManager.PauseForAuction();
 
-        EvolutionItemType first = possibleItems[Random.Range(0, possibleItems.Length)];
-        EvolutionItemType second = possibleItems[Random.Range(0, possibleItems.Length)];
-
-        int safety = 0;
-        while (second == first && safety < 20)
-        {
-            second = possibleItems[Random.Range(0, possibleItems.Length)];
-            safety++;
-        }
-
-        auctionManager.SetAuctionOptions(first, second);
+        auctionManager.SetAuctionOptionsForStage(stage);
 
         if (auctionUIController != null)
-            auctionUIController.OpenAuctionUI(first, second);
+            auctionUIController.OpenAuctionUI(auctionManager.currentOptions);
     }
 }

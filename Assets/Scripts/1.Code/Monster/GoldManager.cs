@@ -17,4 +17,19 @@ public class GoldManager : MonoBehaviour
         currentGold -= amount;
         return true;
     }
+
+    public bool TryEnhance(UnitEnhanceGroup group)
+    {
+        return GameModifierState.TryEnhance(group, this);
+    }
+
+    public int GetEnhanceCost(UnitEnhanceGroup group)
+    {
+        return GameModifierState.GetNextEnhancementCost(group);
+    }
+
+    public int GetReducedUnitExchangeCost(int baseCost)
+    {
+        return GameModifierState.GetReducedUnitExchangeCost(baseCost);
+    }
 }
