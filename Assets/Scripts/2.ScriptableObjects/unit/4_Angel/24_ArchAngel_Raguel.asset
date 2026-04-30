@@ -10,31 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 30_GreatDemon_Satan
+  m_Name: 24_ArchAngel_Raguel
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 30
-  unitName: GreatDemon_Satan
-  grade: 4
-  specialLogicType: 10
-  attackPower: 180
-  attackSpeed: 1.4
-  attackRange: 2.5
-  attackRadius: 1.5
+  unitId: 24
+  unitName: ArchAngel_Raguel
+  grade: 3
+  specialLogicType: 5
+  attackPower: 160
+  attackSpeed: 1.5
+  attackRange: 3.8
+  attackRadius: 0
   multiTargetCount: 1
   pierceCount: 1
-  basicAttackType: 2
-  damageType: 4
-  targetType: 3
+  basicAttackType: 1
+  damageType: 3
+  targetType: 1
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 3
   passiveSkillData:
-    skillName: zcswcz
-    description: cscz
+    skillName: zzsc
+    description: 
     passiveBuffType: 0
     passiveDebuffType: 0
-    useStack: 0
-    maxStack: 20
-    value1: 0.08
-    value2: 0.2
+    useStack: 1
+    maxStack: 10
+    value1: 0.03
+    value2: 0
     value3: 0
     hasExecute: 0
     executeHpPercent: 0.05
@@ -42,16 +46,16 @@ MonoBehaviour:
     bossMultiplier: 1
     effects: []
   activeSkillData:
-    skillName: zcweadf
-    description: zcwadaz
-    castType: 4
-    targetType: 3
-    cooldown: 12
-    duration: 6
-    radius: 3
+    skillName: zcszc
+    description: cxzsc
+    castType: 2
+    targetType: 6
+    cooldown: 14
+    duration: 10
+    radius: 2
     hitCount: 1
     interval: 0.5
-    value1: 3.5
+    value1: 0.3
     value2: 0
     value3: 0
     canStackDebuff: 0

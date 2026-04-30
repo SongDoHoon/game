@@ -11,6 +11,7 @@ public class WaveManager : MonoBehaviour
     public bool waveStarted = false;
     public bool waitingForNextWave = false;
     public bool isPausedForAuction = false;
+    public bool gameEnded = false;
 
     [Header("Spawn Count Per Wave")]
     public int normalMonsterCount = 1;
@@ -23,6 +24,7 @@ public class WaveManager : MonoBehaviour
     public void StartFirstWave()
     {
         if (waveStarted) return;
+        if (gameEnded) return;
 
         waveStarted = true;
         StartNextWave();
@@ -32,6 +34,7 @@ public class WaveManager : MonoBehaviour
     {
         if (monsterSpawner == null) return;
         if (isPausedForAuction) return;
+        if (gameEnded) return;
         if (currentWave >= finalWave) return;
 
         if (spawnWaveCoroutine != null)
@@ -58,7 +61,16 @@ public class WaveManager : MonoBehaviour
 
     public void NotifyMonsterDead()
     {
+        if (gameEnded)
+            return;
+
         aliveMonsterCount--;
+
+        if (aliveMonsterCount <= 0 && currentWave >= finalWave)
+        {
+            CompleteGame(true);
+            return;
+        }
 
         if (aliveMonsterCount <= 0 && !waitingForNextWave && !isPausedForAuction && currentWave < finalWave)
         {
@@ -67,8 +79,19 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    public void NotifyMonsterReachedGoal()
+    {
+        if (gameEnded)
+            return;
+
+        CompleteGame(false);
+    }
+
     public void PauseForAuction()
     {
+        if (gameEnded)
+            return;
+
         isPausedForAuction = true;
         waitingForNextWave = false;
         CancelInvoke(nameof(StartNextWave));
@@ -82,6 +105,9 @@ public class WaveManager : MonoBehaviour
 
     public void ResumeAfterAuction()
     {
+        if (gameEnded)
+            return;
+
         if (!isPausedForAuction)
             return;
 
@@ -126,5 +152,49 @@ public class WaveManager : MonoBehaviour
         GoldManager goldManager = FindFirstObjectByType<GoldManager>();
         if (goldManager != null)
             goldManager.AddGold(GameModifierState.StageStartBonusGold);
+    }
+
+    private void CompleteGame(bool cleared)
+    {
+        if (gameEnded)
+            return;
+
+        gameEnded = true;
+        waveStarted = false;
+        waitingForNextWave = false;
+        isPausedForAuction = false;
+        CancelInvoke(nameof(StartNextWave));
+
+        if (spawnWaveCoroutine != null)
+        {
+            StopCoroutine(spawnWaveCoroutine);
+            spawnWaveCoroutine = null;
+        }
+
+        GameResultRewardManager rewardManager = GameResultRewardManager.Instance;
+        if (rewardManager == null)
+            rewardManager = FindFirstObjectByType<GameResultRewardManager>();
+
+        if (rewardManager != null)
+        {
+            rewardManager.GrantGameResultReward(currentWave, finalWave, cleared);
+        }
+        else
+        {
+            GameResultReward reward = GameResultRewardCalculator.Calculate(
+                currentWave,
+                finalWave,
+                cleared,
+                10,
+                15,
+                300,
+                500,
+                0.6f);
+
+            if (PlayerProgressManager.Instance != null)
+                PlayerProgressManager.Instance.AddGameReward(reward.mainGold, reward.playerExp);
+            else
+                PlayerProgressSaveSystem.AddReward(reward.mainGold, reward.playerExp);
+        }
     }
 }

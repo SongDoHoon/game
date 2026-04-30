@@ -220,6 +220,11 @@ public class MonsterController : MonoBehaviour
 
     private void ReachGoal()
     {
+        if (waveManager != null)
+        {
+            waveManager.NotifyMonsterReachedGoal();
+        }
+
         gameObject.SetActive(false);
 
         if (destroyOnGoal)
@@ -243,15 +248,17 @@ public class MonsterController : MonoBehaviour
 
         if (isBoss)
         {
+            if (waveManager != null && waveManager.gameEnded)
+            {
+                gameObject.SetActive(false);
+                Destroy(gameObject);
+                return;
+            }
+
             BossRewardController bossRewardController = FindFirstObjectByType<BossRewardController>();
             if (bossRewardController != null)
             {
                 bossRewardController.OpenBossAuction();
-            }
-
-            if (waveManager != null && waveManager.currentWave >= waveManager.finalWave)
-            {
-                // TODO: Connect final stage clear handling here when the game-end flow is implemented.
             }
         }
 

@@ -10,49 +10,53 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 25_ArchAngel_Raguel
+  m_Name: 27_GreatDemon_Mammon
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 25
-  unitName: ArchAngel_Raguel
-  grade: 3
-  specialLogicType: 5
+  unitId: 27
+  unitName: GreatDemon_Mammon
+  grade: 4
+  specialLogicType: 8
   attackPower: 160
   attackSpeed: 1.5
   attackRange: 3.8
-  attackRadius: 0
+  attackRadius: 1.7
   multiTargetCount: 1
   pierceCount: 1
-  basicAttackType: 1
-  damageType: 3
-  targetType: 1
+  basicAttackType: 3
+  damageType: 4
+  targetType: 3
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 3
   passiveSkillData:
-    skillName: zzsc
-    description: 
+    skillName: zxcsdsc
+    description: zczxcszs
     passiveBuffType: 0
     passiveDebuffType: 0
     useStack: 1
-    maxStack: 10
-    value1: 0.03
-    value2: 0
-    value3: 0
+    maxStack: 20
+    value1: 0.2
+    value2: 0.2
+    value3: 0.05
     hasExecute: 0
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
     effects: []
   activeSkillData:
-    skillName: zcszc
-    description: cxzsc
-    castType: 2
-    targetType: 6
-    cooldown: 14
-    duration: 10
+    skillName: zcwda
+    description: cwacdaz
+    castType: 1
+    targetType: 7
+    cooldown: 18
+    duration: 6
     radius: 2
     hitCount: 1
     interval: 0.5
-    value1: 0.3
-    value2: 0
+    value1: 0.8
+    value2: 0.2
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1

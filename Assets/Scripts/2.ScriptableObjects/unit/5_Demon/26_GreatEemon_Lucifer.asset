@@ -10,30 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 24_ArchAngel_Uriel
+  m_Name: 26_GreatEemon_Lucifer
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 24
-  unitName: uriel
-  grade: 3
-  specialLogicType: 4
-  attackPower: 160
-  attackSpeed: 1.5
-  attackRange: 3.8
+  unitId: 26
+  unitName: GreatDemon_Lucifer
+  grade: 4
+  specialLogicType: 7
+  attackPower: 180
+  attackSpeed: 1.4
+  attackRange: 2.5
   attackRadius: 1.5
-  multiTargetCount: 0
-  pierceCount: 0
-  basicAttackType: 3
-  damageType: 2
+  multiTargetCount: 1
+  pierceCount: 1
+  basicAttackType: 2
+  damageType: 4
   targetType: 3
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 3
   passiveSkillData:
-    skillName: asd
-    description: asd
+    skillName: zsczs
+    description: 
     passiveBuffType: 0
-    passiveDebuffType: 1
+    passiveDebuffType: 0
     useStack: 1
-    maxStack: 20
-    value1: 0.03
+    maxStack: 0
+    value1: 0.002
     value2: 0
     value3: 0
     hasExecute: 0
@@ -42,20 +46,20 @@ MonoBehaviour:
     bossMultiplier: 1
     effects: []
   activeSkillData:
-    skillName: aaaa
-    description: aaaaa
+    skillName: scszcswf
+    description: csszczsczx
     castType: 3
     targetType: 3
-    cooldown: 12
+    cooldown: 7
     duration: 3
-    radius: 2.5
-    hitCount: 6
+    radius: 2
+    hitCount: 1
     interval: 0.5
-    value1: 1.8
+    value1: 1
     value2: 0
     value3: 0
-    canStackDebuff: 1
-    maxDebuffStack: 20
+    canStackDebuff: 0
+    maxDebuffStack: 1
     effects: []
   canEvolve: 0
   evolveKey: 

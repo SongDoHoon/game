@@ -120,7 +120,7 @@ public static class UnitSkillHandler
 
                 if (unit.IsUrielMaxStackReached)
                 {
-                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Burn, Mathf.Max(1f, unit.CurrentAttackPower * 0.2f), 3f, 20);
+                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Burn, Mathf.Max(1f, SafeDoubleToFloat(unit.CurrentAttackPower * 0.2f)), 3f, 20);
                 }
                 break;
 
@@ -135,7 +135,7 @@ public static class UnitSkillHandler
                 if (leviathanPassive != null)
                 {
                     MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Slow, leviathanPassive.value1, leviathanPassive.value3);
-                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Burn, Mathf.Max(1f, unit.CurrentAttackPower * leviathanPassive.value2), leviathanPassive.value3);
+                    MonsterEffectHandler.ApplyDebuff(unit, target, DebuffType.Burn, Mathf.Max(1f, SafeDoubleToFloat(unit.CurrentAttackPower * leviathanPassive.value2)), leviathanPassive.value3);
                 }
                 break;
 
@@ -365,7 +365,7 @@ public static class UnitSkillHandler
                     monster.AddDebuff(new DebuffInstance
                     {
                         debuffType = DebuffType.Burn,
-                        value = Mathf.Max(1f, unit.CurrentAttackPower * 0.25f),
+                        value = Mathf.Max(1f, SafeDoubleToFloat(unit.CurrentAttackPower * 0.25f)),
                         duration = active.duration,
                         remainTime = active.duration,
                         stack = 1,
@@ -758,15 +758,19 @@ public static class UnitSkillHandler
         return null;
     }
 
-    private static float GetSkillDamage(UnitController unit, float multiplier)
+    private static double GetSkillDamage(UnitController unit, float multiplier)
     {
         if (unit == null)
-            return 0f;
+            return 0.0;
 
         float finalMultiplier = Mathf.Max(1f, multiplier);
 
         if (GameModifierState.IsEvolutionGrade(unit.Data))
             finalMultiplier *= 1f + GameModifierState.AngelDemonSkillDamageBonus;
+
+        UnitGrowthManager growthManager = UnitGrowthManager.Instance;
+        if (growthManager != null)
+            finalMultiplier *= growthManager.GetSkillDamageMultiplier(unit.Data.unitId);
 
         return unit.CurrentAttackPower * finalMultiplier;
     }

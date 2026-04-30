@@ -10,49 +10,53 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 32_GreatDemon_Beelzebub
+  m_Name: 29_GreatDemon_Satan
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 32
-  unitName: GreatDemon_Beelzebub
+  unitId: 29
+  unitName: GreatDemon_Satan
   grade: 4
-  specialLogicType: 12
-  attackPower: 160
-  attackSpeed: 1.5
-  attackRange: 3.8
-  attackRadius: 1.7
+  specialLogicType: 10
+  attackPower: 180
+  attackSpeed: 1.4
+  attackRange: 2.5
+  attackRadius: 1.5
   multiTargetCount: 1
   pierceCount: 1
-  basicAttackType: 6
+  basicAttackType: 2
   damageType: 4
   targetType: 3
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 3
   passiveSkillData:
-    skillName: zsczc
-    description: zsczxc
+    skillName: zcswcz
+    description: cscz
     passiveBuffType: 0
     passiveDebuffType: 0
     useStack: 0
-    maxStack: 0
-    value1: 0.015
-    value2: 6
-    value3: 0.2
+    maxStack: 20
+    value1: 0.08
+    value2: 0.2
+    value3: 0
     hasExecute: 0
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
     effects: []
   activeSkillData:
-    skillName: zxchrdzh
-    description: zdvzxd
-    castType: 3
+    skillName: zcweadf
+    description: zcwadaz
+    castType: 4
     targetType: 3
     cooldown: 12
-    duration: 3
+    duration: 6
     radius: 3
     hitCount: 1
     interval: 0.5
-    value1: 3.2
-    value2: 0.1
+    value1: 3.5
+    value2: 0
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1

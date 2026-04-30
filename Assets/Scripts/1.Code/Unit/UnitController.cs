@@ -7,14 +7,22 @@ public class UnitController : MonoBehaviour
 
     public UnitData Data { get; private set; }
 
-    public float CurrentAttackPower { get; private set; }
+    public double CurrentAttackPower { get; private set; }
     public float CurrentAttackSpeed { get; private set; }
+    public float CurrentAttackInterval { get; private set; }
     public float CurrentAttackRange { get; private set; }
 
     public int CurrentPassiveStack { get; private set; }
     public bool IsUrielMaxStackReached { get; set; }
 
     public UnitPlacementTile CurrentTile { get; private set; }
+
+    [Header("Runtime Stat Debug")]
+    [SerializeField] private string debugUnitId;
+    [SerializeField] private double debugCurrentAttackPower;
+    [SerializeField] private float debugCurrentAttackInterval;
+    [SerializeField] private float debugCurrentAttackSpeed;
+    [SerializeField] private float debugCurrentAttackRange;
 
     private float attackTimer;
     private float activeSkillTimer;
@@ -76,7 +84,7 @@ public class UnitController : MonoBehaviour
         if (currentTarget == null) return;
 
         attackTimer += Time.deltaTime;
-        float delay = 1f / Mathf.Max(0.01f, CurrentAttackSpeed);
+        float delay = Mathf.Max(UnitGrowthBalanceConfig.MinimumAttackInterval, CurrentAttackInterval);
 
         if (attackTimer >= delay)
         {
@@ -94,6 +102,10 @@ public class UnitController : MonoBehaviour
         if (GameModifierState.IsEvolutionGrade(Data))
             cooldown *= Mathf.Clamp01(1f - GameModifierState.AngelDemonCooldownReduction);
 
+        UnitGrowthManager growthManager = UnitGrowthManager.Instance;
+        if (growthManager != null)
+            cooldown *= Mathf.Clamp01(1f - growthManager.GetSkillCooldownReduction(Data.unitId));
+
         if (activeSkillTimer >= cooldown)
         {
             activeSkillTimer = 0f;
@@ -105,14 +117,8 @@ public class UnitController : MonoBehaviour
     {
         if (Data == null) return;
 
-        CurrentAttackPower = Data.attackPower
-            * GameModifierState.GetEnhancementAttackPowerMultiplier(Data.grade)
-            * (1f + GameModifierState.GlobalAttackPowerBonus);
-
-        CurrentAttackSpeed = Data.attackSpeed
-            * GameModifierState.GetEnhancementAttackSpeedMultiplier(Data.grade)
-            * (1f + GameModifierState.GlobalAttackSpeedBonus);
-
+        double runtimeAttackBonus = 0.0;
+        float runtimeAttackSpeedBonus = 0f;
         CurrentAttackRange = Data.attackRange;
 
         foreach (BuffInstance buff in buffs)
@@ -120,11 +126,11 @@ public class UnitController : MonoBehaviour
             switch (buff.buffType)
             {
                 case BuffType.AttackPowerUp:
-                    CurrentAttackPower += Data.attackPower * buff.value;
+                    runtimeAttackBonus += buff.value;
                     break;
 
                 case BuffType.AttackSpeedUp:
-                    CurrentAttackSpeed += Data.attackSpeed * buff.value;
+                    runtimeAttackSpeedBonus += buff.value;
                     break;
 
                 case BuffType.RangeUp:
@@ -132,14 +138,33 @@ public class UnitController : MonoBehaviour
                     break;
 
                 case BuffType.AllStatUp:
-                    CurrentAttackPower += Data.attackPower * buff.value;
-                    CurrentAttackSpeed += Data.attackSpeed * buff.value;
+                    runtimeAttackBonus += buff.value;
+                    runtimeAttackSpeedBonus += buff.value;
                     CurrentAttackRange += buff.value;
                     break;
             }
         }
 
+        UnitGrowthManager growthManager = UnitGrowthManager.Instance;
+        UnitGrowthEntry unitGrowth = growthManager != null ? growthManager.GetUnitGrowth(Data.unitId) : null;
+        PlayerPassiveGrowthData playerPassiveGrowth = growthManager != null ? growthManager.playerPassiveGrowthData : null;
+
+        UnitStatModifierResult statResult = UnitStatCalculator.Calculate(
+            Data,
+            unitGrowth,
+            playerPassiveGrowth,
+            GameModifierState.GlobalAttackPowerBonus,
+            GameModifierState.GlobalAttackSpeedBonus,
+            runtimeAttackBonus,
+            runtimeAttackSpeedBonus);
+
+        CurrentAttackPower = statResult.finalAttack;
+        CurrentAttackInterval = statResult.finalAttackInterval;
+        CurrentAttackSpeed = 1f / Mathf.Max(UnitGrowthBalanceConfig.MinimumAttackInterval, CurrentAttackInterval);
+        RefreshRuntimeStatDebugFields();
+
         UnitSkillHandler.ApplyPassiveStatModifier(this);
+        RefreshRuntimeStatDebugFields();
     }
 
     public void AddBuff(BuffInstance buff)
@@ -313,6 +338,15 @@ public class UnitController : MonoBehaviour
 
         EnsureNameText();
         RefreshNameText();
+    }
+
+    private void RefreshRuntimeStatDebugFields()
+    {
+        debugUnitId = Data != null ? Data.unitId : string.Empty;
+        debugCurrentAttackPower = CurrentAttackPower;
+        debugCurrentAttackInterval = CurrentAttackInterval;
+        debugCurrentAttackSpeed = CurrentAttackSpeed;
+        debugCurrentAttackRange = CurrentAttackRange;
     }
 
     private void EnsureNameText()

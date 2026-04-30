@@ -10,30 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 33_GreatDemon_Belphegor
+  m_Name: 30_GreatDemon_Asmodeus
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
-  unitId: 33
-  unitName: GreatDemon_Belphegor
+  unitId: 30
+  unitName: GreatDemon_Asmodeus
   grade: 4
-  specialLogicType: 13
+  specialLogicType: 11
   attackPower: 160
   attackSpeed: 1.5
   attackRange: 3.8
-  attackRadius: 0
-  multiTargetCount: 1
+  attackRadius: 1.5
+  multiTargetCount: 3
   pierceCount: 1
-  basicAttackType: 1
+  basicAttackType: 7
   damageType: 4
   targetType: 3
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 3
   passiveSkillData:
-    skillName: 136
-    description: 032156
+    skillName: zsczc
+    description: 
     passiveBuffType: 0
-    passiveDebuffType: 2
+    passiveDebuffType: 0
     useStack: 0
-    maxStack: 0
-    value1: 0.05
+    maxStack: 6
+    value1: 0.06
     value2: 0
     value3: 0
     hasExecute: 0
@@ -42,18 +46,18 @@ MonoBehaviour:
     bossMultiplier: 1
     effects: []
   activeSkillData:
-    skillName: zxvgzrsdh
-    description: ftnjgx
+    skillName: srhdrth
+    description: dhds
     castType: 4
     targetType: 3
-    cooldown: 10
-    duration: 4
-    radius: 999
+    cooldown: 12
+    duration: 2.5
+    radius: 3.5
     hitCount: 1
     interval: 0.5
-    value1: 0.3
-    value2: 0.1
-    value3: 0
+    value1: 2.2
+    value2: 1.8
+    value3: 0.8
     canStackDebuff: 0
     maxDebuffStack: 1
     effects: []
