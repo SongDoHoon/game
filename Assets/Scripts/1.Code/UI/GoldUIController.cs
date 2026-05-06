@@ -6,11 +6,13 @@ public class GoldUIController : MonoBehaviour
 {
     [Header("References")]
     public GoldManager goldManager;
+    public PlayerProgressManager playerProgressManager;
     public TMP_Text goldText;
     public Text legacyGoldText;
 
     [Header("Display")]
     public string prefix = "Gold: ";
+    public bool showMainGoldWhenGoldManagerIsMissing = true;
 
     private int lastGold = int.MinValue;
 
@@ -18,6 +20,9 @@ public class GoldUIController : MonoBehaviour
     {
         if (goldManager == null)
             goldManager = FindFirstObjectByType<GoldManager>();
+
+        if (playerProgressManager == null)
+            playerProgressManager = PlayerProgressManager.Instance;
 
         RefreshText(force: true);
     }
@@ -29,10 +34,12 @@ public class GoldUIController : MonoBehaviour
 
     private void RefreshText(bool force = false)
     {
-        if (goldManager == null)
+        if (goldManager == null && playerProgressManager == null)
+            playerProgressManager = PlayerProgressManager.Instance;
+
+        if (!TryGetDisplayGold(out int currentGold))
             return;
 
-        int currentGold = goldManager.currentGold;
         if (!force && currentGold == lastGold)
             return;
 
@@ -44,5 +51,29 @@ public class GoldUIController : MonoBehaviour
 
         if (legacyGoldText != null)
             legacyGoldText.text = message;
+    }
+
+    private bool TryGetDisplayGold(out int currentGold)
+    {
+        if (goldManager != null)
+        {
+            currentGold = goldManager.currentGold;
+            return true;
+        }
+
+        if (showMainGoldWhenGoldManagerIsMissing)
+        {
+            if (playerProgressManager != null)
+            {
+                currentGold = playerProgressManager.playerProgressData.mainGold;
+                return true;
+            }
+
+            currentGold = PlayerProgressSaveSystem.Data.mainGold;
+            return true;
+        }
+
+        currentGold = 0;
+        return false;
     }
 }

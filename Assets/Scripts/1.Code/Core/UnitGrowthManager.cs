@@ -11,7 +11,7 @@ public class UnitGrowthManager : MonoBehaviour
 
     [Header("Gold")]
     public GoldManager goldManager;
-    public bool useMainGoldForGrowthCost;
+    public bool useMainGoldForGrowthCost = true;
 
     [Header("Save")]
     public bool loadSavedDataOnAwake = true;
@@ -205,7 +205,7 @@ public class UnitGrowthManager : MonoBehaviour
 
     public int GetAvailableGrowthGold()
     {
-        if (useMainGoldForGrowthCost)
+        if (ShouldUseMainGoldForGrowthCost())
         {
             if (PlayerProgressManager.Instance != null)
                 return PlayerProgressManager.Instance.playerProgressData.mainGold;
@@ -356,7 +356,7 @@ public class UnitGrowthManager : MonoBehaviour
 
     private bool CanPayGold(int goldCost)
     {
-        if (useMainGoldForGrowthCost)
+        if (ShouldUseMainGoldForGrowthCost())
         {
             if (PlayerProgressManager.Instance != null)
                 return PlayerProgressManager.Instance.playerProgressData.mainGold >= goldCost;
@@ -372,7 +372,7 @@ public class UnitGrowthManager : MonoBehaviour
         if (goldCost <= 0)
             return true;
 
-        if (useMainGoldForGrowthCost)
+        if (ShouldUseMainGoldForGrowthCost())
         {
             if (PlayerProgressManager.Instance != null)
                 return PlayerProgressManager.Instance.TrySpendMainGold(goldCost);
@@ -381,6 +381,11 @@ public class UnitGrowthManager : MonoBehaviour
         }
 
         return goldManager != null && goldManager.UseGold(goldCost);
+    }
+
+    private bool ShouldUseMainGoldForGrowthCost()
+    {
+        return useMainGoldForGrowthCost || goldManager == null;
     }
 
     private void OnGrowthDataChanged(bool recalculateUnits)

@@ -16,8 +16,12 @@ MonoBehaviour:
   unitName: V_SingleMelee
   grade: 2
   specialLogicType: 0
-  attackPower: 90
-  attackSpeed: 1.3
+  unitSprite: {fileID: 0}
+  portraitSprite: {fileID: 0}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
+  attackPower: 160
+  attackSpeed: 2.45
   attackRange: 2.2
   attackRadius: 0
   multiTargetCount: 1
@@ -25,6 +29,10 @@ MonoBehaviour:
   basicAttackType: 0
   damageType: 4
   targetType: 0
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 0
   passiveSkillData:
     skillName: 
@@ -40,6 +48,7 @@ MonoBehaviour:
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
     skillName: 
     description: 
@@ -55,5 +64,6 @@ MonoBehaviour:
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

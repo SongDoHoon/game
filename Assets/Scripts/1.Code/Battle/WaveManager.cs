@@ -3,6 +3,9 @@ using System.Collections;
 
 public class WaveManager : MonoBehaviour
 {
+    private static bool autoStartRequested;
+    private static float requestedAutoStartDelay = 5f;
+
     [Header("Spawner")]
     public MonsterSpawner monsterSpawner;
 
@@ -20,12 +23,30 @@ public class WaveManager : MonoBehaviour
 
     private int aliveMonsterCount = 0;
     private Coroutine spawnWaveCoroutine;
+    private Coroutine autoStartCoroutine;
+
+    private void Start()
+    {
+        if (!autoStartRequested)
+            return;
+
+        float delay = requestedAutoStartDelay;
+        autoStartRequested = false;
+        autoStartCoroutine = StartCoroutine(CoStartFirstWaveAfterDelay(delay));
+    }
+
+    public static void RequestAutoStartOnNextScene(float delay)
+    {
+        autoStartRequested = true;
+        requestedAutoStartDelay = Mathf.Max(0f, delay);
+    }
 
     public void StartFirstWave()
     {
         if (waveStarted) return;
         if (gameEnded) return;
 
+        CancelAutoStart();
         waveStarted = true;
         StartNextWave();
     }
@@ -36,6 +57,9 @@ public class WaveManager : MonoBehaviour
         if (isPausedForAuction) return;
         if (gameEnded) return;
         if (currentWave >= finalWave) return;
+
+        CancelAutoStart();
+        waveStarted = true;
 
         if (spawnWaveCoroutine != null)
         {
@@ -171,6 +195,8 @@ public class WaveManager : MonoBehaviour
             spawnWaveCoroutine = null;
         }
 
+        CancelAutoStart();
+
         GameResultRewardManager rewardManager = GameResultRewardManager.Instance;
         if (rewardManager == null)
             rewardManager = FindFirstObjectByType<GameResultRewardManager>();
@@ -195,6 +221,24 @@ public class WaveManager : MonoBehaviour
                 PlayerProgressManager.Instance.AddGameReward(reward.mainGold, reward.playerExp);
             else
                 PlayerProgressSaveSystem.AddReward(reward.mainGold, reward.playerExp);
+        }
+    }
+
+    private IEnumerator CoStartFirstWaveAfterDelay(float delay)
+    {
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
+
+        autoStartCoroutine = null;
+        StartFirstWave();
+    }
+
+    private void CancelAutoStart()
+    {
+        if (autoStartCoroutine != null)
+        {
+            StopCoroutine(autoStartCoroutine);
+            autoStartCoroutine = null;
         }
     }
 }

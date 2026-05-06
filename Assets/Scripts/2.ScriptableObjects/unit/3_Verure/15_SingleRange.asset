@@ -10,21 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
-  m_Name: 15_PierceRanged
+  m_Name: 15_SingleRange
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 15
   unitName: V_PierceRanged
   grade: 2
   specialLogicType: 0
-  attackPower: 85
-  attackSpeed: 1.4
+  unitSprite: {fileID: 0}
+  portraitSprite: {fileID: 0}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
+  attackPower: 140
+  attackSpeed: 2.25
   attackRange: 3.2
   attackRadius: 0
   multiTargetCount: 1
-  pierceCount: 4
-  basicAttackType: 5
+  pierceCount: 1
+  basicAttackType: 1
   damageType: 3
   targetType: 0
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 0
   passiveSkillData:
     skillName: 
@@ -40,6 +48,7 @@ MonoBehaviour:
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
     skillName: 
     description: 
@@ -55,5 +64,6 @@ MonoBehaviour:
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

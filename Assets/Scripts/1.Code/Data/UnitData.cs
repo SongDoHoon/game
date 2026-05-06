@@ -9,6 +9,12 @@ public class UnitData : ScriptableObject
     public UnitGrade grade;
     public SpecialUnitLogicType specialLogicType = SpecialUnitLogicType.None;
 
+    [Header("Visual")]
+    public Sprite unitSprite;
+    public Sprite portraitSprite;
+    public bool useGradeTintOnSprite;
+    public RuntimeAnimatorController animatorController;
+
     [Header("Combat")]
     public float attackPower = 10f;
     public float attackSpeed = 1f;

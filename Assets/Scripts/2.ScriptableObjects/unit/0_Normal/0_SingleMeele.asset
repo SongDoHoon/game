@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: 0_SingleMeele
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 0
-  unitName: N_SingleMeele
+  unitName: "\uCCAD\uB9B0\uB3C4\uB9C8\uBC40"
   grade: 0
   specialLogicType: 0
+  unitSprite: {fileID: -5972343665867582133, guid: 87b4f4f02fbc21c4c8f1d9638c6c78bf, type: 3}
+  portraitSprite: {fileID: -5972343665867582133, guid: 87b4f4f02fbc21c4c8f1d9638c6c78bf, type: 3}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
   attackPower: 12
-  attackSpeed: 1
+  attackSpeed: 2
   attackRange: 1.5
   attackRadius: 0
   multiTargetCount: 1
@@ -25,6 +29,10 @@ MonoBehaviour:
   basicAttackType: 0
   damageType: 0
   targetType: 0
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 0
   passiveSkillData:
     skillName: 
@@ -40,6 +48,7 @@ MonoBehaviour:
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
     skillName: 
     description: 
@@ -55,5 +64,6 @@ MonoBehaviour:
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

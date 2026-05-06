@@ -4,9 +4,12 @@ using UnityEngine.UI;
 
 public class MainSceneStartGameButton : MonoBehaviour
 {
+    private const string DefaultGameSceneName = "GameScene";
+
     public UnitGrowthManager unitGrowthManager;
     public Button startButton;
-    public string gameSceneName = "SampleScene";
+    public string gameSceneName = DefaultGameSceneName;
+    public float gameSceneAutoStartDelay = 5f;
 
     private void Awake()
     {
@@ -34,6 +37,15 @@ public class MainSceneStartGameButton : MonoBehaviour
             unitGrowthManager.PrepareGrowthDataForSceneTransfer();
         }
 
-        SceneManager.LoadScene(gameSceneName);
+        WaveManager.RequestAutoStartOnNextScene(gameSceneAutoStartDelay);
+        SceneManager.LoadScene(GetGameSceneName());
+    }
+
+    private string GetGameSceneName()
+    {
+        if (string.IsNullOrWhiteSpace(gameSceneName) || gameSceneName == "SampleScene")
+            return DefaultGameSceneName;
+
+        return gameSceneName;
     }
 }

@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: 4_SingleRanged
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 4
-  unitName: N_SingleRanged
+  unitName: "\uC74C\uC591 \uB450\uB8E8\uBBF8"
   grade: 0
   specialLogicType: 0
+  unitSprite: {fileID: 859290578163140656, guid: dca2cccf8973c8a4bb6a1a75da1ddde8, type: 3}
+  portraitSprite: {fileID: 859290578163140656, guid: dca2cccf8973c8a4bb6a1a75da1ddde8, type: 3}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
   attackPower: 10
-  attackSpeed: 1.1
+  attackSpeed: 2
   attackRange: 2.5
   attackRadius: 0
   multiTargetCount: 1
@@ -25,6 +29,10 @@ MonoBehaviour:
   basicAttackType: 1
   damageType: 3
   targetType: 0
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 0
   passiveSkillData:
     skillName: 

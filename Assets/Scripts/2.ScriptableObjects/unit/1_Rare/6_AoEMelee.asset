@@ -13,18 +13,26 @@ MonoBehaviour:
   m_Name: 6_AoEMelee
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 6
-  unitName: R_AoEMelee
+  unitName: "\uBC31\uD638\uC758 \uD608\uC218"
   grade: 5
   specialLogicType: 0
-  attackPower: 25
-  attackSpeed: 1.1
+  unitSprite: {fileID: -2423661615178317053, guid: 0b75525b19de4e949915451f1d68ae66, type: 3}
+  portraitSprite: {fileID: -2423661615178317053, guid: 0b75525b19de4e949915451f1d68ae66, type: 3}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
+  attackPower: 28
+  attackSpeed: 1.08
   attackRange: 1.7
-  attackRadius: 1.4
+  attackRadius: 0.65
   multiTargetCount: 1
   pierceCount: 1
   basicAttackType: 2
   damageType: 0
   targetType: 0
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 0
   passiveSkillData:
     skillName: 
@@ -40,6 +48,7 @@ MonoBehaviour:
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
     skillName: 
     description: 
@@ -55,5 +64,6 @@ MonoBehaviour:
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

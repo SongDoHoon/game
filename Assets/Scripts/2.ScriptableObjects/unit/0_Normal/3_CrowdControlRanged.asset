@@ -13,18 +13,26 @@ MonoBehaviour:
   m_Name: 3_CrowdControlRanged
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 3
-  unitName: N_CrowdControlRanged
+  unitName: "\uD751\uAC01 \uAC70\uBD81"
   grade: 0
   specialLogicType: 0
+  unitSprite: {fileID: -6945426912264098760, guid: 3e68c8f5bc629684588a5557dd4e8518, type: 3}
+  portraitSprite: {fileID: -6945426912264098760, guid: 3e68c8f5bc629684588a5557dd4e8518, type: 3}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
   attackPower: 10
-  attackSpeed: 1.1
+  attackSpeed: 2
   attackRange: 2.5
   attackRadius: 0
   multiTargetCount: 1
   pierceCount: 1
-  basicAttackType: 7
+  basicAttackType: 1
   damageType: 1
   targetType: 0
+  crowdControlSlowAmount: 0.15
+  crowdControlDuration: 2
+  crowdControlBossSlowMultiplier: 0.5
+  crowdControlBossDurationMultiplier: 0.6
   skillTriggerType: 0
   passiveSkillData:
     skillName: 
@@ -40,6 +48,7 @@ MonoBehaviour:
     executeHpPercent: 0.05
     affectsBossDifferently: 0
     bossMultiplier: 1
+    effects: []
   activeSkillData:
     skillName: 
     description: 
@@ -55,5 +64,6 @@ MonoBehaviour:
     value3: 0
     canStackDebuff: 0
     maxDebuffStack: 1
+    effects: []
   canEvolve: 0
   evolveKey: 

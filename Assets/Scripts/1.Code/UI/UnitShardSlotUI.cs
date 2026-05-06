@@ -1,4 +1,3 @@
-using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -95,31 +94,9 @@ public class UnitShardSlotUI : MonoBehaviour
         if (unitImage == null)
             return;
 
-        Sprite sprite = FindUnitSprite(unitData);
+        Sprite sprite = unitData.portraitSprite != null ? unitData.portraitSprite : unitData.unitSprite;
         unitImage.sprite = sprite;
         unitImage.gameObject.SetActive(sprite != null);
-    }
-
-    private static Sprite FindUnitSprite(UnitData data)
-    {
-        if (data == null)
-            return null;
-
-        FieldInfo[] fields = data.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        foreach (FieldInfo field in fields)
-        {
-            if (field.FieldType == typeof(Sprite))
-                return field.GetValue(data) as Sprite;
-        }
-
-        PropertyInfo[] properties = data.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        foreach (PropertyInfo property in properties)
-        {
-            if (property.CanRead && property.PropertyType == typeof(Sprite) && property.GetIndexParameters().Length == 0)
-                return property.GetValue(data) as Sprite;
-        }
-
-        return null;
     }
 
     private static string FormatBonus(UnitShardUpgradeData data)

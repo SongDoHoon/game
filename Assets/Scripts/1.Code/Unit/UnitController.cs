@@ -28,6 +28,10 @@ public class UnitController : MonoBehaviour
     private float activeSkillTimer;
     private MonsterController currentTarget;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
+    private Sprite defaultSprite;
+    private RuntimeAnimatorController defaultAnimatorController;
+    private bool defaultVisualCached;
     private TextMesh nameTextMesh;
     private LineRenderer attackRangeRenderer;
     private LineRenderer splashRangeRenderer;
@@ -328,16 +332,58 @@ public class UnitController : MonoBehaviour
         if (Data == null)
             return;
 
-        if (spriteRenderer == null)
-            spriteRenderer = GetComponent<SpriteRenderer>();
+        EnsureVisualComponents();
 
         if (spriteRenderer != null)
-            spriteRenderer.color = GetUnitColor();
+        {
+            if (Data.unitSprite != null)
+            {
+                spriteRenderer.sprite = Data.unitSprite;
+                spriteRenderer.color = Data.useGradeTintOnSprite ? GetUnitColor() : Color.white;
+            }
+            else
+            {
+                spriteRenderer.sprite = defaultSprite;
+                spriteRenderer.color = GetUnitColor();
+            }
+        }
+
+        ApplyAnimatorController();
 
         transform.localScale = Vector3.one * GetUnitScale();
 
         EnsureNameText();
         RefreshNameText();
+    }
+
+    private void ApplyAnimatorController()
+    {
+        EnsureVisualComponents();
+
+        if (animator != null)
+            animator.runtimeAnimatorController = Data.animatorController != null ? Data.animatorController : defaultAnimatorController;
+    }
+
+    private void EnsureVisualComponents()
+    {
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
+
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+
+        if (defaultVisualCached)
+            return;
+
+        defaultSprite = spriteRenderer != null ? spriteRenderer.sprite : null;
+        defaultAnimatorController = animator != null ? animator.runtimeAnimatorController : null;
+        defaultVisualCached = true;
     }
 
     private void RefreshRuntimeStatDebugFields()
