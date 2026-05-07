@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: 19_AoEMelee
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 19
-  unitName: V_AoEMelee
+  unitName: "\uC774\uB2E8 \uC131\uC5ED \uACE8\uB818"
   grade: 2
-  specialLogicType: 0
   unitSprite: {fileID: 0}
   portraitSprite: {fileID: 0}
   useGradeTintOnSprite: 0
@@ -24,46 +23,13 @@ MonoBehaviour:
   attackSpeed: 1.23
   attackRange: 2.2
   attackRadius: 0.65
-  multiTargetCount: 1
-  pierceCount: 1
   basicAttackType: 2
-  damageType: 4
-  targetType: 0
-  crowdControlSlowAmount: 0.15
-  crowdControlDuration: 2
-  crowdControlBossSlowMultiplier: 0.5
-  crowdControlBossDurationMultiplier: 0.6
-  skillTriggerType: 0
-  passiveSkillData:
-    skillName: 
-    description: 
-    passiveBuffType: 0
-    passiveDebuffType: 0
-    useStack: 0
-    maxStack: 0
-    value1: 0
-    value2: 0
-    value3: 0
-    hasExecute: 0
-    executeHpPercent: 0.05
-    affectsBossDifferently: 0
-    bossMultiplier: 1
-    effects: []
-  activeSkillData:
-    skillName: 
-    description: 
-    castType: 0
-    targetType: 0
-    cooldown: 10
-    duration: 3
-    radius: 2
-    hitCount: 1
-    interval: 0.5
-    value1: 0
-    value2: 0
-    value3: 0
-    canStackDebuff: 0
-    maxDebuffStack: 1
-    effects: []
+  projectileSpeed: 8
+  projectileSize: 0.1
+  projectileColor: {r: 1, g: 0, b: 0.85882354, a: 1}
+  projectileSpawnOffset: {x: 0, y: 0.35, z: 0}
+  showAreaAttackIndicator: 1
+  areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
+  areaAttackIndicatorDuration: 0.25
   canEvolve: 0
   evolveKey: 

@@ -7,7 +7,6 @@ public class UnitData : ScriptableObject
     public string unitId;
     public string unitName;
     public UnitGrade grade;
-    public SpecialUnitLogicType specialLogicType = SpecialUnitLogicType.None;
 
     [Header("Visual")]
     public Sprite unitSprite;
@@ -20,23 +19,23 @@ public class UnitData : ScriptableObject
     public float attackSpeed = 1f;
     public float attackRange = 3f;
     public float attackRadius = 1.5f;
-    public int multiTargetCount = 2;
-    public int pierceCount = 3;
 
     public BasicAttackType basicAttackType;
-    public DamageType damageType;
-    public TargetType targetType;
+    public UnitTargetPriority targetPriority = UnitTargetPriority.Nearest;
 
-    [Header("Crowd Control Basic Attack")]
-    [Range(0f, 1f)] public float crowdControlSlowAmount = 0.15f;
-    public float crowdControlDuration = 2f;
-    [Range(0f, 1f)] public float crowdControlBossSlowMultiplier = 0.5f;
-    public float crowdControlBossDurationMultiplier = 0.6f;
+    [Header("Boss Targeting")]
+    public UnitTargetPriority bossFallbackTargetPriority = UnitTargetPriority.Nearest;
 
-    [Header("Skill")]
-    public SkillTriggerType skillTriggerType = SkillTriggerType.None;
-    public PassiveSkillData passiveSkillData;
-    public ActiveSkillData activeSkillData;
+    [Header("Basic Attack Projectile")]
+    public float projectileSpeed = 8f;
+    public float projectileSize = 0.25f;
+    public Color projectileColor = Color.white;
+    public Vector3 projectileSpawnOffset = new Vector3(0f, 0.35f, 0f);
+
+    [Header("Area Attack Indicator")]
+    public bool showAreaAttackIndicator = true;
+    public Color areaAttackIndicatorColor = new Color(1f, 0.45f, 0.1f, 0.25f);
+    public float areaAttackIndicatorDuration = 0.25f;
 
     [Header("Evolution")]
     public bool canEvolve;

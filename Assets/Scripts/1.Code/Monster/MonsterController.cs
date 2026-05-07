@@ -2,6 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class MonsterWalkAnimationSet
+{
+    public int startWave = 1;
+    public int endWave = 10;
+    public RuntimeAnimatorController animatorController;
+}
+
 public class MonsterController : MonoBehaviour
 {
     public event Action<MonsterController, double> OnDamageTaken;
@@ -21,11 +29,23 @@ public class MonsterController : MonoBehaviour
     public WaypointPath waypointPath;
     public bool destroyOnGoal = true;
 
+    [Header("Animation")]
+    public SpriteRenderer spriteRenderer;
+    public Animator animator;
+    public MonsterWalkAnimationSet[] walkAnimationSets = new MonsterWalkAnimationSet[10];
+
+    [Header("Facing")]
+    public bool faceMovementDirection = true;
+    public bool spriteFacesRightByDefault = true;
+    public float horizontalFacingThreshold = 0.001f;
+
     private int currentWaypointIndex;
     private readonly List<DebuffInstance> debuffs = new();
     private float speedMultiplier = 1f;
     private bool isStunned;
     private WaveManager waveManager;
+    private Vector3 lastPosition;
+    private Vector3 frameMovementDelta;
 
     public bool IsAlive => currentHp > 0.0;
     public double CurrentHp => currentHp;
@@ -33,13 +53,17 @@ public class MonsterController : MonoBehaviour
 
     private void Start()
     {
+        EnsureWalkAnimationSets();
         currentHp = maxHp;
         NotifyHpChanged();
+        CacheVisualComponents();
 
         if (waypointPath != null)
         {
             InitializePath();
         }
+
+        lastPosition = transform.position;
     }
 
     private void Update()
@@ -48,6 +72,9 @@ public class MonsterController : MonoBehaviour
 
         UpdateDebuffs();
         MoveAlongPath();
+        frameMovementDelta = transform.position - lastPosition;
+        UpdateFacingDirection();
+        lastPosition = transform.position;
     }
 
     public void SetPath(WaypointPath path)
@@ -59,6 +86,22 @@ public class MonsterController : MonoBehaviour
     public void SetWaveManager(WaveManager manager)
     {
         waveManager = manager;
+    }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        EnsureWalkAnimationSets();
+    }
+#endif
+
+    public void SetAppearanceForWave(int wave)
+    {
+        MonsterWalkAnimationSet animationSet = GetWalkAnimationSetForWave(wave);
+        CacheVisualComponents();
+
+        if (animator != null && animationSet != null && animationSet.animatorController != null)
+            animator.runtimeAnimatorController = animationSet.animatorController;
     }
 
     private void InitializePath()
@@ -94,6 +137,96 @@ public class MonsterController : MonoBehaviour
             {
                 ReachGoal();
             }
+        }
+    }
+
+    private void UpdateFacingDirection()
+    {
+        if (!faceMovementDirection)
+            return;
+
+        CacheVisualComponents();
+
+        if (spriteRenderer == null)
+            return;
+
+        float horizontalMovement = frameMovementDelta.x;
+        if (Mathf.Abs(horizontalMovement) < horizontalFacingThreshold)
+            return;
+
+        bool movingRight = horizontalMovement > 0f;
+        spriteRenderer.flipX = spriteFacesRightByDefault ? !movingRight : movingRight;
+    }
+
+    private MonsterWalkAnimationSet GetWalkAnimationSetForWave(int wave)
+    {
+        EnsureWalkAnimationSets();
+
+        if (walkAnimationSets == null || walkAnimationSets.Length == 0)
+            return null;
+
+        int safeWave = Mathf.Max(1, wave);
+
+        foreach (MonsterWalkAnimationSet animationSet in walkAnimationSets)
+        {
+            if (animationSet == null)
+                continue;
+
+            int startWave = Mathf.Max(1, animationSet.startWave);
+            int endWave = Mathf.Max(startWave, animationSet.endWave);
+
+            if (safeWave >= startWave && safeWave <= endWave)
+                return animationSet;
+        }
+
+        int fallbackIndex = Mathf.Clamp((safeWave - 1) / 10, 0, walkAnimationSets.Length - 1);
+        return walkAnimationSets[fallbackIndex];
+    }
+
+    private void CacheVisualComponents()
+    {
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+            if (spriteRenderer == null)
+                spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+
+        if (animator != null)
+            return;
+
+        animator = GetComponent<Animator>();
+
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
+    }
+
+    private void EnsureWalkAnimationSets()
+    {
+        const int DefaultSetCount = 10;
+
+        if (walkAnimationSets == null || walkAnimationSets.Length != DefaultSetCount)
+        {
+            MonsterWalkAnimationSet[] resizedSets = new MonsterWalkAnimationSet[DefaultSetCount];
+
+            if (walkAnimationSets != null)
+            {
+                int copyCount = Mathf.Min(walkAnimationSets.Length, resizedSets.Length);
+                for (int i = 0; i < copyCount; i++)
+                    resizedSets[i] = walkAnimationSets[i];
+            }
+
+            walkAnimationSets = resizedSets;
+        }
+
+        for (int i = 0; i < walkAnimationSets.Length; i++)
+        {
+            if (walkAnimationSets[i] == null)
+                walkAnimationSets[i] = new MonsterWalkAnimationSet();
+
+            walkAnimationSets[i].startWave = (i * 10) + 1;
+            walkAnimationSets[i].endWave = (i + 1) * 10;
         }
     }
 

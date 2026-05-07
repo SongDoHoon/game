@@ -13,74 +13,15 @@ public enum BasicAttackType
     SingleMelee,
     SingleRanged,
     AoEMelee,
-    AoERanged,
-    MultiTargetRanged,
-    PierceRanged,
-    DebuffRanged,
-    CrowdControlRanged
+    AoERanged
 }
 
-public enum DamageType
+public enum UnitTargetPriority
 {
-    Physical,
-    Magic,
-    Fire,
-    Holy,
-    Dark
-}
-
-public enum SkillEffectTrigger
-{
-    None,
-    OnInitialize,
-    OnStatRecalculation,
-    OnBasicAttack,
-    OnContinuous,
-    OnKill,
-    OnActiveCast,
-    OnActiveTick,
-    OnActiveEnd
-}
-
-public enum SkillEffectType
-{
-    None,
-    Buff,
-    Debuff,
-    Damage,
-    Execute,
-    AddPassiveStack
-}
-
-public enum SkillTriggerType
-{
-    None,
-    Passive,
-    Active,
-    PassiveAndActive
-}
-
-public enum ActiveSkillCastType
-{
-    None,
-    SelfBuff,
-    AllyBuff,
-    EnemyAreaDamage,
-    EnemyAreaDebuff,
-    SummonZoneEffect,
-    MapTargetStrike
-}
-
-public enum TargetType
-{
-    None,
-    SingleEnemy,
-    MultiEnemy,
-    AreaEnemy,
-    SingleAlly,
-    AreaAlly,
-    AllAllies,
-    Self
+    Nearest,
+    Farthest,
+    Boss,
+    LowestHp
 }
 
 public enum BuffType
@@ -157,22 +98,4 @@ public enum UnitEnhanceGroup
     LowGradeGroup,
     HighGradeGroup,
     EvolutionGroup
-}
-
-public enum SpecialUnitLogicType
-{
-    None,
-    Michael,
-    Gabriel,
-    Raphael,
-    Uriel,
-    Raguel,
-    Sariel,
-    Demon1,
-    Demon2,
-    Demon3,
-    Demon4,
-    Demon5,
-    Demon6,
-    Demon7
 }

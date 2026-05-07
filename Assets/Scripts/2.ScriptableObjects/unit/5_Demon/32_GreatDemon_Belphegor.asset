@@ -13,53 +13,23 @@ MonoBehaviour:
   m_Name: 32_GreatDemon_Belphegor
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 32
-  unitName: GreatDemon_Belphegor
+  unitName: "\uBCA8\uD398\uACE0\uB974"
   grade: 4
-  specialLogicType: 13
-  attackPower: 160
-  attackSpeed: 1.5
-  attackRange: 3.8
+  unitSprite: {fileID: 0}
+  portraitSprite: {fileID: 0}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
+  attackPower: 0
+  attackSpeed: 0
+  attackRange: 4.5
   attackRadius: 0
-  multiTargetCount: 1
-  pierceCount: 1
-  basicAttackType: 1
-  damageType: 4
-  targetType: 3
-  crowdControlSlowAmount: 0.15
-  crowdControlDuration: 2
-  crowdControlBossSlowMultiplier: 0.5
-  crowdControlBossDurationMultiplier: 0.6
-  skillTriggerType: 3
-  passiveSkillData:
-    skillName: 136
-    description: 032156
-    passiveBuffType: 0
-    passiveDebuffType: 2
-    useStack: 0
-    maxStack: 0
-    value1: 0.05
-    value2: 0
-    value3: 0
-    hasExecute: 0
-    executeHpPercent: 0.05
-    affectsBossDifferently: 0
-    bossMultiplier: 1
-    effects: []
-  activeSkillData:
-    skillName: zxvgzrsdh
-    description: ftnjgx
-    castType: 4
-    targetType: 3
-    cooldown: 10
-    duration: 4
-    radius: 999
-    hitCount: 1
-    interval: 0.5
-    value1: 0.3
-    value2: 0.1
-    value3: 0
-    canStackDebuff: 0
-    maxDebuffStack: 1
-    effects: []
+  basicAttackType: 0
+  projectileSpeed: 8
+  projectileSize: 0.1
+  projectileColor: {r: 1, g: 0, b: 0, a: 1}
+  projectileSpawnOffset: {x: 0, y: 0.35, z: 0}
+  showAreaAttackIndicator: 1
+  areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
+  areaAttackIndicatorDuration: 0.25
   canEvolve: 0
   evolveKey: 

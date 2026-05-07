@@ -13,53 +13,23 @@ MonoBehaviour:
   m_Name: 23_ArchAngel_Uriel
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 23
-  unitName: uriel
+  unitName: "\uC6B0\uB9AC\uC5D8"
   grade: 3
-  specialLogicType: 4
-  attackPower: 160
-  attackSpeed: 1.5
-  attackRange: 3.8
-  attackRadius: 1.5
-  multiTargetCount: 0
-  pierceCount: 0
+  unitSprite: {fileID: 0}
+  portraitSprite: {fileID: 0}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
+  attackPower: 310
+  attackSpeed: 1.25
+  attackRange: 4.5
+  attackRadius: 1.2
   basicAttackType: 3
-  damageType: 2
-  targetType: 3
-  crowdControlSlowAmount: 0.15
-  crowdControlDuration: 2
-  crowdControlBossSlowMultiplier: 0.5
-  crowdControlBossDurationMultiplier: 0.6
-  skillTriggerType: 3
-  passiveSkillData:
-    skillName: asd
-    description: asd
-    passiveBuffType: 0
-    passiveDebuffType: 1
-    useStack: 1
-    maxStack: 20
-    value1: 0.03
-    value2: 0
-    value3: 0
-    hasExecute: 0
-    executeHpPercent: 0.05
-    affectsBossDifferently: 0
-    bossMultiplier: 1
-    effects: []
-  activeSkillData:
-    skillName: aaaa
-    description: aaaaa
-    castType: 3
-    targetType: 3
-    cooldown: 12
-    duration: 3
-    radius: 2.5
-    hitCount: 6
-    interval: 0.5
-    value1: 1.8
-    value2: 0
-    value3: 0
-    canStackDebuff: 1
-    maxDebuffStack: 20
-    effects: []
+  projectileSpeed: 8
+  projectileSize: 0.1
+  projectileColor: {r: 0.96862745, g: 1, b: 0, a: 1}
+  projectileSpawnOffset: {x: 0, y: 0.35, z: 0}
+  showAreaAttackIndicator: 1
+  areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
+  areaAttackIndicatorDuration: 0.25
   canEvolve: 0
   evolveKey: 

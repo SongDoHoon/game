@@ -548,8 +548,7 @@ public class UnitPlacementManager : MonoBehaviour
             return true;
 
         return unitData.grade == UnitGrade.ArchAngel
-            || unitData.grade == UnitGrade.GreatDemon
-            || unitData.specialLogicType != SpecialUnitLogicType.None;
+            || unitData.grade == UnitGrade.GreatDemon;
     }
 
     private string GetUnitDisplayName(UnitData unitData)

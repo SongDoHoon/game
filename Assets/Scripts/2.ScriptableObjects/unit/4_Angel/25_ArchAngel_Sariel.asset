@@ -13,95 +13,23 @@ MonoBehaviour:
   m_Name: 25_ArchAngel_Sariel
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 25
-  unitName: ArchAngel_Sariel
+  unitName: "\uC0AC\uB9AC\uC5D8"
   grade: 3
-  specialLogicType: 6
-  attackPower: 10
-  attackSpeed: 1
-  attackRange: 3
-  attackRadius: 1.8
-  multiTargetCount: 1
-  pierceCount: 1
-  basicAttackType: 7
-  damageType: 3
-  targetType: 3
-  crowdControlSlowAmount: 0.15
-  crowdControlDuration: 2
-  crowdControlBossSlowMultiplier: 0.5
-  crowdControlBossDurationMultiplier: 0.6
-  skillTriggerType: 3
-  passiveSkillData:
-    skillName: zcsczs
-    description: zcxczs
-    passiveBuffType: 0
-    passiveDebuffType: 0
-    useStack: 0
-    maxStack: 0
-    value1: 0
-    value2: 0
-    value3: 0
-    hasExecute: 0
-    executeHpPercent: 0.05
-    affectsBossDifferently: 0
-    bossMultiplier: 1
-    effects:
-    - label: 
-      trigger: 4
-      effectType: 2
-      buffType: 0
-      debuffType: 2
-      value: 0.25
-      duration: 0
-      interval: 0
-      radius: 3
-      hitCount: 0
-      maxStack: 0
-      stackAmount: 0
-      affectsBossDifferently: 1
-      bossMultiplier: 0.5
-  activeSkillData:
-    skillName: zcszsc
-    description: xcszxc
-    castType: 4
-    targetType: 3
-    cooldown: 12
-    duration: 3
-    radius: 2
-    hitCount: 1
-    interval: 0.5
-    value1: 0
-    value2: 0
-    value3: 0
-    canStackDebuff: 0
-    maxDebuffStack: 1
-    effects:
-    - label: 
-      trigger: 6
-      effectType: 3
-      buffType: 0
-      debuffType: 0
-      value: 1
-      duration: 0
-      interval: 0
-      radius: 6
-      hitCount: 0
-      maxStack: 0
-      stackAmount: 0
-      affectsBossDifferently: 0
-      bossMultiplier: 0
-    - label: 
-      trigger: 6
-      effectType: 2
-      buffType: 0
-      debuffType: 3
-      value: 0
-      duration: 2.5
-      interval: 0
-      radius: 6
-      hitCount: 0
-      maxStack: 0
-      stackAmount: 0
-      affectsBossDifferently: 1
-      bossMultiplier: 0.4
+  unitSprite: {fileID: 0}
+  portraitSprite: {fileID: 0}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
+  attackPower: 310
+  attackSpeed: 1.25
+  attackRange: 4.5
+  attackRadius: 1.2
+  basicAttackType: 3
+  projectileSpeed: 8
+  projectileSize: 0.1
+  projectileColor: {r: 0.96862745, g: 1, b: 0, a: 1}
+  projectileSpawnOffset: {x: 0, y: 0.35, z: 0}
+  showAreaAttackIndicator: 1
+  areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
+  areaAttackIndicatorDuration: 0.25
   canEvolve: 0
   evolveKey: 

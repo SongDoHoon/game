@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 6580615922040838546}
   - component: {fileID: 8410184121998460207}
   - component: {fileID: 5669267709006483162}
+  - component: {fileID: 7350354534850666610}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -204,6 +205,42 @@ MonoBehaviour:
   isBoss: 0
   waypointPath: {fileID: 0}
   destroyOnGoal: 1
+  spriteRenderer: {fileID: 0}
+  animator: {fileID: 0}
+  walkAnimationSets:
+  - startWave: 1
+    endWave: 10
+    animatorController: {fileID: 9100000, guid: 8c8763b643a06f84e982c0d7379f05a8, type: 2}
+  - startWave: 11
+    endWave: 20
+    animatorController: {fileID: 0}
+  - startWave: 21
+    endWave: 30
+    animatorController: {fileID: 0}
+  - startWave: 31
+    endWave: 40
+    animatorController: {fileID: 0}
+  - startWave: 41
+    endWave: 50
+    animatorController: {fileID: 0}
+  - startWave: 51
+    endWave: 60
+    animatorController: {fileID: 0}
+  - startWave: 61
+    endWave: 70
+    animatorController: {fileID: 0}
+  - startWave: 71
+    endWave: 80
+    animatorController: {fileID: 0}
+  - startWave: 81
+    endWave: 90
+    animatorController: {fileID: 0}
+  - startWave: 91
+    endWave: 100
+    animatorController: {fileID: 0}
+  faceMovementDirection: 1
+  spriteFacesRightByDefault: 0
+  horizontalFacingThreshold: 0.001
 --- !u!114 &5669267709006483162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +259,28 @@ MonoBehaviour:
   worldOffset: {x: 0, y: -2, z: 0}
   randomOffsetRange: {x: 0.25, y: 0.15}
   textColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!95 &7350354534850666610
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400700061364095995}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8c8763b643a06f84e982c0d7379f05a8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &732587079613795875
 GameObject:
   m_ObjectHideFlags: 0

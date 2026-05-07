@@ -61,7 +61,9 @@ public class MonsterSpawner : MonoBehaviour
         monster.SetPath(waypointPath);
         monster.SetWaveManager(waveManager);
 
-        ApplyWaveStat(monster, waveManager.currentWave, false);
+        int wave = waveManager != null ? waveManager.currentWave : 1;
+        ApplyWaveStat(monster, wave, false);
+        monster.SetAppearanceForWave(wave);
         return monster;
     }
 

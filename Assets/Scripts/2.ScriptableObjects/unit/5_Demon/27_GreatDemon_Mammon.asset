@@ -13,53 +13,25 @@ MonoBehaviour:
   m_Name: 27_GreatDemon_Mammon
   m_EditorClassIdentifier: Assembly-CSharp::UnitData
   unitId: 27
-  unitName: GreatDemon_Mammon
+  unitName: "\uB9C8\uBAAC"
   grade: 4
-  specialLogicType: 8
-  attackPower: 160
-  attackSpeed: 1.5
-  attackRange: 3.8
-  attackRadius: 1.7
-  multiTargetCount: 1
-  pierceCount: 1
+  unitSprite: {fileID: 0}
+  portraitSprite: {fileID: 0}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
+  attackPower: 380
+  attackSpeed: 1.1
+  attackRange: 4.2
+  attackRadius: 1.2
   basicAttackType: 3
-  damageType: 4
-  targetType: 3
-  crowdControlSlowAmount: 0.15
-  crowdControlDuration: 2
-  crowdControlBossSlowMultiplier: 0.5
-  crowdControlBossDurationMultiplier: 0.6
-  skillTriggerType: 3
-  passiveSkillData:
-    skillName: zxcsdsc
-    description: zczxcszs
-    passiveBuffType: 0
-    passiveDebuffType: 0
-    useStack: 1
-    maxStack: 20
-    value1: 0.2
-    value2: 0.2
-    value3: 0.05
-    hasExecute: 0
-    executeHpPercent: 0.05
-    affectsBossDifferently: 0
-    bossMultiplier: 1
-    effects: []
-  activeSkillData:
-    skillName: zcwda
-    description: cwacdaz
-    castType: 1
-    targetType: 7
-    cooldown: 18
-    duration: 6
-    radius: 2
-    hitCount: 1
-    interval: 0.5
-    value1: 0.8
-    value2: 0.2
-    value3: 0
-    canStackDebuff: 0
-    maxDebuffStack: 1
-    effects: []
+  targetPriority: 1
+  bossFallbackTargetPriority: 1
+  projectileSpeed: 8
+  projectileSize: 0.1
+  projectileColor: {r: 1, g: 0, b: 0, a: 1}
+  projectileSpawnOffset: {x: 0, y: 0.35, z: 0}
+  showAreaAttackIndicator: 1
+  areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
+  areaAttackIndicatorDuration: 0.25
   canEvolve: 0
   evolveKey: 

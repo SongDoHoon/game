@@ -12,9 +12,6 @@ public class UnitController : MonoBehaviour
     public float CurrentAttackInterval { get; private set; }
     public float CurrentAttackRange { get; private set; }
 
-    public int CurrentPassiveStack { get; private set; }
-    public bool IsUrielMaxStackReached { get; set; }
-
     public UnitPlacementTile CurrentTile { get; private set; }
 
     [Header("Runtime Stat Debug")]
@@ -25,7 +22,6 @@ public class UnitController : MonoBehaviour
     [SerializeField] private float debugCurrentAttackRange;
 
     private float attackTimer;
-    private float activeSkillTimer;
     private MonsterController currentTarget;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -43,13 +39,8 @@ public class UnitController : MonoBehaviour
     {
         Data = data;
         attackTimer = 0f;
-        activeSkillTimer = 0f;
-        CurrentPassiveStack = 0;
-        IsUrielMaxStackReached = false;
         buffs.Clear();
 
-        RecalculateStats();
-        UnitSkillHandler.ApplyPassiveOnStart(this);
         RecalculateStats();
         ApplyVisualIdentity();
     }
@@ -61,8 +52,6 @@ public class UnitController : MonoBehaviour
         UpdateBuffs();
         UpdateTarget();
         UpdateAttack();
-        UpdateActiveSkill();
-        UnitSkillHandler.UpdateContinuousEffects(this);
         UpdateSelectionVisual();
     }
 
@@ -80,7 +69,11 @@ public class UnitController : MonoBehaviour
 
     private void UpdateTarget()
     {
-        currentTarget = UnitTargetFinder.FindNearestTarget(transform.position, CurrentAttackRange);
+        currentTarget = UnitTargetFinder.FindTarget(
+            transform.position,
+            CurrentAttackRange,
+            Data.targetPriority,
+            Data.bossFallbackTargetPriority);
     }
 
     private void UpdateAttack()
@@ -94,26 +87,6 @@ public class UnitController : MonoBehaviour
         {
             attackTimer = 0f;
             UnitAttackHandler.ExecuteBasicAttack(this, currentTarget);
-        }
-    }
-
-    private void UpdateActiveSkill()
-    {
-        if (Data.activeSkillData == null) return;
-
-        activeSkillTimer += Time.deltaTime;
-        float cooldown = Data.activeSkillData.cooldown;
-        if (GameModifierState.IsEvolutionGrade(Data))
-            cooldown *= Mathf.Clamp01(1f - GameModifierState.AngelDemonCooldownReduction);
-
-        UnitGrowthManager growthManager = UnitGrowthManager.Instance;
-        if (growthManager != null)
-            cooldown *= Mathf.Clamp01(1f - growthManager.GetSkillCooldownReduction(Data.unitId));
-
-        if (activeSkillTimer >= cooldown)
-        {
-            activeSkillTimer = 0f;
-            UnitSkillHandler.ExecuteActiveSkill(this);
         }
     }
 
@@ -167,8 +140,6 @@ public class UnitController : MonoBehaviour
         CurrentAttackSpeed = 1f / Mathf.Max(UnitGrowthBalanceConfig.MinimumAttackInterval, CurrentAttackInterval);
         RefreshRuntimeStatDebugFields();
 
-        UnitSkillHandler.ApplyPassiveStatModifier(this);
-        RefreshRuntimeStatDebugFields();
     }
 
     public void AddBuff(BuffInstance buff)
@@ -221,15 +192,6 @@ public class UnitController : MonoBehaviour
 
     public void AddPassiveStack(int amount)
     {
-        PassiveSkillData passive = Data.passiveSkillData;
-        if (passive == null || !passive.useStack) return;
-
-        CurrentPassiveStack += amount;
-
-        if (passive.maxStack > 0)
-            CurrentPassiveStack = Mathf.Clamp(CurrentPassiveStack, 0, passive.maxStack);
-        else
-            CurrentPassiveStack = Mathf.Max(0, CurrentPassiveStack);
     }
 
     public MonsterController GetCurrentTarget() => currentTarget;
@@ -443,9 +405,6 @@ public class UnitController : MonoBehaviour
 
     private Color GetUnitColor()
     {
-        if (Data.specialLogicType == SpecialUnitLogicType.Uriel)
-            return new Color(1f, 0.55f, 0.15f, 1f);
-
         switch (Data.grade)
         {
             case UnitGrade.Normal:
