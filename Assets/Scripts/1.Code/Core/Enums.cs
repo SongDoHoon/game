@@ -32,7 +32,8 @@ public enum BuffType
     CritChanceUp,
     FinalDamageUp,
     BurnDamageUp,
-    AllStatUp
+    AllStatUp,
+    CritDamageUp
 }
 
 public enum DebuffType

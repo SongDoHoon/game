@@ -19,6 +19,7 @@ public class UnitData : ScriptableObject
     public float attackSpeed = 1f;
     public float attackRange = 3f;
     public float attackRadius = 1.5f;
+    public int maxAreaAttackTargets;
 
     public BasicAttackType basicAttackType;
     public UnitTargetPriority targetPriority = UnitTargetPriority.Nearest;
@@ -36,6 +37,9 @@ public class UnitData : ScriptableObject
     public bool showAreaAttackIndicator = true;
     public Color areaAttackIndicatorColor = new Color(1f, 0.45f, 0.1f, 0.25f);
     public float areaAttackIndicatorDuration = 0.25f;
+
+    [Header("Skill")]
+    public SkillData skillData;
 
     [Header("Evolution")]
     public bool canEvolve;

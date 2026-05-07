@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicAttackProjectile : MonoBehaviour
@@ -9,8 +10,10 @@ public class BasicAttackProjectile : MonoBehaviour
 
     private UnitController attacker;
     private MonsterController target;
+    private SkillData impactSkill;
     private double damage;
     private bool isAreaAttack;
+    private bool isHorizontalLineImpact;
     private float areaRadius;
     private float speed;
     private Color areaIndicatorColor;
@@ -39,7 +42,83 @@ public class BasicAttackProjectile : MonoBehaviour
         spriteRenderer.sortingOrder = 60;
 
         BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
-        projectile.Initialize(attacker, target, damage, isAreaAttack, areaRadius, data);
+        projectile.Initialize(
+            attacker,
+            target,
+            damage,
+            isAreaAttack,
+            areaRadius,
+            data.projectileSpeed,
+            data.showAreaAttackIndicator,
+            data.areaAttackIndicatorColor,
+            data.areaAttackIndicatorDuration);
+    }
+
+    public static void SpawnSkill(
+        UnitController attacker,
+        MonsterController target,
+        double damage,
+        bool isAreaAttack,
+        float areaRadius,
+        SkillData skill)
+    {
+        if (attacker == null || target == null || attacker.Data == null || skill == null)
+            return;
+
+        GameObject projectileObject = new GameObject("SkillProjectile");
+        projectileObject.transform.position = attacker.transform.position + skill.projectileSpawnOffset;
+        projectileObject.transform.localScale = Vector3.one * Mathf.Max(0.01f, skill.projectileSize);
+
+        SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = GetCircleSprite();
+        spriteRenderer.color = skill.projectileColor;
+        spriteRenderer.sortingOrder = 60;
+
+        BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
+        projectile.Initialize(
+            attacker,
+            target,
+            damage,
+            isAreaAttack,
+            areaRadius,
+            skill.projectileSpeed,
+            skill.showAreaAttackIndicator,
+            skill.areaAttackIndicatorColor,
+            skill.areaAttackIndicatorDuration);
+    }
+
+    public static void SpawnHorizontalLineSkill(
+        UnitController attacker,
+        MonsterController target,
+        double damage,
+        SkillData skill)
+    {
+        if (attacker == null || target == null || attacker.Data == null || skill == null)
+            return;
+
+        GameObject projectileObject = new GameObject("HorizontalLineSkillProjectile");
+        projectileObject.transform.position = attacker.transform.position + skill.projectileSpawnOffset;
+        projectileObject.transform.localScale = Vector3.one * Mathf.Max(0.01f, skill.projectileSize);
+
+        SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = GetCircleSprite();
+        spriteRenderer.color = skill.projectileColor;
+        spriteRenderer.sortingOrder = 60;
+
+        BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
+        projectile.Initialize(
+            attacker,
+            target,
+            damage,
+            false,
+            0f,
+            skill.projectileSpeed,
+            false,
+            skill.areaAttackIndicatorColor,
+            skill.areaAttackIndicatorDuration);
+
+        projectile.impactSkill = skill;
+        projectile.isHorizontalLineImpact = true;
     }
 
     private void Initialize(
@@ -48,17 +127,20 @@ public class BasicAttackProjectile : MonoBehaviour
         double attackDamage,
         bool areaAttack,
         float radius,
-        UnitData data)
+        float projectileSpeed,
+        bool indicatorShown,
+        Color indicatorColor,
+        float indicatorDuration)
     {
         attacker = sourceUnit;
         target = targetMonster;
         damage = attackDamage;
         isAreaAttack = areaAttack;
         areaRadius = Mathf.Max(0f, radius);
-        speed = Mathf.Max(0.01f, data.projectileSpeed);
-        showAreaIndicator = data.showAreaAttackIndicator;
-        areaIndicatorColor = data.areaAttackIndicatorColor;
-        areaIndicatorDuration = Mathf.Max(0.01f, data.areaAttackIndicatorDuration);
+        speed = Mathf.Max(0.01f, projectileSpeed);
+        showAreaIndicator = indicatorShown;
+        areaIndicatorColor = indicatorColor;
+        areaIndicatorDuration = Mathf.Max(0.01f, indicatorDuration);
         lastTargetPosition = targetMonster != null ? targetMonster.transform.position : transform.position;
     }
 
@@ -83,7 +165,11 @@ public class BasicAttackProjectile : MonoBehaviour
 
     private void Impact(Vector3 impactPosition)
     {
-        if (isAreaAttack)
+        if (isHorizontalLineImpact)
+        {
+            UnitSkillHandler.DealHorizontalLineDamageAt(attacker, impactSkill, impactPosition, damage);
+        }
+        else if (isAreaAttack)
         {
             if (showAreaIndicator && areaRadius > 0f)
                 SpawnAreaIndicator(impactPosition, areaRadius, areaIndicatorColor, areaIndicatorDuration);
@@ -100,6 +186,15 @@ public class BasicAttackProjectile : MonoBehaviour
 
     private void DealAreaDamage(Vector3 center)
     {
+        List<MonsterController> targets = FindAreaTargets(center);
+
+        foreach (MonsterController monster in targets)
+            DamageSystem.DealDamage(attacker, monster, damage);
+    }
+
+    private List<MonsterController> FindAreaTargets(Vector3 center)
+    {
+        List<MonsterController> targets = new();
         MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
 
         foreach (MonsterController monster in monsters)
@@ -108,11 +203,21 @@ public class BasicAttackProjectile : MonoBehaviour
                 continue;
 
             if (Vector3.Distance(center, monster.transform.position) <= areaRadius)
-                DamageSystem.DealDamage(attacker, monster, damage);
+                targets.Add(monster);
         }
+
+        targets.Sort((a, b) =>
+            Vector3.Distance(center, a.transform.position)
+            .CompareTo(Vector3.Distance(center, b.transform.position)));
+
+        int maxTargets = attacker != null && attacker.Data != null ? attacker.Data.maxAreaAttackTargets : 0;
+        if (maxTargets > 0 && targets.Count > maxTargets)
+            targets.RemoveRange(maxTargets, targets.Count - maxTargets);
+
+        return targets;
     }
 
-    private static void SpawnAreaIndicator(Vector3 center, float radius, Color color, float duration)
+    public static GameObject SpawnAreaIndicator(Vector3 center, float radius, Color color, float duration, bool autoDestroy = true)
     {
         GameObject indicatorObject = new GameObject("BasicAttackAreaIndicator");
         indicatorObject.transform.position = center;
@@ -123,7 +228,10 @@ public class BasicAttackProjectile : MonoBehaviour
         spriteRenderer.color = color;
         spriteRenderer.sortingOrder = 20;
 
-        Destroy(indicatorObject, duration);
+        if (autoDestroy)
+            Destroy(indicatorObject, duration);
+
+        return indicatorObject;
     }
 
     private static Sprite GetCircleSprite()

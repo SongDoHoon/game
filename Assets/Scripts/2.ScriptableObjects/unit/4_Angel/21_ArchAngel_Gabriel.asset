@@ -33,5 +33,6 @@ MonoBehaviour:
   showAreaAttackIndicator: 1
   areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
   areaAttackIndicatorDuration: 0.25
+  skillData: {fileID: 11400000, guid: f3728a8cb6fdaca4fb5e81b457a9238f, type: 2}
   canEvolve: 0
   evolveKey: 

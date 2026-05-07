@@ -4,6 +4,7 @@ using UnityEngine;
 public class UnitController : MonoBehaviour
 {
     private const int CircleSegmentCount = 64;
+    private const float DefaultCritDamageMultiplier = 2f;
 
     public UnitData Data { get; private set; }
 
@@ -11,6 +12,8 @@ public class UnitController : MonoBehaviour
     public float CurrentAttackSpeed { get; private set; }
     public float CurrentAttackInterval { get; private set; }
     public float CurrentAttackRange { get; private set; }
+    public float CurrentCritChance { get; private set; }
+    public float CurrentCritDamageMultiplier { get; private set; }
 
     public UnitPlacementTile CurrentTile { get; private set; }
 
@@ -20,8 +23,16 @@ public class UnitController : MonoBehaviour
     [SerializeField] private float debugCurrentAttackInterval;
     [SerializeField] private float debugCurrentAttackSpeed;
     [SerializeField] private float debugCurrentAttackRange;
+    [SerializeField] private float debugCurrentCritChance;
+    [SerializeField] private float debugCurrentCritDamageMultiplier;
+    [SerializeField] private float debugSkillCooldownTimer;
+    [SerializeField] private int debugSkillBasicAttackCount;
+    [SerializeField] private int debugPassiveStack;
 
     private float attackTimer;
+    private float skillCooldownTimer;
+    private int skillBasicAttackCount;
+    private int passiveStack;
     private MonsterController currentTarget;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -39,9 +50,17 @@ public class UnitController : MonoBehaviour
     {
         Data = data;
         attackTimer = 0f;
+        skillCooldownTimer = 0f;
+        skillBasicAttackCount = 0;
+        passiveStack = 0;
         buffs.Clear();
 
         RecalculateStats();
+        SkillData skill = GetSkillData();
+        if (skill != null && skill.startWithCooldown)
+            StartSkillCooldown(UnitSkillHandler.CalculateFinalCooldown(this, skill));
+
+        UnitSkillHandler.ApplyPassiveOnStart(this);
         ApplyVisualIdentity();
     }
 
@@ -51,6 +70,7 @@ public class UnitController : MonoBehaviour
 
         UpdateBuffs();
         UpdateTarget();
+        UnitSkillHandler.UpdateContinuousEffects(this);
         UpdateAttack();
         UpdateSelectionVisual();
     }
@@ -87,6 +107,7 @@ public class UnitController : MonoBehaviour
         {
             attackTimer = 0f;
             UnitAttackHandler.ExecuteBasicAttack(this, currentTarget);
+            UnitSkillHandler.OnBasicAttack(this, currentTarget);
         }
     }
 
@@ -96,7 +117,11 @@ public class UnitController : MonoBehaviour
 
         double runtimeAttackBonus = 0.0;
         float runtimeAttackSpeedBonus = 0f;
+        float runtimeCritChanceBonus = 0f;
+        float runtimeCritDamageBonus = 0f;
         CurrentAttackRange = Data.attackRange;
+        CurrentCritChance = 0f;
+        CurrentCritDamageMultiplier = DefaultCritDamageMultiplier;
 
         foreach (BuffInstance buff in buffs)
         {
@@ -114,6 +139,14 @@ public class UnitController : MonoBehaviour
                     CurrentAttackRange += buff.value;
                     break;
 
+                case BuffType.CritChanceUp:
+                    runtimeCritChanceBonus += buff.value;
+                    break;
+
+                case BuffType.CritDamageUp:
+                    runtimeCritDamageBonus += buff.value;
+                    break;
+
                 case BuffType.AllStatUp:
                     runtimeAttackBonus += buff.value;
                     runtimeAttackSpeedBonus += buff.value;
@@ -125,6 +158,12 @@ public class UnitController : MonoBehaviour
         UnitGrowthManager growthManager = UnitGrowthManager.Instance;
         UnitGrowthEntry unitGrowth = growthManager != null ? growthManager.GetUnitGrowth(Data.unitId) : null;
         PlayerPassiveGrowthData playerPassiveGrowth = growthManager != null ? growthManager.playerPassiveGrowthData : null;
+        runtimeAttackBonus += UnitSkillHandler.GetGlobalPassiveAttackPowerBonus();
+        runtimeAttackSpeedBonus += UnitSkillHandler.GetGlobalPassiveAttackSpeedBonus();
+        runtimeAttackBonus += UnitSkillHandler.GetSelfPassiveAttackPowerBonus(this);
+        runtimeAttackSpeedBonus += UnitSkillHandler.GetSelfPassiveAttackSpeedBonus(this);
+        runtimeAttackBonus += UnitSkillHandler.GetPassiveStackAttackPowerBonus(this);
+        runtimeAttackSpeedBonus += UnitSkillHandler.GetPassiveStackAttackSpeedBonus(this);
 
         UnitStatModifierResult statResult = UnitStatCalculator.Calculate(
             Data,
@@ -138,6 +177,8 @@ public class UnitController : MonoBehaviour
         CurrentAttackPower = statResult.finalAttack;
         CurrentAttackInterval = statResult.finalAttackInterval;
         CurrentAttackSpeed = 1f / Mathf.Max(UnitGrowthBalanceConfig.MinimumAttackInterval, CurrentAttackInterval);
+        CurrentCritChance = Mathf.Clamp01(runtimeCritChanceBonus);
+        CurrentCritDamageMultiplier = Mathf.Max(1f, DefaultCritDamageMultiplier + runtimeCritDamageBonus);
         RefreshRuntimeStatDebugFields();
 
     }
@@ -152,7 +193,7 @@ public class UnitController : MonoBehaviour
     {
         if (isRuntime)
         {
-            AddOrRefreshRuntimeBuff(buffType, value, duration);
+            AddOrRefreshRuntimeBuff(buffType, value, duration, source);
             return;
         }
 
@@ -167,9 +208,10 @@ public class UnitController : MonoBehaviour
         });
     }
 
-    public void AddOrRefreshRuntimeBuff(BuffType buffType, float value, float duration)
+    public void AddOrRefreshRuntimeBuff(BuffType buffType, float value, float duration, UnitController source = null)
     {
-        BuffInstance existing = buffs.Find(b => b.isRuntime && b.buffType == buffType && b.source == this);
+        UnitController safeSource = source != null ? source : this;
+        BuffInstance existing = buffs.Find(b => b.isRuntime && b.buffType == buffType && b.source == safeSource);
 
         if (existing != null)
         {
@@ -185,16 +227,70 @@ public class UnitController : MonoBehaviour
             value = value,
             duration = duration,
             remainTime = duration,
-            source = this,
+            source = safeSource,
             isRuntime = true
         });
     }
 
     public void AddPassiveStack(int amount)
     {
+        passiveStack = Mathf.Max(0, passiveStack + amount);
+
+        SkillData skill = GetSkillData();
+        if (skill != null && skill.maxPassiveStack > 0)
+            passiveStack = Mathf.Min(passiveStack, skill.maxPassiveStack);
+
+        RefreshRuntimeStatDebugFields();
     }
 
     public MonsterController GetCurrentTarget() => currentTarget;
+
+    public SkillData GetSkillData()
+    {
+        return Data != null ? Data.skillData : null;
+    }
+
+    public void TickSkillCooldown(float deltaTime)
+    {
+        if (skillCooldownTimer <= 0f)
+            return;
+
+        skillCooldownTimer = Mathf.Max(0f, skillCooldownTimer - Mathf.Max(0f, deltaTime));
+        RefreshRuntimeStatDebugFields();
+    }
+
+    public bool IsSkillCooldownReady()
+    {
+        return skillCooldownTimer <= 0f;
+    }
+
+    public void StartSkillCooldown(float cooldown)
+    {
+        skillCooldownTimer = Mathf.Max(0f, cooldown);
+        RefreshRuntimeStatDebugFields();
+    }
+
+    public void AddSkillBasicAttackCount(int amount)
+    {
+        skillBasicAttackCount = Mathf.Max(0, skillBasicAttackCount + amount);
+        RefreshRuntimeStatDebugFields();
+    }
+
+    public void ResetSkillBasicAttackCount()
+    {
+        skillBasicAttackCount = 0;
+        RefreshRuntimeStatDebugFields();
+    }
+
+    public int GetSkillBasicAttackCount()
+    {
+        return skillBasicAttackCount;
+    }
+
+    public int GetPassiveStack()
+    {
+        return passiveStack;
+    }
 
     public int GetNearbyEnemyCount(float radius)
     {
@@ -355,6 +451,11 @@ public class UnitController : MonoBehaviour
         debugCurrentAttackInterval = CurrentAttackInterval;
         debugCurrentAttackSpeed = CurrentAttackSpeed;
         debugCurrentAttackRange = CurrentAttackRange;
+        debugCurrentCritChance = CurrentCritChance;
+        debugCurrentCritDamageMultiplier = CurrentCritDamageMultiplier;
+        debugSkillCooldownTimer = skillCooldownTimer;
+        debugSkillBasicAttackCount = skillBasicAttackCount;
+        debugPassiveStack = passiveStack;
     }
 
     private void EnsureNameText()

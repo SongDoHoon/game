@@ -175,6 +175,13 @@ public class UnitPlacementManager : MonoBehaviour
             AddUnitsFromEntries(summonManager.summonTable.verureUnits);
         }
 
+        UnitGrowthManager unitGrowthManager = UnitGrowthManager.Instance;
+        if (unitGrowthManager == null)
+            unitGrowthManager = FindFirstObjectByType<UnitGrowthManager>();
+
+        if (unitGrowthManager != null)
+            AddUnitsFromDatabase(unitGrowthManager.unitDatabase);
+
         EvolutionManager evolutionManager = FindFirstObjectByType<EvolutionManager>();
         if (evolutionManager != null)
         {
@@ -200,6 +207,15 @@ public class UnitPlacementManager : MonoBehaviour
             if (entry == null) continue;
             AddSelectableUnit(entry.unitData);
         }
+    }
+
+    private void AddUnitsFromDatabase(UnitData[] unitDatabase)
+    {
+        if (unitDatabase == null)
+            return;
+
+        foreach (UnitData unitData in unitDatabase)
+            AddSelectableUnit(unitData);
     }
 
     private void AddSelectableUnit(UnitData unitData)
