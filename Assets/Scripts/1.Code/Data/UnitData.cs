@@ -40,6 +40,7 @@ public class UnitData : ScriptableObject
 
     [Header("Skill")]
     public SkillData skillData;
+    public float skillAttackLockDurationOverride = -1f;
 
     [Header("Evolution")]
     public bool canEvolve;

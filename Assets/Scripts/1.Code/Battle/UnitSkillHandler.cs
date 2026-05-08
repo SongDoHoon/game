@@ -4,6 +4,10 @@ using UnityEngine;
 
 public static class UnitSkillHandler
 {
+    private const int ConeIndicatorSegmentCount = 24;
+    private const float MinimumVisibleIndicatorAlpha = 0.35f;
+    private const float MinimumVisibleIndicatorDuration = 0.35f;
+
     private static Sprite squareSprite;
 
     public static void UpdateContinuousEffects(UnitController unit)
@@ -18,6 +22,7 @@ public static class UnitSkillHandler
             return;
 
         ExecuteLowHpTargetsInRange(unit, skill);
+        ApplyPassiveDebuffToTargetsInRange(unit, skill);
 
         if (skill.triggerType != SkillTriggerType.Cooldown)
             return;
@@ -25,7 +30,11 @@ public static class UnitSkillHandler
         if (!unit.IsSkillCooldownReady())
             return;
 
-        TryExecuteSkill(unit, skill, unit.GetCurrentTarget());
+        MonsterController triggerTarget = unit.GetCurrentTarget();
+        if (!IsValidTarget(unit, triggerTarget, unit.CurrentAttackRange))
+            return;
+
+        TryExecuteSkill(unit, skill, triggerTarget);
     }
 
     public static void ApplyPassiveOnStart(UnitController unit)
@@ -84,10 +93,37 @@ public static class UnitSkillHandler
         if (!IsUsableSkill(skill))
             return;
 
-        if (skill.passiveStackGainOnKill <= 0)
+        int stackGain = GetPassiveStackGainOnKill(skill, target);
+        if (stackGain <= 0)
             return;
 
-        unit.AddPassiveStack(skill.passiveStackGainOnKill);
+        unit.AddPassiveStack(stackGain);
+        unit.RecalculateStats();
+    }
+
+    public static void OnAnyMonsterKilled(MonsterController target)
+    {
+        if (target == null)
+            return;
+
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+
+        foreach (UnitController unit in units)
+        {
+            if (!IsValidUnit(unit))
+                continue;
+
+            SkillData skill = unit.GetSkillData();
+            if (!IsUsableSkill(skill))
+                continue;
+
+            int stackGain = GetPassiveStackGainOnAnyMonsterDeath(skill, target);
+            if (stackGain <= 0)
+                continue;
+
+            unit.AddPassiveStack(stackGain);
+            unit.RecalculateStats();
+        }
     }
 
     public static void ExecuteActiveSkill(UnitController unit)
@@ -102,33 +138,49 @@ public static class UnitSkillHandler
         if (!unit.IsSkillCooldownReady())
             return;
 
-        TryExecuteSkill(unit, skill, unit.GetCurrentTarget());
+        MonsterController triggerTarget = unit.GetCurrentTarget();
+        if (!IsValidTarget(unit, triggerTarget, unit.CurrentAttackRange))
+            return;
+
+        TryExecuteSkill(unit, skill, triggerTarget);
     }
 
     private static bool TryExecuteSkill(UnitController unit, SkillData skill, MonsterController preferredTarget)
     {
-        if (skill.effectType == SkillEffectType.ApplyBuff)
+        SkillEffectType effectType = GetEffectiveSkillEffectType(skill);
+
+        if (effectType == SkillEffectType.ApplyBuff)
         {
-            ApplySkillBuffEffects(unit, skill);
-            unit.StartSkillCooldown(CalculateFinalCooldown(unit, skill));
+            bool appliedBuff = ApplySkillBuffEffects(unit, skill);
+            TryGainPassiveStackOnBuffSkill(unit, skill, appliedBuff);
+            StartExecutedSkillCooldownAndLock(unit, skill);
             return true;
         }
 
-        if (skill.effectType == SkillEffectType.HorizontalLineDamage)
+        if (effectType == SkillEffectType.HorizontalLineDamage)
         {
             if (!TryDealHorizontalLineDamage(unit, skill, preferredTarget, CalculateFinalSkillDamage(unit, skill)))
                 return false;
 
-            unit.StartSkillCooldown(CalculateFinalCooldown(unit, skill));
+            StartExecutedSkillCooldownAndLock(unit, skill);
             return true;
         }
 
-        if (skill.effectType == SkillEffectType.RepeatedAreaDamage)
+        if (effectType == SkillEffectType.RepeatedAreaDamage)
         {
             if (!TryStartRepeatedAreaDamage(unit, skill, preferredTarget, CalculateFinalSkillDamage(unit, skill)))
                 return false;
 
-            unit.StartSkillCooldown(CalculateFinalCooldown(unit, skill));
+            StartExecutedSkillCooldownAndLock(unit, skill);
+            return true;
+        }
+
+        if (effectType == SkillEffectType.ConeDamage)
+        {
+            if (!TryDealConeDamage(unit, skill, preferredTarget, CalculateFinalSkillDamage(unit, skill)))
+                return false;
+
+            StartExecutedSkillCooldownAndLock(unit, skill);
             return true;
         }
 
@@ -152,14 +204,30 @@ public static class UnitSkillHandler
         else if (isAreaSkill)
         {
             DealAreaSkillDamage(unit, target.transform.position, skill.areaRadius, finalDamage);
+            ApplySkillDebuffsInArea(unit, skill, target.transform.position, skill.areaRadius);
         }
         else
         {
             DamageSystem.DealDamage(unit, target, finalDamage);
+            ApplySkillDebuffsToTarget(unit, skill, target);
         }
 
-        unit.StartSkillCooldown(CalculateFinalCooldown(unit, skill));
+        StartExecutedSkillCooldownAndLock(unit, skill);
         return true;
+    }
+
+    private static void StartExecutedSkillCooldownAndLock(UnitController unit, SkillData skill)
+    {
+        unit.StartSkillCooldown(CalculateFinalCooldown(unit, skill));
+        unit.StartSkillAttackLock(GetAttackLockDurationOnCast(unit, skill));
+    }
+
+    private static float GetAttackLockDurationOnCast(UnitController unit, SkillData skill)
+    {
+        if (unit != null && unit.Data != null && unit.Data.skillAttackLockDurationOverride >= 0f)
+            return unit.Data.skillAttackLockDurationOverride;
+
+        return skill != null ? skill.attackLockDurationOnCast : 0f;
     }
 
     public static float GetGlobalPassiveAttackPowerBonus()
@@ -246,10 +314,66 @@ public static class UnitSkillHandler
         }
     }
 
-    private static void ApplySkillBuffEffects(UnitController caster, SkillData skill)
+    private static void ApplyPassiveDebuffToTargetsInRange(UnitController unit, SkillData skill)
+    {
+        if (!skill.hasPassiveAura || skill.passiveDebuffType == DebuffType.None)
+            return;
+
+        float radius = Mathf.Max(0f, skill.passiveDebuffRadius);
+        if (radius <= 0f)
+            return;
+
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (monster == null || !monster.IsAlive)
+                continue;
+
+            if (Vector3.Distance(unit.transform.position, monster.transform.position) > radius)
+                continue;
+
+            ApplyDebuffToTarget(
+                unit,
+                monster,
+                skill.passiveDebuffType,
+                skill.passiveDebuffValue,
+                skill.passiveDebuffDuration,
+                1,
+                1);
+        }
+    }
+
+    private static int GetPassiveStackGainOnKill(SkillData skill, MonsterController target)
+    {
+        if (skill == null || target == null)
+            return 0;
+
+        bool isBossOrElite = target.isBoss || target.monsterType != MonsterType.Normal;
+        if (isBossOrElite && skill.passiveBossOrEliteStackGainOnKill > 0)
+            return skill.passiveBossOrEliteStackGainOnKill;
+
+        return skill.passiveStackGainOnKill;
+    }
+
+    private static int GetPassiveStackGainOnAnyMonsterDeath(SkillData skill, MonsterController target)
+    {
+        if (skill == null || target == null)
+            return 0;
+
+        bool isBossOrElite = target.isBoss || target.monsterType != MonsterType.Normal;
+        if (isBossOrElite && skill.passiveBossOrEliteStackGainOnAnyMonsterDeath > 0)
+            return skill.passiveBossOrEliteStackGainOnAnyMonsterDeath;
+
+        return skill.passiveStackGainOnAnyMonsterDeath;
+    }
+
+    private static bool ApplySkillBuffEffects(UnitController caster, SkillData skill)
     {
         if (skill.buffEffects == null || skill.buffEffects.Length == 0)
-            return;
+            return false;
+
+        bool appliedAnyBuff = false;
 
         foreach (SkillBuffEffect buffEffect in skill.buffEffects)
         {
@@ -258,13 +382,15 @@ public static class UnitSkillHandler
 
             if (buffEffect.applyToAllUnits)
             {
-                ApplyBuffToAllUnits(caster, buffEffect);
+                appliedAnyBuff |= ApplyBuffToAllUnits(caster, buffEffect);
             }
             else
             {
-                ApplyBuffToUnit(caster, caster, buffEffect);
+                appliedAnyBuff |= ApplyBuffToUnit(caster, caster, buffEffect);
             }
         }
+
+        return appliedAnyBuff;
     }
 
     private static void ApplyPassiveStackOnBasicAttack(UnitController unit, SkillData skill)
@@ -276,18 +402,21 @@ public static class UnitSkillHandler
         unit.RecalculateStats();
     }
 
-    private static void ApplyBuffToAllUnits(UnitController caster, SkillBuffEffect buffEffect)
+    private static bool ApplyBuffToAllUnits(UnitController caster, SkillBuffEffect buffEffect)
     {
+        bool appliedAnyBuff = false;
         UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
 
         foreach (UnitController unit in units)
-            ApplyBuffToUnit(unit, caster, buffEffect);
+            appliedAnyBuff |= ApplyBuffToUnit(unit, caster, buffEffect);
+
+        return appliedAnyBuff;
     }
 
-    private static void ApplyBuffToUnit(UnitController targetUnit, UnitController sourceUnit, SkillBuffEffect buffEffect)
+    private static bool ApplyBuffToUnit(UnitController targetUnit, UnitController sourceUnit, SkillBuffEffect buffEffect)
     {
         if (!IsValidUnit(targetUnit))
-            return;
+            return false;
 
         targetUnit.ApplyExtendedBuff(
             buffEffect.buffType,
@@ -297,6 +426,64 @@ public static class UnitSkillHandler
             true);
 
         targetUnit.RecalculateStats();
+        return true;
+    }
+
+    private static void TryGainPassiveStackOnBuffSkill(UnitController unit, SkillData skill, bool appliedBuff)
+    {
+        if (!appliedBuff || !IsValidUnit(unit) || skill == null)
+            return;
+
+        if (!skill.hasPassiveAura || skill.passiveStackGainOnBuffSkill <= 0)
+            return;
+
+        if (unit.IsPassiveMaxStackBuffActive())
+            return;
+
+        unit.AddPassiveStack(skill.passiveStackGainOnBuffSkill);
+        unit.RecalculateStats();
+
+        if (skill.maxPassiveStack <= 0 || unit.GetPassiveStack() < skill.maxPassiveStack)
+            return;
+
+        TryApplyPassiveMaxStackBuff(unit, skill);
+    }
+
+    private static void TryApplyPassiveMaxStackBuff(UnitController unit, SkillData skill)
+    {
+        if (skill.passiveMaxStackBuffEffects == null || skill.passiveMaxStackBuffEffects.Length == 0)
+            return;
+
+        unit.SetPassiveMaxStackBuffActive(true);
+
+        float longestDuration = 0f;
+        foreach (SkillBuffEffect buffEffect in skill.passiveMaxStackBuffEffects)
+        {
+            if (buffEffect == null)
+                continue;
+
+            longestDuration = Mathf.Max(longestDuration, Mathf.Max(0f, buffEffect.duration));
+
+            if (buffEffect.applyToAllUnits)
+                ApplyBuffToAllUnits(unit, buffEffect);
+            else
+                ApplyBuffToUnit(unit, unit, buffEffect);
+        }
+
+        unit.StartCoroutine(CoResetPassiveStackAfterMaxStackBuff(unit, Mathf.Max(0f, longestDuration)));
+    }
+
+    private static IEnumerator CoResetPassiveStackAfterMaxStackBuff(UnitController unit, float duration)
+    {
+        if (duration > 0f)
+            yield return new WaitForSeconds(duration);
+
+        if (!IsValidUnit(unit))
+            yield break;
+
+        unit.ResetPassiveStack();
+        unit.SetPassiveMaxStackBuffActive(false);
+        unit.RecalculateStats();
     }
 
     private static MonsterController ResolveTarget(UnitController unit, SkillData skill, MonsterController preferredTarget)
@@ -351,6 +538,73 @@ public static class UnitSkillHandler
         }
     }
 
+    public static void ApplySkillDebuffsInArea(UnitController unit, SkillData skill, Vector3 center, float radius)
+    {
+        if (!HasSkillDebuffs(skill))
+            return;
+
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (monster == null || !monster.IsAlive)
+                continue;
+
+            if (Vector3.Distance(center, monster.transform.position) <= radius)
+                ApplySkillDebuffsToTarget(unit, skill, monster);
+        }
+    }
+
+    public static void ApplySkillDebuffsToTarget(UnitController unit, SkillData skill, MonsterController target)
+    {
+        if (!HasSkillDebuffs(skill) || target == null || !target.IsAlive)
+            return;
+
+        foreach (SkillDebuffEffect debuffEffect in skill.debuffEffects)
+        {
+            if (debuffEffect == null || debuffEffect.debuffType == DebuffType.None)
+                continue;
+
+            ApplyDebuffToTarget(
+                unit,
+                target,
+                debuffEffect.debuffType,
+                debuffEffect.value,
+                debuffEffect.duration,
+                debuffEffect.stack,
+                debuffEffect.maxStack);
+        }
+    }
+
+    private static void ApplyDebuffToTarget(
+        UnitController unit,
+        MonsterController target,
+        DebuffType debuffType,
+        float value,
+        float duration,
+        int stack,
+        int maxStack)
+    {
+        if (unit == null || target == null || !target.IsAlive || debuffType == DebuffType.None)
+            return;
+
+        target.AddDebuff(new DebuffInstance
+        {
+            debuffType = debuffType,
+            value = Mathf.Max(0f, value),
+            duration = Mathf.Max(0.01f, duration),
+            remainTime = Mathf.Max(0.01f, duration),
+            stack = Mathf.Max(1, stack),
+            maxStack = Mathf.Max(1, maxStack),
+            source = unit
+        });
+    }
+
+    private static bool HasSkillDebuffs(SkillData skill)
+    {
+        return skill != null && skill.debuffEffects != null && skill.debuffEffects.Length > 0;
+    }
+
     private static bool TryDealHorizontalLineDamage(UnitController unit, SkillData skill, MonsterController preferredTarget, double finalDamage)
     {
         if (skill.lineOrigin == SkillLineOrigin.TargetPosition)
@@ -392,6 +646,76 @@ public static class UnitSkillHandler
 
         unit.StartCoroutine(CoRepeatedAreaDamage(unit, skill, center, finalDamage));
         return true;
+    }
+
+    private static bool TryDealConeDamage(UnitController unit, SkillData skill, MonsterController preferredTarget, double finalDamage)
+    {
+        if (!IsValidUnit(unit) || skill == null)
+            return false;
+
+        float range = Mathf.Max(0f, skill.coneRange);
+        float halfAngle = Mathf.Clamp(skill.coneAngle, 1f, 360f) * 0.5f;
+        if (range <= 0f)
+            return false;
+
+        Vector3 forward = ResolveConeForward(unit, skill, preferredTarget, range);
+        if (skill.showAreaAttackIndicator)
+            SpawnConeIndicator(unit.transform.position, forward, range, halfAngle, skill.areaAttackIndicatorColor, skill.areaAttackIndicatorDuration);
+
+        bool hitAnyTarget = false;
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (monster == null || !monster.IsAlive)
+                continue;
+
+            Vector3 offset = monster.transform.position - unit.transform.position;
+            if (offset.sqrMagnitude > range * range)
+                continue;
+
+            if (offset.sqrMagnitude <= Mathf.Epsilon)
+                continue;
+
+            if (Vector3.Angle(forward, offset.normalized) > halfAngle)
+                continue;
+
+            DamageSystem.DealDamage(unit, monster, finalDamage);
+            ApplySkillDebuffsToTarget(unit, skill, monster);
+            hitAnyTarget = true;
+        }
+
+        return hitAnyTarget;
+    }
+
+    private static Vector3 ResolveConeForward(UnitController unit, SkillData skill, MonsterController preferredTarget, float range)
+    {
+        if (skill.aimConeAtTarget && IsValidTarget(unit, preferredTarget, range))
+            return (preferredTarget.transform.position - unit.transform.position).normalized;
+
+        if (skill.aimConeAtTarget)
+        {
+            MonsterController target = UnitTargetFinder.FindTarget(
+                unit.transform.position,
+                range,
+                skill.targetPriority,
+                skill.bossFallbackTargetPriority);
+
+            if (target != null)
+                return (target.transform.position - unit.transform.position).normalized;
+        }
+
+        switch (skill.coneFallbackDirection)
+        {
+            case SkillLineDirection.Left:
+                return Vector3.left;
+
+            case SkillLineDirection.Right:
+                return Vector3.right;
+
+            default:
+                return Vector3.right;
+        }
     }
 
     private static IEnumerator CoRepeatedAreaDamage(UnitController unit, SkillData skill, Vector3 center, double finalDamage)
@@ -515,6 +839,68 @@ public static class UnitSkillHandler
         return new Vector3(displayLength, width, 1f);
     }
 
+    private static void SpawnConeIndicator(Vector3 origin, Vector3 forward, float range, float halfAngle, Color color, float duration)
+    {
+        if (range <= 0f || forward.sqrMagnitude <= Mathf.Epsilon)
+            return;
+
+        GameObject indicatorObject = new GameObject("ConeSkillIndicator");
+        indicatorObject.transform.position = origin;
+
+        MeshFilter meshFilter = indicatorObject.AddComponent<MeshFilter>();
+        MeshRenderer meshRenderer = indicatorObject.AddComponent<MeshRenderer>();
+        meshFilter.mesh = CreateConeMesh(forward.normalized, range, halfAngle);
+
+        Shader spriteShader = Shader.Find("Sprites/Default");
+        if (spriteShader != null)
+            meshRenderer.material = new Material(spriteShader);
+
+        if (meshRenderer.material != null)
+            meshRenderer.material.color = GetVisibleIndicatorColor(color);
+
+        meshRenderer.sortingOrder = 21;
+        Object.Destroy(indicatorObject, Mathf.Max(MinimumVisibleIndicatorDuration, duration));
+    }
+
+    private static Mesh CreateConeMesh(Vector3 forward, float range, float halfAngle)
+    {
+        Mesh mesh = new Mesh();
+        Vector3[] vertices = new Vector3[ConeIndicatorSegmentCount + 2];
+        int[] triangles = new int[ConeIndicatorSegmentCount * 3];
+
+        vertices[0] = Vector3.zero;
+        float forwardAngle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
+        float startAngle = forwardAngle - halfAngle;
+        float angleStep = (halfAngle * 2f) / ConeIndicatorSegmentCount;
+
+        for (int i = 0; i <= ConeIndicatorSegmentCount; i++)
+        {
+            float angle = (startAngle + angleStep * i) * Mathf.Deg2Rad;
+            vertices[i + 1] = new Vector3(Mathf.Cos(angle) * range, Mathf.Sin(angle) * range, 0f);
+        }
+
+        for (int i = 0; i < ConeIndicatorSegmentCount; i++)
+        {
+            int triangleIndex = i * 3;
+            triangles[triangleIndex] = 0;
+            triangles[triangleIndex + 1] = i + 1;
+            triangles[triangleIndex + 2] = i + 2;
+        }
+
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateBounds();
+        return mesh;
+    }
+
+    private static Color GetVisibleIndicatorColor(Color color)
+    {
+        if (color.a < MinimumVisibleIndicatorAlpha)
+            color.a = MinimumVisibleIndicatorAlpha;
+
+        return color;
+    }
+
     private static Sprite GetSquareSprite()
     {
         if (squareSprite != null)
@@ -554,6 +940,20 @@ public static class UnitSkillHandler
             return unit != null ? unit.CurrentAttackRange : 0f;
 
         return skill.skillRange;
+    }
+
+    private static SkillEffectType GetEffectiveSkillEffectType(SkillData skill)
+    {
+        if (skill == null)
+            return SkillEffectType.Damage;
+
+        if (skill.effectType != SkillEffectType.Damage)
+            return skill.effectType;
+
+        if (skill.repeatedHitCount > 1 && skill.areaRadius > 0f)
+            return SkillEffectType.RepeatedAreaDamage;
+
+        return skill.effectType;
     }
 
     private static UnitGrowthEntry GetUnitGrowth(UnitController unit)

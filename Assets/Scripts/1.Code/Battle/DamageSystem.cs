@@ -12,7 +12,10 @@ public static class DamageSystem
             target.TakeDamage(target.CurrentHp);
             bool executed = wasAlive && !target.IsAlive;
             if (executed)
+            {
                 UnitSkillHandler.OnMonsterKilled(attacker, target);
+                UnitSkillHandler.OnAnyMonsterKilled(target);
+            }
 
             return executed;
         }
@@ -31,7 +34,10 @@ public static class DamageSystem
 
         bool killed = wasAlive && !target.IsAlive;
         if (killed)
+        {
             UnitSkillHandler.OnMonsterKilled(attacker, target);
+            UnitSkillHandler.OnAnyMonsterKilled(target);
+        }
 
         return killed;
     }

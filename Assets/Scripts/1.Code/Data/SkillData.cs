@@ -12,7 +12,8 @@ public enum SkillEffectType
     Damage,
     ApplyBuff,
     HorizontalLineDamage,
-    RepeatedAreaDamage
+    RepeatedAreaDamage,
+    ConeDamage
 }
 
 public enum SkillLineDirection
@@ -40,6 +41,7 @@ public class SkillData : ScriptableObject
     public SkillTriggerType triggerType = SkillTriggerType.Cooldown;
     public SkillEffectType effectType = SkillEffectType.Damage;
     public float cooldown = 8f;
+    public float attackLockDurationOnCast = 0.2f;
     public bool startWithCooldown;
     [Range(0f, 1f)] public float triggerChance = 1f;
     public int requiredBasicAttackCount = 3;
@@ -54,6 +56,10 @@ public class SkillData : ScriptableObject
     public float passiveDamageBonusPerEnemyInRange;
     public int passiveDamageBonusMaxEnemyCount;
     [Range(0f, 1f)] public float passiveExecuteHpPercent;
+    public float passiveDebuffRadius = 0f;
+    public DebuffType passiveDebuffType = DebuffType.None;
+    public float passiveDebuffValue = 0f;
+    public float passiveDebuffDuration = 0.2f;
 
     [Header("Targeting")]
     public bool useCurrentTargetFirst = true;
@@ -78,17 +84,31 @@ public class SkillData : ScriptableObject
     [Header("Passive Stack")]
     public int passiveStackGainOnBasicAttack = 0;
     public int passiveStackGainOnKill = 0;
+    public int passiveBossOrEliteStackGainOnKill = 0;
+    public int passiveStackGainOnAnyMonsterDeath = 0;
+    public int passiveBossOrEliteStackGainOnAnyMonsterDeath = 0;
     public int maxPassiveStack = 0;
     public float attackPowerBonusPerPassiveStack = 0f;
     public float attackSpeedBonusPerPassiveStack = 0f;
+    public int passiveStackGainOnBuffSkill = 0;
+    public SkillBuffEffect[] passiveMaxStackBuffEffects = new SkillBuffEffect[0];
 
     [Header("Repeated Area Damage")]
     public SkillLineOrigin repeatedDamageOrigin = SkillLineOrigin.TargetPosition;
     public int repeatedHitCount = 1;
     public float repeatedHitInterval = 0.5f;
 
+    [Header("Cone Damage")]
+    public float coneRange = 4f;
+    [Range(1f, 360f)] public float coneAngle = 90f;
+    public SkillLineDirection coneFallbackDirection = SkillLineDirection.Right;
+    public bool aimConeAtTarget = true;
+
     [Header("Buff Effect")]
     public SkillBuffEffect[] buffEffects = new SkillBuffEffect[0];
+
+    [Header("Debuff Effect")]
+    public SkillDebuffEffect[] debuffEffects = new SkillDebuffEffect[0];
 
     [Header("Projectile")]
     public bool useProjectile = true;
@@ -110,6 +130,16 @@ public class SkillBuffEffect
     public float value;
     public float duration;
     public bool applyToAllUnits = true;
+}
+
+[System.Serializable]
+public class SkillDebuffEffect
+{
+    public DebuffType debuffType = DebuffType.None;
+    public float value;
+    public float duration;
+    public int stack = 1;
+    public int maxStack = 1;
 }
 
 [System.Serializable]

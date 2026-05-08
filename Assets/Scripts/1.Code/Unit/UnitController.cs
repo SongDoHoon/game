@@ -31,8 +31,10 @@ public class UnitController : MonoBehaviour
 
     private float attackTimer;
     private float skillCooldownTimer;
+    private float skillAttackLockTimer;
     private int skillBasicAttackCount;
     private int passiveStack;
+    private bool passiveMaxStackBuffActive;
     private MonsterController currentTarget;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -51,8 +53,10 @@ public class UnitController : MonoBehaviour
         Data = data;
         attackTimer = 0f;
         skillCooldownTimer = 0f;
+        skillAttackLockTimer = 0f;
         skillBasicAttackCount = 0;
         passiveStack = 0;
+        passiveMaxStackBuffActive = false;
         buffs.Clear();
 
         RecalculateStats();
@@ -69,6 +73,7 @@ public class UnitController : MonoBehaviour
         if (Data == null) return;
 
         UpdateBuffs();
+        TickSkillAttackLock(Time.deltaTime);
         UpdateTarget();
         UnitSkillHandler.UpdateContinuousEffects(this);
         UpdateAttack();
@@ -98,10 +103,11 @@ public class UnitController : MonoBehaviour
 
     private void UpdateAttack()
     {
-        if (currentTarget == null) return;
-
-        attackTimer += Time.deltaTime;
         float delay = Mathf.Max(UnitGrowthBalanceConfig.MinimumAttackInterval, CurrentAttackInterval);
+        attackTimer = Mathf.Min(delay, attackTimer + Time.deltaTime);
+
+        if (currentTarget == null) return;
+        if (IsBasicAttackLockedBySkill()) return;
 
         if (attackTimer >= delay)
         {
@@ -215,9 +221,18 @@ public class UnitController : MonoBehaviour
 
         if (existing != null)
         {
-            existing.value = value;
-            existing.duration = duration;
-            existing.remainTime = duration;
+            if (value > existing.value)
+            {
+                existing.value = value;
+                existing.duration = duration;
+                existing.remainTime = duration;
+            }
+            else if (Mathf.Approximately(value, existing.value))
+            {
+                existing.duration = duration;
+                existing.remainTime = duration;
+            }
+
             return;
         }
 
@@ -241,6 +256,22 @@ public class UnitController : MonoBehaviour
             passiveStack = Mathf.Min(passiveStack, skill.maxPassiveStack);
 
         RefreshRuntimeStatDebugFields();
+    }
+
+    public void ResetPassiveStack()
+    {
+        passiveStack = 0;
+        RefreshRuntimeStatDebugFields();
+    }
+
+    public bool IsPassiveMaxStackBuffActive()
+    {
+        return passiveMaxStackBuffActive;
+    }
+
+    public void SetPassiveMaxStackBuffActive(bool active)
+    {
+        passiveMaxStackBuffActive = active;
     }
 
     public MonsterController GetCurrentTarget() => currentTarget;
@@ -268,6 +299,24 @@ public class UnitController : MonoBehaviour
     {
         skillCooldownTimer = Mathf.Max(0f, cooldown);
         RefreshRuntimeStatDebugFields();
+    }
+
+    public void StartSkillAttackLock(float duration)
+    {
+        skillAttackLockTimer = Mathf.Max(skillAttackLockTimer, Mathf.Max(0f, duration));
+    }
+
+    public bool IsBasicAttackLockedBySkill()
+    {
+        return skillAttackLockTimer > 0f;
+    }
+
+    private void TickSkillAttackLock(float deltaTime)
+    {
+        if (skillAttackLockTimer <= 0f)
+            return;
+
+        skillAttackLockTimer = Mathf.Max(0f, skillAttackLockTimer - Mathf.Max(0f, deltaTime));
     }
 
     public void AddSkillBasicAttackCount(int amount)

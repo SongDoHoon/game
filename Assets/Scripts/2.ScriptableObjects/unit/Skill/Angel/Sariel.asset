@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c329cc47dbfbd48b26101027dfb834, type: 3}
+  m_Name: Sariel
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillId: sariel
+  skillName: "\uC0AC\uB9AC\uC5D8"
+  isEnabled: 1
+  triggerType: 0
+  effectType: 0
+  cooldown: 14
+  startWithCooldown: 1
+  triggerChance: 1
+  requiredBasicAttackCount: 3
+  hasPassiveAura: 1
+  stackPassiveAuraWithSameSkill: 0
+  passiveAllUnitAttackPowerBonus: 0
+  passiveAllUnitAttackSpeedBonus: 0
+  passiveSelfAttackPowerBonus: 0
+  passiveSelfAttackSpeedBonus: 0
+  passiveDamageBonusPerEnemyInRange: 0
+  passiveDamageBonusMaxEnemyCount: 0
+  passiveExecuteHpPercent: 0
+  passiveDebuffRadius: 2
+  passiveDebuffType: 2
+  passiveDebuffValue: 0.1
+  passiveDebuffDuration: 0.2
+  useCurrentTargetFirst: 1
+  targetPriority: 0
+  bossFallbackTargetPriority: 0
+  skillRange: 0
+  baseSkillDamageMultiplier: 1
+  additionalSkillDamage: 0
+  areaRadius: 1
+  lineOrigin: 0
+  lineDirection: 0
+  lineLength: 6
+  lineWidth: 1
+  showLineIndicator: 1
+  lineIndicatorColor: {r: 1, g: 0.92, b: 0.35, a: 0.25}
+  lineIndicatorDuration: 0.25
+  passiveStackGainOnBasicAttack: 0
+  passiveStackGainOnKill: 0
+  maxPassiveStack: 0
+  attackPowerBonusPerPassiveStack: 0
+  attackSpeedBonusPerPassiveStack: 0
+  passiveStackGainOnBuffSkill: 0
+  passiveMaxStackBuffEffects: []
+  repeatedDamageOrigin: 1
+  repeatedHitCount: 1
+  repeatedHitInterval: 0.5
+  buffEffects: []
+  debuffEffects:
+  - debuffType: 3
+    value: 0
+    duration: 2.5
+    stack: 1
+    maxStack: 1
+  useProjectile: 1
+  projectileSpeed: 10
+  projectileSize: 0.35
+  projectileColor: {r: 1, g: 0.92, b: 0.35, a: 1}
+  projectileSpawnOffset: {x: 0, y: 0.45, z: 0}
+  showAreaAttackIndicator: 1
+  areaAttackIndicatorColor: {r: 1, g: 0.92, b: 0.35, a: 0.25}
+  areaAttackIndicatorDuration: 0.25

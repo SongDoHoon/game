@@ -17659,7 +17659,7 @@ MonoBehaviour:
   waitingForNextWave: 0
   isPausedForAuction: 0
   gameEnded: 0
-  normalMonsterCount: 15
+  normalMonsterCount: 1
   normalSpawnSpacingDistance: 0.5
   finalWave: 100
 --- !u!4 &1864289198

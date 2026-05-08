@@ -5,6 +5,9 @@ public class BasicAttackProjectile : MonoBehaviour
 {
     private const int CircleTextureSize = 64;
     private const float HitDistance = 0.05f;
+    private const float MinimumVisibleProjectileSize = 0.22f;
+    private const float MinimumVisibleIndicatorAlpha = 0.35f;
+    private const float MinimumVisibleIndicatorDuration = 0.35f;
 
     private static Sprite circleSprite;
 
@@ -33,13 +36,15 @@ public class BasicAttackProjectile : MonoBehaviour
 
         UnitData data = attacker.Data;
         GameObject projectileObject = new GameObject("BasicAttackProjectile");
-        projectileObject.transform.position = attacker.transform.position + data.projectileSpawnOffset;
-        projectileObject.transform.localScale = Vector3.one * Mathf.Max(0.01f, data.projectileSize);
+        projectileObject.transform.position = GetSpawnPosition(attacker.transform.position, data.projectileSpawnOffset);
+        projectileObject.transform.localScale = Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, data.projectileSize);
 
         SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = GetCircleSprite();
         spriteRenderer.color = data.projectileColor;
         spriteRenderer.sortingOrder = 60;
+
+        AddProjectileTrail(projectileObject, data.projectileColor, data.projectileSize);
 
         BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
         projectile.Initialize(
@@ -66,13 +71,15 @@ public class BasicAttackProjectile : MonoBehaviour
             return;
 
         GameObject projectileObject = new GameObject("SkillProjectile");
-        projectileObject.transform.position = attacker.transform.position + skill.projectileSpawnOffset;
-        projectileObject.transform.localScale = Vector3.one * Mathf.Max(0.01f, skill.projectileSize);
+        projectileObject.transform.position = GetSpawnPosition(attacker.transform.position, skill.projectileSpawnOffset);
+        projectileObject.transform.localScale = Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, skill.projectileSize);
 
         SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = GetCircleSprite();
         spriteRenderer.color = skill.projectileColor;
         spriteRenderer.sortingOrder = 60;
+
+        AddProjectileTrail(projectileObject, skill.projectileColor, skill.projectileSize);
 
         BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
         projectile.Initialize(
@@ -85,6 +92,8 @@ public class BasicAttackProjectile : MonoBehaviour
             skill.showAreaAttackIndicator,
             skill.areaAttackIndicatorColor,
             skill.areaAttackIndicatorDuration);
+
+        projectile.impactSkill = skill;
     }
 
     public static void SpawnHorizontalLineSkill(
@@ -97,13 +106,15 @@ public class BasicAttackProjectile : MonoBehaviour
             return;
 
         GameObject projectileObject = new GameObject("HorizontalLineSkillProjectile");
-        projectileObject.transform.position = attacker.transform.position + skill.projectileSpawnOffset;
-        projectileObject.transform.localScale = Vector3.one * Mathf.Max(0.01f, skill.projectileSize);
+        projectileObject.transform.position = GetSpawnPosition(attacker.transform.position, skill.projectileSpawnOffset);
+        projectileObject.transform.localScale = Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, skill.projectileSize);
 
         SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = GetCircleSprite();
         spriteRenderer.color = skill.projectileColor;
         spriteRenderer.sortingOrder = 60;
+
+        AddProjectileTrail(projectileObject, skill.projectileColor, skill.projectileSize);
 
         BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
         projectile.Initialize(
@@ -189,7 +200,10 @@ public class BasicAttackProjectile : MonoBehaviour
         List<MonsterController> targets = FindAreaTargets(center);
 
         foreach (MonsterController monster in targets)
+        {
             DamageSystem.DealDamage(attacker, monster, damage);
+            UnitSkillHandler.ApplySkillDebuffsToTarget(attacker, impactSkill, monster);
+        }
     }
 
     private List<MonsterController> FindAreaTargets(Vector3 center)
@@ -225,13 +239,52 @@ public class BasicAttackProjectile : MonoBehaviour
 
         SpriteRenderer spriteRenderer = indicatorObject.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = GetCircleSprite();
-        spriteRenderer.color = color;
+        spriteRenderer.color = GetVisibleIndicatorColor(color);
         spriteRenderer.sortingOrder = 20;
 
         if (autoDestroy)
-            Destroy(indicatorObject, duration);
+            Destroy(indicatorObject, Mathf.Max(MinimumVisibleIndicatorDuration, duration));
 
         return indicatorObject;
+    }
+
+    private static Vector3 GetSpawnPosition(Vector3 attackerPosition, Vector3 spawnOffset)
+    {
+        Vector3 position = attackerPosition + spawnOffset;
+        position.z = attackerPosition.z;
+        return position;
+    }
+
+    private static void AddProjectileTrail(GameObject projectileObject, Color color, float projectileSize)
+    {
+        TrailRenderer trailRenderer = projectileObject.AddComponent<TrailRenderer>();
+        trailRenderer.time = 0.18f;
+        trailRenderer.startWidth = Mathf.Max(MinimumVisibleProjectileSize, projectileSize) * 0.7f;
+        trailRenderer.endWidth = 0f;
+        trailRenderer.startColor = GetVisibleProjectileColor(color);
+        trailRenderer.endColor = new Color(color.r, color.g, color.b, 0f);
+        trailRenderer.sortingOrder = 59;
+        trailRenderer.alignment = LineAlignment.View;
+
+        Shader spriteShader = Shader.Find("Sprites/Default");
+        if (spriteShader != null)
+            trailRenderer.material = new Material(spriteShader);
+    }
+
+    private static Color GetVisibleProjectileColor(Color color)
+    {
+        if (color.a < 0.8f)
+            color.a = 0.8f;
+
+        return color;
+    }
+
+    private static Color GetVisibleIndicatorColor(Color color)
+    {
+        if (color.a < MinimumVisibleIndicatorAlpha)
+            color.a = MinimumVisibleIndicatorAlpha;
+
+        return color;
     }
 
     private static Sprite GetCircleSprite()
