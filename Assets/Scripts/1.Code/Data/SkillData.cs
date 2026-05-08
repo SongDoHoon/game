@@ -93,6 +93,39 @@ public class SkillData : ScriptableObject
     public int passiveStackGainOnBuffSkill = 0;
     public SkillBuffEffect[] passiveMaxStackBuffEffects = new SkillBuffEffect[0];
 
+    [Header("Manual Self Enhancement")]
+    public bool hasManualSelfEnhancement;
+    public int manualEnhanceMaxStack = 20;
+    public int manualEnhanceBaseGoldCost = 100;
+    public int manualEnhanceGoldCostIncrease = 10;
+    [Range(0f, 1f)] public float manualEnhanceBaseSuccessChance = 0.05f;
+    [Range(0f, 1f)] public float manualEnhanceSuccessChanceMultiplierPerSuccess = 0.5f;
+    public float manualEnhanceAttackPowerBonusPerStack = 0.1f;
+    public float manualEnhanceAttackSpeedBonusPerStack = 0.05f;
+
+    [Header("Active Self Buff")]
+    public float activeBuffDuration = 0f;
+    public float activeSelfAttackPowerBonus = 0f;
+    public float activeSelfRangeOverride = 0f;
+    public float activeAttackPowerBonusPerEnemyInRange = 0f;
+    public float activeAttackPowerBonusMax = 0f;
+
+    [Header("Deep Sea Area")]
+    public bool createDeepSeaAreaOnBasicAttackImpact;
+    public float deepSeaAreaRadius = 1.5f;
+    public float deepSeaAreaDuration = 5f;
+    public int maxDeepSeaAreaCount = 2;
+    public float deepSeaAreaSlow = 0.1f;
+    public float deepSeaAreaDamageMultiplierPerSecond = 0.6f;
+    public Color deepSeaAreaColor = new Color(0.05f, 0.45f, 0.8f, 0.35f);
+
+    [Header("Deep Sea Explosion")]
+    public bool activeExplodesDeepSeaAreas;
+    public float deepSeaExplosionDuration = 5f;
+    public float deepSeaExplosionDamageMultiplierPerSecond = 1.1f;
+    public float deepSeaExplosionSlow = 0.35f;
+    public Color deepSeaExplosionColor = new Color(0.25f, 0.9f, 1f, 0.45f);
+
     [Header("Repeated Area Damage")]
     public SkillLineOrigin repeatedDamageOrigin = SkillLineOrigin.TargetPosition;
     public int repeatedHitCount = 1;

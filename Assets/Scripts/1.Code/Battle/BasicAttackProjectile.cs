@@ -182,6 +182,8 @@ public class BasicAttackProjectile : MonoBehaviour
         }
         else if (isAreaAttack)
         {
+            UnitSkillHandler.OnBasicAttackImpact(attacker, impactPosition);
+
             if (showAreaIndicator && areaRadius > 0f)
                 SpawnAreaIndicator(impactPosition, areaRadius, areaIndicatorColor, areaIndicatorDuration);
 
@@ -189,6 +191,7 @@ public class BasicAttackProjectile : MonoBehaviour
         }
         else if (target != null && target.IsAlive)
         {
+            UnitSkillHandler.OnBasicAttackImpact(attacker, impactPosition);
             DamageSystem.DealDamage(attacker, target, damage);
         }
 

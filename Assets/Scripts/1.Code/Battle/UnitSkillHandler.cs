@@ -30,8 +30,9 @@ public static class UnitSkillHandler
         if (!unit.IsSkillCooldownReady())
             return;
 
-        MonsterController triggerTarget = unit.GetCurrentTarget();
-        if (!IsValidTarget(unit, triggerTarget, unit.CurrentAttackRange))
+        float triggerRange = GetSkillRange(unit, skill);
+        MonsterController triggerTarget = ResolveTriggerTarget(unit, skill, triggerRange);
+        if (triggerTarget == null && !CanExecuteWithoutTriggerTarget(skill))
             return;
 
         TryExecuteSkill(unit, skill, triggerTarget);
@@ -82,6 +83,18 @@ public static class UnitSkillHandler
                 }
                 break;
         }
+    }
+
+    public static void OnBasicAttackImpact(UnitController unit, Vector3 impactPosition)
+    {
+        if (!IsValidUnit(unit))
+            return;
+
+        SkillData skill = unit.GetSkillData();
+        if (!IsUsableSkill(skill))
+            return;
+
+        LeviathanDeepSeaArea.TryCreate(unit, skill, impactPosition);
     }
 
     public static void OnMonsterKilled(UnitController unit, MonsterController target)
@@ -138,8 +151,9 @@ public static class UnitSkillHandler
         if (!unit.IsSkillCooldownReady())
             return;
 
-        MonsterController triggerTarget = unit.GetCurrentTarget();
-        if (!IsValidTarget(unit, triggerTarget, unit.CurrentAttackRange))
+        float triggerRange = GetSkillRange(unit, skill);
+        MonsterController triggerTarget = ResolveTriggerTarget(unit, skill, triggerRange);
+        if (triggerTarget == null && !CanExecuteWithoutTriggerTarget(skill))
             return;
 
         TryExecuteSkill(unit, skill, triggerTarget);
@@ -152,9 +166,14 @@ public static class UnitSkillHandler
         if (effectType == SkillEffectType.ApplyBuff)
         {
             bool appliedBuff = ApplySkillBuffEffects(unit, skill);
+            bool activatedSelfBuff = TryActivateSelfSkillBuff(unit, skill);
+            bool activatedDeepSeaExplosion = LeviathanDeepSeaArea.TryStartExplosionOnActiveAreas(unit, skill);
             TryGainPassiveStackOnBuffSkill(unit, skill, appliedBuff);
-            StartExecutedSkillCooldownAndLock(unit, skill);
-            return true;
+            bool activatedAnyEffect = appliedBuff || activatedSelfBuff || activatedDeepSeaExplosion;
+            if (activatedAnyEffect)
+                StartExecutedSkillCooldownAndLock(unit, skill);
+
+            return activatedAnyEffect;
         }
 
         if (effectType == SkillEffectType.HorizontalLineDamage)
@@ -393,6 +412,25 @@ public static class UnitSkillHandler
         return appliedAnyBuff;
     }
 
+    private static bool TryActivateSelfSkillBuff(UnitController unit, SkillData skill)
+    {
+        if (!IsValidUnit(unit) || skill == null)
+            return false;
+
+        if (skill.activeBuffDuration <= 0f)
+            return false;
+
+        bool hasActiveSelfEffect = skill.activeSelfAttackPowerBonus > 0f
+            || skill.activeSelfRangeOverride > 0f
+            || skill.activeAttackPowerBonusPerEnemyInRange > 0f;
+
+        if (!hasActiveSelfEffect)
+            return false;
+
+        unit.StartActiveSelfSkillBuff(skill.activeBuffDuration);
+        return true;
+    }
+
     private static void ApplyPassiveStackOnBasicAttack(UnitController unit, SkillData skill)
     {
         if (skill.passiveStackGainOnBasicAttack <= 0)
@@ -492,6 +530,19 @@ public static class UnitSkillHandler
 
         if (skill.useCurrentTargetFirst && IsValidTarget(unit, preferredTarget, range))
             return preferredTarget;
+
+        return UnitTargetFinder.FindTarget(
+            unit.transform.position,
+            range,
+            skill.targetPriority,
+            skill.bossFallbackTargetPriority);
+    }
+
+    private static MonsterController ResolveTriggerTarget(UnitController unit, SkillData skill, float range)
+    {
+        MonsterController currentTarget = unit.GetCurrentTarget();
+        if (IsValidTarget(unit, currentTarget, range))
+            return currentTarget;
 
         return UnitTargetFinder.FindTarget(
             unit.transform.position,
@@ -954,6 +1005,13 @@ public static class UnitSkillHandler
             return SkillEffectType.RepeatedAreaDamage;
 
         return skill.effectType;
+    }
+
+    private static bool CanExecuteWithoutTriggerTarget(SkillData skill)
+    {
+        return skill != null
+            && skill.activeExplodesDeepSeaAreas
+            && LeviathanDeepSeaArea.HasActiveArea();
     }
 
     private static UnitGrowthEntry GetUnitGrowth(UnitController unit)

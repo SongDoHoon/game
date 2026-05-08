@@ -28,12 +28,18 @@ public class UnitController : MonoBehaviour
     [SerializeField] private float debugSkillCooldownTimer;
     [SerializeField] private int debugSkillBasicAttackCount;
     [SerializeField] private int debugPassiveStack;
+    [SerializeField] private int debugManualEnhanceStack;
+    [SerializeField] private int debugManualEnhanceCost;
+    [SerializeField] private float debugManualEnhanceChance;
 
     private float attackTimer;
     private float skillCooldownTimer;
     private float skillAttackLockTimer;
+    private float activeSelfSkillBuffTimer;
     private int skillBasicAttackCount;
     private int passiveStack;
+    private int manualEnhanceStack;
+    private int manualEnhanceSuccessCount;
     private bool passiveMaxStackBuffActive;
     private MonsterController currentTarget;
     private SpriteRenderer spriteRenderer;
@@ -54,8 +60,11 @@ public class UnitController : MonoBehaviour
         attackTimer = 0f;
         skillCooldownTimer = 0f;
         skillAttackLockTimer = 0f;
+        activeSelfSkillBuffTimer = 0f;
         skillBasicAttackCount = 0;
         passiveStack = 0;
+        manualEnhanceStack = 0;
+        manualEnhanceSuccessCount = 0;
         passiveMaxStackBuffActive = false;
         buffs.Clear();
 
@@ -74,6 +83,7 @@ public class UnitController : MonoBehaviour
 
         UpdateBuffs();
         TickSkillAttackLock(Time.deltaTime);
+        TickActiveSelfSkillBuff(Time.deltaTime);
         UpdateTarget();
         UnitSkillHandler.UpdateContinuousEffects(this);
         UpdateAttack();
@@ -159,6 +169,18 @@ public class UnitController : MonoBehaviour
                     CurrentAttackRange += buff.value;
                     break;
             }
+        }
+
+        SkillData skill = GetSkillData();
+        if (skill != null)
+        {
+            runtimeAttackBonus += GetManualEnhanceAttackPowerBonus(skill);
+            runtimeAttackSpeedBonus += GetManualEnhanceAttackSpeedBonus(skill);
+
+            if (IsActiveSelfSkillBuffActive() && skill.activeSelfRangeOverride > 0f)
+                CurrentAttackRange = Mathf.Max(CurrentAttackRange, skill.activeSelfRangeOverride);
+
+            runtimeAttackBonus += GetActiveSelfSkillAttackPowerBonus(skill);
         }
 
         UnitGrowthManager growthManager = UnitGrowthManager.Instance;
@@ -274,6 +296,92 @@ public class UnitController : MonoBehaviour
         passiveMaxStackBuffActive = active;
     }
 
+    public bool HasManualSelfEnhancement()
+    {
+        SkillData skill = GetSkillData();
+        return skill != null && skill.isEnabled && skill.hasManualSelfEnhancement;
+    }
+
+    public int GetManualEnhanceStack()
+    {
+        return manualEnhanceStack;
+    }
+
+    public int GetManualEnhanceMaxStack()
+    {
+        SkillData skill = GetSkillData();
+        return skill != null ? Mathf.Max(0, skill.manualEnhanceMaxStack) : 0;
+    }
+
+    public int GetManualEnhanceCost()
+    {
+        SkillData skill = GetSkillData();
+        if (skill == null)
+            return 0;
+
+        return Mathf.Max(0, skill.manualEnhanceBaseGoldCost + manualEnhanceSuccessCount * skill.manualEnhanceGoldCostIncrease);
+    }
+
+    public float GetManualEnhanceSuccessChance()
+    {
+        SkillData skill = GetSkillData();
+        if (skill == null)
+            return 0f;
+
+        float chance = Mathf.Clamp01(skill.manualEnhanceBaseSuccessChance);
+        float multiplier = Mathf.Clamp01(skill.manualEnhanceSuccessChanceMultiplierPerSuccess);
+        return Mathf.Clamp01(chance * Mathf.Pow(multiplier, manualEnhanceSuccessCount));
+    }
+
+    public bool CanTryManualEnhance(GoldManager goldManager)
+    {
+        if (!HasManualSelfEnhancement())
+            return false;
+
+        int maxStack = GetManualEnhanceMaxStack();
+        if (maxStack > 0 && manualEnhanceStack >= maxStack)
+            return false;
+
+        return goldManager != null && goldManager.currentGold >= GetManualEnhanceCost();
+    }
+
+    public ManualEnhanceResult TryManualEnhance(GoldManager goldManager)
+    {
+        if (!HasManualSelfEnhancement())
+            return ManualEnhanceResult.NotAvailable;
+
+        int maxStack = GetManualEnhanceMaxStack();
+        if (maxStack > 0 && manualEnhanceStack >= maxStack)
+            return ManualEnhanceResult.MaxStack;
+
+        int cost = GetManualEnhanceCost();
+        if (goldManager == null || !goldManager.UseGold(cost))
+            return ManualEnhanceResult.NotEnoughGold;
+
+        bool success = Random.value <= GetManualEnhanceSuccessChance();
+        if (!success)
+        {
+            RefreshRuntimeStatDebugFields();
+            return ManualEnhanceResult.Failed;
+        }
+
+        manualEnhanceStack++;
+        manualEnhanceSuccessCount++;
+        RecalculateStats();
+        return ManualEnhanceResult.Success;
+    }
+
+    public void StartActiveSelfSkillBuff(float duration)
+    {
+        activeSelfSkillBuffTimer = Mathf.Max(activeSelfSkillBuffTimer, Mathf.Max(0f, duration));
+        RecalculateStats();
+    }
+
+    public bool IsActiveSelfSkillBuffActive()
+    {
+        return activeSelfSkillBuffTimer > 0f;
+    }
+
     public MonsterController GetCurrentTarget() => currentTarget;
 
     public SkillData GetSkillData()
@@ -317,6 +425,15 @@ public class UnitController : MonoBehaviour
             return;
 
         skillAttackLockTimer = Mathf.Max(0f, skillAttackLockTimer - Mathf.Max(0f, deltaTime));
+    }
+
+    private void TickActiveSelfSkillBuff(float deltaTime)
+    {
+        if (activeSelfSkillBuffTimer <= 0f)
+            return;
+
+        activeSelfSkillBuffTimer = Mathf.Max(0f, activeSelfSkillBuffTimer - Mathf.Max(0f, deltaTime));
+        RecalculateStats();
     }
 
     public void AddSkillBasicAttackCount(int amount)
@@ -505,6 +622,43 @@ public class UnitController : MonoBehaviour
         debugSkillCooldownTimer = skillCooldownTimer;
         debugSkillBasicAttackCount = skillBasicAttackCount;
         debugPassiveStack = passiveStack;
+        debugManualEnhanceStack = manualEnhanceStack;
+        debugManualEnhanceCost = GetManualEnhanceCost();
+        debugManualEnhanceChance = GetManualEnhanceSuccessChance();
+    }
+
+    private float GetManualEnhanceAttackPowerBonus(SkillData skill)
+    {
+        if (skill == null || !skill.hasManualSelfEnhancement)
+            return 0f;
+
+        return manualEnhanceStack * skill.manualEnhanceAttackPowerBonusPerStack;
+    }
+
+    private float GetManualEnhanceAttackSpeedBonus(SkillData skill)
+    {
+        if (skill == null || !skill.hasManualSelfEnhancement)
+            return 0f;
+
+        return manualEnhanceStack * skill.manualEnhanceAttackSpeedBonusPerStack;
+    }
+
+    private float GetActiveSelfSkillAttackPowerBonus(SkillData skill)
+    {
+        if (skill == null || !IsActiveSelfSkillBuffActive())
+            return 0f;
+
+        float bonus = Mathf.Max(0f, skill.activeSelfAttackPowerBonus);
+        if (skill.activeAttackPowerBonusPerEnemyInRange > 0f)
+        {
+            float enemyBonus = GetTargetsInRangeCount() * skill.activeAttackPowerBonusPerEnemyInRange;
+            if (skill.activeAttackPowerBonusMax > 0f)
+                enemyBonus = Mathf.Min(enemyBonus, skill.activeAttackPowerBonusMax);
+
+            bonus += enemyBonus;
+        }
+
+        return bonus;
     }
 
     private void EnsureNameText()

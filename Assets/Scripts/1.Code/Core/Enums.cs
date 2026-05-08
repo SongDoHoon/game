@@ -100,3 +100,12 @@ public enum UnitEnhanceGroup
     HighGradeGroup,
     EvolutionGroup
 }
+
+public enum ManualEnhanceResult
+{
+    Success,
+    Failed,
+    NotEnoughGold,
+    MaxStack,
+    NotAvailable
+}

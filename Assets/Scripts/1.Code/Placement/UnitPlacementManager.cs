@@ -11,6 +11,7 @@ public class UnitPlacementManager : MonoBehaviour
     private static readonly Rect UnitPanelRect = new Rect(10f, 50f, 300f, 420f);
 
     public SummonManager summonManager;
+    public GoldManager goldManager;
     public GameObject unitPrefab;
     public UnitPlacementTile[] placementTiles;
 
@@ -37,6 +38,9 @@ public class UnitPlacementManager : MonoBehaviour
 
         if (placementTiles == null || placementTiles.Length == 0)
             placementTiles = GetComponentsInChildren<UnitPlacementTile>(true);
+
+        if (goldManager == null)
+            goldManager = FindFirstObjectByType<GoldManager>();
 
         RefreshSelectableUnits();
         RefreshRangeVisuals();
@@ -337,6 +341,23 @@ public class UnitPlacementManager : MonoBehaviour
             RefreshMergeUI();
     }
 
+    public void TryUseInspectedUnitAction()
+    {
+        if (inspectedUnit == null)
+        {
+            RefreshMergeUI();
+            return;
+        }
+
+        if (inspectedUnit.HasManualSelfEnhancement())
+        {
+            TryManualEnhanceInspectedUnit();
+            return;
+        }
+
+        TryMergeInspectedUnit();
+    }
+
     private void DrawUnitSelectionToggle()
     {
         Rect toggleRect = new Rect(10f, 10f, 150f, 30f);
@@ -598,7 +619,8 @@ public class UnitPlacementManager : MonoBehaviour
             return;
 
         mergeButton.onClick.RemoveListener(TryMergeInspectedUnit);
-        mergeButton.onClick.AddListener(TryMergeInspectedUnit);
+        mergeButton.onClick.RemoveListener(TryUseInspectedUnitAction);
+        mergeButton.onClick.AddListener(TryUseInspectedUnitAction);
     }
 
     private void RefreshMergeUI()
@@ -606,21 +628,86 @@ public class UnitPlacementManager : MonoBehaviour
         if (mergeButtonRoot == null)
             return;
 
-        bool hasInspectedUnit = inspectedUnit != null;
-        mergeButtonRoot.SetActive(hasInspectedUnit);
-
-        if (!hasInspectedUnit)
+        if (inspectedUnit == null)
+        {
+            mergeButtonRoot.SetActive(false);
             return;
+        }
+
+        if (inspectedUnit.HasManualSelfEnhancement())
+        {
+            mergeButtonRoot.SetActive(true);
+            RefreshManualEnhanceUI();
+            return;
+        }
 
         bool canMerge = TryGetMergeInfo(inspectedUnit, out _, out _, out _);
+        mergeButtonRoot.SetActive(canMerge);
+
+        if (!canMerge)
+            return;
 
         if (mergeButton != null)
-            mergeButton.interactable = canMerge;
+            mergeButton.interactable = true;
 
         if (mergeButtonText != null)
             mergeButtonText.text = "Merge";
 
         UpdateMergeButtonPosition();
+    }
+
+    private void RefreshManualEnhanceUI()
+    {
+        if (inspectedUnit == null)
+            return;
+
+        if (mergeButton != null)
+            mergeButton.interactable = inspectedUnit.CanTryManualEnhance(goldManager);
+
+        if (mergeButtonText != null)
+        {
+            int stack = inspectedUnit.GetManualEnhanceStack();
+            int maxStack = inspectedUnit.GetManualEnhanceMaxStack();
+            int cost = inspectedUnit.GetManualEnhanceCost();
+            int chancePercent = Mathf.RoundToInt(inspectedUnit.GetManualEnhanceSuccessChance() * 100f);
+            mergeButtonText.text = maxStack > 0 && stack >= maxStack
+                ? $"Enhance MAX ({stack}/{maxStack})"
+                : $"Enhance {cost}G {chancePercent}% ({stack}/{maxStack})";
+        }
+
+        UpdateMergeButtonPosition();
+    }
+
+    private void TryManualEnhanceInspectedUnit()
+    {
+        if (inspectedUnit == null)
+        {
+            RefreshMergeUI();
+            return;
+        }
+
+        ManualEnhanceResult result = inspectedUnit.TryManualEnhance(goldManager);
+        switch (result)
+        {
+            case ManualEnhanceResult.Success:
+                Debug.Log($"{GetUnitDisplayName(inspectedUnit.Data)} enhancement succeeded. Stack: {inspectedUnit.GetManualEnhanceStack()}");
+                break;
+
+            case ManualEnhanceResult.Failed:
+                Debug.Log($"{GetUnitDisplayName(inspectedUnit.Data)} enhancement failed.");
+                break;
+
+            case ManualEnhanceResult.NotEnoughGold:
+                Debug.Log($"{GetUnitDisplayName(inspectedUnit.Data)} enhancement failed: not enough gold.");
+                break;
+
+            case ManualEnhanceResult.MaxStack:
+                Debug.Log($"{GetUnitDisplayName(inspectedUnit.Data)} enhancement is already maxed.");
+                break;
+        }
+
+        RefreshRangeVisuals();
+        RefreshMergeUI();
     }
 
     private bool HasNextGradeMergePool(UnitData currentUnit)
