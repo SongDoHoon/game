@@ -39,6 +39,12 @@ public class MonsterController : MonoBehaviour
     public bool spriteFacesRightByDefault = true;
     public float horizontalFacingThreshold = 0.001f;
 
+    [Header("Runtime Move Speed Debug")]
+    [SerializeField] private float debugSpeedMultiplier = 1f;
+    [SerializeField] private float debugGlobalSpeedReduction = 0f;
+    [SerializeField] private float debugGlobalSpeedMultiplier = 1f;
+    [SerializeField] private float debugFinalMoveSpeed = 0f;
+
     private int currentWaypointIndex;
     private readonly List<DebuffInstance> debuffs = new();
     private float speedMultiplier = 1f;
@@ -125,8 +131,11 @@ public class MonsterController : MonoBehaviour
         Transform target = waypointPath.GetWaypoint(currentWaypointIndex);
         if (target == null) return;
 
-        float auctionSpeedMultiplier = Mathf.Clamp01(1f - GameModifierState.MonsterMoveSpeedReduction);
-        float finalSpeed = moveSpeed * speedMultiplier * auctionSpeedMultiplier;
+        float globalSpeedReduction = GameModifierState.MonsterMoveSpeedReduction
+            + UnitSkillHandler.GetGlobalPassiveMonsterMoveSpeedReduction();
+        float globalSpeedMultiplier = Mathf.Clamp01(1f - globalSpeedReduction);
+        float finalSpeed = moveSpeed * speedMultiplier * globalSpeedMultiplier;
+        RefreshMoveSpeedDebugFields(globalSpeedReduction, globalSpeedMultiplier, finalSpeed);
         transform.position = Vector3.MoveTowards(transform.position, target.position, finalSpeed * Time.deltaTime);
 
         if (Vector3.Distance(transform.position, target.position) <= 0.05f)
@@ -156,6 +165,14 @@ public class MonsterController : MonoBehaviour
 
         bool movingRight = horizontalMovement > 0f;
         spriteRenderer.flipX = spriteFacesRightByDefault ? !movingRight : movingRight;
+    }
+
+    private void RefreshMoveSpeedDebugFields(float globalSpeedReduction, float globalSpeedMultiplier, float finalSpeed)
+    {
+        debugSpeedMultiplier = speedMultiplier;
+        debugGlobalSpeedReduction = globalSpeedReduction;
+        debugGlobalSpeedMultiplier = globalSpeedMultiplier;
+        debugFinalMoveSpeed = finalSpeed;
     }
 
     private MonsterWalkAnimationSet GetWalkAnimationSetForWave(int wave)
@@ -254,6 +271,8 @@ public class MonsterController : MonoBehaviour
         if (debuff == null) return;
 
         DebuffInstance existing = debuffs.Find(d => d.debuffType == debuff.debuffType && d.source == debuff.source);
+        if (debuff.debuffType == DebuffType.CorruptionLord && existing != null)
+            return;
 
         if (debuff.debuffType == DebuffType.Burn)
         {
@@ -274,10 +293,18 @@ public class MonsterController : MonoBehaviour
             existing.remainTime = debuff.duration;
             existing.stack = Mathf.Max(1, debuff.stack);
             existing.maxStack = Mathf.Max(1, debuff.maxStack);
+            existing.damageMultiplierOnExpire = debuff.damageMultiplierOnExpire;
+            existing.currentHpDamagePercentOnExpire = debuff.currentHpDamagePercentOnExpire;
+            existing.maxHpDamagePercentPerTick = debuff.maxHpDamagePercentPerTick;
+            existing.tickInterval = debuff.tickInterval;
+            existing.tickTimer = debuff.tickTimer;
             return;
         }
 
         debuff.remainTime = debuff.duration;
+        if (debuff.tickInterval > 0f && debuff.tickTimer <= 0f)
+            debuff.tickTimer = debuff.tickInterval;
+
         debuffs.Add(debuff);
     }
 
@@ -326,6 +353,10 @@ public class MonsterController : MonoBehaviour
                     isStunned = true;
                     break;
 
+                case DebuffType.CorruptionLord:
+                    TickMaxHpDamageDebuff(d);
+                    break;
+
                 case DebuffType.DamageTakenUp:
                 case DebuffType.Silence:
                     break;
@@ -333,8 +364,34 @@ public class MonsterController : MonoBehaviour
 
             if (d.remainTime <= 0f)
             {
+                ApplyDebuffExpireDamage(d);
                 debuffs.RemoveAt(i);
             }
+        }
+    }
+
+    private void ApplyDebuffExpireDamage(DebuffInstance debuff)
+    {
+        if (debuff == null || debuff.source == null || !IsAlive)
+            return;
+
+        if (debuff.currentHpDamagePercentOnExpire > 0f)
+            DamageSystem.DealRawDamage(debuff.source, this, CurrentHp * debuff.currentHpDamagePercentOnExpire);
+
+        if (debuff.damageMultiplierOnExpire > 0f && IsAlive)
+            DamageSystem.DealDamage(debuff.source, this, debuff.source.CurrentAttackPower * debuff.damageMultiplierOnExpire);
+    }
+
+    private void TickMaxHpDamageDebuff(DebuffInstance debuff)
+    {
+        if (debuff == null || debuff.source == null || debuff.maxHpDamagePercentPerTick <= 0f || debuff.tickInterval <= 0f)
+            return;
+
+        debuff.tickTimer -= Time.deltaTime;
+        while (debuff.tickTimer <= 0f && IsAlive)
+        {
+            DamageSystem.DealRawDamage(debuff.source, this, MaxHp * debuff.maxHpDamagePercentPerTick);
+            debuff.tickTimer += debuff.tickInterval;
         }
     }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   unitId: 5
   unitName: "\uCCAD\uB8E1\uC758 \uC794\uB9B0"
   grade: 5
-  unitSprite: {fileID: 3794998073203032334, guid: 1b53b75c4429e10448b7c3f17865bcd9, type: 3}
+  unitSprite: {fileID: 2611111272039391384, guid: 1d67bda150744804bb3adbf84c069134, type: 3}
   portraitSprite: {fileID: 3794998073203032334, guid: 1b53b75c4429e10448b7c3f17865bcd9, type: 3}
   useGradeTintOnSprite: 0
   animatorController: {fileID: 0}
@@ -23,6 +23,7 @@ MonoBehaviour:
   attackSpeed: 2.15
   attackRange: 1.7
   attackRadius: 0
+  maxAreaAttackTargets: 0
   basicAttackType: 0
   targetPriority: 2
   bossFallbackTargetPriority: 0
@@ -33,5 +34,7 @@ MonoBehaviour:
   showAreaAttackIndicator: 1
   areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
   areaAttackIndicatorDuration: 0.25
+  skillData: {fileID: 0}
+  skillAttackLockDurationOverride: -1
   canEvolve: 0
   evolveKey: 

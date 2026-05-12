@@ -21,7 +21,9 @@ public enum UnitTargetPriority
     Nearest,
     Farthest,
     Boss,
-    LowestHp
+    LowestHp,
+    Elite,
+    BossOrElite
 }
 
 public enum BuffType
@@ -44,7 +46,8 @@ public enum DebuffType
     Stun,
     DefenseDown,
     DamageTakenUp,
-    Silence
+    Silence,
+    CorruptionLord
 }
 
 public enum MonsterType

@@ -41,4 +41,22 @@ public static class DamageSystem
 
         return killed;
     }
+
+    public static bool DealRawDamage(UnitController attacker, MonsterController target, double damage)
+    {
+        if (attacker == null || target == null || !target.IsAlive)
+            return false;
+
+        bool wasAlive = target.IsAlive;
+        target.TakeDamage(damage);
+
+        bool killed = wasAlive && !target.IsAlive;
+        if (killed)
+        {
+            UnitSkillHandler.OnMonsterKilled(attacker, target);
+            UnitSkillHandler.OnAnyMonsterKilled(target);
+        }
+
+        return killed;
+    }
 }

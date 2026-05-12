@@ -20,7 +20,8 @@ public enum SkillLineDirection
 {
     Both,
     Left,
-    Right
+    Right,
+    TowardTarget
 }
 
 public enum SkillLineOrigin
@@ -51,6 +52,8 @@ public class SkillData : ScriptableObject
     public bool stackPassiveAuraWithSameSkill;
     public float passiveAllUnitAttackPowerBonus;
     public float passiveAllUnitAttackSpeedBonus;
+    public float passiveAllMonsterMoveSpeedReduction;
+    public int passiveAllMonsterMoveSpeedReductionMaxSameSkillCount = 1;
     public float passiveSelfAttackPowerBonus;
     public float passiveSelfAttackSpeedBonus;
     public float passiveDamageBonusPerEnemyInRange;
@@ -71,6 +74,8 @@ public class SkillData : ScriptableObject
     public float baseSkillDamageMultiplier = 2f;
     public float additionalSkillDamage = 0f;
     public float areaRadius = 0f;
+    public bool activeHitsAllTargetsInRange;
+    public bool activeTargetsEntireField;
 
     [Header("Horizontal Line Damage")]
     public SkillLineOrigin lineOrigin = SkillLineOrigin.CasterPosition;
@@ -92,6 +97,10 @@ public class SkillData : ScriptableObject
     public float attackSpeedBonusPerPassiveStack = 0f;
     public int passiveStackGainOnBuffSkill = 0;
     public SkillBuffEffect[] passiveMaxStackBuffEffects = new SkillBuffEffect[0];
+    public bool passiveStackTracksEnemiesInAttackRange;
+    public bool passiveStackTracksSlowOrStunnedEnemies;
+    public float cooldownReductionPerPassiveStack = 0f;
+    public float passiveMaxStackAttackSpeedBonus = 0f;
 
     [Header("Manual Self Enhancement")]
     public bool hasManualSelfEnhancement;
@@ -109,6 +118,13 @@ public class SkillData : ScriptableObject
     public float activeSelfRangeOverride = 0f;
     public float activeAttackPowerBonusPerEnemyInRange = 0f;
     public float activeAttackPowerBonusMax = 0f;
+
+    [Header("Corruption Lord")]
+    public bool hasCorruptionLord;
+    public float corruptionLordDuration = 6f;
+    public float corruptionLordTickInterval = 0.5f;
+    public float corruptionLordMaxHpDamagePercentPerTick = 0.005f;
+    public float corruptionLordActiveBonusMaxHpDamagePercent = 0.1f;
 
     [Header("Deep Sea Area")]
     public bool createDeepSeaAreaOnBasicAttackImpact;
@@ -173,6 +189,8 @@ public class SkillDebuffEffect
     public float duration;
     public int stack = 1;
     public int maxStack = 1;
+    public float damageMultiplierOnExpire = 0f;
+    public float currentHpDamagePercentOnExpire = 0f;
 }
 
 [System.Serializable]
@@ -196,4 +214,9 @@ public class DebuffInstance
     public int stack = 1;
     public int maxStack = 1;
     public UnitController source;
+    public float damageMultiplierOnExpire;
+    public float currentHpDamagePercentOnExpire;
+    public float maxHpDamagePercentPerTick;
+    public float tickInterval;
+    public float tickTimer;
 }

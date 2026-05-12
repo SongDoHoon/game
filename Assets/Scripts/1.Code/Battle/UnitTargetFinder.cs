@@ -20,6 +20,8 @@ public static class UnitTargetFinder
             UnitTargetPriority.Farthest => FindFarthestTarget(monsters, unitPos, range),
             UnitTargetPriority.Boss => FindBossTarget(monsters, unitPos, range, bossFallbackPriority),
             UnitTargetPriority.LowestHp => FindLowestHpTarget(monsters, unitPos, range),
+            UnitTargetPriority.Elite => FindEliteTarget(monsters, unitPos, range, bossFallbackPriority),
+            UnitTargetPriority.BossOrElite => FindBossOrEliteTarget(monsters, unitPos, range, bossFallbackPriority),
             _ => FindNearestTarget(monsters, unitPos, range)
         };
     }
@@ -92,6 +94,80 @@ public static class UnitTargetFinder
             return bossTarget;
 
         UnitTargetPriority safeFallback = fallbackPriority == UnitTargetPriority.Boss
+            ? UnitTargetPriority.Nearest
+            : fallbackPriority;
+
+        return FindTarget(unitPos, range, safeFallback, UnitTargetPriority.Nearest);
+    }
+
+    private static MonsterController FindEliteTarget(
+        MonsterController[] monsters,
+        Vector3 unitPos,
+        float range,
+        UnitTargetPriority fallbackPriority)
+    {
+        MonsterController eliteTarget = null;
+        float bestDistance = float.MaxValue;
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (monster == null || monster.monsterType != MonsterType.Elite)
+                continue;
+
+            if (!IsValidTarget(monster, unitPos, range, out float distance))
+                continue;
+
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                eliteTarget = monster;
+            }
+        }
+
+        if (eliteTarget != null)
+            return eliteTarget;
+
+        UnitTargetPriority safeFallback = fallbackPriority == UnitTargetPriority.Elite
+            || fallbackPriority == UnitTargetPriority.BossOrElite
+            ? UnitTargetPriority.Nearest
+            : fallbackPriority;
+
+        return FindTarget(unitPos, range, safeFallback, UnitTargetPriority.Nearest);
+    }
+
+    private static MonsterController FindBossOrEliteTarget(
+        MonsterController[] monsters,
+        Vector3 unitPos,
+        float range,
+        UnitTargetPriority fallbackPriority)
+    {
+        MonsterController specialTarget = null;
+        float bestDistance = float.MaxValue;
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (monster == null
+                || (monster.monsterType != MonsterType.Boss && monster.monsterType != MonsterType.Elite))
+            {
+                continue;
+            }
+
+            if (!IsValidTarget(monster, unitPos, range, out float distance))
+                continue;
+
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                specialTarget = monster;
+            }
+        }
+
+        if (specialTarget != null)
+            return specialTarget;
+
+        UnitTargetPriority safeFallback = fallbackPriority == UnitTargetPriority.Boss
+            || fallbackPriority == UnitTargetPriority.Elite
+            || fallbackPriority == UnitTargetPriority.BossOrElite
             ? UnitTargetPriority.Nearest
             : fallbackPriority;
 

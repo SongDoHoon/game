@@ -286,6 +286,17 @@ public class UnitController : MonoBehaviour
         RefreshRuntimeStatDebugFields();
     }
 
+    public void SetPassiveStack(int stack)
+    {
+        passiveStack = Mathf.Max(0, stack);
+
+        SkillData skill = GetSkillData();
+        if (skill != null && skill.maxPassiveStack > 0)
+            passiveStack = Mathf.Min(passiveStack, skill.maxPassiveStack);
+
+        RefreshRuntimeStatDebugFields();
+    }
+
     public bool IsPassiveMaxStackBuffActive()
     {
         return passiveMaxStackBuffActive;

@@ -6160,6 +6160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementManager
   summonManager: {fileID: 882231000}
+  goldManager: {fileID: 0}
   unitPrefab: {fileID: 4017895008963063709, guid: 55ee6d912c8195f478358fe3981f06da, type: 3}
   placementTiles:
   - {fileID: 1128431056}
@@ -8671,7 +8672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a27b00bb76ce4449b410f07d1257a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AuctionManager
-  goldManager: {fileID: 0}
+  goldManager: {fileID: 1057302174}
   itemInventory: {fileID: 780795161}
   currentOptions:
   - optionName: 
@@ -17654,12 +17655,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   monsterSpawner: {fileID: 589766392}
-  currentWave: 0
+  currentWave: 51
   waveStarted: 0
   waitingForNextWave: 0
   isPausedForAuction: 0
   gameEnded: 0
-  normalMonsterCount: 1
+  normalMonsterCount: 15
   normalSpawnSpacingDistance: 0.5
   finalWave: 100
 --- !u!4 &1864289198

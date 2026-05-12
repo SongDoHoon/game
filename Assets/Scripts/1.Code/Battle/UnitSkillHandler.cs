@@ -21,6 +21,8 @@ public static class UnitSkillHandler
         if (!IsUsableSkill(skill))
             return;
 
+        UpdatePassiveStackFromEnemiesInAttackRange(unit, skill);
+        UpdatePassiveStackFromSlowOrStunnedEnemies(unit, skill);
         ExecuteLowHpTargetsInRange(unit, skill);
         ApplyPassiveDebuffToTargetsInRange(unit, skill);
 
@@ -203,6 +205,15 @@ public static class UnitSkillHandler
             return true;
         }
 
+        if (skill.activeHitsAllTargetsInRange)
+        {
+            if (!TryDealDamageToAllTargetsInRange(unit, skill, CalculateFinalSkillDamage(unit, skill)))
+                return false;
+
+            StartExecutedSkillCooldownAndLock(unit, skill);
+            return true;
+        }
+
         MonsterController target = ResolveTarget(unit, skill, preferredTarget);
         if (target == null)
             return false;
@@ -237,6 +248,7 @@ public static class UnitSkillHandler
 
     private static void StartExecutedSkillCooldownAndLock(UnitController unit, SkillData skill)
     {
+        UpdatePassiveStackFromSlowOrStunnedEnemies(unit, skill);
         unit.StartSkillCooldown(CalculateFinalCooldown(unit, skill));
         unit.StartSkillAttackLock(GetAttackLockDurationOnCast(unit, skill));
     }
@@ -257,6 +269,33 @@ public static class UnitSkillHandler
     public static float GetGlobalPassiveAttackSpeedBonus()
     {
         return GetGlobalPassiveBonus(skill => skill.passiveAllUnitAttackSpeedBonus);
+    }
+
+    public static float GetGlobalPassiveMonsterMoveSpeedReduction()
+    {
+        Dictionary<SkillData, int> appliedSkillCounts = new();
+        float totalReduction = 0f;
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+
+        foreach (UnitController unit in units)
+        {
+            if (!IsValidUnit(unit))
+                continue;
+
+            SkillData skill = unit.GetSkillData();
+            if (!IsUsableSkill(skill) || !skill.hasPassiveAura || skill.passiveAllMonsterMoveSpeedReduction <= 0f)
+                continue;
+
+            int maxSameSkillCount = Mathf.Max(1, skill.passiveAllMonsterMoveSpeedReductionMaxSameSkillCount);
+            appliedSkillCounts.TryGetValue(skill, out int appliedCount);
+            if (appliedCount >= maxSameSkillCount)
+                continue;
+
+            appliedSkillCounts[skill] = appliedCount + 1;
+            totalReduction += skill.passiveAllMonsterMoveSpeedReduction;
+        }
+
+        return Mathf.Clamp01(totalReduction);
     }
 
     public static float GetSelfPassiveAttackPowerBonus(UnitController unit)
@@ -280,7 +319,18 @@ public static class UnitSkillHandler
     public static float GetPassiveStackAttackSpeedBonus(UnitController unit)
     {
         SkillData skill = GetSelfPassiveSkill(unit);
-        return skill != null ? unit.GetPassiveStack() * skill.attackSpeedBonusPerPassiveStack : 0f;
+        if (skill == null)
+            return 0f;
+
+        float bonus = unit.GetPassiveStack() * skill.attackSpeedBonusPerPassiveStack;
+        if (skill.maxPassiveStack > 0
+            && unit.GetPassiveStack() >= skill.maxPassiveStack
+            && skill.passiveMaxStackAttackSpeedBonus > 0f)
+        {
+            bonus += skill.passiveMaxStackAttackSpeedBonus;
+        }
+
+        return bonus;
     }
 
     public static float GetPassiveDamageMultiplier(UnitController unit)
@@ -361,6 +411,38 @@ public static class UnitSkillHandler
                 1,
                 1);
         }
+    }
+
+    private static void UpdatePassiveStackFromEnemiesInAttackRange(UnitController unit, SkillData skill)
+    {
+        if (!skill.hasPassiveAura || !skill.passiveStackTracksEnemiesInAttackRange)
+            return;
+
+        int enemyCount = unit.GetTargetsInRangeCount();
+        if (skill.maxPassiveStack > 0)
+            enemyCount = Mathf.Min(enemyCount, skill.maxPassiveStack);
+
+        if (unit.GetPassiveStack() == enemyCount)
+            return;
+
+        unit.SetPassiveStack(enemyCount);
+        unit.RecalculateStats();
+    }
+
+    private static void UpdatePassiveStackFromSlowOrStunnedEnemies(UnitController unit, SkillData skill)
+    {
+        if (!skill.hasPassiveAura || !skill.passiveStackTracksSlowOrStunnedEnemies)
+            return;
+
+        int enemyCount = unit.CountEnemiesWithDebuffs(DebuffType.Slow, DebuffType.Stun);
+        if (skill.maxPassiveStack > 0)
+            enemyCount = Mathf.Min(enemyCount, skill.maxPassiveStack);
+
+        if (unit.GetPassiveStack() == enemyCount)
+            return;
+
+        unit.SetPassiveStack(enemyCount);
+        unit.RecalculateStats();
     }
 
     private static int GetPassiveStackGainOnKill(SkillData skill, MonsterController target)
@@ -572,7 +654,40 @@ public static class UnitSkillHandler
         if (GameModifierState.IsEvolutionGrade(unit.Data))
             cooldownReduction += GameModifierState.AngelDemonCooldownReduction;
 
-        return Mathf.Max(0f, skill.cooldown * (1f - Mathf.Clamp01(cooldownReduction)));
+        float cooldown = skill.cooldown * (1f - Mathf.Clamp01(cooldownReduction));
+        cooldown -= unit.GetPassiveStack() * Mathf.Max(0f, skill.cooldownReductionPerPassiveStack);
+        return Mathf.Max(0f, cooldown);
+    }
+
+    private static bool TryDealDamageToAllTargetsInRange(UnitController unit, SkillData skill, double finalDamage)
+    {
+        if (!IsValidUnit(unit) || skill == null)
+            return false;
+
+        float range = GetSkillRange(unit, skill);
+        bool hitAnyTarget = false;
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+
+        foreach (MonsterController monster in monsters)
+        {
+            if (monster == null || !monster.IsAlive)
+                continue;
+
+            if (!skill.activeTargetsEntireField
+                && Vector3.Distance(unit.transform.position, monster.transform.position) > range)
+            {
+                continue;
+            }
+
+            if (finalDamage > 0.0)
+                DamageSystem.DealDamage(unit, monster, finalDamage);
+
+            ApplyCorruptionLordOnActiveSkillHit(unit, skill, monster);
+            ApplySkillDebuffsToTarget(unit, skill, monster);
+            hitAnyTarget = true;
+        }
+
+        return hitAnyTarget;
     }
 
     private static void DealAreaSkillDamage(UnitController unit, Vector3 center, float radius, double finalDamage)
@@ -623,8 +738,62 @@ public static class UnitSkillHandler
                 debuffEffect.value,
                 debuffEffect.duration,
                 debuffEffect.stack,
-                debuffEffect.maxStack);
+                debuffEffect.maxStack,
+                debuffEffect.damageMultiplierOnExpire,
+                debuffEffect.currentHpDamagePercentOnExpire);
         }
+    }
+
+    public static void ApplyCorruptionLordOnBasicAttack(UnitController unit, MonsterController target)
+    {
+        SkillData skill = GetSelfPassiveSkill(unit);
+        if (skill == null || !skill.hasCorruptionLord || target == null || !target.IsAlive)
+            return;
+
+        TryApplyCorruptionLord(unit, skill, target);
+    }
+
+    private static void ApplyCorruptionLordOnActiveSkillHit(UnitController unit, SkillData skill, MonsterController target)
+    {
+        if (!IsValidUnit(unit) || skill == null || !skill.hasCorruptionLord || target == null || !target.IsAlive)
+            return;
+
+        if (target.HasDebuff(DebuffType.CorruptionLord))
+        {
+            double bonusDamage = target.MaxHp * Mathf.Max(0f, skill.corruptionLordActiveBonusMaxHpDamagePercent);
+            DamageSystem.DealRawDamage(unit, target, bonusDamage);
+            return;
+        }
+
+        TryApplyCorruptionLord(unit, skill, target);
+    }
+
+    private static bool TryApplyCorruptionLord(UnitController unit, SkillData skill, MonsterController target)
+    {
+        if (!IsValidUnit(unit) || skill == null || target == null || !target.IsAlive)
+            return false;
+
+        if (target.HasDebuff(DebuffType.CorruptionLord))
+            return false;
+
+        float duration = Mathf.Max(0.01f, skill.corruptionLordDuration);
+        float interval = Mathf.Max(0.01f, skill.corruptionLordTickInterval);
+
+        target.AddDebuff(new DebuffInstance
+        {
+            debuffType = DebuffType.CorruptionLord,
+            value = 0f,
+            duration = duration,
+            remainTime = duration,
+            stack = 1,
+            maxStack = 1,
+            source = unit,
+            maxHpDamagePercentPerTick = Mathf.Max(0f, skill.corruptionLordMaxHpDamagePercentPerTick),
+            tickInterval = interval,
+            tickTimer = interval
+        });
+
+        return true;
     }
 
     private static void ApplyDebuffToTarget(
@@ -634,7 +803,9 @@ public static class UnitSkillHandler
         float value,
         float duration,
         int stack,
-        int maxStack)
+        int maxStack,
+        float damageMultiplierOnExpire = 0f,
+        float currentHpDamagePercentOnExpire = 0f)
     {
         if (unit == null || target == null || !target.IsAlive || debuffType == DebuffType.None)
             return;
@@ -647,7 +818,9 @@ public static class UnitSkillHandler
             remainTime = Mathf.Max(0.01f, duration),
             stack = Mathf.Max(1, stack),
             maxStack = Mathf.Max(1, maxStack),
-            source = unit
+            source = unit,
+            damageMultiplierOnExpire = Mathf.Max(0f, damageMultiplierOnExpire),
+            currentHpDamagePercentOnExpire = Mathf.Max(0f, currentHpDamagePercentOnExpire)
         });
     }
 
@@ -674,7 +847,7 @@ public static class UnitSkillHandler
             return true;
         }
 
-        DealHorizontalLineDamageAt(unit, skill, unit.transform.position, finalDamage);
+        DealHorizontalLineDamageAt(unit, skill, unit.transform.position, finalDamage, preferredTarget);
         return true;
     }
 
@@ -806,6 +979,11 @@ public static class UnitSkillHandler
 
     public static void DealHorizontalLineDamageAt(UnitController unit, SkillData skill, Vector3 origin, double finalDamage)
     {
+        DealHorizontalLineDamageAt(unit, skill, origin, finalDamage, null);
+    }
+
+    private static void DealHorizontalLineDamageAt(UnitController unit, SkillData skill, Vector3 origin, double finalDamage, MonsterController preferredTarget)
+    {
         if (!IsValidUnit(unit) || skill == null)
             return;
 
@@ -815,8 +993,10 @@ public static class UnitSkillHandler
         if (length <= 0f || halfWidth <= 0f)
             return;
 
+        Vector3 lineForward = ResolveLineForward(unit, skill, origin, preferredTarget);
+
         if (skill.showLineIndicator)
-            SpawnLineIndicator(origin, skill);
+            SpawnLineIndicator(origin, skill, lineForward);
 
         MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
 
@@ -826,35 +1006,74 @@ public static class UnitSkillHandler
                 continue;
 
             Vector3 offset = monster.transform.position - origin;
-            if (!IsInsideHorizontalLine(offset, length, halfWidth, skill.lineDirection))
+            if (!IsInsideLine(offset, length, halfWidth, lineForward, skill.lineDirection))
                 continue;
 
             DamageSystem.DealDamage(unit, monster, finalDamage);
         }
     }
 
-    private static bool IsInsideHorizontalLine(Vector3 offset, float length, float halfWidth, SkillLineDirection direction)
+    private static Vector3 ResolveLineForward(UnitController unit, SkillData skill, Vector3 origin, MonsterController preferredTarget)
     {
-        if (Mathf.Abs(offset.y) > halfWidth)
-            return false;
+        if (skill == null)
+            return Vector3.right;
 
-        switch (direction)
+        if (skill.lineDirection == SkillLineDirection.Left)
+            return Vector3.left;
+
+        if (skill.lineDirection == SkillLineDirection.Right || skill.lineDirection == SkillLineDirection.Both)
+            return Vector3.right;
+
+        float range = GetSkillRange(unit, skill);
+        MonsterController target = unit != null ? unit.GetCurrentTarget() : null;
+        if (!IsValidTarget(unit, target, range))
+            target = preferredTarget;
+
+        if (!IsValidTarget(unit, target, range))
         {
-            case SkillLineDirection.Left:
-                return offset.x <= 0f && Mathf.Abs(offset.x) <= length;
-
-            case SkillLineDirection.Right:
-                return offset.x >= 0f && offset.x <= length;
-
-            default:
-                return Mathf.Abs(offset.x) <= length;
+            target = UnitTargetFinder.FindTarget(
+                unit.transform.position,
+                range,
+                skill.targetPriority,
+                skill.bossFallbackTargetPriority);
         }
+
+        if (target == null)
+            return Vector3.right;
+
+        Vector3 forward = target.transform.position - origin;
+        forward.z = 0f;
+
+        if (forward.sqrMagnitude <= Mathf.Epsilon)
+            return Vector3.right;
+
+        return forward.normalized;
     }
 
-    private static void SpawnLineIndicator(Vector3 origin, SkillData skill)
+    private static bool IsInsideLine(Vector3 offset, float length, float halfWidth, Vector3 forward, SkillLineDirection direction)
+    {
+        if (forward.sqrMagnitude <= Mathf.Epsilon)
+            return false;
+
+        Vector3 normalizedForward = forward.normalized;
+        Vector3 normalizedRight = new Vector3(-normalizedForward.y, normalizedForward.x, 0f);
+        float forwardDistance = Vector3.Dot(offset, normalizedForward);
+        float sideDistance = Vector3.Dot(offset, normalizedRight);
+
+        if (Mathf.Abs(sideDistance) > halfWidth)
+            return false;
+
+        if (direction == SkillLineDirection.Both)
+            return Mathf.Abs(forwardDistance) <= length;
+
+        return forwardDistance >= 0f && forwardDistance <= length;
+    }
+
+    private static void SpawnLineIndicator(Vector3 origin, SkillData skill, Vector3 forward)
     {
         GameObject indicatorObject = new GameObject("HorizontalLineSkillIndicator");
-        indicatorObject.transform.position = GetLineIndicatorCenter(origin, skill);
+        indicatorObject.transform.position = GetLineIndicatorCenter(origin, skill, forward);
+        indicatorObject.transform.rotation = GetLineIndicatorRotation(forward);
         indicatorObject.transform.localScale = GetLineIndicatorScale(skill);
 
         SpriteRenderer spriteRenderer = indicatorObject.AddComponent<SpriteRenderer>();
@@ -865,21 +1084,22 @@ public static class UnitSkillHandler
         Object.Destroy(indicatorObject, Mathf.Max(0.01f, skill.lineIndicatorDuration));
     }
 
-    private static Vector3 GetLineIndicatorCenter(Vector3 origin, SkillData skill)
+    private static Vector3 GetLineIndicatorCenter(Vector3 origin, SkillData skill, Vector3 forward)
     {
         float halfLength = Mathf.Max(0f, skill.lineLength) * 0.5f;
+        if (skill.lineDirection == SkillLineDirection.Both)
+            return origin;
 
-        switch (skill.lineDirection)
-        {
-            case SkillLineDirection.Left:
-                return origin + new Vector3(-halfLength, 0f, 0f);
+        return origin + forward.normalized * halfLength;
+    }
 
-            case SkillLineDirection.Right:
-                return origin + new Vector3(halfLength, 0f, 0f);
+    private static Quaternion GetLineIndicatorRotation(Vector3 forward)
+    {
+        if (forward.sqrMagnitude <= Mathf.Epsilon)
+            return Quaternion.identity;
 
-            default:
-                return origin;
-        }
+        float angle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
+        return Quaternion.Euler(0f, 0f, angle);
     }
 
     private static Vector3 GetLineIndicatorScale(SkillData skill)

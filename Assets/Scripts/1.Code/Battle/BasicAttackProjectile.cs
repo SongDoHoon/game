@@ -193,6 +193,7 @@ public class BasicAttackProjectile : MonoBehaviour
         {
             UnitSkillHandler.OnBasicAttackImpact(attacker, impactPosition);
             DamageSystem.DealDamage(attacker, target, damage);
+            UnitSkillHandler.ApplyCorruptionLordOnBasicAttack(attacker, target);
         }
 
         Destroy(gameObject);
@@ -205,6 +206,7 @@ public class BasicAttackProjectile : MonoBehaviour
         foreach (MonsterController monster in targets)
         {
             DamageSystem.DealDamage(attacker, monster, damage);
+            UnitSkillHandler.ApplyCorruptionLordOnBasicAttack(attacker, monster);
             UnitSkillHandler.ApplySkillDebuffsToTarget(attacker, impactSkill, monster);
         }
     }
