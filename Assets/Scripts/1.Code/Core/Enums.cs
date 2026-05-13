@@ -60,19 +60,14 @@ public enum MonsterType
 public enum EvolutionItemType
 {
     None,
-    MichaelItem,
-    GabrielItem,
-    RaphaelItem,
-    UrielItem,
-    RaguelItem,
-    SarielItem,
-    DemonItem1,
-    DemonItem2,
-    DemonItem3,
-    DemonItem4,
-    DemonItem5,
-    DemonItem6,
-    DemonItem7
+    Baekho,
+    Cheongryong,
+    Hyeonmu,
+    Jujak,
+    Taotie,
+    Qiongqi,
+    Taowu,
+    Hundun
 }
 
 public enum AuctionRewardType

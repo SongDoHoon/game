@@ -139,6 +139,20 @@ public class BattleMagicStoneManager : MonoBehaviour
         return GameModifierState.SetEnhancementLevel(group, currentLevel + 1);
     }
 
+    public bool CanSpendBattleMagicStone(int amount)
+    {
+        return amount >= 0 && currentBattleMagicStone >= amount;
+    }
+
+    public bool TrySpendBattleMagicStone(int amount)
+    {
+        if (!CanSpendBattleMagicStone(amount))
+            return false;
+
+        currentBattleMagicStone -= amount;
+        return true;
+    }
+
     public double GetAttackMultiplier(UnitEnhanceGroup group)
     {
         int level = GetGroupLevel(group);

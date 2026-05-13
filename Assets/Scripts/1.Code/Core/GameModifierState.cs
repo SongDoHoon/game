@@ -123,7 +123,10 @@ public static class GameModifierState
 
     public static int GetReducedUnitExchangeCost(int baseCost)
     {
-        return Mathf.Max(0, Mathf.RoundToInt(baseCost * (1f - UnitExchangeCostReduction)));
+        if (baseCost < 0)
+            return GameBalanceConfig.UnitExchangeUnavailableCost;
+
+        return Mathf.Max(1, Mathf.RoundToInt(baseCost * (1f - UnitExchangeCostReduction)));
     }
 
     public static float GetEnhancementAttackPowerMultiplier(UnitGrade grade)

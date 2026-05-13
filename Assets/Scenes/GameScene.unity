@@ -9589,75 +9589,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AuctionManager
   goldManager: {fileID: 1057302174}
   itemInventory: {fileID: 780795161}
-  currentOptions:
-  - optionName: 
-    rewardType: 0
-    rewardItemType: 0
-    stage: 0
-    startPrice: 0
-    currentPrice: 0
-    aiFirstBid: 0
-    aiMaxBudget: 0
-    aiPersonality: 0
-    hasActiveBid: 0
-    currentBidOwner: 
-  - optionName: 
-    rewardType: 0
-    rewardItemType: 0
-    stage: 0
-    startPrice: 0
-    currentPrice: 0
-    aiFirstBid: 0
-    aiMaxBudget: 0
-    aiPersonality: 0
-    hasActiveBid: 0
-    currentBidOwner: 
-  - optionName: 
-    rewardType: 0
-    rewardItemType: 0
-    stage: 0
-    startPrice: 0
-    currentPrice: 0
-    aiFirstBid: 0
-    aiMaxBudget: 0
-    aiPersonality: 0
-    hasActiveBid: 0
-    currentBidOwner: 
-  - optionName: 
-    rewardType: 0
-    rewardItemType: 0
-    stage: 0
-    startPrice: 0
-    currentPrice: 0
-    aiFirstBid: 0
-    aiMaxBudget: 0
-    aiPersonality: 0
-    hasActiveBid: 0
-    currentBidOwner: 
-  leftOption:
-    optionName: uriel
-    rewardType: 0
-    rewardItemType: 4
-    stage: 0
-    startPrice: 0
-    currentPrice: 0
-    aiFirstBid: 0
-    aiMaxBudget: 0
-    aiPersonality: 0
-    hasActiveBid: 0
-    currentBidOwner: 
-  rightOption:
-    optionName: demon
-    rewardType: 0
-    rewardItemType: 7
-    stage: 0
-    startPrice: 0
-    currentPrice: 0
-    aiFirstBid: 0
-    aiMaxBudget: 0
-    aiPersonality: 0
-    hasActiveBid: 0
-    currentBidOwner: 
 --- !u!4 &872170802
 Transform:
   m_ObjectHideFlags: 0
@@ -16224,7 +16155,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EvolutionManager
   recipes:
-  - {fileID: 11400000, guid: 591c08abd061aa14293b7b98c37ba177, type: 2}
+  - {fileID: 11400000, guid: 784c2fbc87393054d9c616511d901a7f, type: 2}
+  - {fileID: 11400000, guid: 79689f0c5838604459d6caecfee1867e, type: 2}
+  - {fileID: 11400000, guid: 6fb3e307b6f853d44bf55adcd40fae5d, type: 2}
+  - {fileID: 11400000, guid: c3f1ddb6bbcfe03448dc51c0681c2c62, type: 2}
+  - {fileID: 11400000, guid: 467638e25f7d2374dbf2e3fa0d50f309, type: 2}
+  - {fileID: 11400000, guid: 7f099eaa957ad8e469078708ab1fd9e9, type: 2}
+  - {fileID: 11400000, guid: e89b1a691c5849448900a20bee452133, type: 2}
+  - {fileID: 11400000, guid: fb87197510eca9f4bb587ccb47ade261, type: 2}
+  - {fileID: 11400000, guid: 16e6e9df1e90361468d9083c272f49c9, type: 2}
+  - {fileID: 11400000, guid: bbfc442b8378f5f4f9f464392c347e83, type: 2}
+  - {fileID: 11400000, guid: 33a6c7477f628824ab4acca1f05bc273, type: 2}
+  - {fileID: 11400000, guid: c39c2d8d8a4f53f47905a3f7d32d4119, type: 2}
+  - {fileID: 11400000, guid: 69e5f202de30d264caf7e39a226c4d5a, type: 2}
 --- !u!4 &1445506450
 Transform:
   m_ObjectHideFlags: 0

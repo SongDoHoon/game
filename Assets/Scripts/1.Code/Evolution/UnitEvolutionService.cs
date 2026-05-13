@@ -5,6 +5,11 @@ public class UnitEvolutionService : MonoBehaviour
     public EvolutionManager evolutionManager;
     public EvolutionItemInventory itemInventory;
 
+    private void Awake()
+    {
+        ResolveReferences();
+    }
+
     public bool CanEvolveUnit(UnitController unit)
     {
         return TryGetAvailableRecipe(unit, out _);
@@ -13,22 +18,13 @@ public class UnitEvolutionService : MonoBehaviour
     public bool TryGetAvailableRecipe(UnitController unit, out EvolutionRecipe recipe)
     {
         recipe = null;
+        ResolveReferences();
 
         if (unit == null) return false;
         if (unit.Data == null) return false;
         if (evolutionManager == null || itemInventory == null) return false;
 
-        foreach (EvolutionRecipe candidate in evolutionManager.recipes)
-        {
-            if (candidate == null) continue;
-            if (candidate.requiredBaseUnit != unit.Data) continue;
-            if (!itemInventory.HasItem(candidate.requiredItem)) continue;
-
-            recipe = candidate;
-            return true;
-        }
-
-        return false;
+        return evolutionManager.TryGetAvailableRecipe(unit.Data, itemInventory, out recipe);
     }
 
     public bool TryEvolveFirstAvailable(UnitController unit)
@@ -41,6 +37,8 @@ public class UnitEvolutionService : MonoBehaviour
 
     public bool TryEvolveUnit(UnitController unit, EvolutionItemType itemType)
     {
+        ResolveReferences();
+
         if (unit == null) return false;
         if (evolutionManager == null || itemInventory == null) return false;
 
@@ -54,5 +52,14 @@ public class UnitEvolutionService : MonoBehaviour
         itemInventory.UseItem(itemType, 1);
         unit.Initialize(result);
         return true;
+    }
+
+    private void ResolveReferences()
+    {
+        if (evolutionManager == null)
+            evolutionManager = FindFirstObjectByType<EvolutionManager>();
+
+        if (itemInventory == null)
+            itemInventory = FindFirstObjectByType<EvolutionItemInventory>();
     }
 }

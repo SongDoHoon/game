@@ -29,6 +29,6 @@ public class BossRewardController : MonoBehaviour
         auctionManager.SetAuctionOptionsForStage(stage);
 
         if (auctionUIController != null)
-            auctionUIController.OpenAuctionUI(auctionManager.currentOptions);
+            auctionUIController.OpenAuctionUI(auctionManager.CurrentOptions);
     }
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1497bacfd17b0cf409bb7bc03b4821c9, type: 3}
-  m_Name: EvolutionRecipes
+  m_Name: Mammon
   m_EditorClassIdentifier: Assembly-CSharp::EvolutionRecipe
-  evolveKey: 0
-  requiredBaseUnit: {fileID: 11400000, guid: 04355f2e229277e4789ce8c354721909, type: 2}
-  requiredItem: 4
-  resultUnit: {fileID: 11400000, guid: a72b8b79a051fab40bb8d57c54dd952f, type: 2}
+  evolveKey: Mammon
+  requiredBaseUnit: {fileID: 11400000, guid: 9602f5383d1c8e3429fafc2271bb320e, type: 2}
+  requiredItem: 6
+  resultUnit: {fileID: 11400000, guid: 05e3e61a8ea39a04a914b99543a3a9dc, type: 2}

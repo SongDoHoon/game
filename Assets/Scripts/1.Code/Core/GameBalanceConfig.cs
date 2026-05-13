@@ -5,6 +5,8 @@ public static class GameBalanceConfig
 {
     public const int MaxEnhancementLevel = 30;
     public const int StageClearGold = 10;
+    public const int EvolutionAuctionStartStage = 30;
+    public const int UnitExchangeUnavailableCost = -1;
 
     private static readonly int[] BossClearGoldByStage = { 50, 100, 200, 250, 300, 350, 400, 450, 500, 0 };
     private static readonly int[] AuctionBasePriceByStage = { 20, 40, 75, 95, 120, 145, 170, 200, 240, 0 };
@@ -24,19 +26,14 @@ public static class GameBalanceConfig
 
     private static readonly EvolutionItemType[] EvolutionAuctionRewards =
     {
-        EvolutionItemType.MichaelItem,
-        EvolutionItemType.GabrielItem,
-        EvolutionItemType.RaphaelItem,
-        EvolutionItemType.UrielItem,
-        EvolutionItemType.RaguelItem,
-        EvolutionItemType.SarielItem,
-        EvolutionItemType.DemonItem1,
-        EvolutionItemType.DemonItem2,
-        EvolutionItemType.DemonItem3,
-        EvolutionItemType.DemonItem4,
-        EvolutionItemType.DemonItem5,
-        EvolutionItemType.DemonItem6,
-        EvolutionItemType.DemonItem7
+        EvolutionItemType.Baekho,
+        EvolutionItemType.Cheongryong,
+        EvolutionItemType.Hyeonmu,
+        EvolutionItemType.Jujak,
+        EvolutionItemType.Taotie,
+        EvolutionItemType.Qiongqi,
+        EvolutionItemType.Taowu,
+        EvolutionItemType.Hundun
     };
 
     private static readonly Dictionary<AuctionRewardType, float> AuctionPriceMultipliers = new()
@@ -298,6 +295,35 @@ public static class GameBalanceConfig
         }
     }
 
+    public static bool CanExchangeUnitGrade(UnitGrade grade)
+    {
+        return grade == UnitGrade.Normal
+            || grade == UnitGrade.Rare
+            || grade == UnitGrade.Epic
+            || grade == UnitGrade.Verure;
+    }
+
+    public static int GetUnitExchangeBaseCost(UnitGrade grade)
+    {
+        switch (grade)
+        {
+            case UnitGrade.Normal:
+                return 20;
+
+            case UnitGrade.Rare:
+                return 45;
+
+            case UnitGrade.Epic:
+                return 110;
+
+            case UnitGrade.Verure:
+                return 260;
+
+            default:
+                return UnitExchangeUnavailableCost;
+        }
+    }
+
     private static int GetBossStageIndex(int stage)
     {
         if (stage < 10 || stage > 100 || stage % 10 != 0)
@@ -308,7 +334,7 @@ public static class GameBalanceConfig
 
     private static int GetEvolutionOptionCount(int stage)
     {
-        if (stage < 30)
+        if (stage < EvolutionAuctionStartStage)
             return 0;
 
         if (stage <= 60)

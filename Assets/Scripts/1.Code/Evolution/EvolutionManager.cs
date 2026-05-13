@@ -9,6 +9,8 @@ public class EvolutionManager : MonoBehaviour
     {
         foreach (EvolutionRecipe recipe in recipes)
         {
+            if (recipe == null) continue;
+
             if (recipe.requiredBaseUnit == baseUnit && recipe.requiredItem == itemType)
                 return recipe;
         }
@@ -20,6 +22,8 @@ public class EvolutionManager : MonoBehaviour
     {
         foreach (EvolutionRecipe recipe in recipes)
         {
+            if (recipe == null) continue;
+
             if (recipe.requiredBaseUnit == baseUnit)
                 return recipe;
         }
@@ -43,5 +47,25 @@ public class EvolutionManager : MonoBehaviour
 
         targetUnit.Initialize(result);
         return true;
+    }
+
+    public bool TryGetAvailableRecipe(UnitData baseUnit, EvolutionItemInventory inventory, out EvolutionRecipe recipe)
+    {
+        recipe = null;
+
+        if (baseUnit == null || inventory == null)
+            return false;
+
+        foreach (EvolutionRecipe candidate in recipes)
+        {
+            if (candidate == null) continue;
+            if (candidate.requiredBaseUnit != baseUnit) continue;
+            if (!inventory.HasItem(candidate.requiredItem)) continue;
+
+            recipe = candidate;
+            return true;
+        }
+
+        return false;
     }
 }

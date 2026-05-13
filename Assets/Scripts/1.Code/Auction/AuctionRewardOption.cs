@@ -36,7 +36,7 @@ public class AuctionRewardOption
     {
         AuctionRewardOption option = new()
         {
-            optionName = itemType.ToString(),
+            optionName = GetEvolutionItemName(itemType),
             rewardType = AuctionRewardType.EvolutionItem,
             rewardItemType = itemType,
             stage = stage,
@@ -77,6 +77,22 @@ public class AuctionRewardOption
             AuctionRewardType.HigherGradeSummonChanceUp => "High Grade Summon Chance +2%",
             AuctionRewardType.MergeTwoGradeUpChance => "Merge Two Grade Up +3%",
             AuctionRewardType.UnitExchangeCostReduction => "Unit Exchange Cost -3%",
+            _ => "None"
+        };
+    }
+
+    private static string GetEvolutionItemName(EvolutionItemType itemType)
+    {
+        return itemType switch
+        {
+            EvolutionItemType.Baekho => "\uBC31\uD638",
+            EvolutionItemType.Cheongryong => "\uCCAD\uB8E1",
+            EvolutionItemType.Hyeonmu => "\uD604\uBB34",
+            EvolutionItemType.Jujak => "\uC8FC\uC791",
+            EvolutionItemType.Taotie => "\uB3C4\uCCA0",
+            EvolutionItemType.Qiongqi => "\uAD81\uAE30",
+            EvolutionItemType.Taowu => "\uB3C4\uC62C",
+            EvolutionItemType.Hundun => "\uD63C\uB3C8",
             _ => "None"
         };
     }

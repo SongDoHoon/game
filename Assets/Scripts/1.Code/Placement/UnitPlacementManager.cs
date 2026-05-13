@@ -31,6 +31,7 @@ public class UnitPlacementManager : MonoBehaviour
     private bool showAllUnitRanges;
     private UnitController inspectedUnit;
     private RectTransform mergeButtonRectTransform;
+    private UnitEvolutionService evolutionService;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class UnitPlacementManager : MonoBehaviour
         if (goldManager == null)
             goldManager = FindFirstObjectByType<GoldManager>();
 
+        ResolveEvolutionService();
         RefreshSelectableUnits();
         RefreshRangeVisuals();
         BindMergeButtonEvent();
@@ -128,6 +130,36 @@ public class UnitPlacementManager : MonoBehaviour
         UnitController unit = fromTile.PlacedUnit;
         fromTile.ClearTile();
         return toTile.PlaceExistingUnit(unit);
+    }
+
+    public bool TryExchangeInspectedUnit()
+    {
+        if (inspectedUnit == null || inspectedUnit.Data == null)
+        {
+            RefreshMergeUI();
+            return false;
+        }
+
+        bool success = TryExchangeUnit(inspectedUnit);
+        RefreshRangeVisuals();
+        RefreshMergeUI();
+        return success;
+    }
+
+    public bool TryEvolveInspectedUnit()
+    {
+        if (inspectedUnit == null || inspectedUnit.Data == null)
+        {
+            RefreshMergeUI();
+            return false;
+        }
+
+        ResolveEvolutionService();
+
+        bool success = evolutionService != null && evolutionService.TryEvolveFirstAvailable(inspectedUnit);
+        RefreshRangeVisuals();
+        RefreshMergeUI();
+        return success;
     }
 
     public void InspectUnit(UnitController unit)
@@ -355,7 +387,19 @@ public class UnitPlacementManager : MonoBehaviour
             return;
         }
 
-        TryMergeInspectedUnit();
+        if (CanEvolveUnit(inspectedUnit))
+        {
+            TryEvolveInspectedUnit();
+            return;
+        }
+
+        if (TryGetMergeInfo(inspectedUnit, out _, out _, out _))
+        {
+            TryMergeInspectedUnit();
+            return;
+        }
+
+        TryExchangeInspectedUnit();
     }
 
     private void DrawUnitSelectionToggle()
@@ -459,6 +503,30 @@ public class UnitPlacementManager : MonoBehaviour
         return true;
     }
 
+    private bool TryExchangeUnit(UnitController targetUnit)
+    {
+        if (targetUnit == null || targetUnit.Data == null)
+            return false;
+
+        int exchangeCost = GetUnitExchangeCost(targetUnit.Data);
+        if (exchangeCost < 0)
+            return false;
+
+        UnitData exchangeResult = RollSameGradeExchangeUnit(targetUnit.Data);
+        if (exchangeResult == null)
+            return false;
+
+        BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
+        if (magicStoneManager == null)
+            magicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+
+        if (magicStoneManager == null || !magicStoneManager.TrySpendBattleMagicStone(exchangeCost))
+            return false;
+
+        targetUnit.Initialize(exchangeResult);
+        return true;
+    }
+
     private UnitController FindMatchingMergeMaterial(UnitController baseUnit)
     {
         if (baseUnit == null || baseUnit.Data == null)
@@ -527,6 +595,44 @@ public class UnitPlacementManager : MonoBehaviour
         return null;
     }
 
+    private UnitData RollSameGradeExchangeUnit(UnitData currentUnit)
+    {
+        if (currentUnit == null || !GameBalanceConfig.CanExchangeUnitGrade(currentUnit.grade))
+            return null;
+
+        List<WeightedUnitEntry> exchangePool = GetMergePool(currentUnit.grade);
+        if (exchangePool == null || exchangePool.Count == 0)
+            return null;
+
+        int totalWeight = 0;
+
+        foreach (WeightedUnitEntry entry in exchangePool)
+        {
+            if (!IsValidExchangeCandidate(entry, currentUnit))
+                continue;
+
+            totalWeight += Mathf.Max(0, entry.weight);
+        }
+
+        if (totalWeight <= 0)
+            return null;
+
+        int roll = UnityEngine.Random.Range(0, totalWeight);
+        int cumulativeWeight = 0;
+
+        foreach (WeightedUnitEntry entry in exchangePool)
+        {
+            if (!IsValidExchangeCandidate(entry, currentUnit))
+                continue;
+
+            cumulativeWeight += Mathf.Max(0, entry.weight);
+            if (roll < cumulativeWeight)
+                return entry.unitData;
+        }
+
+        return null;
+    }
+
     private UnitGrade? GetNextMergeGrade(UnitGrade currentGrade)
     {
         switch (currentGrade)
@@ -565,6 +671,9 @@ public class UnitPlacementManager : MonoBehaviour
 
         switch (grade)
         {
+            case UnitGrade.Normal:
+                return summonManager.summonTable.normalUnits;
+
             case UnitGrade.Rare:
                 return summonManager.summonTable.rareUnits;
 
@@ -586,6 +695,95 @@ public class UnitPlacementManager : MonoBehaviour
 
         return unitData.grade == UnitGrade.ArchAngel
             || unitData.grade == UnitGrade.GreatDemon;
+    }
+
+    private bool CanExchangeUnit(UnitData unitData)
+    {
+        if (unitData == null)
+            return false;
+
+        if (!GameBalanceConfig.CanExchangeUnitGrade(unitData.grade))
+            return false;
+
+        if (!HasExchangeCandidate(unitData))
+            return false;
+
+        int exchangeCost = GetUnitExchangeCost(unitData);
+        BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
+        if (magicStoneManager == null)
+            magicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+
+        return magicStoneManager != null && magicStoneManager.CanSpendBattleMagicStone(exchangeCost);
+    }
+
+    private bool HasExchangeCandidate(UnitData currentUnit)
+    {
+        if (currentUnit == null || !GameBalanceConfig.CanExchangeUnitGrade(currentUnit.grade))
+            return false;
+
+        List<WeightedUnitEntry> exchangePool = GetMergePool(currentUnit.grade);
+        if (exchangePool == null || exchangePool.Count == 0)
+            return false;
+
+        foreach (WeightedUnitEntry entry in exchangePool)
+        {
+            if (IsValidExchangeCandidate(entry, currentUnit))
+                return true;
+        }
+
+        return false;
+    }
+
+    private int GetUnitExchangeCost(UnitData unitData)
+    {
+        if (unitData == null)
+            return GameBalanceConfig.UnitExchangeUnavailableCost;
+
+        int baseCost = GameBalanceConfig.GetUnitExchangeBaseCost(unitData.grade);
+        return GameModifierState.GetReducedUnitExchangeCost(baseCost);
+    }
+
+    private bool IsValidExchangeCandidate(WeightedUnitEntry entry, UnitData currentUnit)
+    {
+        if (entry == null || entry.unitData == null || currentUnit == null)
+            return false;
+
+        if (IsSameUnitData(entry.unitData, currentUnit))
+            return false;
+
+        if (entry.unitData.grade != currentUnit.grade)
+            return false;
+
+        if (!GameBalanceConfig.CanExchangeUnitGrade(entry.unitData.grade))
+            return false;
+
+        return entry.weight > 0;
+    }
+
+    private bool IsSameUnitData(UnitData left, UnitData right)
+    {
+        if (left == right)
+            return true;
+
+        return left != null
+            && right != null
+            && !string.IsNullOrEmpty(left.unitId)
+            && left.unitId == right.unitId;
+    }
+
+    private bool CanEvolveUnit(UnitController unit)
+    {
+        if (unit == null || unit.Data == null)
+            return false;
+
+        ResolveEvolutionService();
+        return evolutionService != null && evolutionService.TryGetAvailableRecipe(unit, out _);
+    }
+
+    private void ResolveEvolutionService()
+    {
+        if (evolutionService == null)
+            evolutionService = FindFirstObjectByType<UnitEvolutionService>();
     }
 
     private string GetUnitDisplayName(UnitData unitData)
@@ -641,17 +839,26 @@ public class UnitPlacementManager : MonoBehaviour
             return;
         }
 
+        bool canEvolve = CanEvolveUnit(inspectedUnit);
         bool canMerge = TryGetMergeInfo(inspectedUnit, out _, out _, out _);
-        mergeButtonRoot.SetActive(canMerge);
+        bool canExchange = CanExchangeUnit(inspectedUnit.Data);
+        mergeButtonRoot.SetActive(canEvolve || canMerge || canExchange);
 
-        if (!canMerge)
+        if (!canEvolve && !canMerge && !canExchange)
             return;
 
         if (mergeButton != null)
             mergeButton.interactable = true;
 
         if (mergeButtonText != null)
-            mergeButtonText.text = "Merge";
+        {
+            if (canEvolve)
+                mergeButtonText.text = "\uC9C4\uD654";
+            else if (canMerge)
+                mergeButtonText.text = "Merge";
+            else
+                mergeButtonText.text = $"\uAD50\uD658 {GetUnitExchangeCost(inspectedUnit.Data)}";
+        }
 
         UpdateMergeButtonPosition();
     }

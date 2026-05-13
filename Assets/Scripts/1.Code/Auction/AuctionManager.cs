@@ -17,10 +17,11 @@ public class AuctionManager : MonoBehaviour
     [Header("Reward Inventory")]
     public EvolutionItemInventory itemInventory;
 
-    [Header("Current Auction Options")]
-    public AuctionRewardOption[] currentOptions = new AuctionRewardOption[4];
-    public AuctionRewardOption leftOption;
-    public AuctionRewardOption rightOption;
+    private AuctionRewardOption[] currentOptions = new AuctionRewardOption[4];
+    private AuctionRewardOption leftOption;
+    private AuctionRewardOption rightOption;
+
+    public AuctionRewardOption[] CurrentOptions => currentOptions;
 
     private void Awake()
     {
