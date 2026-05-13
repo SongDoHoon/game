@@ -20,6 +20,23 @@ public static class GameModifierState
     public static float MergeTwoGradeUpChance { get; private set; }
     public static float UnitExchangeCostReduction { get; private set; }
 
+    public static void ResetBattleState()
+    {
+        ResetEnhancementLevels();
+
+        GlobalAttackSpeedBonus = 0f;
+        GlobalAttackPowerBonus = 0f;
+        AngelDemonCooldownReduction = 0f;
+        MonsterMoveSpeedReduction = 0f;
+        AngelDemonSkillDamageBonus = 0f;
+        StageStartBonusGold = 0;
+        HigherGradeSummonChanceBonus = 0f;
+        MergeTwoGradeUpChance = 0f;
+        UnitExchangeCostReduction = 0f;
+
+        RecalculateAllUnitStats();
+    }
+
     public static void ApplyAuctionReward(AuctionRewardOption option)
     {
         if (option == null)
@@ -72,7 +89,7 @@ public static class GameModifierState
 
     public static int GetNextEnhancementCost(UnitEnhanceGroup group)
     {
-        int nextLevel = Mathf.Min(10, GetEnhancementLevel(group) + 1);
+        int nextLevel = Mathf.Min(GameBalanceConfig.MaxEnhancementLevel, GetEnhancementLevel(group) + 1);
 
         if (!GameBalanceConfig.TryGetEnhancementData(group, nextLevel, out EnhancementLevelData data))
             return 0;
@@ -82,20 +99,26 @@ public static class GameModifierState
 
     public static bool TryEnhance(UnitEnhanceGroup group, GoldManager goldManager)
     {
-        if (goldManager == null)
+        BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
+        if (magicStoneManager == null)
+            magicStoneManager = Object.FindFirstObjectByType<BattleMagicStoneManager>();
+
+        return magicStoneManager != null && magicStoneManager.TryUpgradeGradeGroup(group);
+    }
+
+    public static bool SetEnhancementLevel(UnitEnhanceGroup group, int level)
+    {
+        if (!EnhancementLevels.ContainsKey(group))
             return false;
 
-        int currentLevel = GetEnhancementLevel(group);
-        if (currentLevel >= 10)
-            return false;
-
-        int cost = GetNextEnhancementCost(group);
-        if (!goldManager.UseGold(cost))
-            return false;
-
-        EnhancementLevels[group] = currentLevel + 1;
+        EnhancementLevels[group] = Mathf.Clamp(level, 0, GameBalanceConfig.MaxEnhancementLevel);
         RecalculateAllUnitStats();
         return true;
+    }
+
+    public static UnitEnhanceGroup GetEnhancementGroup(UnitGrade grade)
+    {
+        return GameBalanceConfig.GetEnhanceGroup(grade);
     }
 
     public static int GetReducedUnitExchangeCost(int baseCost)
@@ -138,5 +161,12 @@ public static class GameModifierState
             if (unit != null)
                 unit.RecalculateStats();
         }
+    }
+
+    private static void ResetEnhancementLevels()
+    {
+        EnhancementLevels[UnitEnhanceGroup.LowGradeGroup] = 0;
+        EnhancementLevels[UnitEnhanceGroup.HighGradeGroup] = 0;
+        EnhancementLevels[UnitEnhanceGroup.EvolutionGroup] = 0;
     }
 }

@@ -17,7 +17,7 @@ public class WaveManager : MonoBehaviour
     public bool gameEnded = false;
 
     [Header("Spawn Count Per Wave")]
-    public int normalMonsterCount = 1;
+    public int normalMonsterCount = 15;
     public float normalSpawnSpacingDistance = 1f;
     public int finalWave = 100;
 
@@ -47,6 +47,7 @@ public class WaveManager : MonoBehaviour
         if (gameEnded) return;
 
         CancelAutoStart();
+        ResetBattleRuntimeData();
         waveStarted = true;
         StartNextWave();
     }
@@ -69,7 +70,6 @@ public class WaveManager : MonoBehaviour
 
         currentWave++;
         waitingForNextWave = false;
-        GrantStageStartGold();
 
         if (currentWave % 10 == 0)
         {
@@ -92,12 +92,14 @@ public class WaveManager : MonoBehaviour
 
         if (aliveMonsterCount <= 0 && currentWave >= finalWave)
         {
+            GrantStageClearGold();
             CompleteGame(true);
             return;
         }
 
         if (aliveMonsterCount <= 0 && !waitingForNextWave && !isPausedForAuction && currentWave < finalWave)
         {
+            GrantStageClearGold();
             waitingForNextWave = true;
             Invoke(nameof(StartNextWave), 1.5f);
         }
@@ -168,14 +170,27 @@ public class WaveManager : MonoBehaviour
         spawnWaveCoroutine = null;
     }
 
-    private void GrantStageStartGold()
+    private void GrantStageClearGold()
     {
-        if (GameModifierState.StageStartBonusGold <= 0)
+        int goldAmount = GameBalanceConfig.GetStageClearGold() + GameModifierState.StageStartBonusGold;
+        if (goldAmount <= 0)
             return;
 
         GoldManager goldManager = FindFirstObjectByType<GoldManager>();
         if (goldManager != null)
-            goldManager.AddGold(GameModifierState.StageStartBonusGold);
+            goldManager.AddGold(goldAmount);
+    }
+
+    private void ResetBattleRuntimeData()
+    {
+        BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
+        if (magicStoneManager == null)
+            magicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+
+        if (magicStoneManager != null)
+            magicStoneManager.ResetForBattle();
+        else
+            GameModifierState.ResetBattleState();
     }
 
     private void CompleteGame(bool cleared)

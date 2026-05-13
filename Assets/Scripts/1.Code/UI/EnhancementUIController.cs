@@ -4,14 +4,17 @@ using UnityEngine.UI;
 
 public class EnhancementUIController : MonoBehaviour
 {
+    private const float RefreshInterval = 0.1f;
+
     [Header("Panel")]
     public GameObject enhancementPanel;
     public Button openButton;
     public Button closeButton;
     public bool closeOnStart = true;
 
-    [Header("Gold")]
-    public GoldManager goldManager;
+    [Header("Magic Stone")]
+    public BattleMagicStoneManager battleMagicStoneManager;
+    public TMP_Text currentMagicStoneText;
 
     [Header("Low Grade Group")]
     public Button lowGradeButton;
@@ -31,10 +34,15 @@ public class EnhancementUIController : MonoBehaviour
     [Header("Result")]
     public TMP_Text resultText;
 
+    private float refreshTimer;
+
     private void Awake()
     {
-        if (goldManager == null)
-            goldManager = FindFirstObjectByType<GoldManager>();
+        if (battleMagicStoneManager == null)
+            battleMagicStoneManager = BattleMagicStoneManager.Instance;
+
+        if (battleMagicStoneManager == null)
+            battleMagicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
 
         BindButtonEvents();
         RefreshUI();
@@ -45,6 +53,16 @@ public class EnhancementUIController : MonoBehaviour
 
     private void OnEnable()
     {
+        RefreshUI();
+    }
+
+    private void Update()
+    {
+        refreshTimer -= Time.deltaTime;
+        if (refreshTimer > 0f)
+            return;
+
+        refreshTimer = RefreshInterval;
         RefreshUI();
     }
 
@@ -79,6 +97,7 @@ public class EnhancementUIController : MonoBehaviour
 
     public void RefreshUI()
     {
+        RefreshCurrentMagicStoneUI();
         RefreshGroupUI(UnitEnhanceGroup.LowGradeGroup, lowGradeLevelText, lowGradeCostText, lowGradeButton);
         RefreshGroupUI(UnitEnhanceGroup.HighGradeGroup, highGradeLevelText, highGradeCostText, highGradeButton);
         RefreshGroupUI(UnitEnhanceGroup.EvolutionGroup, evolutionLevelText, evolutionCostText, evolutionButton);
@@ -119,40 +138,64 @@ public class EnhancementUIController : MonoBehaviour
 
     private void TryEnhance(UnitEnhanceGroup group, string displayName)
     {
-        if (goldManager == null)
+        if (battleMagicStoneManager == null)
+            battleMagicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+
+        if (battleMagicStoneManager == null)
         {
-            SetResultText("GoldManager is not assigned.");
+            SetResultText("인게임 마석 매니저가 배치되지 않았습니다.");
             return;
         }
 
         int beforeLevel = GameModifierState.GetEnhancementLevel(group);
-        bool success = goldManager.TryEnhance(group);
+        bool success = battleMagicStoneManager.TryUpgradeGradeGroup(group);
         int afterLevel = GameModifierState.GetEnhancementLevel(group);
 
         if (success)
-            SetResultText($"{displayName} enhanced to Lv.{afterLevel}.");
-        else if (beforeLevel >= 10)
-            SetResultText($"{displayName} is already max level.");
+            SetResultText($"{displayName} 강화 Lv.{afterLevel}");
+        else if (beforeLevel >= GameBalanceConfig.MaxEnhancementLevel)
+            SetResultText($"{displayName}은 이미 최대 강화입니다.");
         else
-            SetResultText($"Not enough gold for {displayName}.");
+            SetResultText($"{displayName} 강화에 필요한 마석이 부족합니다.");
 
         RefreshUI();
     }
 
     private void RefreshGroupUI(UnitEnhanceGroup group, TMP_Text levelText, TMP_Text costText, Button button)
     {
+        if (battleMagicStoneManager == null)
+            battleMagicStoneManager = BattleMagicStoneManager.Instance;
+
+        if (battleMagicStoneManager == null)
+            battleMagicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+
         int level = GameModifierState.GetEnhancementLevel(group);
-        bool isMaxLevel = level >= 10;
+        bool isMaxLevel = level >= GameBalanceConfig.MaxEnhancementLevel;
         int cost = isMaxLevel ? 0 : GameModifierState.GetNextEnhancementCost(group);
 
         if (levelText != null)
-            levelText.text = $"Lv. {level}/10";
+            levelText.text = $"Lv. {level}/{GameBalanceConfig.MaxEnhancementLevel}";
 
         if (costText != null)
-            costText.text = isMaxLevel ? "MAX" : $"Cost: {cost}";
+            costText.text = isMaxLevel ? "MAX" : $"마석 {cost}";
 
         if (button != null)
-            button.interactable = goldManager != null && !isMaxLevel && goldManager.currentGold >= cost;
+            button.interactable = battleMagicStoneManager != null && !isMaxLevel && battleMagicStoneManager.CurrentBattleMagicStone >= cost;
+    }
+
+    private void RefreshCurrentMagicStoneUI()
+    {
+        if (battleMagicStoneManager == null)
+            battleMagicStoneManager = BattleMagicStoneManager.Instance;
+
+        if (battleMagicStoneManager == null)
+            battleMagicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+
+        if (currentMagicStoneText != null)
+        {
+            double currentMagicStone = battleMagicStoneManager != null ? battleMagicStoneManager.CurrentBattleMagicStone : 0.0;
+            currentMagicStoneText.text = $"마석 {System.Math.Floor(currentMagicStone)}";
+        }
     }
 
     private void SetResultText(string message)

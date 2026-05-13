@@ -73,7 +73,7 @@ public class AuctionRewardOption
             AuctionRewardType.AngelDemonCooldownReduction => "Angel/Demon Cooldown -5%",
             AuctionRewardType.MonsterMoveSpeedReduction => "Monster Move Speed -5%",
             AuctionRewardType.AngelDemonSkillDamageUp => "Angel/Demon Skill Damage +5%",
-            AuctionRewardType.StageStartBonusGold => "Stage Start Gold +10",
+            AuctionRewardType.StageStartBonusGold => "Stage Clear Gold +10",
             AuctionRewardType.HigherGradeSummonChanceUp => "High Grade Summon Chance +2%",
             AuctionRewardType.MergeTwoGradeUpChance => "Merge Two Grade Up +3%",
             AuctionRewardType.UnitExchangeCostReduction => "Unit Exchange Cost -3%",

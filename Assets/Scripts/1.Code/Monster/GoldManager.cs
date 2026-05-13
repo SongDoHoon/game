@@ -20,7 +20,11 @@ public class GoldManager : MonoBehaviour
 
     public bool TryEnhance(UnitEnhanceGroup group)
     {
-        return GameModifierState.TryEnhance(group, this);
+        BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
+        if (magicStoneManager == null)
+            magicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+
+        return magicStoneManager != null && magicStoneManager.TryUpgradeGradeGroup(group);
     }
 
     public int GetEnhanceCost(UnitEnhanceGroup group)
