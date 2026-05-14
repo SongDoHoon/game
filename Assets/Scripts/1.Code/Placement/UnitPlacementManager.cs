@@ -21,6 +21,18 @@ public class UnitPlacementManager : MonoBehaviour
     public TMP_Text mergeButtonText;
     public bool positionMergeButtonNearSelectedUnit = true;
     public Vector2 mergeButtonScreenOffset = new Vector2(0f, -70f);
+    public Vector2 exchangeButtonScreenOffset = new Vector2(0f, 70f);
+
+    [Header("Action Button Labels")]
+    public string evolveButtonLabel = "Evolve";
+    public string mergeButtonLabel = "Merge";
+    public string exchangeButtonLabel = "Exchange";
+    public string exchangeUnavailableLabel = "Exchange N/A";
+    public TMP_FontAsset actionButtonFontAsset;
+
+    [Header("Action Button Visuals")]
+    [Range(0f, 1f)] public float enabledButtonAlpha = 1f;
+    [Range(0f, 1f)] public float disabledButtonAlpha = 0.7f;
 
     public static UnitPlacementManager Instance { get; private set; }
 
@@ -31,6 +43,12 @@ public class UnitPlacementManager : MonoBehaviour
     private bool showAllUnitRanges;
     private UnitController inspectedUnit;
     private RectTransform mergeButtonRectTransform;
+    private CanvasGroup mergeButtonCanvasGroup;
+    private GameObject exchangeButtonRoot;
+    private Button exchangeButton;
+    private TMP_Text exchangeButtonText;
+    private RectTransform exchangeButtonRectTransform;
+    private CanvasGroup exchangeButtonCanvasGroup;
     private UnitEvolutionService evolutionService;
 
     private void Awake()
@@ -41,12 +59,14 @@ public class UnitPlacementManager : MonoBehaviour
             placementTiles = GetComponentsInChildren<UnitPlacementTile>(true);
 
         if (goldManager == null)
-            goldManager = FindFirstObjectByType<GoldManager>();
+            goldManager = FindAnyObjectByType<GoldManager>();
 
         ResolveEvolutionService();
         RefreshSelectableUnits();
         RefreshRangeVisuals();
+        CreateExchangeButtonUI();
         BindMergeButtonEvent();
+        BindExchangeButtonEvent();
         RefreshMergeUI();
     }
 
@@ -60,7 +80,7 @@ public class UnitPlacementManager : MonoBehaviour
 
     private void LateUpdate()
     {
-        UpdateMergeButtonPosition();
+        RefreshMergeUI();
     }
 
     private void Update()
@@ -213,12 +233,12 @@ public class UnitPlacementManager : MonoBehaviour
 
         UnitGrowthManager unitGrowthManager = UnitGrowthManager.Instance;
         if (unitGrowthManager == null)
-            unitGrowthManager = FindFirstObjectByType<UnitGrowthManager>();
+            unitGrowthManager = FindAnyObjectByType<UnitGrowthManager>();
 
         if (unitGrowthManager != null)
             AddUnitsFromDatabase(unitGrowthManager.unitDatabase);
 
-        EvolutionManager evolutionManager = FindFirstObjectByType<EvolutionManager>();
+        EvolutionManager evolutionManager = FindAnyObjectByType<EvolutionManager>();
         if (evolutionManager != null)
         {
             foreach (EvolutionRecipe recipe in evolutionManager.recipes)
@@ -383,13 +403,21 @@ public class UnitPlacementManager : MonoBehaviour
 
         if (inspectedUnit.HasManualSelfEnhancement())
         {
-            TryManualEnhanceInspectedUnit();
+            if (inspectedUnit.CanTryManualEnhance(goldManager))
+                TryManualEnhanceInspectedUnit();
+            else
+                RefreshMergeUI();
+
             return;
         }
 
-        if (CanEvolveUnit(inspectedUnit))
+        if (HasEvolutionRecipe(inspectedUnit) || IsRestrictedMergeUnit(inspectedUnit.Data))
         {
-            TryEvolveInspectedUnit();
+            if (CanEvolveUnit(inspectedUnit))
+                TryEvolveInspectedUnit();
+            else
+                RefreshMergeUI();
+
             return;
         }
 
@@ -399,7 +427,7 @@ public class UnitPlacementManager : MonoBehaviour
             return;
         }
 
-        TryExchangeInspectedUnit();
+        RefreshMergeUI();
     }
 
     private void DrawUnitSelectionToggle()
@@ -518,7 +546,7 @@ public class UnitPlacementManager : MonoBehaviour
 
         BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
         if (magicStoneManager == null)
-            magicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+            magicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
 
         if (magicStoneManager == null || !magicStoneManager.TrySpendBattleMagicStone(exchangeCost))
             return false;
@@ -532,7 +560,7 @@ public class UnitPlacementManager : MonoBehaviour
         if (baseUnit == null || baseUnit.Data == null)
             return null;
 
-        UnitController[] units = FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        UnitController[] units = FindObjectsByType<UnitController>(FindObjectsInactive.Exclude);
 
         foreach (UnitController candidate in units)
         {
@@ -711,7 +739,7 @@ public class UnitPlacementManager : MonoBehaviour
         int exchangeCost = GetUnitExchangeCost(unitData);
         BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
         if (magicStoneManager == null)
-            magicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+            magicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
 
         return magicStoneManager != null && magicStoneManager.CanSpendBattleMagicStone(exchangeCost);
     }
@@ -780,10 +808,27 @@ public class UnitPlacementManager : MonoBehaviour
         return evolutionService != null && evolutionService.TryGetAvailableRecipe(unit, out _);
     }
 
+    private bool HasEvolutionRecipe(UnitController unit)
+    {
+        if (unit == null || unit.Data == null)
+            return false;
+
+        EvolutionManager manager = null;
+        ResolveEvolutionService();
+
+        if (evolutionService != null)
+            manager = evolutionService.evolutionManager;
+
+        if (manager == null)
+            manager = FindAnyObjectByType<EvolutionManager>();
+
+        return manager != null && manager.GetFirstRecipe(unit.Data) != null;
+    }
+
     private void ResolveEvolutionService()
     {
         if (evolutionService == null)
-            evolutionService = FindFirstObjectByType<UnitEvolutionService>();
+            evolutionService = FindAnyObjectByType<UnitEvolutionService>();
     }
 
     private string GetUnitDisplayName(UnitData unitData)
@@ -799,7 +844,7 @@ public class UnitPlacementManager : MonoBehaviour
 
     private void RefreshRangeVisuals(bool clearOnly = false)
     {
-        UnitController[] units = FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        UnitController[] units = FindObjectsByType<UnitController>(FindObjectsInactive.Exclude);
 
         foreach (UnitController unit in units)
         {
@@ -816,15 +861,79 @@ public class UnitPlacementManager : MonoBehaviour
         if (mergeButton == null)
             return;
 
+        mergeButtonCanvasGroup = GetOrAddCanvasGroup(mergeButtonRoot);
         mergeButton.onClick.RemoveListener(TryMergeInspectedUnit);
         mergeButton.onClick.RemoveListener(TryUseInspectedUnitAction);
         mergeButton.onClick.AddListener(TryUseInspectedUnitAction);
+    }
+
+    private void CreateExchangeButtonUI()
+    {
+        if (exchangeButtonRoot != null || mergeButtonRoot == null)
+            return;
+
+        Transform buttonParent = mergeButtonRoot.transform.parent;
+        Transform existingExchangeRoot = buttonParent != null ? buttonParent.Find("exchangeButtonRoot") : null;
+        exchangeButtonRoot = existingExchangeRoot != null
+            ? existingExchangeRoot.gameObject
+            : Instantiate(mergeButtonRoot, buttonParent);
+
+        exchangeButtonRoot.name = "exchangeButtonRoot";
+        exchangeButton = exchangeButtonRoot.GetComponentInChildren<Button>(true);
+        exchangeButtonText = exchangeButtonRoot.GetComponentInChildren<TMP_Text>(true);
+        exchangeButtonRectTransform = exchangeButtonRoot.GetComponent<RectTransform>();
+        exchangeButtonCanvasGroup = GetOrAddCanvasGroup(exchangeButtonRoot);
+        exchangeButtonRoot.SetActive(false);
+    }
+
+    private void BindExchangeButtonEvent()
+    {
+        if (exchangeButton == null)
+            return;
+
+        exchangeButton.onClick.RemoveAllListeners();
+        exchangeButton.onClick.AddListener(OnClickExchangeButton);
+    }
+
+    private void OnClickExchangeButton()
+    {
+        if (inspectedUnit != null && CanExchangeUnit(inspectedUnit.Data))
+            TryExchangeInspectedUnit();
+        else
+            RefreshMergeUI();
+    }
+
+    private CanvasGroup GetOrAddCanvasGroup(GameObject targetRoot)
+    {
+        if (targetRoot == null)
+            return null;
+
+        CanvasGroup canvasGroup = targetRoot.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            canvasGroup = targetRoot.AddComponent<CanvasGroup>();
+
+        return canvasGroup;
+    }
+
+    private void SetButtonState(Button button, CanvasGroup canvasGroup, bool isInteractable)
+    {
+        if (button != null)
+            button.interactable = isInteractable;
+
+        if (canvasGroup == null)
+            return;
+
+        canvasGroup.alpha = isInteractable ? enabledButtonAlpha : disabledButtonAlpha;
+        canvasGroup.interactable = isInteractable;
+        canvasGroup.blocksRaycasts = isInteractable;
     }
 
     private void RefreshMergeUI()
     {
         if (mergeButtonRoot == null)
             return;
+
+        RefreshExchangeUI();
 
         if (inspectedUnit == null)
         {
@@ -839,28 +948,48 @@ public class UnitPlacementManager : MonoBehaviour
             return;
         }
 
-        bool canEvolve = CanEvolveUnit(inspectedUnit);
-        bool canMerge = TryGetMergeInfo(inspectedUnit, out _, out _, out _);
-        bool canExchange = CanExchangeUnit(inspectedUnit.Data);
-        mergeButtonRoot.SetActive(canEvolve || canMerge || canExchange);
-
-        if (!canEvolve && !canMerge && !canExchange)
-            return;
-
-        if (mergeButton != null)
-            mergeButton.interactable = true;
+        bool hasEvolutionRecipe = HasEvolutionRecipe(inspectedUnit) || IsRestrictedMergeUnit(inspectedUnit.Data);
+        bool canEvolve = hasEvolutionRecipe && CanEvolveUnit(inspectedUnit);
+        bool canMerge = !hasEvolutionRecipe && TryGetMergeInfo(inspectedUnit, out _, out _, out _);
+        mergeButtonRoot.SetActive(true);
 
         if (mergeButtonText != null)
         {
-            if (canEvolve)
-                mergeButtonText.text = "\uC9C4\uD654";
-            else if (canMerge)
-                mergeButtonText.text = "Merge";
-            else
-                mergeButtonText.text = $"\uAD50\uD658 {GetUnitExchangeCost(inspectedUnit.Data)}";
+            ApplyActionButtonFont(mergeButtonText);
+            mergeButtonText.text = hasEvolutionRecipe ? evolveButtonLabel : mergeButtonLabel;
         }
 
+        SetButtonState(mergeButton, mergeButtonCanvasGroup, canEvolve || canMerge);
+
         UpdateMergeButtonPosition();
+    }
+
+    private void RefreshExchangeUI()
+    {
+        if (exchangeButtonRoot == null)
+            return;
+
+        if (inspectedUnit == null || inspectedUnit.Data == null)
+        {
+            exchangeButtonRoot.SetActive(false);
+            return;
+        }
+
+        bool canExchange = CanExchangeUnit(inspectedUnit.Data);
+        int exchangeCost = GetUnitExchangeCost(inspectedUnit.Data);
+        exchangeButtonRoot.SetActive(true);
+
+        if (exchangeButtonText != null)
+        {
+            ApplyActionButtonFont(exchangeButtonText);
+            exchangeButtonText.text = exchangeCost >= 0
+                ? $"{exchangeButtonLabel} {exchangeCost}"
+                : exchangeUnavailableLabel;
+        }
+
+        SetButtonState(exchangeButton, exchangeButtonCanvasGroup, canExchange);
+
+        UpdateExchangeButtonPosition();
     }
 
     private void RefreshManualEnhanceUI()
@@ -868,11 +997,11 @@ public class UnitPlacementManager : MonoBehaviour
         if (inspectedUnit == null)
             return;
 
-        if (mergeButton != null)
-            mergeButton.interactable = inspectedUnit.CanTryManualEnhance(goldManager);
+        SetButtonState(mergeButton, mergeButtonCanvasGroup, inspectedUnit.CanTryManualEnhance(goldManager));
 
         if (mergeButtonText != null)
         {
+            ApplyActionButtonFont(mergeButtonText);
             int stack = inspectedUnit.GetManualEnhanceStack();
             int maxStack = inspectedUnit.GetManualEnhanceMaxStack();
             int cost = inspectedUnit.GetManualEnhanceCost();
@@ -883,6 +1012,17 @@ public class UnitPlacementManager : MonoBehaviour
         }
 
         UpdateMergeButtonPosition();
+    }
+
+    private void ApplyActionButtonFont(TMP_Text targetText)
+    {
+        if (targetText == null || actionButtonFontAsset == null)
+            return;
+
+        if (targetText.font == actionButtonFontAsset)
+            return;
+
+        targetText.font = actionButtonFontAsset;
     }
 
     private void TryManualEnhanceInspectedUnit()
@@ -977,6 +1117,31 @@ public class UnitPlacementManager : MonoBehaviour
             return;
 
         mergeButtonRectTransform.position = (Vector2)screenPosition + mergeButtonScreenOffset;
+    }
+
+    private void UpdateExchangeButtonPosition()
+    {
+        if (!positionMergeButtonNearSelectedUnit)
+            return;
+
+        if (exchangeButtonRoot == null || inspectedUnit == null)
+            return;
+
+        Camera targetCamera = Camera.main;
+        if (targetCamera == null)
+            return;
+
+        if (exchangeButtonRectTransform == null)
+            exchangeButtonRectTransform = exchangeButtonRoot.GetComponent<RectTransform>();
+
+        if (exchangeButtonRectTransform == null)
+            return;
+
+        Vector3 screenPosition = targetCamera.WorldToScreenPoint(inspectedUnit.transform.position);
+        if (screenPosition.z <= 0f)
+            return;
+
+        exchangeButtonRectTransform.position = (Vector2)screenPosition + exchangeButtonScreenOffset;
     }
 
 }

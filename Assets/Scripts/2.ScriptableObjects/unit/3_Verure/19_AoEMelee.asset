@@ -23,7 +23,10 @@ MonoBehaviour:
   attackSpeed: 1.23
   attackRange: 2.2
   attackRadius: 0.65
+  maxAreaAttackTargets: 0
   basicAttackType: 2
+  targetPriority: 0
+  bossFallbackTargetPriority: 0
   projectileSpeed: 8
   projectileSize: 0.1
   projectileColor: {r: 1, g: 0, b: 0.85882354, a: 1}
@@ -31,5 +34,5 @@ MonoBehaviour:
   showAreaAttackIndicator: 1
   areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
   areaAttackIndicatorDuration: 0.25
-  canEvolve: 0
-  evolveKey: 
+  skillData: {fileID: 11400000, guid: 1db8d37c501ac254693f4715ea0fc44f, type: 2}
+  skillAttackLockDurationOverride: -1

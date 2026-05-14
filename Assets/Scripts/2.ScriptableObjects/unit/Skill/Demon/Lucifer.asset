@@ -26,6 +26,8 @@ MonoBehaviour:
   stackPassiveAuraWithSameSkill: 0
   passiveAllUnitAttackPowerBonus: 0
   passiveAllUnitAttackSpeedBonus: 0
+  passiveAllMonsterMoveSpeedReduction: 0
+  passiveAllMonsterMoveSpeedReductionMaxSameSkillCount: 1
   passiveSelfAttackPowerBonus: 0
   passiveSelfAttackSpeedBonus: 0
   passiveDamageBonusPerEnemyInRange: 0
@@ -36,12 +38,15 @@ MonoBehaviour:
   passiveDebuffValue: 0
   passiveDebuffDuration: 0.2
   useCurrentTargetFirst: 1
-  targetPriority: 0
+  targetPriority: 2
   bossFallbackTargetPriority: 0
   skillRange: 0
   baseSkillDamageMultiplier: 1.2
   additionalSkillDamage: 0
   areaRadius: 0
+  useBasicAttackRadius: 0
+  activeHitsAllTargetsInRange: 0
+  activeTargetsEntireField: 0
   lineOrigin: 0
   lineDirection: 0
   lineLength: 6
@@ -59,6 +64,40 @@ MonoBehaviour:
   attackSpeedBonusPerPassiveStack: 0
   passiveStackGainOnBuffSkill: 0
   passiveMaxStackBuffEffects: []
+  passiveStackTracksEnemiesInAttackRange: 0
+  passiveStackTracksSlowOrStunnedEnemies: 0
+  cooldownReductionPerPassiveStack: 0
+  passiveMaxStackAttackSpeedBonus: 0
+  hasManualSelfEnhancement: 0
+  manualEnhanceMaxStack: 20
+  manualEnhanceBaseGoldCost: 100
+  manualEnhanceGoldCostIncrease: 10
+  manualEnhanceBaseSuccessChance: 0.05
+  manualEnhanceSuccessChanceMultiplierPerSuccess: 0.5
+  manualEnhanceAttackPowerBonusPerStack: 0.1
+  manualEnhanceAttackSpeedBonusPerStack: 0.05
+  activeBuffDuration: 0
+  activeSelfAttackPowerBonus: 0
+  activeSelfRangeOverride: 0
+  activeAttackPowerBonusPerEnemyInRange: 0
+  activeAttackPowerBonusMax: 0
+  hasCorruptionLord: 0
+  corruptionLordDuration: 6
+  corruptionLordTickInterval: 0.5
+  corruptionLordMaxHpDamagePercentPerTick: 0.005
+  corruptionLordActiveBonusMaxHpDamagePercent: 0.1
+  createDeepSeaAreaOnBasicAttackImpact: 0
+  deepSeaAreaRadius: 1.5
+  deepSeaAreaDuration: 5
+  maxDeepSeaAreaCount: 2
+  deepSeaAreaSlow: 0.1
+  deepSeaAreaDamageMultiplierPerSecond: 0.6
+  deepSeaAreaColor: {r: 0.05, g: 0.45, b: 0.8, a: 0.35}
+  activeExplodesDeepSeaAreas: 0
+  deepSeaExplosionDuration: 5
+  deepSeaExplosionDamageMultiplierPerSecond: 1.1
+  deepSeaExplosionSlow: 0.35
+  deepSeaExplosionColor: {r: 0.25, g: 0.9, b: 1, a: 0.45}
   repeatedDamageOrigin: 1
   repeatedHitCount: 1
   repeatedHitInterval: 0.5

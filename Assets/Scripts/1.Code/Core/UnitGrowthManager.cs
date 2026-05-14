@@ -28,7 +28,7 @@ public class UnitGrowthManager : MonoBehaviour
         Instance = this;
 
         if (goldManager == null)
-            goldManager = FindFirstObjectByType<GoldManager>();
+            goldManager = FindAnyObjectByType<GoldManager>();
 
         if (loadSavedDataOnAwake)
             LoadGrowthData();
@@ -423,7 +423,7 @@ public class UnitGrowthManager : MonoBehaviour
 
     private void RecalculateAllUnitStats()
     {
-        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsInactive.Exclude);
 
         foreach (UnitController unit in units)
         {

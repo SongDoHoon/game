@@ -17,7 +17,7 @@ public class WaveUIController : MonoBehaviour
     private void Awake()
     {
         if (waveManager == null)
-            waveManager = FindFirstObjectByType<WaveManager>();
+            waveManager = FindAnyObjectByType<WaveManager>();
 
         RefreshText(true);
     }

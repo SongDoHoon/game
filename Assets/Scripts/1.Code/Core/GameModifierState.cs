@@ -101,7 +101,7 @@ public static class GameModifierState
     {
         BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
         if (magicStoneManager == null)
-            magicStoneManager = Object.FindFirstObjectByType<BattleMagicStoneManager>();
+            magicStoneManager = Object.FindAnyObjectByType<BattleMagicStoneManager>();
 
         return magicStoneManager != null && magicStoneManager.TryUpgradeGradeGroup(group);
     }
@@ -157,7 +157,7 @@ public static class GameModifierState
 
     private static void RecalculateAllUnitStats()
     {
-        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsInactive.Exclude);
 
         foreach (UnitController unit in units)
         {

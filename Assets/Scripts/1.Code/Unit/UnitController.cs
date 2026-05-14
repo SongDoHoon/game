@@ -472,7 +472,7 @@ public class UnitController : MonoBehaviour
     public int GetNearbyEnemyCount(float radius)
     {
         int count = 0;
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -491,7 +491,7 @@ public class UnitController : MonoBehaviour
             return 0;
 
         int count = 0;
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -513,7 +513,7 @@ public class UnitController : MonoBehaviour
     public int GetTargetsInRangeCount()
     {
         int count = 0;
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -529,7 +529,7 @@ public class UnitController : MonoBehaviour
     public List<MonsterController> GetTargetsInRangeSorted()
     {
         List<MonsterController> result = new();
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {

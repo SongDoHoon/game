@@ -18,6 +18,9 @@ public class AuctionUIController : MonoBehaviour
     public TMP_Text currentPriceText;
     public TMP_Text resultText;
 
+    [Header("Font")]
+    public TMP_FontAsset auctionFontAsset;
+
     [Header("Input")]
     public TMP_InputField bidInputField;
 
@@ -42,7 +45,7 @@ public class AuctionUIController : MonoBehaviour
         BindButtonEvents();
 
         if (waveManager == null)
-            waveManager = FindFirstObjectByType<WaveManager>();
+            waveManager = FindAnyObjectByType<WaveManager>();
     }
 
     private void Start()
@@ -62,6 +65,7 @@ public class AuctionUIController : MonoBehaviour
     public void OpenAuctionUI(AuctionRewardOption[] options)
     {
         BindButtonEvents();
+        ApplyAuctionFont();
 
         currentOptions = options;
         isProcessingBid = false;
@@ -306,6 +310,8 @@ public class AuctionUIController : MonoBehaviour
 
     private void RefreshBiddingPanel()
     {
+        ApplyAuctionFont();
+
         if (currentOptions == null || selectedOptionIndex < 0 || selectedOptionIndex >= currentOptions.Length)
             return;
 
@@ -328,6 +334,8 @@ public class AuctionUIController : MonoBehaviour
 
     private void RefreshOptionTexts()
     {
+        ApplyAuctionFont();
+
         if (optionTexts == null)
             return;
 
@@ -339,6 +347,8 @@ public class AuctionUIController : MonoBehaviour
     {
         if (text == null)
             return;
+
+        ApplyAuctionFont(text);
 
         if (currentOptions == null || optionIndex < 0 || optionIndex >= currentOptions.Length || currentOptions[optionIndex] == null)
         {
@@ -353,6 +363,46 @@ public class AuctionUIController : MonoBehaviour
     private void SetResultText(string message)
     {
         if (resultText != null)
+        {
+            ApplyAuctionFont(resultText);
             resultText.text = message;
+        }
+    }
+
+    private void ApplyAuctionFont()
+    {
+        if (auctionFontAsset == null)
+            return;
+
+        ApplyAuctionFont(leftItemText);
+        ApplyAuctionFont(rightItemText);
+        ApplyAuctionFont(selectedItemText);
+        ApplyAuctionFont(currentPriceText);
+        ApplyAuctionFont(resultText);
+
+        if (optionTexts != null)
+        {
+            foreach (TMP_Text optionText in optionTexts)
+                ApplyAuctionFont(optionText);
+        }
+
+        if (bidInputField == null)
+            return;
+
+        ApplyAuctionFont(bidInputField.textComponent);
+
+        if (bidInputField.placeholder is TMP_Text placeholderText)
+            ApplyAuctionFont(placeholderText);
+    }
+
+    private void ApplyAuctionFont(TMP_Text targetText)
+    {
+        if (targetText == null || auctionFontAsset == null)
+            return;
+
+        if (targetText.font == auctionFontAsset)
+            return;
+
+        targetText.font = auctionFontAsset;
     }
 }

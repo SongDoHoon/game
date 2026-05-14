@@ -22,7 +22,7 @@ public class GoldManager : MonoBehaviour
     {
         BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
         if (magicStoneManager == null)
-            magicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+            magicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
 
         return magicStoneManager != null && magicStoneManager.TryUpgradeGradeGroup(group);
     }

@@ -12,7 +12,7 @@ public class UnitPlacementTile : MonoBehaviour
 
     private void Awake()
     {
-        placementManager = FindFirstObjectByType<UnitPlacementManager>();
+        placementManager = FindAnyObjectByType<UnitPlacementManager>();
     }
 
     private void OnMouseDown()
@@ -23,7 +23,7 @@ public class UnitPlacementTile : MonoBehaviour
         if (IsOccupied)
         {
             if (placementManager == null)
-                placementManager = FindFirstObjectByType<UnitPlacementManager>();
+                placementManager = FindAnyObjectByType<UnitPlacementManager>();
 
             if (placementManager != null)
                 placementManager.InspectUnit(placedUnit);
@@ -32,7 +32,7 @@ public class UnitPlacementTile : MonoBehaviour
         }
 
         if (placementManager == null)
-            placementManager = FindFirstObjectByType<UnitPlacementManager>();
+            placementManager = FindAnyObjectByType<UnitPlacementManager>();
 
         if (placementManager == null)
             return;

@@ -108,7 +108,7 @@ public class EnhancementPanelManager : MonoBehaviour
             battleMagicStoneManager = BattleMagicStoneManager.Instance;
 
         if (battleMagicStoneManager == null)
-            battleMagicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+            battleMagicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
     }
 
     private void BindButtonEvents()
@@ -150,7 +150,7 @@ public class EnhancementPanelManager : MonoBehaviour
 
         if (battleMagicStoneManager == null)
         {
-            SetResultText("인게임 마석 매니저가 배치되지 않았습니다.");
+            SetResultText("?�게??마석 매니?�가 배치?��? ?�았?�니??");
             return;
         }
 
@@ -161,9 +161,9 @@ public class EnhancementPanelManager : MonoBehaviour
         if (success)
             SetResultText($"{displayName} 강화 Lv.{afterLevel}");
         else if (beforeLevel >= GameBalanceConfig.MaxEnhancementLevel)
-            SetResultText($"{displayName}은 이미 최대 강화입니다.");
+            SetResultText($"{displayName}?� ?��? 최�? 강화?�니??");
         else
-            SetResultText($"{displayName} 강화에 필요한 마석이 부족합니다.");
+            SetResultText($"{displayName} 강화???�요??마석??부족합?�다.");
 
         RefreshUI();
     }

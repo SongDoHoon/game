@@ -57,9 +57,9 @@ public class UnitEvolutionService : MonoBehaviour
     private void ResolveReferences()
     {
         if (evolutionManager == null)
-            evolutionManager = FindFirstObjectByType<EvolutionManager>();
+            evolutionManager = FindAnyObjectByType<EvolutionManager>();
 
         if (itemInventory == null)
-            itemInventory = FindFirstObjectByType<EvolutionItemInventory>();
+            itemInventory = FindAnyObjectByType<EvolutionItemInventory>();
     }
 }

@@ -121,7 +121,7 @@ public static class UnitSkillHandler
         if (target == null)
             return;
 
-        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsInactive.Exclude);
 
         foreach (UnitController unit in units)
         {
@@ -219,7 +219,8 @@ public static class UnitSkillHandler
             return false;
 
         double finalDamage = CalculateFinalSkillDamage(unit, skill);
-        bool isAreaSkill = skill.areaRadius > 0f;
+        float areaRadius = GetSkillAreaRadius(unit, skill);
+        bool isAreaSkill = areaRadius > 0f;
 
         if (skill.useProjectile)
         {
@@ -228,13 +229,14 @@ public static class UnitSkillHandler
                 target,
                 finalDamage,
                 isAreaSkill,
-                skill.areaRadius,
+                areaRadius,
                 skill);
         }
         else if (isAreaSkill)
         {
-            DealAreaSkillDamage(unit, target.transform.position, skill.areaRadius, finalDamage);
-            ApplySkillDebuffsInArea(unit, skill, target.transform.position, skill.areaRadius);
+            List<MonsterController> areaTargets = FindAreaSkillTargets(target.transform.position, areaRadius, skill.maxAreaTargets);
+            DealAreaSkillDamage(unit, areaTargets, finalDamage);
+            ApplySkillDebuffsToTargets(unit, skill, areaTargets);
         }
         else
         {
@@ -275,7 +277,7 @@ public static class UnitSkillHandler
     {
         Dictionary<SkillData, int> appliedSkillCounts = new();
         float totalReduction = 0f;
-        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsInactive.Exclude);
 
         foreach (UnitController unit in units)
         {
@@ -366,7 +368,7 @@ public static class UnitSkillHandler
         if (skill.passiveExecuteHpPercent <= 0f)
             return;
 
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -392,7 +394,7 @@ public static class UnitSkillHandler
         if (radius <= 0f)
             return;
 
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -525,7 +527,7 @@ public static class UnitSkillHandler
     private static bool ApplyBuffToAllUnits(UnitController caster, SkillBuffEffect buffEffect)
     {
         bool appliedAnyBuff = false;
-        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsInactive.Exclude);
 
         foreach (UnitController unit in units)
             appliedAnyBuff |= ApplyBuffToUnit(unit, caster, buffEffect);
@@ -666,18 +668,12 @@ public static class UnitSkillHandler
 
         float range = GetSkillRange(unit, skill);
         bool hitAnyTarget = false;
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        List<MonsterController> targets = FindActiveSkillTargetsInRange(unit, skill, range);
 
-        foreach (MonsterController monster in monsters)
+        foreach (MonsterController monster in targets)
         {
             if (monster == null || !monster.IsAlive)
                 continue;
-
-            if (!skill.activeTargetsEntireField
-                && Vector3.Distance(unit.transform.position, monster.transform.position) > range)
-            {
-                continue;
-            }
 
             if (finalDamage > 0.0)
                 DamageSystem.DealDamage(unit, monster, finalDamage);
@@ -690,17 +686,54 @@ public static class UnitSkillHandler
         return hitAnyTarget;
     }
 
-    private static void DealAreaSkillDamage(UnitController unit, Vector3 center, float radius, double finalDamage)
+    private static List<MonsterController> FindActiveSkillTargetsInRange(UnitController unit, SkillData skill, float range)
     {
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        List<MonsterController> targets = new();
+        if (unit == null || skill == null)
+            return targets;
+
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
             if (monster == null || !monster.IsAlive)
                 continue;
 
-            if (Vector3.Distance(center, monster.transform.position) <= radius)
-                DamageSystem.DealDamage(unit, monster, finalDamage);
+            if (!skill.activeTargetsEntireField
+                && Vector3.Distance(unit.transform.position, monster.transform.position) > range)
+            {
+                continue;
+            }
+
+            targets.Add(monster);
+        }
+
+        targets.Sort((a, b) =>
+            Vector3.Distance(unit.transform.position, a.transform.position)
+            .CompareTo(Vector3.Distance(unit.transform.position, b.transform.position)));
+
+        if (skill.maxAreaTargets > 0 && targets.Count > skill.maxAreaTargets)
+            targets.RemoveRange(skill.maxAreaTargets, targets.Count - skill.maxAreaTargets);
+
+        return targets;
+    }
+
+    private static void DealAreaSkillDamage(UnitController unit, Vector3 center, float radius, double finalDamage)
+    {
+        DealAreaSkillDamage(unit, FindAreaSkillTargets(center, radius, 0), finalDamage);
+    }
+
+    private static void DealAreaSkillDamage(UnitController unit, List<MonsterController> targets, double finalDamage)
+    {
+        if (targets == null)
+            return;
+
+        foreach (MonsterController monster in targets)
+        {
+            if (monster == null || !monster.IsAlive)
+                continue;
+
+            DamageSystem.DealDamage(unit, monster, finalDamage);
         }
     }
 
@@ -709,7 +742,27 @@ public static class UnitSkillHandler
         if (!HasSkillDebuffs(skill))
             return;
 
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        ApplySkillDebuffsToTargets(unit, skill, FindAreaSkillTargets(center, radius, skill.maxAreaTargets));
+    }
+
+    private static void ApplySkillDebuffsToTargets(UnitController unit, SkillData skill, List<MonsterController> targets)
+    {
+        if (!HasSkillDebuffs(skill) || targets == null)
+            return;
+
+        foreach (MonsterController monster in targets)
+        {
+            if (monster == null || !monster.IsAlive)
+                continue;
+
+            ApplySkillDebuffsToTarget(unit, skill, monster);
+        }
+    }
+
+    private static List<MonsterController> FindAreaSkillTargets(Vector3 center, float radius, int maxTargets)
+    {
+        List<MonsterController> targets = new();
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -717,8 +770,17 @@ public static class UnitSkillHandler
                 continue;
 
             if (Vector3.Distance(center, monster.transform.position) <= radius)
-                ApplySkillDebuffsToTarget(unit, skill, monster);
+                targets.Add(monster);
         }
+
+        targets.Sort((a, b) =>
+            Vector3.Distance(center, a.transform.position)
+            .CompareTo(Vector3.Distance(center, b.transform.position)));
+
+        if (maxTargets > 0 && targets.Count > maxTargets)
+            targets.RemoveRange(maxTargets, targets.Count - maxTargets);
+
+        return targets;
     }
 
     public static void ApplySkillDebuffsToTarget(UnitController unit, SkillData skill, MonsterController target)
@@ -887,7 +949,7 @@ public static class UnitSkillHandler
             SpawnConeIndicator(unit.transform.position, forward, range, halfAngle, skill.areaAttackIndicatorColor, skill.areaAttackIndicatorDuration);
 
         bool hitAnyTarget = false;
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -948,11 +1010,12 @@ public static class UnitSkillHandler
         float interval = Mathf.Max(0.01f, skill.repeatedHitInterval);
         GameObject areaIndicator = null;
 
-        if (skill.showAreaAttackIndicator && skill.areaRadius > 0f)
+        float areaRadius = GetSkillAreaRadius(unit, skill);
+        if (skill.showAreaAttackIndicator && areaRadius > 0f)
         {
             areaIndicator = BasicAttackProjectile.SpawnAreaIndicator(
                 center,
-                skill.areaRadius,
+                areaRadius,
                 skill.areaAttackIndicatorColor,
                 skill.areaAttackIndicatorDuration,
                 false);
@@ -968,7 +1031,7 @@ public static class UnitSkillHandler
                 yield break;
             }
 
-            DealAreaSkillDamage(unit, center, skill.areaRadius, finalDamage);
+            DealAreaSkillDamage(unit, FindAreaSkillTargets(center, areaRadius, skill.maxAreaTargets), finalDamage);
 
             yield return new WaitForSeconds(interval);
         }
@@ -998,7 +1061,7 @@ public static class UnitSkillHandler
         if (skill.showLineIndicator)
             SpawnLineIndicator(origin, skill, lineForward);
 
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -1213,6 +1276,17 @@ public static class UnitSkillHandler
         return skill.skillRange;
     }
 
+    private static float GetSkillAreaRadius(UnitController unit, SkillData skill)
+    {
+        if (skill == null)
+            return 0f;
+
+        if (skill.useBasicAttackRadius && unit != null && unit.Data != null)
+            return Mathf.Max(0f, unit.Data.attackRadius);
+
+        return Mathf.Max(0f, skill.areaRadius);
+    }
+
     private static SkillEffectType GetEffectiveSkillEffectType(SkillData skill)
     {
         if (skill == null)
@@ -1221,7 +1295,7 @@ public static class UnitSkillHandler
         if (skill.effectType != SkillEffectType.Damage)
             return skill.effectType;
 
-        if (skill.repeatedHitCount > 1 && skill.areaRadius > 0f)
+        if (skill.repeatedHitCount > 1 && (skill.areaRadius > 0f || skill.useBasicAttackRadius))
             return SkillEffectType.RepeatedAreaDamage;
 
         return skill.effectType;
@@ -1258,7 +1332,7 @@ public static class UnitSkillHandler
     {
         float totalBonus = 0f;
         HashSet<SkillData> appliedUniqueSkills = new();
-        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsSortMode.None);
+        UnitController[] units = Object.FindObjectsByType<UnitController>(FindObjectsInactive.Exclude);
 
         foreach (UnitController unit in units)
         {

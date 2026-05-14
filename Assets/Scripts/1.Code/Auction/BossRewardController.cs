@@ -12,7 +12,7 @@ public class BossRewardController : MonoBehaviour
     private void Awake()
     {
         if (waveManager == null)
-            waveManager = FindFirstObjectByType<WaveManager>();
+            waveManager = FindAnyObjectByType<WaveManager>();
     }
 
     public void OpenBossAuction()

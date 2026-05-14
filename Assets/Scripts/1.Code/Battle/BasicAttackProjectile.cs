@@ -214,7 +214,7 @@ public class BasicAttackProjectile : MonoBehaviour
     private List<MonsterController> FindAreaTargets(Vector3 center)
     {
         List<MonsterController> targets = new();
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         foreach (MonsterController monster in monsters)
         {
@@ -229,7 +229,9 @@ public class BasicAttackProjectile : MonoBehaviour
             Vector3.Distance(center, a.transform.position)
             .CompareTo(Vector3.Distance(center, b.transform.position)));
 
-        int maxTargets = attacker != null && attacker.Data != null ? attacker.Data.maxAreaAttackTargets : 0;
+        int maxTargets = impactSkill != null && impactSkill.maxAreaTargets > 0
+            ? impactSkill.maxAreaTargets
+            : attacker != null && attacker.Data != null ? attacker.Data.maxAreaAttackTargets : 0;
         if (maxTargets > 0 && targets.Count > maxTargets)
             targets.RemoveRange(maxTargets, targets.Count - maxTargets);
 

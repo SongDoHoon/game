@@ -168,7 +168,7 @@ public class LeviathanDeepSeaArea : MonoBehaviour
         if (sourceUnit == null || skill == null)
             return;
 
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
         foreach (MonsterController monster in monsters)
         {
             if (monster == null || !monster.IsAlive)

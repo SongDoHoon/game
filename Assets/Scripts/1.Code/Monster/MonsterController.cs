@@ -425,7 +425,7 @@ public class MonsterController : MonoBehaviour
 
     private void Die()
     {
-        GoldManager goldManager = FindFirstObjectByType<GoldManager>();
+        GoldManager goldManager = FindAnyObjectByType<GoldManager>();
         if (goldManager != null && rewardGold > 0)
         {
             goldManager.AddGold(rewardGold);
@@ -445,7 +445,7 @@ public class MonsterController : MonoBehaviour
                 return;
             }
 
-            BossRewardController bossRewardController = FindFirstObjectByType<BossRewardController>();
+            BossRewardController bossRewardController = FindAnyObjectByType<BossRewardController>();
             if (bossRewardController != null)
             {
                 bossRewardController.OpenBossAuction();

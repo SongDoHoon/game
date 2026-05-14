@@ -41,10 +41,10 @@ public class BattleMagicStoneManager : MonoBehaviour
         Instance = this;
 
         if (goldManager == null)
-            goldManager = FindFirstObjectByType<GoldManager>();
+            goldManager = FindAnyObjectByType<GoldManager>();
 
         if (waveManager == null)
-            waveManager = FindFirstObjectByType<WaveManager>();
+            waveManager = FindAnyObjectByType<WaveManager>();
 
         ResetForBattle();
     }
@@ -87,7 +87,7 @@ public class BattleMagicStoneManager : MonoBehaviour
             return false;
 
         if (goldManager == null)
-            goldManager = FindFirstObjectByType<GoldManager>();
+            goldManager = FindAnyObjectByType<GoldManager>();
 
         return goldManager != null && goldManager.currentGold >= GetNextWorkerCost();
     }
@@ -177,7 +177,7 @@ public class BattleMagicStoneManager : MonoBehaviour
     private bool IsProductionPaused()
     {
         if (waveManager == null)
-            waveManager = FindFirstObjectByType<WaveManager>();
+            waveManager = FindAnyObjectByType<WaveManager>();
 
         return waveManager != null && waveManager.isPausedForAuction;
     }

@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c329cc47dbfbd48b26101027dfb834, type: 3}
+  m_Name: Arcanon
+  m_EditorClassIdentifier: Assembly-CSharp::SkillData
+  skillId: arcanon
+  skillName: "\uC544\uB974\uCE74\uB17C"
+  isEnabled: 1
+  triggerType: 0
+  effectType: 0
+  cooldown: 20
+  attackLockDurationOnCast: 0.2
+  startWithCooldown: 1
+  triggerChance: 1
+  requiredBasicAttackCount: 3
+  hasPassiveAura: 0
+  stackPassiveAuraWithSameSkill: 0
+  passiveAllUnitAttackPowerBonus: 0
+  passiveAllUnitAttackSpeedBonus: 0
+  passiveAllMonsterMoveSpeedReduction: 0
+  passiveAllMonsterMoveSpeedReductionMaxSameSkillCount: 1
+  passiveSelfAttackPowerBonus: 0
+  passiveSelfAttackSpeedBonus: 0
+  passiveDamageBonusPerEnemyInRange: 0
+  passiveDamageBonusMaxEnemyCount: 0
+  passiveExecuteHpPercent: 0
+  passiveDebuffRadius: 0
+  passiveDebuffType: 0
+  passiveDebuffValue: 0
+  passiveDebuffDuration: 0.2
+  useCurrentTargetFirst: 1
+  targetPriority: 0
+  bossFallbackTargetPriority: 0
+  skillRange: 0
+  baseSkillDamageMultiplier: 1.2
+  additionalSkillDamage: 0
+  areaRadius: 0
+  useBasicAttackRadius: 0
+  maxAreaTargets: 3
+  activeHitsAllTargetsInRange: 0
+  activeTargetsEntireField: 0
+  lineOrigin: 0
+  lineDirection: 0
+  lineLength: 6
+  lineWidth: 1
+  showLineIndicator: 1
+  lineIndicatorColor: {r: 1, g: 0.92, b: 0.35, a: 0.25}
+  lineIndicatorDuration: 0.25
+  passiveStackGainOnBasicAttack: 0
+  passiveStackGainOnKill: 0
+  passiveBossOrEliteStackGainOnKill: 0
+  passiveStackGainOnAnyMonsterDeath: 0
+  passiveBossOrEliteStackGainOnAnyMonsterDeath: 0
+  maxPassiveStack: 0
+  attackPowerBonusPerPassiveStack: 0
+  attackSpeedBonusPerPassiveStack: 0
+  passiveStackGainOnBuffSkill: 0
+  passiveMaxStackBuffEffects: []
+  passiveStackTracksEnemiesInAttackRange: 0
+  passiveStackTracksSlowOrStunnedEnemies: 0
+  cooldownReductionPerPassiveStack: 0
+  passiveMaxStackAttackSpeedBonus: 0
+  hasManualSelfEnhancement: 0
+  manualEnhanceMaxStack: 20
+  manualEnhanceBaseGoldCost: 100
+  manualEnhanceGoldCostIncrease: 10
+  manualEnhanceBaseSuccessChance: 0.05
+  manualEnhanceSuccessChanceMultiplierPerSuccess: 0.5
+  manualEnhanceAttackPowerBonusPerStack: 0.1
+  manualEnhanceAttackSpeedBonusPerStack: 0.05
+  activeBuffDuration: 0
+  activeSelfAttackPowerBonus: 0
+  activeSelfRangeOverride: 0
+  activeAttackPowerBonusPerEnemyInRange: 0
+  activeAttackPowerBonusMax: 0
+  hasCorruptionLord: 0
+  corruptionLordDuration: 6
+  corruptionLordTickInterval: 0.5
+  corruptionLordMaxHpDamagePercentPerTick: 0.005
+  corruptionLordActiveBonusMaxHpDamagePercent: 0.1
+  createDeepSeaAreaOnBasicAttackImpact: 0
+  deepSeaAreaRadius: 1.5
+  deepSeaAreaDuration: 5
+  maxDeepSeaAreaCount: 2
+  deepSeaAreaSlow: 0.1
+  deepSeaAreaDamageMultiplierPerSecond: 0.6
+  deepSeaAreaColor: {r: 0.05, g: 0.45, b: 0.8, a: 0.35}
+  activeExplodesDeepSeaAreas: 0
+  deepSeaExplosionDuration: 5
+  deepSeaExplosionDamageMultiplierPerSecond: 1.1
+  deepSeaExplosionSlow: 0.35
+  deepSeaExplosionColor: {r: 0.25, g: 0.9, b: 1, a: 0.45}
+  repeatedDamageOrigin: 1
+  repeatedHitCount: 1
+  repeatedHitInterval: 0.5
+  coneRange: 4
+  coneAngle: 90
+  coneFallbackDirection: 2
+  aimConeAtTarget: 1
+  buffEffects: []
+  debuffEffects: []
+  useProjectile: 1
+  projectileSpeed: 10
+  projectileSize: 0.35
+  projectileColor: {r: 1, g: 0.92, b: 0.35, a: 1}
+  projectileSpawnOffset: {x: 0, y: 0.45, z: 0}
+  showAreaAttackIndicator: 1
+  areaAttackIndicatorColor: {r: 1, g: 0.92, b: 0.35, a: 0.25}
+  areaAttackIndicatorDuration: 0.25

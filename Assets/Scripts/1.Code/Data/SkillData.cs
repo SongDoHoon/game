@@ -74,6 +74,8 @@ public class SkillData : ScriptableObject
     public float baseSkillDamageMultiplier = 2f;
     public float additionalSkillDamage = 0f;
     public float areaRadius = 0f;
+    public bool useBasicAttackRadius;
+    public int maxAreaTargets = 0;
     public bool activeHitsAllTargetsInRange;
     public bool activeTargetsEntireField;
 

@@ -176,7 +176,7 @@ public class WaveManager : MonoBehaviour
         if (goldAmount <= 0)
             return;
 
-        GoldManager goldManager = FindFirstObjectByType<GoldManager>();
+        GoldManager goldManager = FindAnyObjectByType<GoldManager>();
         if (goldManager != null)
             goldManager.AddGold(goldAmount);
     }
@@ -185,7 +185,7 @@ public class WaveManager : MonoBehaviour
     {
         BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
         if (magicStoneManager == null)
-            magicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+            magicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
 
         if (magicStoneManager != null)
             magicStoneManager.ResetForBattle();
@@ -214,7 +214,7 @@ public class WaveManager : MonoBehaviour
 
         GameResultRewardManager rewardManager = GameResultRewardManager.Instance;
         if (rewardManager == null)
-            rewardManager = FindFirstObjectByType<GameResultRewardManager>();
+            rewardManager = FindAnyObjectByType<GameResultRewardManager>();
 
         if (rewardManager != null)
         {

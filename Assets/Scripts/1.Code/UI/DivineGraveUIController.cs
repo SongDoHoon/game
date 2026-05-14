@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -103,25 +103,25 @@ public class DivineGraveUIController : MonoBehaviour
         bool canHireWorker = battleMagicStoneManager != null && battleMagicStoneManager.CanHireWorker();
 
         if (currentGoldText != null)
-            currentGoldText.text = $"골드 {currentGold}";
+            currentGoldText.text = $"怨⑤뱶 {currentGold}";
 
         if (currentMagicStoneText != null)
-            currentMagicStoneText.text = $"마석 {Math.Floor(currentMagicStone)}";
+            currentMagicStoneText.text = $"留덉꽍 {Math.Floor(currentMagicStone)}";
 
         if (alwaysVisibleMagicStoneText != null)
-            alwaysVisibleMagicStoneText.text = $"마석 {Math.Floor(currentMagicStone)}";
+            alwaysVisibleMagicStoneText.text = $"留덉꽍 {Math.Floor(currentMagicStone)}";
 
         if (magicStonePerSecondLabelText != null)
-            magicStonePerSecondLabelText.text = "초당 획득량";
+            magicStonePerSecondLabelText.text = "Magic Stone / sec";
 
         if (magicStonePerSecondValueText != null)
             magicStonePerSecondValueText.text = $"{magicStonePerSecond:0.0}/s";
 
         if (workerCountText != null)
-            workerCountText.text = $"일꾼 {workerCount}/{maxWorkers}";
+            workerCountText.text = $"?쇨씔 {workerCount}/{maxWorkers}";
 
         if (hireWorkerCostText != null)
-            hireWorkerCostText.text = workerCount >= maxWorkers ? "MAX" : $"고용 {nextWorkerCost}";
+            hireWorkerCostText.text = workerCount >= maxWorkers ? "MAX" : $"怨좎슜 {nextWorkerCost}";
 
         if (hireWorkerButton != null)
             hireWorkerButton.interactable = canHireWorker;
@@ -133,10 +133,10 @@ public class DivineGraveUIController : MonoBehaviour
             battleMagicStoneManager = BattleMagicStoneManager.Instance;
 
         if (battleMagicStoneManager == null)
-            battleMagicStoneManager = FindFirstObjectByType<BattleMagicStoneManager>();
+            battleMagicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
 
         if (goldManager == null)
-            goldManager = FindFirstObjectByType<GoldManager>();
+            goldManager = FindAnyObjectByType<GoldManager>();
     }
 
     private void BindButtons()

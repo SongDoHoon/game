@@ -19,7 +19,7 @@ public class GoldUIController : MonoBehaviour
     private void Awake()
     {
         if (goldManager == null)
-            goldManager = FindFirstObjectByType<GoldManager>();
+            goldManager = FindAnyObjectByType<GoldManager>();
 
         if (playerProgressManager == null)
             playerProgressManager = PlayerProgressManager.Instance;

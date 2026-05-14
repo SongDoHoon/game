@@ -13,7 +13,7 @@ public static class UnitTargetFinder
         UnitTargetPriority priority,
         UnitTargetPriority bossFallbackPriority)
     {
-        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsSortMode.None);
+        MonsterController[] monsters = Object.FindObjectsByType<MonsterController>(FindObjectsInactive.Exclude);
 
         return priority switch
         {

@@ -26,7 +26,7 @@ public class AuctionManager : MonoBehaviour
     private void Awake()
     {
         if (goldManager == null)
-            goldManager = FindFirstObjectByType<GoldManager>();
+            goldManager = FindAnyObjectByType<GoldManager>();
     }
 
     public void SetAuctionOptions(EvolutionItemType item1, EvolutionItemType item2)
