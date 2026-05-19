@@ -10,6 +10,7 @@ public class WaveManager : MonoBehaviour
     [Header("Spawner")]
     public MonsterSpawner monsterSpawner;
     public BattleLifeManager battleLifeManager;
+    public BountyManager bountyManager;
 
     [Header("Wave Settings")]
     public int currentWave = 0;
@@ -225,6 +226,10 @@ public class WaveManager : MonoBehaviour
             magicStoneManager.ResetForBattle();
         else
             GameModifierState.ResetBattleState();
+
+        bountyManager = BountyManager.EnsureInstance(this, monsterSpawner);
+        if (bountyManager != null)
+            bountyManager.ResetBountyForBattleStart();
     }
 
     private void CompleteGame(bool cleared)

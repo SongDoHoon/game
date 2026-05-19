@@ -153,6 +153,14 @@ public class BattleMagicStoneManager : MonoBehaviour
         return true;
     }
 
+    public void AddBattleMagicStone(int amount)
+    {
+        if (amount <= 0)
+            return;
+
+        currentBattleMagicStone += amount;
+    }
+
     public double GetAttackMultiplier(UnitEnhanceGroup group)
     {
         int level = GetGroupLevel(group);

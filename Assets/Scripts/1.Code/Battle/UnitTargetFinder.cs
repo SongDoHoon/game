@@ -111,7 +111,7 @@ public static class UnitTargetFinder
 
         foreach (MonsterController monster in monsters)
         {
-            if (monster == null || monster.monsterType != MonsterType.Elite)
+            if (monster == null || !IsEliteTarget(monster))
                 continue;
 
             if (!IsValidTarget(monster, unitPos, range, out float distance))
@@ -147,7 +147,7 @@ public static class UnitTargetFinder
         foreach (MonsterController monster in monsters)
         {
             if (monster == null
-                || (monster.monsterType != MonsterType.Boss && monster.monsterType != MonsterType.Elite))
+                || (monster.monsterType != MonsterType.Boss && !IsEliteTarget(monster)))
             {
                 continue;
             }
@@ -205,5 +205,11 @@ public static class UnitTargetFinder
 
         distance = Vector3.Distance(unitPos, monster.transform.position);
         return distance <= range;
+    }
+
+    private static bool IsEliteTarget(MonsterController monster)
+    {
+        return monster != null
+            && (monster.monsterType == MonsterType.Elite || monster.monsterType == MonsterType.BountyElite);
     }
 }

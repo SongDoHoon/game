@@ -24,6 +24,7 @@ public class MonsterController : MonoBehaviour
     public float moveSpeed = 2f;
     public int rewardGold = 10;
     public bool isBoss = false;
+    public int bountyDifficulty = 0;
 
     [Header("Path")]
     public WaypointPath waypointPath;
@@ -50,12 +51,14 @@ public class MonsterController : MonoBehaviour
     private float speedMultiplier = 1f;
     private bool isStunned;
     private WaveManager waveManager;
+    private BountyManager bountyManager;
     private Vector3 lastPosition;
     private Vector3 frameMovementDelta;
 
     public bool IsAlive => currentHp > 0.0;
     public double CurrentHp => currentHp;
     public double MaxHp => maxHp;
+    public bool IsBountyElite => monsterType == MonsterType.BountyElite;
 
     private void Start()
     {
@@ -92,6 +95,11 @@ public class MonsterController : MonoBehaviour
     public void SetWaveManager(WaveManager manager)
     {
         waveManager = manager;
+    }
+
+    public void SetBountyManager(BountyManager manager)
+    {
+        bountyManager = manager;
     }
 
 #if UNITY_EDITOR
@@ -410,6 +418,19 @@ public class MonsterController : MonoBehaviour
 
     private void ReachGoal()
     {
+        if (IsBountyElite)
+        {
+            NotifyBountyEliteRemoved();
+            gameObject.SetActive(false);
+
+            if (destroyOnGoal)
+            {
+                Destroy(gameObject);
+            }
+
+            return;
+        }
+
         if (waveManager != null)
         {
             waveManager.NotifyMonsterReachedGoal();
@@ -425,6 +446,14 @@ public class MonsterController : MonoBehaviour
 
     private void Die()
     {
+        if (IsBountyElite)
+        {
+            NotifyBountyEliteKilled();
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+            return;
+        }
+
         GoldManager goldManager = FindAnyObjectByType<GoldManager>();
         if (goldManager != null && rewardGold > 0)
         {
@@ -454,6 +483,24 @@ public class MonsterController : MonoBehaviour
 
         gameObject.SetActive(false);
         Destroy(gameObject);
+    }
+
+    private void NotifyBountyEliteKilled()
+    {
+        if (bountyManager == null)
+            bountyManager = BountyManager.Instance != null ? BountyManager.Instance : FindAnyObjectByType<BountyManager>();
+
+        if (bountyManager != null)
+            bountyManager.OnBountyEliteKilled(bountyDifficulty);
+    }
+
+    private void NotifyBountyEliteRemoved()
+    {
+        if (bountyManager == null)
+            bountyManager = BountyManager.Instance != null ? BountyManager.Instance : FindAnyObjectByType<BountyManager>();
+
+        if (bountyManager != null)
+            bountyManager.OnBountyEliteRemoved(this);
     }
 
     private void NotifyHpChanged()

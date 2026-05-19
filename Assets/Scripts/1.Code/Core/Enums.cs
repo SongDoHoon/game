@@ -54,6 +54,7 @@ public enum MonsterType
 {
     Normal,
     Elite,
+    BountyElite,
     Boss
 }
 

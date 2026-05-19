@@ -15,6 +15,7 @@ public class MonsterSpawner : MonoBehaviour
     [Header("Spawn Settings")]
     public GameObject monsterPrefab;
     public GameObject bossPrefab;
+    public GameObject bountyElitePrefab;
     public WaypointPath waypointPath;
 
     [Header("Optional Spawn Point")]
@@ -90,6 +91,44 @@ public class MonsterSpawner : MonoBehaviour
         monster.SetWaveManager(waveManager);
 
         ApplyBossStat(monster, waveManager != null ? waveManager.currentWave : 0);
+    }
+
+    public MonsterController SpawnBountyElite(BountyEliteData data, BountyManager bountyManager)
+    {
+        if (data == null)
+            return null;
+
+        GameObject prefab = bountyElitePrefab != null ? bountyElitePrefab : bossPrefab != null ? bossPrefab : monsterPrefab;
+        if (prefab == null)
+            return null;
+
+        if (waypointPath == null)
+            return null;
+
+        Vector3 spawnPosition = GetSpawnPosition();
+
+        GameObject obj = Instantiate(prefab, spawnPosition, Quaternion.identity);
+        obj.transform.localScale = Vector3.one * 0.5f;
+        MonsterController monster = obj.GetComponent<MonsterController>();
+
+        if (monster == null)
+            return null;
+
+        monster.monsterType = MonsterType.BountyElite;
+        monster.isBoss = false;
+        monster.rewardGold = 0;
+        monster.maxHp = data.hp;
+        monster.currentHp = monster.maxHp;
+        monster.moveSpeed = MonsterBalanceCalculator.GetNormalMoveSpeed(1);
+        monster.bountyDifficulty = data.difficulty;
+        monster.SetPath(waypointPath);
+        monster.SetWaveManager(null);
+        monster.SetBountyManager(bountyManager);
+
+        if (prefab == monsterPrefab)
+            monster.SetAppearanceForWave(1);
+
+        return monster;
     }
 
     private void ApplyWaveStat(MonsterController monster, int wave, bool isBoss)
