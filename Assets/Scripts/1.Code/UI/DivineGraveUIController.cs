@@ -20,12 +20,14 @@ public class DivineGraveUIController : MonoBehaviour
     [Header("Gold")]
     public TMP_Text currentGoldText;
     public Image goldIcon;
+    public Sprite goldSprite;
 
     [Header("Magic Stone")]
     public TMP_Text currentMagicStoneText;
     public Image magicStoneIcon;
     public TMP_Text alwaysVisibleMagicStoneText;
     public Image alwaysVisibleMagicStoneIcon;
+    public Sprite magicStoneSprite;
     public TMP_Text magicStonePerSecondLabelText;
     public Image magicStonePerSecondIcon;
     public TMP_Text magicStonePerSecondValueText;
@@ -38,6 +40,10 @@ public class DivineGraveUIController : MonoBehaviour
 
     [Header("Display")]
     public bool closeOnStart = true;
+    public bool hideCurrencyNameWhenIconIsAssigned = true;
+    public bool createIconWhenSpriteIsAssigned = true;
+    public Vector2 iconSize = new(32f, 32f);
+    public float iconSpacing = 6f;
 
     private float refreshTimer;
 
@@ -102,14 +108,16 @@ public class DivineGraveUIController : MonoBehaviour
         int nextWorkerCost = battleMagicStoneManager != null ? battleMagicStoneManager.GetNextWorkerCost() : 0;
         bool canHireWorker = battleMagicStoneManager != null && battleMagicStoneManager.CanHireWorker();
 
+        RefreshCurrencyIcons();
+
         if (currentGoldText != null)
-            currentGoldText.text = $"怨⑤뱶 {currentGold}";
+            currentGoldText.text = FormatCurrencyAmount("골드", currentGold, goldIcon);
 
         if (currentMagicStoneText != null)
-            currentMagicStoneText.text = $"留덉꽍 {Math.Floor(currentMagicStone)}";
+            currentMagicStoneText.text = FormatCurrencyAmount("마석", Math.Floor(currentMagicStone), magicStoneIcon);
 
         if (alwaysVisibleMagicStoneText != null)
-            alwaysVisibleMagicStoneText.text = $"留덉꽍 {Math.Floor(currentMagicStone)}";
+            alwaysVisibleMagicStoneText.text = FormatCurrencyAmount("마석", Math.Floor(currentMagicStone), alwaysVisibleMagicStoneIcon);
 
         if (magicStonePerSecondLabelText != null)
             magicStonePerSecondLabelText.text = "Magic Stone / sec";
@@ -121,7 +129,7 @@ public class DivineGraveUIController : MonoBehaviour
             workerCountText.text = $"?쇨씔 {workerCount}/{maxWorkers}";
 
         if (hireWorkerCostText != null)
-            hireWorkerCostText.text = workerCount >= maxWorkers ? "MAX" : $"怨좎슜 {nextWorkerCost}";
+            hireWorkerCostText.text = workerCount >= maxWorkers ? "MAX" : FormatCurrencyAmount("골드", nextWorkerCost, hireWorkerCostGoldIcon);
 
         if (hireWorkerButton != null)
             hireWorkerButton.interactable = canHireWorker;
@@ -158,5 +166,69 @@ public class DivineGraveUIController : MonoBehaviour
             hireWorkerButton.onClick.RemoveListener(TryHireWorker);
             hireWorkerButton.onClick.AddListener(TryHireWorker);
         }
+    }
+
+    private string FormatCurrencyAmount(string currencyName, double amount, Image icon)
+    {
+        bool useIcon = ShouldUseIcon(icon);
+        string amountText = amount.ToString("0");
+        return useIcon && hideCurrencyNameWhenIconIsAssigned ? amountText : $"{currencyName} {amountText}";
+    }
+
+    private void RefreshCurrencyIcons()
+    {
+        goldIcon = EnsureIconImage(goldIcon, currentGoldText, "Gold Icon", goldSprite);
+        magicStoneIcon = EnsureIconImage(magicStoneIcon, currentMagicStoneText, "Magic Stone Icon", magicStoneSprite);
+        alwaysVisibleMagicStoneIcon = EnsureIconImage(alwaysVisibleMagicStoneIcon, alwaysVisibleMagicStoneText, "Always Visible Magic Stone Icon", magicStoneSprite);
+        magicStonePerSecondIcon = EnsureIconImage(magicStonePerSecondIcon, magicStonePerSecondLabelText, "Magic Stone Per Second Icon", magicStoneSprite);
+        hireWorkerCostGoldIcon = EnsureIconImage(hireWorkerCostGoldIcon, hireWorkerCostText, "Hire Worker Gold Icon", goldSprite);
+
+        SetIconSprite(goldIcon, goldSprite);
+        SetIconSprite(magicStoneIcon, magicStoneSprite);
+        SetIconSprite(alwaysVisibleMagicStoneIcon, magicStoneSprite);
+        SetIconSprite(magicStonePerSecondIcon, magicStoneSprite);
+        SetIconSprite(hireWorkerCostGoldIcon, goldSprite);
+
+        SetIconVisible(goldIcon, ShouldUseIcon(goldIcon));
+        SetIconVisible(magicStoneIcon, ShouldUseIcon(magicStoneIcon));
+        SetIconVisible(alwaysVisibleMagicStoneIcon, ShouldUseIcon(alwaysVisibleMagicStoneIcon));
+        SetIconVisible(magicStonePerSecondIcon, ShouldUseIcon(magicStonePerSecondIcon));
+        SetIconVisible(hireWorkerCostGoldIcon, ShouldUseIcon(hireWorkerCostGoldIcon));
+    }
+
+    private static bool ShouldUseIcon(Image icon)
+    {
+        return icon != null && icon.sprite != null;
+    }
+
+    private static void SetIconSprite(Image icon, Sprite sprite)
+    {
+        if (icon != null && sprite != null)
+            icon.sprite = sprite;
+    }
+
+    private static void SetIconVisible(Image icon, bool visible)
+    {
+        if (icon != null)
+            icon.gameObject.SetActive(visible);
+    }
+
+    private Image EnsureIconImage(Image icon, TMP_Text targetText, string iconObjectName, Sprite sprite)
+    {
+        if (icon != null || sprite == null || !createIconWhenSpriteIsAssigned || targetText == null)
+            return icon;
+
+        GameObject iconObject = new GameObject(iconObjectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        RectTransform iconRect = iconObject.GetComponent<RectTransform>();
+        iconRect.SetParent(targetText.transform, false);
+        iconRect.anchorMin = new Vector2(0f, 0.5f);
+        iconRect.anchorMax = new Vector2(0f, 0.5f);
+        iconRect.pivot = new Vector2(1f, 0.5f);
+        iconRect.sizeDelta = iconSize;
+        iconRect.anchoredPosition = new Vector2(-iconSpacing, 0f);
+
+        Image createdIcon = iconObject.GetComponent<Image>();
+        createdIcon.raycastTarget = false;
+        return createdIcon;
     }
 }

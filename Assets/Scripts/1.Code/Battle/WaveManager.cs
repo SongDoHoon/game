@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class WaveManager : MonoBehaviour
 
     [Header("Spawner")]
     public MonsterSpawner monsterSpawner;
+    public BattleLifeManager battleLifeManager;
 
     [Header("Wave Settings")]
     public int currentWave = 0;
@@ -21,12 +23,19 @@ public class WaveManager : MonoBehaviour
     public float normalSpawnSpacingDistance = 1f;
     public int finalWave = 100;
 
+    [Header("Game Over Scene")]
+    public bool returnToMainSceneOnGameOver = true;
+    public string mainSceneName = "MainScene";
+    public float returnToMainSceneDelay = 1.5f;
+
     private int aliveMonsterCount = 0;
     private Coroutine spawnWaveCoroutine;
     private Coroutine autoStartCoroutine;
 
     private void Start()
     {
+        ResolveBattleLifeManager();
+
         if (!autoStartRequested)
             return;
 
@@ -110,7 +119,28 @@ public class WaveManager : MonoBehaviour
         if (gameEnded)
             return;
 
-        CompleteGame(false);
+        ResolveBattleLifeManager();
+
+        bool hasLifeRemaining = battleLifeManager != null && battleLifeManager.LoseLife();
+        aliveMonsterCount--;
+
+        if (!hasLifeRemaining)
+        {
+            CompleteGame(false);
+            return;
+        }
+
+        if (aliveMonsterCount <= 0 && currentWave >= finalWave)
+        {
+            CompleteGame(true);
+            return;
+        }
+
+        if (aliveMonsterCount <= 0 && !waitingForNextWave && !isPausedForAuction && currentWave < finalWave)
+        {
+            waitingForNextWave = true;
+            Invoke(nameof(StartNextWave), 1.5f);
+        }
     }
 
     public void PauseForAuction()
@@ -183,6 +213,10 @@ public class WaveManager : MonoBehaviour
 
     private void ResetBattleRuntimeData()
     {
+        ResolveBattleLifeManager();
+        if (battleLifeManager != null)
+            battleLifeManager.ResetLife();
+
         BattleMagicStoneManager magicStoneManager = BattleMagicStoneManager.Instance;
         if (magicStoneManager == null)
             magicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
@@ -237,6 +271,9 @@ public class WaveManager : MonoBehaviour
             else
                 PlayerProgressSaveSystem.AddReward(reward.mainGold, reward.playerExp);
         }
+
+        if (!cleared && returnToMainSceneOnGameOver)
+            StartCoroutine(CoReturnToMainSceneAfterDelay());
     }
 
     private IEnumerator CoStartFirstWaveAfterDelay(float delay)
@@ -255,5 +292,21 @@ public class WaveManager : MonoBehaviour
             StopCoroutine(autoStartCoroutine);
             autoStartCoroutine = null;
         }
+    }
+
+    private void ResolveBattleLifeManager()
+    {
+        if (battleLifeManager == null)
+            battleLifeManager = FindAnyObjectByType<BattleLifeManager>();
+    }
+
+    private IEnumerator CoReturnToMainSceneAfterDelay()
+    {
+        float delay = Mathf.Max(0f, returnToMainSceneDelay);
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
+
+        if (!string.IsNullOrWhiteSpace(mainSceneName))
+            SceneManager.LoadScene(mainSceneName);
     }
 }

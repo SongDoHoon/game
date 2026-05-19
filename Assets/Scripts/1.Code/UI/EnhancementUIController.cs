@@ -15,24 +15,35 @@ public class EnhancementUIController : MonoBehaviour
     [Header("Magic Stone")]
     public BattleMagicStoneManager battleMagicStoneManager;
     public TMP_Text currentMagicStoneText;
+    public Image currentMagicStoneIcon;
+    public Sprite magicStoneSprite;
 
     [Header("Low Grade Group")]
     public Button lowGradeButton;
     public TMP_Text lowGradeLevelText;
     public TMP_Text lowGradeCostText;
+    public Image lowGradeCostMagicStoneIcon;
 
     [Header("High Grade Group")]
     public Button highGradeButton;
     public TMP_Text highGradeLevelText;
     public TMP_Text highGradeCostText;
+    public Image highGradeCostMagicStoneIcon;
 
     [Header("Evolution Group")]
     public Button evolutionButton;
     public TMP_Text evolutionLevelText;
     public TMP_Text evolutionCostText;
+    public Image evolutionCostMagicStoneIcon;
 
     [Header("Result")]
     public TMP_Text resultText;
+
+    [Header("Display")]
+    public bool hideCurrencyNameWhenIconIsAssigned = true;
+    public bool createIconWhenSpriteIsAssigned = true;
+    public Vector2 iconSize = new(32f, 32f);
+    public float iconSpacing = 6f;
 
     private float refreshTimer;
 
@@ -98,9 +109,10 @@ public class EnhancementUIController : MonoBehaviour
     public void RefreshUI()
     {
         RefreshCurrentMagicStoneUI();
-        RefreshGroupUI(UnitEnhanceGroup.LowGradeGroup, lowGradeLevelText, lowGradeCostText, lowGradeButton);
-        RefreshGroupUI(UnitEnhanceGroup.HighGradeGroup, highGradeLevelText, highGradeCostText, highGradeButton);
-        RefreshGroupUI(UnitEnhanceGroup.EvolutionGroup, evolutionLevelText, evolutionCostText, evolutionButton);
+        EnsureCostIcons();
+        RefreshGroupUI(UnitEnhanceGroup.LowGradeGroup, lowGradeLevelText, lowGradeCostText, lowGradeButton, lowGradeCostMagicStoneIcon);
+        RefreshGroupUI(UnitEnhanceGroup.HighGradeGroup, highGradeLevelText, highGradeCostText, highGradeButton, highGradeCostMagicStoneIcon);
+        RefreshGroupUI(UnitEnhanceGroup.EvolutionGroup, evolutionLevelText, evolutionCostText, evolutionButton, evolutionCostMagicStoneIcon);
     }
 
     private void BindButtonEvents()
@@ -161,7 +173,7 @@ public class EnhancementUIController : MonoBehaviour
         RefreshUI();
     }
 
-    private void RefreshGroupUI(UnitEnhanceGroup group, TMP_Text levelText, TMP_Text costText, Button button)
+    private void RefreshGroupUI(UnitEnhanceGroup group, TMP_Text levelText, TMP_Text costText, Button button, Image costIcon)
     {
         if (battleMagicStoneManager == null)
             battleMagicStoneManager = BattleMagicStoneManager.Instance;
@@ -176,8 +188,11 @@ public class EnhancementUIController : MonoBehaviour
         if (levelText != null)
             levelText.text = $"Lv. {level}/{GameBalanceConfig.MaxEnhancementLevel}";
 
+        SetIconSprite(costIcon, magicStoneSprite);
+        SetIconVisible(costIcon, !isMaxLevel && ShouldUseIcon(costIcon));
+
         if (costText != null)
-            costText.text = isMaxLevel ? "MAX" : $"마석 {cost}";
+            costText.text = isMaxLevel ? "MAX" : FormatCurrencyAmount("Magic Stone", cost, costIcon);
 
         if (button != null)
             button.interactable = battleMagicStoneManager != null && !isMaxLevel && battleMagicStoneManager.CurrentBattleMagicStone >= cost;
@@ -194,13 +209,65 @@ public class EnhancementUIController : MonoBehaviour
         if (currentMagicStoneText != null)
         {
             double currentMagicStone = battleMagicStoneManager != null ? battleMagicStoneManager.CurrentBattleMagicStone : 0.0;
-            currentMagicStoneText.text = $"마석 {System.Math.Floor(currentMagicStone)}";
+            currentMagicStoneIcon = EnsureIconImage(currentMagicStoneIcon, currentMagicStoneText, "Current Magic Stone Icon", magicStoneSprite);
+            SetIconSprite(currentMagicStoneIcon, magicStoneSprite);
+            currentMagicStoneText.text = FormatCurrencyAmount("Magic Stone", System.Math.Floor(currentMagicStone), currentMagicStoneIcon);
         }
+
+        SetIconVisible(currentMagicStoneIcon, ShouldUseIcon(currentMagicStoneIcon));
     }
 
+    private void EnsureCostIcons()
+    {
+        lowGradeCostMagicStoneIcon = EnsureIconImage(lowGradeCostMagicStoneIcon, lowGradeCostText, "Low Grade Magic Stone Cost Icon", magicStoneSprite);
+        highGradeCostMagicStoneIcon = EnsureIconImage(highGradeCostMagicStoneIcon, highGradeCostText, "High Grade Magic Stone Cost Icon", magicStoneSprite);
+        evolutionCostMagicStoneIcon = EnsureIconImage(evolutionCostMagicStoneIcon, evolutionCostText, "Evolution Magic Stone Cost Icon", magicStoneSprite);
+    }
     private void SetResultText(string message)
     {
         if (resultText != null)
             resultText.text = message;
     }
-}
+
+    private string FormatCurrencyAmount(string currencyName, double amount, Image icon)
+    {
+        bool useIcon = ShouldUseIcon(icon);
+        string amountText = amount.ToString("0");
+        return useIcon && hideCurrencyNameWhenIconIsAssigned ? amountText : $"{currencyName} {amountText}";
+    }
+
+    private static bool ShouldUseIcon(Image icon)
+    {
+        return icon != null && icon.sprite != null;
+    }
+
+    private static void SetIconSprite(Image icon, Sprite sprite)
+    {
+        if (icon != null && sprite != null)
+            icon.sprite = sprite;
+    }
+
+    private static void SetIconVisible(Image icon, bool visible)
+    {
+        if (icon != null)
+            icon.gameObject.SetActive(visible);
+    }
+
+    private Image EnsureIconImage(Image icon, TMP_Text targetText, string iconObjectName, Sprite sprite)
+    {
+        if (icon != null || sprite == null || !createIconWhenSpriteIsAssigned || targetText == null)
+            return icon;
+
+        GameObject iconObject = new GameObject(iconObjectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        RectTransform iconRect = iconObject.GetComponent<RectTransform>();
+        iconRect.SetParent(targetText.transform, false);
+        iconRect.anchorMin = new Vector2(0f, 0.5f);
+        iconRect.anchorMax = new Vector2(0f, 0.5f);
+        iconRect.pivot = new Vector2(1f, 0.5f);
+        iconRect.sizeDelta = iconSize;
+        iconRect.anchoredPosition = new Vector2(-iconSpacing, 0f);
+
+        Image createdIcon = iconObject.GetComponent<Image>();
+        createdIcon.raycastTarget = false;
+        return createdIcon;
+    }}

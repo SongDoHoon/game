@@ -40,6 +40,7 @@ public class UnitPlacementManager : MonoBehaviour
     private Vector2 unitScrollPosition;
     private UnitData selectedPlacementUnit;
     private bool showUnitSelectionUI = true;
+    private bool hasPendingUnitSelectionUIToggle;
     private bool showAllUnitRanges;
     private UnitController inspectedUnit;
     private RectTransform mergeButtonRectTransform;
@@ -315,6 +316,12 @@ public class UnitPlacementManager : MonoBehaviour
 
     private void OnGUI()
     {
+        if (Event.current.type == EventType.Layout && hasPendingUnitSelectionUIToggle)
+        {
+            showUnitSelectionUI = !showUnitSelectionUI;
+            hasPendingUnitSelectionUIToggle = false;
+        }
+
         DrawUnitSelectionToggle();
 
         if (!showUnitSelectionUI)
@@ -436,7 +443,7 @@ public class UnitPlacementManager : MonoBehaviour
         string buttonLabel = showUnitSelectionUI ? "Hide Unit UI" : "Show Unit UI";
 
         if (GUI.Button(toggleRect, buttonLabel))
-            showUnitSelectionUI = !showUnitSelectionUI;
+            hasPendingUnitSelectionUIToggle = true;
     }
 
     private void DrawSelectedUnitOverlay()

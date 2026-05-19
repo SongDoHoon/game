@@ -17,6 +17,13 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
     public TMP_Text mainGoldText;
     public TMP_Text resultText;
 
+    [Header("Currency Icons")]
+    public Image mainGoldIcon;
+    public Sprite goldSprite;
+
+    [Header("Display")]
+    public bool hideCurrencyNameWhenIconIsAssigned = true;
+
     [Header("Grid Layout")]
     public bool configureSlotGridLayout = true;
     public Vector2 slotCellSize = new(150f, 150f);
@@ -70,8 +77,11 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
                 slot.Refresh();
         }
 
+        SetIconSprite(mainGoldIcon, goldSprite);
+        SetIconVisible(mainGoldIcon, ShouldUseIcon(mainGoldIcon));
+
         if (mainGoldText != null && unitGrowthManager != null)
-            mainGoldText.text = $"Gold {unitGrowthManager.GetAvailableGrowthGold()}";
+            mainGoldText.text = FormatCurrencyAmount("Gold", unitGrowthManager.GetAvailableGrowthGold(), mainGoldIcon);
     }
 
     public void SetResultMessage(string message)
@@ -160,5 +170,29 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
 
             DestroyImmediate(layoutGroup);
         }
+    }
+
+    private string FormatCurrencyAmount(string currencyName, int amount, Image icon)
+    {
+        bool useIcon = ShouldUseIcon(icon);
+        string amountText = amount.ToString();
+        return useIcon && hideCurrencyNameWhenIconIsAssigned ? amountText : $"{currencyName} {amountText}";
+    }
+
+    private static bool ShouldUseIcon(Image icon)
+    {
+        return icon != null && icon.sprite != null;
+    }
+
+    private static void SetIconSprite(Image icon, Sprite sprite)
+    {
+        if (icon != null && sprite != null)
+            icon.sprite = sprite;
+    }
+
+    private static void SetIconVisible(Image icon, bool visible)
+    {
+        if (icon != null)
+            icon.gameObject.SetActive(visible);
     }
 }

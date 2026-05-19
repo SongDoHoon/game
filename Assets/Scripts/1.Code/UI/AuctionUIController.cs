@@ -18,6 +18,14 @@ public class AuctionUIController : MonoBehaviour
     public TMP_Text currentPriceText;
     public TMP_Text resultText;
 
+    [Header("Currency Icons")]
+    public Image currentPriceGoldIcon;
+    public Image[] optionStartPriceGoldIcons;
+    public Sprite goldSprite;
+
+    [Header("Display")]
+    public bool hideCurrencyNameWhenIconIsAssigned = true;
+
     [Header("Font")]
     public TMP_FontAsset auctionFontAsset;
 
@@ -319,8 +327,12 @@ public class AuctionUIController : MonoBehaviour
         if (selectedItemText != null)
             selectedItemText.text = option.optionName;
 
+        SetIconSprite(currentPriceGoldIcon, goldSprite);
+
         if (currentPriceText != null)
-            currentPriceText.text = $"Current Bid: {option.currentPrice}";
+            currentPriceText.text = FormatCurrencyAmount("Current Bid:", option.currentPrice, currentPriceGoldIcon);
+
+        SetIconVisible(currentPriceGoldIcon, ShouldUseIcon(currentPriceGoldIcon));
 
         if (bidInputField != null)
             bidInputField.text = string.Empty;
@@ -357,7 +369,10 @@ public class AuctionUIController : MonoBehaviour
         }
 
         AuctionRewardOption option = currentOptions[optionIndex];
-        text.text = $"{option.optionName}\nStart: {option.startPrice}";
+        Image startPriceIcon = GetOptionStartPriceIcon(optionIndex);
+        SetIconSprite(startPriceIcon, goldSprite);
+        text.text = $"{option.optionName}\n{FormatCurrencyAmount("Start:", option.startPrice, startPriceIcon)}";
+        SetIconVisible(startPriceIcon, ShouldUseIcon(startPriceIcon));
     }
 
     private void SetResultText(string message)
@@ -404,5 +419,36 @@ public class AuctionUIController : MonoBehaviour
             return;
 
         targetText.font = auctionFontAsset;
+    }
+
+    private Image GetOptionStartPriceIcon(int optionIndex)
+    {
+        if (optionStartPriceGoldIcons == null || optionIndex < 0 || optionIndex >= optionStartPriceGoldIcons.Length)
+            return null;
+
+        return optionStartPriceGoldIcons[optionIndex];
+    }
+
+    private string FormatCurrencyAmount(string label, int amount, Image icon)
+    {
+        bool useIcon = ShouldUseIcon(icon);
+        return useIcon && hideCurrencyNameWhenIconIsAssigned ? amount.ToString() : $"{label} {amount}";
+    }
+
+    private static bool ShouldUseIcon(Image icon)
+    {
+        return icon != null && icon.sprite != null;
+    }
+
+    private static void SetIconSprite(Image icon, Sprite sprite)
+    {
+        if (icon != null && sprite != null)
+            icon.sprite = sprite;
+    }
+
+    private static void SetIconVisible(Image icon, bool visible)
+    {
+        if (icon != null)
+            icon.gameObject.SetActive(visible);
     }
 }

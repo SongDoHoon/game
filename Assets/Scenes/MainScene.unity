@@ -1904,6 +1904,9 @@ MonoBehaviour:
   slotPrefab: {fileID: 8739063494127810000, guid: 0e919b8c4c9ac4e419a8b7de8badaec1, type: 3}
   mainGoldText: {fileID: 1056761750}
   resultText: {fileID: 1789416550}
+  mainGoldIcon: {fileID: 0}
+  goldSprite: {fileID: 0}
+  hideCurrencyNameWhenIconIsAssigned: 1
   configureSlotGridLayout: 1
   slotCellSize: {x: 250, y: 300}
   slotSpacing: {x: 8, y: 8}
