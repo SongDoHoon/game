@@ -143,6 +143,22 @@ public class UnitPlacementManager : MonoBehaviour
         return false;
     }
 
+    public IReadOnlyList<UnitController> GetPlacedUnits()
+    {
+        List<UnitController> units = new();
+
+        if (placementTiles == null)
+            return units;
+
+        foreach (UnitPlacementTile tile in placementTiles)
+        {
+            if (tile != null && tile.PlacedUnit != null)
+                units.Add(tile.PlacedUnit);
+        }
+
+        return units;
+    }
+
     public bool TryMoveUnit(UnitPlacementTile fromTile, UnitPlacementTile toTile)
     {
         if (fromTile == null || toTile == null) return false;
@@ -150,7 +166,9 @@ public class UnitPlacementManager : MonoBehaviour
 
         UnitController unit = fromTile.PlacedUnit;
         fromTile.ClearTile();
-        return toTile.PlaceExistingUnit(unit);
+        bool moved = toTile.PlaceExistingUnit(unit);
+        NotifyMissionFieldUnitsChanged();
+        return moved;
     }
 
     public bool TryExchangeInspectedUnit()
@@ -178,6 +196,9 @@ public class UnitPlacementManager : MonoBehaviour
         ResolveEvolutionService();
 
         bool success = evolutionService != null && evolutionService.TryEvolveFirstAvailable(inspectedUnit);
+        if (success)
+            NotifyMissionFieldUnitsChanged();
+
         RefreshRangeVisuals();
         RefreshMergeUI();
         return success;
@@ -397,7 +418,10 @@ public class UnitPlacementManager : MonoBehaviour
         }
 
         if (TryMergeUnits(inspectedUnit, materialUnit, mergeResult))
+        {
+            NotifyMissionFieldUnitsChanged();
             RefreshMergeUI();
+        }
     }
 
     public void TryUseInspectedUnitAction()
@@ -559,6 +583,7 @@ public class UnitPlacementManager : MonoBehaviour
             return false;
 
         targetUnit.Initialize(exchangeResult);
+        NotifyMissionFieldUnitsChanged();
         return true;
     }
 
@@ -1099,6 +1124,16 @@ public class UnitPlacementManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void NotifyMissionFieldUnitsChanged()
+    {
+        MissionManager missionManager = MissionManager.Instance;
+        if (missionManager == null)
+            missionManager = FindAnyObjectByType<MissionManager>();
+
+        if (missionManager != null)
+            missionManager.NotifyFieldUnitsChanged();
     }
 
     private void UpdateMergeButtonPosition()

@@ -51,6 +51,7 @@ public class UnitEvolutionService : MonoBehaviour
 
         itemInventory.UseItem(itemType, 1);
         unit.Initialize(result);
+        NotifyMissionFieldUnitsChanged();
         return true;
     }
 
@@ -61,5 +62,15 @@ public class UnitEvolutionService : MonoBehaviour
 
         if (itemInventory == null)
             itemInventory = FindAnyObjectByType<EvolutionItemInventory>();
+    }
+
+    private void NotifyMissionFieldUnitsChanged()
+    {
+        MissionManager missionManager = MissionManager.Instance;
+        if (missionManager == null)
+            missionManager = FindAnyObjectByType<MissionManager>();
+
+        if (missionManager != null)
+            missionManager.NotifyFieldUnitsChanged();
     }
 }

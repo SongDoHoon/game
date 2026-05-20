@@ -11,6 +11,7 @@ public class WaveManager : MonoBehaviour
     public MonsterSpawner monsterSpawner;
     public BattleLifeManager battleLifeManager;
     public BountyManager bountyManager;
+    public MissionManager missionManager;
 
     [Header("Wave Settings")]
     public int currentWave = 0;
@@ -18,6 +19,7 @@ public class WaveManager : MonoBehaviour
     public bool waitingForNextWave = false;
     public bool isPausedForAuction = false;
     public bool gameEnded = false;
+    public float elapsedBattleTime = 0f;
 
     [Header("Spawn Count Per Wave")]
     public int normalMonsterCount = 15;
@@ -32,6 +34,8 @@ public class WaveManager : MonoBehaviour
     private int aliveMonsterCount = 0;
     private Coroutine spawnWaveCoroutine;
     private Coroutine autoStartCoroutine;
+
+    public bool IsBattleTimerRunning => waveStarted && !gameEnded;
 
     private void Start()
     {
@@ -60,6 +64,14 @@ public class WaveManager : MonoBehaviour
         ResetBattleRuntimeData();
         waveStarted = true;
         StartNextWave();
+    }
+
+    private void Update()
+    {
+        if (!IsBattleTimerRunning)
+            return;
+
+        elapsedBattleTime += Time.deltaTime;
     }
 
     public void StartNextWave()
@@ -214,6 +226,8 @@ public class WaveManager : MonoBehaviour
 
     private void ResetBattleRuntimeData()
     {
+        elapsedBattleTime = 0f;
+
         ResolveBattleLifeManager();
         if (battleLifeManager != null)
             battleLifeManager.ResetLife();
@@ -230,6 +244,14 @@ public class WaveManager : MonoBehaviour
         bountyManager = BountyManager.EnsureInstance(this, monsterSpawner);
         if (bountyManager != null)
             bountyManager.ResetBountyForBattleStart();
+
+        if (missionManager == null)
+            missionManager = MissionManager.Instance != null
+                ? MissionManager.Instance
+                : FindAnyObjectByType<MissionManager>();
+
+        if (missionManager != null)
+            missionManager.InitializeMissions();
     }
 
     private void CompleteGame(bool cleared)
@@ -313,5 +335,18 @@ public class WaveManager : MonoBehaviour
 
         if (!string.IsNullOrWhiteSpace(mainSceneName))
             SceneManager.LoadScene(mainSceneName);
+    }
+
+    public int GetElapsedBattleSeconds()
+    {
+        return Mathf.Max(0, Mathf.FloorToInt(elapsedBattleTime));
+    }
+
+    public string GetFormattedElapsedBattleTime()
+    {
+        int totalSeconds = GetElapsedBattleSeconds();
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        return $"{minutes:00}:{seconds:00}";
     }
 }

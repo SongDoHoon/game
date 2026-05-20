@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983079ef6358094498c90142f3d19b0e, type: 3}
+  m_Name: 3_SingleRanged
+  m_EditorClassIdentifier: Assembly-CSharp::UnitData
+  unitId: 3
+  unitName: "\uD751\uAC01 \uAC70\uBD81"
+  grade: 0
+  unitSprite: {fileID: -4291612010697112755, guid: b74b472999bd0d24698f1556217d12c1, type: 3}
+  portraitSprite: {fileID: -6945426912264098760, guid: 3e68c8f5bc629684588a5557dd4e8518, type: 3}
+  useGradeTintOnSprite: 0
+  animatorController: {fileID: 0}
+  attackPower: 10
+  attackSpeed: 2
+  attackRange: 2.5
+  attackRadius: 0
+  maxAreaAttackTargets: 0
+  basicAttackType: 1
+  targetPriority: 3
+  bossFallbackTargetPriority: 0
+  projectileSpeed: 8
+  projectileSize: 0.1
+  projectileColor: {r: 1, g: 1, b: 1, a: 1}
+  projectileSpawnOffset: {x: 0, y: 0.35, z: 0}
+  showAreaAttackIndicator: 1
+  areaAttackIndicatorColor: {r: 1, g: 0.45, b: 0.1, a: 0.25}
+  areaAttackIndicatorDuration: 0.25
+  skillData: {fileID: 0}
+  skillAttackLockDurationOverride: -1
+  canEvolve: 0
+  evolveKey: 

@@ -5,6 +5,25 @@ using UnityEngine.UI;
 
 public class AuctionUIController : MonoBehaviour
 {
+    private static readonly char[] KoreanFontProbeCharacters =
+    {
+        '\uBC31',
+        '\uD638',
+        '\uCCAD',
+        '\uB8E1',
+        '\uD604',
+        '\uBB34',
+        '\uC8FC',
+        '\uC791',
+        '\uB3C4',
+        '\uCCA0',
+        '\uAD81',
+        '\uAE30',
+        '\uC62C',
+        '\uD63C',
+        '\uB3C8'
+    };
+
     [Header("Root")]
     public GameObject auctionPanel;
     public GameObject optionSelectionPanel;
@@ -28,6 +47,7 @@ public class AuctionUIController : MonoBehaviour
 
     [Header("Font")]
     public TMP_FontAsset auctionFontAsset;
+    public bool autoFindKoreanFontAsset = true;
 
     [Header("Input")]
     public TMP_InputField bidInputField;
@@ -46,11 +66,14 @@ public class AuctionUIController : MonoBehaviour
     private AuctionRewardOption[] currentOptions;
     private int selectedOptionIndex = -1;
     private bool isProcessingBid;
+    private bool triedAutoFindKoreanFontAsset;
     private Coroutine closeAfterResultCoroutine;
 
     private void Awake()
     {
         BindButtonEvents();
+        ResolveAuctionFontAsset();
+        ApplyAuctionFont();
 
         if (waveManager == null)
             waveManager = FindAnyObjectByType<WaveManager>();
@@ -386,6 +409,8 @@ public class AuctionUIController : MonoBehaviour
 
     private void ApplyAuctionFont()
     {
+        ResolveAuctionFontAsset();
+
         if (auctionFontAsset == null)
             return;
 
@@ -412,6 +437,8 @@ public class AuctionUIController : MonoBehaviour
 
     private void ApplyAuctionFont(TMP_Text targetText)
     {
+        ResolveAuctionFontAsset();
+
         if (targetText == null || auctionFontAsset == null)
             return;
 
@@ -419,6 +446,40 @@ public class AuctionUIController : MonoBehaviour
             return;
 
         targetText.font = auctionFontAsset;
+    }
+
+    private void ResolveAuctionFontAsset()
+    {
+        if (auctionFontAsset != null || !autoFindKoreanFontAsset || triedAutoFindKoreanFontAsset)
+            return;
+
+        triedAutoFindKoreanFontAsset = true;
+        TMP_FontAsset[] fontAssets = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
+        foreach (TMP_FontAsset fontAsset in fontAssets)
+        {
+            if (fontAsset == null)
+                continue;
+
+            if (CanRenderAuctionKorean(fontAsset))
+            {
+                auctionFontAsset = fontAsset;
+                return;
+            }
+        }
+    }
+
+    private static bool CanRenderAuctionKorean(TMP_FontAsset fontAsset)
+    {
+        if (fontAsset == null)
+            return false;
+
+        foreach (char character in KoreanFontProbeCharacters)
+        {
+            if (fontAsset.HasCharacter(character))
+                return true;
+        }
+
+        return false;
     }
 
     private Image GetOptionStartPriceIcon(int optionIndex)

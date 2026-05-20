@@ -65,6 +65,7 @@ public class UnitPlacementTile : MonoBehaviour
         placedUnit = unit;
         placedUnit.Initialize(data);
         placedUnit.SetTile(this);
+        NotifyMissionFieldUnitsChanged();
 
         return true;
     }
@@ -77,6 +78,7 @@ public class UnitPlacementTile : MonoBehaviour
         placedUnit = unit;
         placedUnit.transform.position = GetPlacePosition();
         placedUnit.SetTile(this);
+        NotifyMissionFieldUnitsChanged();
 
         return true;
     }
@@ -84,6 +86,7 @@ public class UnitPlacementTile : MonoBehaviour
     public void ClearTile()
     {
         placedUnit = null;
+        NotifyMissionFieldUnitsChanged();
     }
 
     public void RemoveUnitFromTile()
@@ -92,6 +95,17 @@ public class UnitPlacementTile : MonoBehaviour
         {
             Destroy(placedUnit.gameObject);
             placedUnit = null;
+            NotifyMissionFieldUnitsChanged();
         }
+    }
+
+    private void NotifyMissionFieldUnitsChanged()
+    {
+        MissionManager missionManager = MissionManager.Instance;
+        if (missionManager == null)
+            missionManager = FindAnyObjectByType<MissionManager>();
+
+        if (missionManager != null)
+            missionManager.NotifyFieldUnitsChanged();
     }
 }
