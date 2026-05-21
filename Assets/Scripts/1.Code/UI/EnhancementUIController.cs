@@ -79,6 +79,8 @@ public class EnhancementUIController : MonoBehaviour
 
     public void OpenPanel()
     {
+        InGamePanelCoordinator.CloseOtherPanels(enhancementPanel);
+
         if (enhancementPanel != null)
             enhancementPanel.SetActive(true);
 

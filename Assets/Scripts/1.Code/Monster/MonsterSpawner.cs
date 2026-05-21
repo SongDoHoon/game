@@ -122,7 +122,7 @@ public class MonsterSpawner : MonoBehaviour
         monster.moveSpeed = MonsterBalanceCalculator.GetNormalMoveSpeed(1);
         monster.bountyDifficulty = data.difficulty;
         monster.SetPath(waypointPath);
-        monster.SetWaveManager(null);
+        monster.SetWaveManager(bountyManager != null ? bountyManager.waveManager : null);
         monster.SetBountyManager(bountyManager);
 
         if (prefab == monsterPrefab)

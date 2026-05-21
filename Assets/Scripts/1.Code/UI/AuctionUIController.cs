@@ -97,6 +97,8 @@ public class AuctionUIController : MonoBehaviour
     {
         BindButtonEvents();
         ApplyAuctionFont();
+        UnitPlacementManager.Instance?.ClearInspectedUnit();
+        InGamePanelCoordinator.CloseAllPanels();
 
         currentOptions = options;
         isProcessingBid = false;

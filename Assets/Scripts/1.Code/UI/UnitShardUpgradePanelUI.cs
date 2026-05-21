@@ -53,6 +53,8 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
 
     public void OpenPanel()
     {
+        InGamePanelCoordinator.CloseOtherPanels(panelRoot);
+
         if (panelRoot != null)
             panelRoot.SetActive(true);
 

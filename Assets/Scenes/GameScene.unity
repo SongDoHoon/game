@@ -9720,7 +9720,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC7AC\uB8CC"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 323c4dad3ccadb84490a5ab3e01be769, type: 2}
   m_sharedMaterial: {fileID: 8924001121517442168, guid: 323c4dad3ccadb84490a5ab3e01be769, type: 2}
@@ -26236,7 +26236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1731985700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28299,8 +28299,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -8237894310126275104, guid: 1a193f2bdf9843a4086580b259b9d6e1, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

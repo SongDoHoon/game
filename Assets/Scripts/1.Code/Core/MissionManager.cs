@@ -615,14 +615,14 @@ public class MissionManager : MonoBehaviour
             MissionRequirement.RandomGradeUnit(UnitGrade.Epic)));
 
         missionData.Add(new MissionData("mission_06", "불꽃이 닭", 59, 18,
-            MissionRequirement.SpecificUnit("화령조"),
-            MissionRequirement.SpecificUnit("화령조"),
-            MissionRequirement.SpecificUnit("화령조")));
+            MissionRequirement.SpecificUnit("주작의 화령죠"),
+            MissionRequirement.SpecificUnit("주작의 화령죠"),
+            MissionRequirement.SpecificUnit("주작의 화령죠")));
 
         missionData.Add(new MissionData("mission_07", "성장 I", 89, 30,
             MissionRequirement.SpecificUnit("청린 도마뱀"),
             MissionRequirement.SpecificUnit("청룡의 잔린"),
-            MissionRequirement.SpecificUnit("집행관")));
+            MissionRequirement.SpecificUnit("집행자")));
 
         missionData.Add(new MissionData("mission_08", "성장 II", 89, 30,
             MissionRequirement.SpecificUnit("백아"),

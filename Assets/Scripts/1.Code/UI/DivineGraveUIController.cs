@@ -74,6 +74,8 @@ public class DivineGraveUIController : MonoBehaviour
 
     public void OpenPanel()
     {
+        InGamePanelCoordinator.CloseOtherPanels(panelRoot);
+
         if (panelRoot != null)
             panelRoot.SetActive(true);
 
@@ -126,7 +128,7 @@ public class DivineGraveUIController : MonoBehaviour
             magicStonePerSecondValueText.text = $"{magicStonePerSecond:0.0}/s";
 
         if (workerCountText != null)
-            workerCountText.text = $"?쇨씔 {workerCount}/{maxWorkers}";
+            workerCountText.text = $"일꾼 {workerCount}/{maxWorkers}";
 
         if (hireWorkerCostText != null)
             hireWorkerCostText.text = workerCount >= maxWorkers ? "MAX" : FormatCurrencyAmount("골드", nextWorkerCost, hireWorkerCostGoldIcon);

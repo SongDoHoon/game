@@ -14,6 +14,9 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
     public Image itemImage;
     public Image lockImage;
     public Image[] recipeBaseUnitImages;
+    public Image[] recipeBaseUnitBackgroundImages;
+    public Image[] recipeBaseUnitCheckMarkImages;
+    public GameObject[] recipeBaseUnitCheckMarkObjects;
     public Image[] recipeItemImages;
     public Image[] recipeResultUnitImages;
 
@@ -28,6 +31,11 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
     [Header("State")]
     public CanvasGroup canvasGroup;
     [Range(0f, 1f)] public float lockedAlpha = 0.45f;
+    public Color defaultBackgroundColor = Color.white;
+    public Color missingRecipeUnitColor = Color.white;
+    public Color ownedRecipeUnitColor = new(0.45f, 0.85f, 0.55f, 1f);
+
+    private readonly Dictionary<Image, TMP_Text> runtimeRecipeUnitCheckMarks = new();
 
     public void Refresh(EvolutionMaterialDisplayData displayData, int ownedCount, IReadOnlyList<EvolutionRecipe> recipes)
     {
@@ -43,13 +51,17 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
         RefreshImages(displayData);
         RefreshTexts(displayData, ownedCount, recipes);
         RefreshRecipeImages(displayData, recipes);
+        RefreshRecipeUnitOwnedStates(recipes);
         RefreshOwnedState(isOwned);
     }
 
     private void RefreshImages(EvolutionMaterialDisplayData displayData)
     {
         if (backgroundImage != null)
+        {
             backgroundImage.sprite = displayData.backgroundSprite;
+            backgroundImage.color = defaultBackgroundColor;
+        }
 
         if (itemImage != null)
         {
@@ -154,6 +166,119 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
             canvasGroup.interactable = isOwned;
             canvasGroup.blocksRaycasts = isOwned;
         }
+    }
+
+    private void RefreshRecipeUnitOwnedStates(IReadOnlyList<EvolutionRecipe> recipes)
+    {
+        int maxCount = recipeBaseUnitImages != null ? recipeBaseUnitImages.Length : 0;
+        for (int i = 0; i < maxCount; i++)
+        {
+            Image unitImage = recipeBaseUnitImages[i];
+            if (unitImage == null)
+                continue;
+
+            EvolutionRecipe recipe = recipes != null && i < recipes.Count ? recipes[i] : null;
+            bool hasRecipe = recipe != null && recipe.requiredBaseUnit != null;
+            bool hasRequiredUnit = hasRecipe && HasPlacedUnit(recipe.requiredBaseUnit);
+
+            SetRecipeUnitOwnedState(i, unitImage, hasRecipe, hasRequiredUnit);
+        }
+    }
+
+    private void SetRecipeUnitOwnedState(int index, Image unitImage, bool hasRecipe, bool hasRequiredUnit)
+    {
+        Image background = GetArrayElement(recipeBaseUnitBackgroundImages, index);
+        Image checkImage = GetArrayElement(recipeBaseUnitCheckMarkImages, index);
+        GameObject checkObject = GetArrayElement(recipeBaseUnitCheckMarkObjects, index);
+
+        if (background != null)
+            background.color = hasRequiredUnit ? ownedRecipeUnitColor : missingRecipeUnitColor;
+        else if (unitImage != null)
+            unitImage.color = hasRequiredUnit ? ownedRecipeUnitColor : missingRecipeUnitColor;
+
+        if (checkImage != null)
+            checkImage.gameObject.SetActive(hasRequiredUnit);
+
+        if (checkObject != null)
+            checkObject.SetActive(hasRequiredUnit);
+        else if (checkImage == null)
+            SetRuntimeRecipeUnitCheckMarkActive(unitImage, hasRecipe && hasRequiredUnit);
+    }
+
+    private bool HasPlacedUnit(UnitData requiredUnit)
+    {
+        if (requiredUnit == null)
+            return false;
+
+        UnitPlacementManager placementManager = UnitPlacementManager.Instance != null
+            ? UnitPlacementManager.Instance
+            : FindAnyObjectByType<UnitPlacementManager>();
+
+        if (placementManager == null)
+            return false;
+
+        IReadOnlyList<UnitController> placedUnits = placementManager.GetPlacedUnits();
+        foreach (UnitController placedUnit in placedUnits)
+        {
+            if (placedUnit != null && IsSameUnit(placedUnit.Data, requiredUnit))
+                return true;
+        }
+
+        return false;
+    }
+
+    private static bool IsSameUnit(UnitData left, UnitData right)
+    {
+        if (left == right)
+            return true;
+
+        return left != null
+            && right != null
+            && !string.IsNullOrEmpty(left.unitId)
+            && left.unitId == right.unitId;
+    }
+
+    private void SetRuntimeRecipeUnitCheckMarkActive(Image unitImage, bool active)
+    {
+        TMP_Text checkMarkText = GetOrCreateRuntimeRecipeUnitCheckMarkText(unitImage);
+        if (checkMarkText != null)
+            checkMarkText.gameObject.SetActive(active);
+    }
+
+    private TMP_Text GetOrCreateRuntimeRecipeUnitCheckMarkText(Image unitImage)
+    {
+        if (unitImage == null)
+            return null;
+
+        if (runtimeRecipeUnitCheckMarks.TryGetValue(unitImage, out TMP_Text existingText) && existingText != null)
+            return existingText;
+
+        GameObject checkMarkTextObject = new GameObject("Runtime Unit Check Mark", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        RectTransform rectTransform = checkMarkTextObject.GetComponent<RectTransform>();
+        rectTransform.SetParent(unitImage.transform, false);
+        rectTransform.anchorMin = new Vector2(1f, 1f);
+        rectTransform.anchorMax = new Vector2(1f, 1f);
+        rectTransform.pivot = new Vector2(1f, 1f);
+        rectTransform.anchoredPosition = new Vector2(-4f, -4f);
+        rectTransform.sizeDelta = new Vector2(28f, 28f);
+
+        TMP_Text checkMarkText = checkMarkTextObject.GetComponent<TMP_Text>();
+        checkMarkText.text = "V";
+        checkMarkText.alignment = TextAlignmentOptions.Center;
+        checkMarkText.fontSize = 24f;
+        checkMarkText.fontStyle = FontStyles.Bold;
+        checkMarkText.color = Color.white;
+        checkMarkText.raycastTarget = false;
+        runtimeRecipeUnitCheckMarks[unitImage] = checkMarkText;
+        return checkMarkText;
+    }
+
+    private static T GetArrayElement<T>(T[] array, int index)
+    {
+        if (array == null || index < 0 || index >= array.Length)
+            return default(T);
+
+        return array[index];
     }
 
     private Sprite GetBaseUnitSprite(EvolutionRecipe recipe)

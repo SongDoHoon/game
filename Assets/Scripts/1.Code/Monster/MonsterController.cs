@@ -135,6 +135,7 @@ public class MonsterController : MonoBehaviour
     {
         if (waypointPath == null) return;
         if (isStunned) return;
+        if (waveManager != null && waveManager.isPausedForAuction) return;
 
         Transform target = waypointPath.GetWaypoint(currentWaypointIndex);
         if (target == null) return;

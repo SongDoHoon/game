@@ -25,6 +25,8 @@ public class EvolutionMaterialDisplayData
 
 public class EvolutionMaterialPanelManager : MonoBehaviour
 {
+    private const float RefreshInterval = 0.1f;
+
     [Header("Root")]
     public GameObject panelRoot;
 
@@ -47,6 +49,7 @@ public class EvolutionMaterialPanelManager : MonoBehaviour
     public List<EvolutionMaterialDisplayData> materialDisplayData = new();
 
     private readonly Dictionary<EvolutionItemType, EvolutionMaterialSlotUI> slotsByItem = new();
+    private float refreshTimer;
 
     private void Awake()
     {
@@ -76,8 +79,24 @@ public class EvolutionMaterialPanelManager : MonoBehaviour
             itemInventory.OnItemCountChanged -= HandleItemCountChanged;
     }
 
+    private void Update()
+    {
+        if (panelRoot == null || !panelRoot.activeSelf)
+            return;
+
+        refreshTimer -= Time.deltaTime;
+        if (refreshTimer > 0f)
+            return;
+
+        refreshTimer = RefreshInterval;
+        RefreshAllSlots();
+    }
+
     public void OpenPanel()
     {
+        InGamePanelCoordinator.CloseOtherPanels(panelRoot);
+        refreshTimer = 0f;
+
         if (panelRoot != null)
             panelRoot.SetActive(true);
 

@@ -82,6 +82,8 @@ public class BountyUIController : MonoBehaviour
 
     public void OpenPanel()
     {
+        InGamePanelCoordinator.CloseOtherPanels(panelRoot);
+
         if (panelRoot != null)
             panelRoot.SetActive(true);
 
@@ -99,11 +101,10 @@ public class BountyUIController : MonoBehaviour
         if (panelRoot == null)
             return;
 
-        bool nextActive = !panelRoot.activeSelf;
-        panelRoot.SetActive(nextActive);
-
-        if (nextActive)
-            RefreshUI();
+        if (panelRoot.activeSelf)
+            ClosePanel();
+        else
+            OpenPanel();
     }
 
     public void SpawnDifficulty1()
