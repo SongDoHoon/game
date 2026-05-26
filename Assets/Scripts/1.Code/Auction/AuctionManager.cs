@@ -18,8 +18,6 @@ public class AuctionManager : MonoBehaviour
     public EvolutionItemInventory itemInventory;
 
     private AuctionRewardOption[] currentOptions = new AuctionRewardOption[4];
-    private AuctionRewardOption leftOption;
-    private AuctionRewardOption rightOption;
 
     public AuctionRewardOption[] CurrentOptions => currentOptions;
 
@@ -29,44 +27,9 @@ public class AuctionManager : MonoBehaviour
             goldManager = FindAnyObjectByType<GoldManager>();
     }
 
-    public void SetAuctionOptions(EvolutionItemType item1, EvolutionItemType item2)
-    {
-        currentOptions = new[]
-        {
-            AuctionRewardOption.CreateEvolutionItem(item1, 10),
-            AuctionRewardOption.CreateEvolutionItem(item2, 10)
-        };
-
-        SyncLegacyOptions();
-    }
-
     public void SetAuctionOptionsForStage(int stage)
     {
         currentOptions = GameBalanceConfig.CreateAuctionOptions(stage);
-        SyncLegacyOptions();
-    }
-
-    public bool TryBidLeft(int playerBid, out int npcBid)
-    {
-        return TryBid(leftOption, playerBid, out npcBid);
-    }
-
-    public bool TryBidRight(int playerBid, out int npcBid)
-    {
-        return TryBid(rightOption, playerBid, out npcBid);
-    }
-
-    public bool TryBidOption(int optionIndex, int playerBid, out int npcBid)
-    {
-        npcBid = 0;
-
-        if (currentOptions == null)
-            return false;
-
-        if (optionIndex < 0 || optionIndex >= currentOptions.Length)
-            return false;
-
-        return TryBid(currentOptions[optionIndex], playerBid, out npcBid);
     }
 
     public AuctionBidResult TryPlayerBidOption(int optionIndex, int playerBid, out int aiBid)
@@ -88,31 +51,6 @@ public class AuctionManager : MonoBehaviour
             return 0;
 
         return option.currentPrice + 1;
-    }
-
-    private bool TryBid(AuctionRewardOption option, int playerBid, out int npcBid)
-    {
-        npcBid = 0;
-
-        if (option == null || option.rewardType == AuctionRewardType.None)
-            return false;
-
-        if (goldManager == null)
-            return false;
-
-        if (playerBid < option.startPrice)
-            return false;
-
-        npcBid = ResolveAIBid(option, playerBid);
-
-        if (playerBid <= npcBid)
-            return false;
-
-        if (!goldManager.UseGold(playerBid))
-            return false;
-
-        ApplyReward(option);
-        return true;
     }
 
     private AuctionBidResult TryPlayerBid(AuctionRewardOption option, int playerBid, out int aiBid)
@@ -170,26 +108,6 @@ public class AuctionManager : MonoBehaviour
         return true;
     }
 
-    private int ResolveAIBid(AuctionRewardOption option, int playerBid)
-    {
-        int npcBid = Mathf.Max(option.aiFirstBid, option.startPrice);
-        float burdenRate = option.aiMaxBudget > 0 ? (float)npcBid / option.aiMaxBudget : 1f;
-
-        while (npcBid < playerBid && Random.value <= GameBalanceConfig.GetAIRebidChance(burdenRate))
-        {
-            int nextBid = option.GetNextAIBid(npcBid);
-
-            if (nextBid > option.aiMaxBudget)
-                break;
-
-            npcBid = nextBid;
-            burdenRate = option.aiMaxBudget > 0 ? (float)npcBid / option.aiMaxBudget : 1f;
-        }
-
-        option.currentPrice = Mathf.Max(option.currentPrice, npcBid);
-        return npcBid;
-    }
-
     private void ApplyReward(AuctionRewardOption option)
     {
         if (option.IsEvolutionItem)
@@ -203,9 +121,4 @@ public class AuctionManager : MonoBehaviour
         GameModifierState.ApplyAuctionReward(option);
     }
 
-    private void SyncLegacyOptions()
-    {
-        leftOption = currentOptions != null && currentOptions.Length > 0 ? currentOptions[0] : null;
-        rightOption = currentOptions != null && currentOptions.Length > 1 ? currentOptions[1] : null;
-    }
 }

@@ -203,6 +203,7 @@ MonoBehaviour:
   moveSpeed: 0.5
   rewardGold: 10
   isBoss: 0
+  bountyDifficulty: 0
   waypointPath: {fileID: 0}
   destroyOnGoal: 1
   spriteRenderer: {fileID: 0}
@@ -241,6 +242,10 @@ MonoBehaviour:
   faceMovementDirection: 1
   spriteFacesRightByDefault: 0
   horizontalFacingThreshold: 0.001
+  debugSpeedMultiplier: 1
+  debugGlobalSpeedReduction: 0
+  debugGlobalSpeedMultiplier: 1
+  debugFinalMoveSpeed: 0
 --- !u!114 &5669267709006483162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -742,7 +747,7 @@ RectTransform:
   m_GameObject: {fileID: 7437991139658215122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.012, y: 0.02, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3893202604996272425}
@@ -752,7 +757,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 120, y: 30}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7168232317864345156
 Canvas:
@@ -793,4 +798,24 @@ MonoBehaviour:
   targetMonster: {fileID: 8410184121998460207}
   hpSlider: {fileID: 2034816451579891104}
   hpText: {fileID: 457738177251453791}
+  healthBarRect: {fileID: 8400727045019427060}
+  hpFillImage: {fileID: 7117477350612289131}
   billboardToCamera: 1
+  normalView:
+    localPositionOffset: {x: 0, y: -0.1, z: 0}
+    localScale: {x: 1, y: 1, z: 1}
+    overrideSize: 1
+    sizeDelta: {x: 1, y: 1}
+    showHpText: 1
+    hpTextFontSize: 0
+    overrideFillColor: 0
+    fillColor: {r: 0, g: 1, b: 0, a: 1}
+  bossView:
+    localPositionOffset: {x: 0, y: 0, z: 0}
+    localScale: {x: 1.25, y: 1.25, z: 1}
+    overrideSize: 0
+    sizeDelta: {x: 1, y: 0.15}
+    showHpText: 1
+    hpTextFontSize: 0
+    overrideFillColor: 0
+    fillColor: {r: 0.9, g: 0.2, b: 0.2, a: 1}

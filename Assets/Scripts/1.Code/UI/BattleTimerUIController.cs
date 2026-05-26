@@ -1,13 +1,11 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BattleTimerUIController : MonoBehaviour
 {
     [Header("References")]
     public WaveManager waveManager;
     public TMP_Text timerText;
-    public Text legacyTimerText;
 
     private int lastDisplayedSeconds = int.MinValue;
 
@@ -41,8 +39,5 @@ public class BattleTimerUIController : MonoBehaviour
 
         if (timerText != null)
             timerText.text = message;
-
-        if (legacyTimerText != null)
-            legacyTimerText.text = message;
     }
 }

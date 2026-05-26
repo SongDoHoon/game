@@ -5,7 +5,6 @@ public class MonsterDamagePopupEmitter : MonoBehaviour
     [Header("References")]
     public MonsterController targetMonster;
     public DamagePopup damagePopupPrefab;
-    public Transform popupSpawnPoint;
 
     [Header("Spawn Offset")]
     public Vector3 worldOffset = new Vector3(0f, 1.6f, 0f);
@@ -42,20 +41,19 @@ public class MonsterDamagePopupEmitter : MonoBehaviour
         if (damagePopupPrefab == null)
             return;
 
-        Vector3 basePosition = popupSpawnPoint != null
-            ? popupSpawnPoint.position
-            : transform.position;
+        Vector3 basePosition = transform.position;
 
         Vector3 randomOffset = new Vector3(
             Random.Range(-randomOffsetRange.x, randomOffsetRange.x),
             Random.Range(-randomOffsetRange.y, randomOffsetRange.y),
             0f);
 
-        DamagePopup popupInstance = Instantiate(
+        DamagePopup popupInstance = DamagePopupPool.Get(
             damagePopupPrefab,
             basePosition + worldOffset + randomOffset,
             Quaternion.identity);
 
-        popupInstance.Setup(damageAmount, textColor);
+        if (popupInstance != null)
+            popupInstance.Setup(damageAmount, textColor);
     }
 }

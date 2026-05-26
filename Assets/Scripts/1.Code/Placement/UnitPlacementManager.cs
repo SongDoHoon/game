@@ -11,7 +11,6 @@ public class UnitPlacementManager : MonoBehaviour
     private static readonly Rect UnitPanelRect = new Rect(10f, 50f, 300f, 420f);
 
     public SummonManager summonManager;
-    public GoldManager goldManager;
     public GameObject unitPrefab;
     public UnitPlacementTile[] placementTiles;
 
@@ -51,6 +50,7 @@ public class UnitPlacementManager : MonoBehaviour
     private RectTransform exchangeButtonRectTransform;
     private CanvasGroup exchangeButtonCanvasGroup;
     private UnitEvolutionService evolutionService;
+    private GoldManager goldManager;
 
     private void Awake()
     {

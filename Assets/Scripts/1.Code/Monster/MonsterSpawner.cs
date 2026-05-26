@@ -15,11 +15,7 @@ public class MonsterSpawner : MonoBehaviour
     [Header("Spawn Settings")]
     public GameObject monsterPrefab;
     public GameObject bossPrefab;
-    public GameObject bountyElitePrefab;
     public WaypointPath waypointPath;
-
-    [Header("Optional Spawn Point")]
-    public Transform spawnPoint;
 
     [Header("Wave Scaling")]
     public float normalHpMultiplierPerWave = 0.15f;
@@ -98,7 +94,7 @@ public class MonsterSpawner : MonoBehaviour
         if (data == null)
             return null;
 
-        GameObject prefab = bountyElitePrefab != null ? bountyElitePrefab : bossPrefab != null ? bossPrefab : monsterPrefab;
+        GameObject prefab = bossPrefab != null ? bossPrefab : monsterPrefab;
         if (prefab == null)
             return null;
 
@@ -215,9 +211,6 @@ public class MonsterSpawner : MonoBehaviour
 
     private Vector3 GetSpawnPosition()
     {
-        if (spawnPoint != null)
-            return spawnPoint.position;
-
         if (waypointPath != null && waypointPath.GetWaypoint(0) != null)
             return waypointPath.GetWaypoint(0).position;
 

@@ -27,12 +27,9 @@ public class MonsterController : MonoBehaviour
     public int bountyDifficulty = 0;
 
     [Header("Path")]
-    public WaypointPath waypointPath;
     public bool destroyOnGoal = true;
 
     [Header("Animation")]
-    public SpriteRenderer spriteRenderer;
-    public Animator animator;
     public MonsterWalkAnimationSet[] walkAnimationSets = new MonsterWalkAnimationSet[10];
 
     [Header("Facing")]
@@ -50,6 +47,9 @@ public class MonsterController : MonoBehaviour
     private readonly List<DebuffInstance> debuffs = new();
     private float speedMultiplier = 1f;
     private bool isStunned;
+    private WaypointPath waypointPath;
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
     private WaveManager waveManager;
     private BountyManager bountyManager;
     private Vector3 lastPosition;

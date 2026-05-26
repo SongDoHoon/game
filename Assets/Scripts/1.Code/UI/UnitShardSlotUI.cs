@@ -77,11 +77,11 @@ public class UnitShardSlotUI : MonoBehaviour
                 ? $"현재: {FormatBonus(currentData)}\n다음: MAX"
                 : $"현재: {FormatBonus(currentData)}\n다음: {FormatBonus(nextData)}";
 
-        SetIconSprite(upgradeCostGoldIcon, goldSprite);
-        SetIconVisible(upgradeCostGoldIcon, !isMaxLevel && ShouldUseIcon(upgradeCostGoldIcon));
+        CurrencyDisplayUtility.SetIconSprite(upgradeCostGoldIcon, goldSprite);
+        CurrencyDisplayUtility.SetIconVisible(upgradeCostGoldIcon, !isMaxLevel && CurrencyDisplayUtility.ShouldUseIcon(upgradeCostGoldIcon));
 
         if (upgradeCostText != null)
-            upgradeCostText.text = isMaxLevel ? "MAX" : FormatCurrencyAmount("Gold", nextData.goldCost, upgradeCostGoldIcon);
+            upgradeCostText.text = isMaxLevel ? "MAX" : CurrencyDisplayUtility.FormatAmount("Gold", nextData.goldCost, upgradeCostGoldIcon, hideCurrencyNameWhenIconIsAssigned);
 
         if (upgradeButton != null)
             upgradeButton.interactable = !isMaxLevel && unitGrowthManager.CanUpgradeUnitShard(unitData.unitId);
@@ -105,30 +105,6 @@ public class UnitShardSlotUI : MonoBehaviour
         Sprite sprite = unitData.portraitSprite != null ? unitData.portraitSprite : unitData.unitSprite;
         unitImage.sprite = sprite;
         unitImage.gameObject.SetActive(sprite != null);
-    }
-
-    private string FormatCurrencyAmount(string currencyName, int amount, Image icon)
-    {
-        bool useIcon = ShouldUseIcon(icon);
-        string amountText = amount.ToString();
-        return useIcon && hideCurrencyNameWhenIconIsAssigned ? amountText : $"{currencyName} {amountText}";
-    }
-
-    private static bool ShouldUseIcon(Image icon)
-    {
-        return icon != null && icon.sprite != null;
-    }
-
-    private static void SetIconSprite(Image icon, Sprite sprite)
-    {
-        if (icon != null && sprite != null)
-            icon.sprite = sprite;
-    }
-
-    private static void SetIconVisible(Image icon, bool visible)
-    {
-        if (icon != null)
-            icon.gameObject.SetActive(visible);
     }
 
     private static string FormatBonus(UnitShardUpgradeData data)

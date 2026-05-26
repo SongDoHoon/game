@@ -29,7 +29,7 @@ public class BountyManager : MonoBehaviour
     [SerializeField] private float bountyTimer;
     [SerializeField] private bool bountyReady;
     [SerializeField] private int unlockedBountyDifficulty = MinBountyDifficulty;
-    [SerializeField] private MonsterController activeBountyElite;
+    private MonsterController activeBountyElite;
     [SerializeField] private int activeBountyDifficulty;
 
     public bool HasActiveBountyElite => activeBountyElite != null && activeBountyElite.IsAlive;

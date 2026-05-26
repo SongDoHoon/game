@@ -6,9 +6,6 @@ public class BossRewardController : MonoBehaviour
     public AuctionUIController auctionUIController;
     public WaveManager waveManager;
 
-    [Header("Possible Reward Pool")]
-    public EvolutionItemType[] possibleItems;
-
     private void Awake()
     {
         if (waveManager == null)

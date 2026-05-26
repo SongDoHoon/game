@@ -27,14 +27,6 @@ public class BountyUIController : MonoBehaviour
     public Button difficulty5Button;
     public Button difficulty6Button;
 
-    [Header("Difficulty Texts")]
-    public TMP_Text difficulty1Text;
-    public TMP_Text difficulty2Text;
-    public TMP_Text difficulty3Text;
-    public TMP_Text difficulty4Text;
-    public TMP_Text difficulty5Text;
-    public TMP_Text difficulty6Text;
-
     [Header("Bounty Data Texts")]
     public TMP_Text[] hpTexts = new TMP_Text[6];
     public TMP_Text[] rewardTexts = new TMP_Text[6];
@@ -47,13 +39,12 @@ public class BountyUIController : MonoBehaviour
     public float rewardIconTextPadding = 4f;
 
     [Header("Status")]
-    public TMP_Text statusText;
     public TMP_Text cooldownText;
-    public TMP_Text unlockedDifficultyText;
 
     private float refreshTimer;
     private readonly Image[] runtimeRewardGoldIcons = new Image[6];
     private readonly Image[] runtimeRewardMagicStoneIcons = new Image[6];
+    private string lastCooldownText;
 
     private void Awake()
     {
@@ -148,27 +139,22 @@ public class BountyUIController : MonoBehaviour
 
     public void RefreshUI()
     {
+        if (panelRoot != null && !panelRoot.activeInHierarchy)
+            return;
+
         ResolveReferences();
 
-        RefreshDifficultyButton(1, difficulty1Button, difficulty1Text);
-        RefreshDifficultyButton(2, difficulty2Button, difficulty2Text);
-        RefreshDifficultyButton(3, difficulty3Button, difficulty3Text);
-        RefreshDifficultyButton(4, difficulty4Button, difficulty4Text);
-        RefreshDifficultyButton(5, difficulty5Button, difficulty5Text);
-        RefreshDifficultyButton(6, difficulty6Button, difficulty6Text);
-
-        if (statusText != null)
-            statusText.text = GetStatusMessage();
+        RefreshDifficultyButton(1, difficulty1Button);
+        RefreshDifficultyButton(2, difficulty2Button);
+        RefreshDifficultyButton(3, difficulty3Button);
+        RefreshDifficultyButton(4, difficulty4Button);
+        RefreshDifficultyButton(5, difficulty5Button);
+        RefreshDifficultyButton(6, difficulty6Button);
 
         if (cooldownText != null)
-            cooldownText.text = bountyManager != null
+            SetTextIfChanged(cooldownText, ref lastCooldownText, bountyManager != null
                 ? $"Cooldown {Math.Ceiling(bountyManager.GetRemainingBountyCooldown()):0}s"
-                : "Cooldown -";
-
-        if (unlockedDifficultyText != null)
-            unlockedDifficultyText.text = bountyManager != null
-                ? $"Unlocked Lv. {bountyManager.GetUnlockedBountyDifficulty()}"
-                : "Unlocked Lv. -";
+                : "Cooldown -");
     }
 
     private void BindButtons()
@@ -202,7 +188,7 @@ public class BountyUIController : MonoBehaviour
         button.onClick.AddListener(action);
     }
 
-    private void RefreshDifficultyButton(int difficulty, Button button, TMP_Text text)
+    private void RefreshDifficultyButton(int difficulty, Button button)
     {
         BountyEliteData data = bountyManager != null ? bountyManager.GetBountyData(difficulty) : null;
 
@@ -210,21 +196,6 @@ public class BountyUIController : MonoBehaviour
             button.interactable = bountyManager != null && bountyManager.CanSpawnBounty(difficulty);
 
         RefreshBountyDataTexts(difficulty, data);
-
-        if (text == null)
-            return;
-
-        if (data == null)
-        {
-            text.text = $"Difficulty {difficulty}";
-            return;
-        }
-
-        string lockText = bountyManager != null && difficulty <= bountyManager.GetUnlockedBountyDifficulty()
-            ? string.Empty
-            : "\nLocked";
-
-        text.text = $"Difficulty {difficulty}{lockText}";
     }
 
     private void RefreshBountyDataTexts(int difficulty, BountyEliteData data)
@@ -233,32 +204,33 @@ public class BountyUIController : MonoBehaviour
 
         TMP_Text hpText = GetArrayElement(hpTexts, index);
         TMP_Text rewardText = GetArrayElement(rewardTexts, index);
-        Image rewardGoldIcon = EnsureRewardIconImage(runtimeRewardGoldIcons, index, rewardText, "Gold Reward Icon", goldSprite, 0);
-        Image rewardMagicStoneIcon = EnsureRewardIconImage(runtimeRewardMagicStoneIcons, index, rewardText, "Magic Stone Reward Icon", magicStoneSprite, 1);
+        Image rewardGoldIcon = EnsureRewardIconImage(runtimeRewardGoldIcons, index, rewardText, "Gold Reward Icon", goldSprite);
+        Image rewardMagicStoneIcon = EnsureRewardIconImage(runtimeRewardMagicStoneIcons, index, rewardText, "Magic Stone Reward Icon", magicStoneSprite);
 
-        SetIconSprite(rewardGoldIcon, goldSprite);
-        SetIconSprite(rewardMagicStoneIcon, magicStoneSprite);
-        SetIconVisible(rewardGoldIcon, data != null && data.rewardGold > 0 && ShouldUseIcon(rewardGoldIcon));
-        SetIconVisible(rewardMagicStoneIcon, data != null && data.rewardBattleMagicStone > 0 && ShouldUseIcon(rewardMagicStoneIcon));
+        CurrencyDisplayUtility.SetIconSprite(rewardGoldIcon, goldSprite);
+        CurrencyDisplayUtility.SetIconSprite(rewardMagicStoneIcon, magicStoneSprite);
+        CurrencyDisplayUtility.SetIconVisible(rewardGoldIcon, data != null && data.rewardGold > 0 && CurrencyDisplayUtility.ShouldUseIcon(rewardGoldIcon));
+        CurrencyDisplayUtility.SetIconVisible(rewardMagicStoneIcon, data != null && data.rewardBattleMagicStone > 0 && CurrencyDisplayUtility.ShouldUseIcon(rewardMagicStoneIcon));
 
         if (data == null)
         {
             if (hpText != null)
-                hpText.text = "HP -";
+                SetTextIfChanged(hpText, "HP -");
 
             if (rewardText != null)
-                rewardText.text = "Reward -";
+                SetTextIfChanged(rewardText, "Reward -");
 
             return;
         }
 
         if (hpText != null)
-            hpText.text = $"HP {data.hp:0}";
+            SetTextIfChanged(hpText, $"HP {data.hp:0}");
 
         if (rewardText != null)
         {
-            rewardText.text = FormatRewardText(data);
-            PositionRewardIcons(rewardText, data, rewardGoldIcon, rewardMagicStoneIcon);
+            bool rewardTextChanged = SetTextIfChanged(rewardText, FormatRewardText(data));
+            if (rewardTextChanged)
+                PositionRewardIcons(rewardText, data, rewardGoldIcon, rewardMagicStoneIcon);
         }
     }
 
@@ -277,20 +249,6 @@ public class BountyUIController : MonoBehaviour
             return $"    {data.rewardBattleMagicStone}";
 
         return "\uBCF4\uC0C1 \uC5C6\uC74C";
-    }
-
-    private string GetStatusMessage()
-    {
-        if (bountyManager == null)
-            return "Bounty Manager Missing";
-
-        if (bountyManager.IsBountyEliteAlive())
-            return "Bounty In Progress";
-
-        if (bountyManager.IsBountyReady())
-            return "Bounty Ready";
-
-        return "Bounty Cooldown";
     }
 
     private void ResolveReferences()
@@ -319,24 +277,7 @@ public class BountyUIController : MonoBehaviour
         return array[index];
     }
 
-    private static bool ShouldUseIcon(Image icon)
-    {
-        return icon != null && icon.sprite != null;
-    }
-
-    private static void SetIconSprite(Image icon, Sprite sprite)
-    {
-        if (icon != null && sprite != null)
-            icon.sprite = sprite;
-    }
-
-    private static void SetIconVisible(Image icon, bool visible)
-    {
-        if (icon != null)
-            icon.gameObject.SetActive(visible);
-    }
-
-    private Image EnsureRewardIconImage(Image[] iconArray, int index, TMP_Text targetText, string iconObjectName, Sprite sprite, int iconOrder)
+    private Image EnsureRewardIconImage(Image[] iconArray, int index, TMP_Text targetText, string iconObjectName, Sprite sprite)
     {
         if (iconArray == null || index < 0 || index >= iconArray.Length)
             return null;
@@ -347,17 +288,16 @@ public class BountyUIController : MonoBehaviour
         if (!createRewardIconsWhenSpriteIsAssigned || sprite == null || targetText == null)
             return null;
 
-        GameObject iconObject = new GameObject($"{iconObjectName} {index + 1}", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        RectTransform iconRect = iconObject.GetComponent<RectTransform>();
-        iconRect.SetParent(targetText.transform, false);
-        iconRect.anchorMin = new Vector2(0f, 0.5f);
-        iconRect.anchorMax = new Vector2(0f, 0.5f);
-        iconRect.pivot = new Vector2(0.5f, 0.5f);
-        iconRect.sizeDelta = rewardIconSize;
-        iconRect.localPosition = Vector3.zero;
+        Image createdIcon = CurrencyDisplayUtility.EnsureIconImage(
+            null,
+            targetText,
+            $"{iconObjectName} {index + 1}",
+            sprite,
+            createRewardIconsWhenSpriteIsAssigned,
+            rewardIconSize,
+            new Vector2(0.5f, 0.5f),
+            Vector2.zero);
 
-        Image createdIcon = iconObject.GetComponent<Image>();
-        createdIcon.raycastTarget = false;
         iconArray[index] = createdIcon;
         return createdIcon;
     }
@@ -396,5 +336,23 @@ public class BountyUIController : MonoBehaviour
         float iconX = characterInfo.bottomLeft.x - rewardIconTextPadding - (rewardIconSize.x * 0.5f);
         float iconY = (characterInfo.bottomLeft.y + characterInfo.topLeft.y) * 0.5f;
         iconRect.localPosition = new Vector3(iconX, iconY, 0f);
+    }
+
+    private static bool SetTextIfChanged(TMP_Text text, string value)
+    {
+        if (text == null || text.text == value)
+            return false;
+
+        text.text = value;
+        return true;
+    }
+
+    private static bool SetTextIfChanged(TMP_Text text, ref string cachedValue, string value)
+    {
+        if (cachedValue == value)
+            return false;
+
+        cachedValue = value;
+        return SetTextIfChanged(text, value);
     }
 }

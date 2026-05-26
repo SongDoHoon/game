@@ -30,31 +30,24 @@ public class AuctionUIController : MonoBehaviour
     public GameObject biddingPanel;
 
     [Header("Texts")]
-    public TMP_Text leftItemText;
-    public TMP_Text rightItemText;
     public TMP_Text[] optionTexts;
     public TMP_Text selectedItemText;
     public TMP_Text currentPriceText;
     public TMP_Text resultText;
 
     [Header("Currency Icons")]
-    public Image currentPriceGoldIcon;
     public Image[] optionStartPriceGoldIcons;
-    public Sprite goldSprite;
 
     [Header("Display")]
     public bool hideCurrencyNameWhenIconIsAssigned = true;
 
     [Header("Font")]
-    public TMP_FontAsset auctionFontAsset;
     public bool autoFindKoreanFontAsset = true;
 
     [Header("Input")]
     public TMP_InputField bidInputField;
 
     [Header("Buttons")]
-    public Button leftBidButton;
-    public Button rightBidButton;
     public Button[] optionBidButtons;
     public Button submitBidButton;
     public Button giveUpButton;
@@ -68,6 +61,7 @@ public class AuctionUIController : MonoBehaviour
     private bool isProcessingBid;
     private bool triedAutoFindKoreanFontAsset;
     private Coroutine closeAfterResultCoroutine;
+    private TMP_FontAsset auctionFontAsset;
 
     private void Awake()
     {
@@ -82,15 +76,6 @@ public class AuctionUIController : MonoBehaviour
     private void Start()
     {
         CloseAuctionUI();
-    }
-
-    public void OpenAuctionUI(EvolutionItemType leftItem, EvolutionItemType rightItem)
-    {
-        OpenAuctionUI(new[]
-        {
-            AuctionRewardOption.CreateEvolutionItem(leftItem, 10),
-            AuctionRewardOption.CreateEvolutionItem(rightItem, 10)
-        });
     }
 
     public void OpenAuctionUI(AuctionRewardOption[] options)
@@ -109,8 +94,6 @@ public class AuctionUIController : MonoBehaviour
         ShowOptionSelectionPanel();
         SetOptionButtonsInteractable(true);
 
-        RefreshOptionText(leftItemText, 0);
-        RefreshOptionText(rightItemText, 1);
         RefreshOptionTexts();
         SetResultText("Choose an item.");
     }
@@ -137,30 +120,8 @@ public class AuctionUIController : MonoBehaviour
             biddingPanel.SetActive(false);
     }
 
-    public void BidLeft()
-    {
-        SelectOption(0);
-    }
-
-    public void BidRight()
-    {
-        SelectOption(1);
-    }
-
     private void BindButtonEvents()
     {
-        if (leftBidButton != null)
-        {
-            leftBidButton.onClick.RemoveListener(BidLeft);
-            leftBidButton.onClick.AddListener(BidLeft);
-        }
-
-        if (rightBidButton != null)
-        {
-            rightBidButton.onClick.RemoveListener(BidRight);
-            rightBidButton.onClick.AddListener(BidRight);
-        }
-
         if (submitBidButton != null)
         {
             submitBidButton.onClick.RemoveListener(SubmitSelectedBid);
@@ -190,12 +151,6 @@ public class AuctionUIController : MonoBehaviour
 
     private void SetOptionButtonsInteractable(bool interactable)
     {
-        if (leftBidButton != null)
-            leftBidButton.interactable = interactable;
-
-        if (rightBidButton != null)
-            rightBidButton.interactable = interactable;
-
         if (optionBidButtons == null)
             return;
 
@@ -352,12 +307,8 @@ public class AuctionUIController : MonoBehaviour
         if (selectedItemText != null)
             selectedItemText.text = option.optionName;
 
-        SetIconSprite(currentPriceGoldIcon, goldSprite);
-
         if (currentPriceText != null)
-            currentPriceText.text = FormatCurrencyAmount("Current Bid:", option.currentPrice, currentPriceGoldIcon);
-
-        SetIconVisible(currentPriceGoldIcon, ShouldUseIcon(currentPriceGoldIcon));
+            currentPriceText.text = CurrencyDisplayUtility.FormatAmount("Current Bid:", option.currentPrice, null, hideCurrencyNameWhenIconIsAssigned);
 
         if (bidInputField != null)
             bidInputField.text = string.Empty;
@@ -395,9 +346,8 @@ public class AuctionUIController : MonoBehaviour
 
         AuctionRewardOption option = currentOptions[optionIndex];
         Image startPriceIcon = GetOptionStartPriceIcon(optionIndex);
-        SetIconSprite(startPriceIcon, goldSprite);
-        text.text = $"{option.optionName}\n{FormatCurrencyAmount("Start:", option.startPrice, startPriceIcon)}";
-        SetIconVisible(startPriceIcon, ShouldUseIcon(startPriceIcon));
+        text.text = $"{option.optionName}\n{CurrencyDisplayUtility.FormatAmount("Start:", option.startPrice, startPriceIcon, hideCurrencyNameWhenIconIsAssigned)}";
+        CurrencyDisplayUtility.SetIconVisible(startPriceIcon, CurrencyDisplayUtility.ShouldUseIcon(startPriceIcon));
     }
 
     private void SetResultText(string message)
@@ -416,8 +366,6 @@ public class AuctionUIController : MonoBehaviour
         if (auctionFontAsset == null)
             return;
 
-        ApplyAuctionFont(leftItemText);
-        ApplyAuctionFont(rightItemText);
         ApplyAuctionFont(selectedItemText);
         ApplyAuctionFont(currentPriceText);
         ApplyAuctionFont(resultText);
@@ -492,26 +440,4 @@ public class AuctionUIController : MonoBehaviour
         return optionStartPriceGoldIcons[optionIndex];
     }
 
-    private string FormatCurrencyAmount(string label, int amount, Image icon)
-    {
-        bool useIcon = ShouldUseIcon(icon);
-        return useIcon && hideCurrencyNameWhenIconIsAssigned ? amount.ToString() : $"{label} {amount}";
-    }
-
-    private static bool ShouldUseIcon(Image icon)
-    {
-        return icon != null && icon.sprite != null;
-    }
-
-    private static void SetIconSprite(Image icon, Sprite sprite)
-    {
-        if (icon != null && sprite != null)
-            icon.sprite = sprite;
-    }
-
-    private static void SetIconVisible(Image icon, bool visible)
-    {
-        if (icon != null)
-            icon.gameObject.SetActive(visible);
-    }
 }

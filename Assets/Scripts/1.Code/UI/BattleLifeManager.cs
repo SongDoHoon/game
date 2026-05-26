@@ -9,23 +9,15 @@ public class BattleLifeManager : MonoBehaviour
 
     [Header("Sprites")]
     public Sprite fullHeartSprite;
-    public Sprite brokenHeartSprite;
     public Sprite emptyHeartSprite;
 
     [Header("UI")]
-    public Transform heartPanel;
-    public Image heartImagePrefab;
     public Image[] heartImages;
-    public bool buildHeartsOnAwake = false;
-    public bool rebuildIfCountDoesNotMatch = true;
 
     private void Awake()
     {
         maxLife = Mathf.Max(1, maxLife);
         currentLife = Mathf.Clamp(currentLife, 0, maxLife);
-
-        if (buildHeartsOnAwake)
-            BuildHeartImagesIfNeeded();
 
         RefreshUI();
     }
@@ -34,7 +26,6 @@ public class BattleLifeManager : MonoBehaviour
     {
         maxLife = Mathf.Max(1, maxLife);
         currentLife = maxLife;
-        BuildHeartImagesIfNeeded();
         RefreshUI();
     }
 
@@ -69,45 +60,8 @@ public class BattleLifeManager : MonoBehaviour
         }
     }
 
-    private void BuildHeartImagesIfNeeded()
-    {
-        if (heartImages != null && heartImages.Length == maxLife && !HasMissingHeartImage())
-            return;
-
-        if (!rebuildIfCountDoesNotMatch && heartImages != null && heartImages.Length > 0)
-            return;
-
-        if (heartPanel == null || heartImagePrefab == null)
-            return;
-
-        heartImages = new Image[maxLife];
-
-        for (int i = 0; i < maxLife; i++)
-        {
-            Image heartImage = Instantiate(heartImagePrefab, heartPanel);
-            heartImage.gameObject.name = $"Life Heart {i + 1}";
-            heartImages[i] = heartImage;
-        }
-
-        heartImagePrefab.gameObject.SetActive(false);
-    }
-
-    private bool HasMissingHeartImage()
-    {
-        if (heartImages == null)
-            return true;
-
-        for (int i = 0; i < heartImages.Length; i++)
-        {
-            if (heartImages[i] == null)
-                return true;
-        }
-
-        return false;
-    }
-
     private Sprite GetBrokenHeartSprite()
     {
-        return brokenHeartSprite != null ? brokenHeartSprite : emptyHeartSprite;
+        return emptyHeartSprite;
     }
 }

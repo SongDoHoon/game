@@ -165,7 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &6982663
 SpriteRenderer:
   serializedVersion: 2
@@ -317,7 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &8625248
 SpriteRenderer:
   serializedVersion: 2
@@ -1247,7 +1245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &54065893
 SpriteRenderer:
   serializedVersion: 2
@@ -1398,10 +1395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoldUIController
   goldManager: {fileID: 1057302174}
-  playerProgressManager: {fileID: 0}
   goldText: {fileID: 1216462259}
-  legacyGoldText: {fileID: 0}
-  goldIcon: {fileID: 0}
   goldSprite: {fileID: 21300000, guid: 405960c181cee594698b6d3067abb627, type: 3}
   prefix: 'Gold: '
   hidePrefixWhenIconIsAssigned: 1
@@ -1561,7 +1555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &87038671
 SpriteRenderer:
   serializedVersion: 2
@@ -1868,7 +1861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &92224094
 SpriteRenderer:
   serializedVersion: 2
@@ -2944,7 +2936,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WaveUIController
   waveManager: {fileID: 1864289197}
   waveText: {fileID: 791278888}
-  legacyWaveText: {fileID: 0}
   prefix: 'Stage :'
 --- !u!4 &179614642
 Transform:
@@ -4007,7 +3998,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &243524373
 SpriteRenderer:
   serializedVersion: 2
@@ -4234,7 +4224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &260165059
 SpriteRenderer:
   serializedVersion: 2
@@ -4559,7 +4548,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &305563111
 SpriteRenderer:
   serializedVersion: 2
@@ -5413,7 +5401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &389335938
 SpriteRenderer:
   serializedVersion: 2
@@ -5885,7 +5872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &441595202
 SpriteRenderer:
   serializedVersion: 2
@@ -6466,7 +6452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &463623239
 SpriteRenderer:
   serializedVersion: 2
@@ -6858,7 +6843,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &482668398
 SpriteRenderer:
   serializedVersion: 2
@@ -7147,7 +7131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &502685843
 SpriteRenderer:
   serializedVersion: 2
@@ -8126,7 +8109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &562217375
 SpriteRenderer:
   serializedVersion: 2
@@ -8545,9 +8527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawner
   monsterPrefab: {fileID: 400700061364095995, guid: 8e3d1eb80ce35214bbdc77dec2e38008, type: 3}
   bossPrefab: {fileID: 7936987449058940562, guid: b127501b449801146963eed2cffdfe4e, type: 3}
-  bountyElitePrefab: {fileID: 0}
   waypointPath: {fileID: 949639256}
-  spawnPoint: {fileID: 0}
   normalHpMultiplierPerWave: 0.1
   bossHpMultiplierPerWave: 0.2
   bossWaveConfigs:
@@ -8733,10 +8713,7 @@ MonoBehaviour:
   maxLife: 10
   currentLife: 10
   fullHeartSprite: {fileID: 3652952086539667216, guid: 1dbe8cf87eef6b546a705ed52ccbfa34, type: 3}
-  brokenHeartSprite: {fileID: 0}
   emptyHeartSprite: {fileID: -2173372641171424173, guid: bbb259a3f79504a428efd41721cfab05, type: 3}
-  heartPanel: {fileID: 609128759}
-  heartImagePrefab: {fileID: 1647462361831480006, guid: 4d4b10c498773864f9a669a6aab0b8d0, type: 3}
   heartImages:
   - {fileID: 1284505502}
   - {fileID: 1822990242}
@@ -8748,8 +8725,6 @@ MonoBehaviour:
   - {fileID: 1783658189}
   - {fileID: 1021238416}
   - {fileID: 554307742}
-  buildHeartsOnAwake: 1
-  rebuildIfCountDoesNotMatch: 1
 --- !u!114 &609128761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8918,7 +8893,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &625527418
 SpriteRenderer:
   serializedVersion: 2
@@ -9272,7 +9246,6 @@ MonoBehaviour:
   auctionManager: {fileID: 872170801}
   auctionUIController: {fileID: 1674675438}
   waveManager: {fileID: 1864289197}
-  possibleItems: 0400000007000000
 --- !u!4 &635158234
 Transform:
   m_ObjectHideFlags: 0
@@ -9576,7 +9549,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementManager
   summonManager: {fileID: 882231000}
-  goldManager: {fileID: 0}
   unitPrefab: {fileID: 4017895008963063709, guid: 55ee6d912c8195f478358fe3981f06da, type: 3}
   placementTiles:
   - {fileID: 1128431056}
@@ -9846,7 +9818,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &680239519
 SpriteRenderer:
   serializedVersion: 2
@@ -10519,7 +10490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &746974670
 SpriteRenderer:
   serializedVersion: 2
@@ -10718,7 +10688,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &754634516
 SpriteRenderer:
   serializedVersion: 2
@@ -10991,7 +10960,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &776213554
 SpriteRenderer:
   serializedVersion: 2
@@ -11659,7 +11627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &823110039
 SpriteRenderer:
   serializedVersion: 2
@@ -11811,7 +11778,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &825310901
 SpriteRenderer:
   serializedVersion: 2
@@ -12363,7 +12329,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &852389899
 SpriteRenderer:
   serializedVersion: 2
@@ -12869,7 +12834,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &866145375
 SpriteRenderer:
   serializedVersion: 2
@@ -13188,7 +13152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &890270147
 SpriteRenderer:
   serializedVersion: 2
@@ -13523,7 +13486,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &912563785
 SpriteRenderer:
   serializedVersion: 2
@@ -14149,7 +14111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &951608685
 SpriteRenderer:
   serializedVersion: 2
@@ -14440,7 +14401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &956390639
 SpriteRenderer:
   serializedVersion: 2
@@ -15211,7 +15171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1008209253
 SpriteRenderer:
   serializedVersion: 2
@@ -15423,7 +15382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1014721655
 SpriteRenderer:
   serializedVersion: 2
@@ -16561,7 +16519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1062907933
 SpriteRenderer:
   serializedVersion: 2
@@ -16713,7 +16670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1065722950
 SpriteRenderer:
   serializedVersion: 2
@@ -16850,7 +16806,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1066601917
 SpriteRenderer:
   serializedVersion: 2
@@ -17017,7 +16972,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1074805481
 SpriteRenderer:
   serializedVersion: 2
@@ -17397,7 +17351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1106002408
 SpriteRenderer:
   serializedVersion: 2
@@ -17703,7 +17656,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1128431057
 SpriteRenderer:
   serializedVersion: 2
@@ -18031,7 +17983,6 @@ MonoBehaviour:
     passives: []
     totalAttackBonus: 0
     totalAttackSpeedBonus: 0
-  goldManager: {fileID: 1057302174}
   useMainGoldForGrowthCost: 0
   loadSavedDataOnAwake: 1
   saveDataOnChange: 1
@@ -18688,7 +18639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1224535503
 SpriteRenderer:
   serializedVersion: 2
@@ -18978,7 +18928,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1235668838
 SpriteRenderer:
   serializedVersion: 2
@@ -19130,7 +19079,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1247361252
 SpriteRenderer:
   serializedVersion: 2
@@ -19950,7 +19898,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1309442272
 SpriteRenderer:
   serializedVersion: 2
@@ -20102,7 +20049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1329245619
 SpriteRenderer:
   serializedVersion: 2
@@ -20239,7 +20185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1336303245
 SpriteRenderer:
   serializedVersion: 2
@@ -21083,7 +21028,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1365644474
 SpriteRenderer:
   serializedVersion: 2
@@ -21453,7 +21397,6 @@ MonoBehaviour:
   bountyTimer: 0
   bountyReady: 0
   unlockedBountyDifficulty: 1
-  activeBountyElite: {fileID: 0}
   activeBountyDifficulty: 0
 --- !u!4 &1387588861
 Transform:
@@ -22129,7 +22072,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1428130179
 SpriteRenderer:
   serializedVersion: 2
@@ -23903,7 +23845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1528225207
 SpriteRenderer:
   serializedVersion: 2
@@ -24194,7 +24135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1550660677
 SpriteRenderer:
   serializedVersion: 2
@@ -24695,7 +24635,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1593365729
 SpriteRenderer:
   serializedVersion: 2
@@ -25439,7 +25378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleMagicStoneManager
   goldManager: {fileID: 1057302174}
-  waveManager: {fileID: 0}
   currentBattleMagicStone: 0
   workerCount: 0
 --- !u!4 &1644210957
@@ -25489,8 +25427,6 @@ MonoBehaviour:
   auctionPanel: {fileID: 347579527}
   optionSelectionPanel: {fileID: 836078549}
   biddingPanel: {fileID: 454440369}
-  leftItemText: {fileID: 510888095}
-  rightItemText: {fileID: 631469328}
   optionTexts:
   - {fileID: 235724200}
   - {fileID: 864670617}
@@ -25499,15 +25435,10 @@ MonoBehaviour:
   selectedItemText: {fileID: 1406960959}
   currentPriceText: {fileID: 1951054663}
   resultText: {fileID: 1425032680}
-  currentPriceGoldIcon: {fileID: 0}
   optionStartPriceGoldIcons: []
-  goldSprite: {fileID: 0}
   hideCurrencyNameWhenIconIsAssigned: 1
-  auctionFontAsset: {fileID: 0}
   autoFindKoreanFontAsset: 1
   bidInputField: {fileID: 1503769518}
-  leftBidButton: {fileID: 1629805410}
-  rightBidButton: {fileID: 968664633}
   optionBidButtons:
   - {fileID: 1935977784}
   - {fileID: 1997217568}
@@ -25578,7 +25509,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1686451165
 SpriteRenderer:
   serializedVersion: 2
@@ -25915,14 +25845,12 @@ MonoBehaviour:
   panelRoot: {fileID: 1701596851}
   openButton: {fileID: 1588399632}
   closeButton: {fileID: 711548042}
-  backgroundImage: {fileID: 0}
   currentGoldText: {fileID: 2001309554}
   goldIcon: {fileID: 107667282}
   goldSprite: {fileID: 21300000, guid: 405960c181cee594698b6d3067abb627, type: 3}
   currentMagicStoneText: {fileID: 1803315886}
   magicStoneIcon: {fileID: 2043975921}
   alwaysVisibleMagicStoneText: {fileID: 1406527153}
-  alwaysVisibleMagicStoneIcon: {fileID: 0}
   magicStoneSprite: {fileID: 21300000, guid: 211d50586fb81844ba7f2b81292fa4f4, type: 3}
   magicStonePerSecondLabelText: {fileID: 1641662608}
   magicStonePerSecondIcon: {fileID: 1699317166}
@@ -25969,21 +25897,16 @@ MonoBehaviour:
   closeOnStart: 1
   battleMagicStoneManager: {fileID: 1644210956}
   currentMagicStoneText: {fileID: 476901658}
-  currentMagicStoneIcon: {fileID: 0}
   magicStoneSprite: {fileID: 21300000, guid: 211d50586fb81844ba7f2b81292fa4f4, type: 3}
   lowGradeButton: {fileID: 143642328}
   lowGradeLevelText: {fileID: 1111312965}
   lowGradeCostText: {fileID: 199812043}
-  lowGradeCostMagicStoneIcon: {fileID: 0}
   highGradeButton: {fileID: 765771417}
   highGradeLevelText: {fileID: 1360388212}
   highGradeCostText: {fileID: 1527131692}
-  highGradeCostMagicStoneIcon: {fileID: 0}
   evolutionButton: {fileID: 990649955}
   evolutionLevelText: {fileID: 1179682929}
   evolutionCostText: {fileID: 2074981909}
-  evolutionCostMagicStoneIcon: {fileID: 0}
-  resultText: {fileID: 0}
   hideCurrencyNameWhenIconIsAssigned: 1
   createIconWhenSpriteIsAssigned: 1
   iconSize: {x: 60, y: 60}
@@ -26082,12 +26005,6 @@ MonoBehaviour:
   difficulty4Button: {fileID: 1264764454}
   difficulty5Button: {fileID: 114025988}
   difficulty6Button: {fileID: 227178072}
-  difficulty1Text: {fileID: 0}
-  difficulty2Text: {fileID: 0}
-  difficulty3Text: {fileID: 0}
-  difficulty4Text: {fileID: 0}
-  difficulty5Text: {fileID: 0}
-  difficulty6Text: {fileID: 0}
   hpTexts:
   - {fileID: 635581967}
   - {fileID: 1059099991}
@@ -26107,9 +26024,7 @@ MonoBehaviour:
   createRewardIconsWhenSpriteIsAssigned: 1
   rewardIconSize: {x: 28, y: 28}
   rewardIconTextPadding: 1
-  statusText: {fileID: 0}
   cooldownText: {fileID: 836063523}
-  unlockedDifficultyText: {fileID: 0}
 --- !u!114 &1711106010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26143,7 +26058,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleTimerUIController
   waveManager: {fileID: 1864289197}
   timerText: {fileID: 940509005}
-  legacyTimerText: {fileID: 0}
 --- !u!1 &1712995140
 GameObject:
   m_ObjectHideFlags: 0
@@ -26236,7 +26150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1731985700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26915,7 +26829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1837995699
 SpriteRenderer:
   serializedVersion: 2
@@ -27204,7 +27117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1842090899
 SpriteRenderer:
   serializedVersion: 2
@@ -27470,7 +27382,7 @@ MonoBehaviour:
   isPausedForAuction: 0
   gameEnded: 0
   elapsedBattleTime: 0
-  normalMonsterCount: 15
+  normalMonsterCount: 1
   normalSpawnSpacingDistance: 0.5
   finalWave: 100
   returnToMainSceneOnGameOver: 1
@@ -27695,7 +27607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1867218914
 SpriteRenderer:
   serializedVersion: 2
@@ -28700,7 +28611,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &1909387995
 SpriteRenderer:
   serializedVersion: 2
@@ -29982,7 +29892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &2009516375
 SpriteRenderer:
   serializedVersion: 2
@@ -30151,7 +30060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &2018541184
 SpriteRenderer:
   serializedVersion: 2
@@ -30817,7 +30725,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &2060617564
 SpriteRenderer:
   serializedVersion: 2
@@ -30969,7 +30876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &2062752496
 SpriteRenderer:
   serializedVersion: 2
@@ -31509,7 +31415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa7ab9b814491424a8f5ab09db286744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitPlacementTile
-  unitAnchor: {fileID: 0}
 --- !u!212 &2081223221
 SpriteRenderer:
   serializedVersion: 2

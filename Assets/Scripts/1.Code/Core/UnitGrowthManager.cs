@@ -10,8 +10,9 @@ public class UnitGrowthManager : MonoBehaviour
     public PlayerPassiveGrowthData playerPassiveGrowthData = new();
 
     [Header("Gold")]
-    public GoldManager goldManager;
     public bool useMainGoldForGrowthCost = true;
+
+    private GoldManager goldManager;
 
     [Header("Save")]
     public bool loadSavedDataOnAwake = true;

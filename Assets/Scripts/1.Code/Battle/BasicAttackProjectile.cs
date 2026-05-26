@@ -10,6 +10,7 @@ public class BasicAttackProjectile : MonoBehaviour
     private const float MinimumVisibleIndicatorDuration = 0.35f;
 
     private static Sprite circleSprite;
+    private static Material sharedSpriteMaterial;
 
     private UnitController attacker;
     private MonsterController target;
@@ -274,8 +275,9 @@ public class BasicAttackProjectile : MonoBehaviour
         trailRenderer.alignment = LineAlignment.View;
 
         Shader spriteShader = Shader.Find("Sprites/Default");
-        if (spriteShader != null)
-            trailRenderer.material = new Material(spriteShader);
+        Material sharedMaterial = GetSharedSpriteMaterial(spriteShader);
+        if (sharedMaterial != null)
+            trailRenderer.sharedMaterial = sharedMaterial;
     }
 
     private static Color GetVisibleProjectileColor(Color color)
@@ -324,5 +326,21 @@ public class BasicAttackProjectile : MonoBehaviour
             CircleTextureSize);
 
         return circleSprite;
+    }
+
+    private static Material GetSharedSpriteMaterial(Shader spriteShader)
+    {
+        if (sharedSpriteMaterial != null)
+            return sharedSpriteMaterial;
+
+        if (spriteShader == null)
+            return null;
+
+        sharedSpriteMaterial = new Material(spriteShader)
+        {
+            name = "BasicAttackProjectileSharedMaterial"
+        };
+
+        return sharedSpriteMaterial;
     }
 }

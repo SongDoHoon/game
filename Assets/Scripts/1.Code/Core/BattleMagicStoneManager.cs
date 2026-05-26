@@ -19,7 +19,7 @@ public class BattleMagicStoneManager : MonoBehaviour
 
     [Header("Gold")]
     public GoldManager goldManager;
-    public WaveManager waveManager;
+    private WaveManager waveManager;
 
     [Header("Runtime")]
     [SerializeField] private double currentBattleMagicStone;

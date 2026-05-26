@@ -1,7 +1,19 @@
 using TMPro;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
+
+[System.Serializable]
+public class MonsterHealthBarViewSettings
+{
+    public Vector3 localPositionOffset = Vector3.zero;
+    public Vector3 localScale = Vector3.one;
+    public bool overrideSize = false;
+    public Vector2 sizeDelta = new Vector2(1f, 0.15f);
+    public bool showHpText = true;
+    public float hpTextFontSize = 0f;
+    public bool overrideFillColor = false;
+    public Color fillColor = Color.green;
+}
 
 public class MonsterWorldHealthBar : MonoBehaviour
 {
@@ -12,13 +24,31 @@ public class MonsterWorldHealthBar : MonoBehaviour
 
     [Header("View")]
     public bool billboardToCamera = true;
+    public MonsterHealthBarViewSettings normalView = new MonsterHealthBarViewSettings();
+    public MonsterHealthBarViewSettings bossView = new MonsterHealthBarViewSettings
+    {
+        localScale = new Vector3(1.25f, 1.25f, 1f),
+        fillColor = new Color(0.9f, 0.2f, 0.2f, 1f)
+    };
 
     private Camera cachedCamera;
+    private bool hasCachedBaseView;
+    private Vector3 baseLocalPosition;
+    private Vector3 baseLocalScale;
+    private Vector2 baseSizeDelta;
+    private float baseHpTextFontSize;
+    private Color baseFillColor;
+    private RectTransform healthBarRect;
+    private Image hpFillImage;
+    private float lastSliderValue = -1f;
+    private string lastHpText;
 
     private void Awake()
     {
         if (targetMonster == null)
             targetMonster = GetComponentInParent<MonsterController>();
+
+        EnsureViewReferences();
 
         if (hpSlider != null)
         {
@@ -27,13 +57,21 @@ public class MonsterWorldHealthBar : MonoBehaviour
         }
 
         cachedCamera = Camera.main;
+        ApplyViewSettings();
         RefreshImmediately();
     }
 
     private void OnEnable()
     {
         Subscribe();
+        ApplyViewSettings();
         RefreshImmediately();
+    }
+
+    private void OnValidate()
+    {
+        if (Application.isPlaying)
+            ApplyViewSettings();
     }
 
     private void OnDisable()
@@ -79,13 +117,77 @@ public class MonsterWorldHealthBar : MonoBehaviour
 
     private void Refresh(double currentHp, double maxHp)
     {
+        ApplyViewSettings();
+
         float normalized = maxHp > 0.0 ? Mathf.Clamp01((float)(currentHp / maxHp)) : 0f;
 
-        if (hpSlider != null)
+        if (hpSlider != null && !Mathf.Approximately(lastSliderValue, normalized))
+        {
             hpSlider.value = normalized;
+            lastSliderValue = normalized;
+        }
 
         if (hpText != null)
-            hpText.text = $"{Math.Ceiling(currentHp):N0}/{Math.Ceiling(maxHp):N0}";
+        {
+            string hpMessage = $"{BattleNumberFormatter.Format(currentHp)}/{BattleNumberFormatter.Format(maxHp)}";
+            if (lastHpText != hpMessage)
+            {
+                hpText.text = hpMessage;
+                lastHpText = hpMessage;
+            }
+        }
+    }
+
+    private void ApplyViewSettings()
+    {
+        EnsureViewReferences();
+        CacheBaseView();
+
+        MonsterHealthBarViewSettings settings = IsBossTarget() ? bossView : normalView;
+        if (settings == null)
+            return;
+
+        transform.localPosition = baseLocalPosition + settings.localPositionOffset;
+        transform.localScale = Vector3.Scale(baseLocalScale, settings.localScale);
+
+        if (healthBarRect != null)
+            healthBarRect.sizeDelta = settings.overrideSize ? settings.sizeDelta : baseSizeDelta;
+
+        if (hpText != null)
+        {
+            hpText.gameObject.SetActive(settings.showHpText);
+            hpText.fontSize = settings.hpTextFontSize > 0f ? settings.hpTextFontSize : baseHpTextFontSize;
+        }
+
+        if (hpFillImage != null)
+            hpFillImage.color = settings.overrideFillColor ? settings.fillColor : baseFillColor;
+    }
+
+    private void EnsureViewReferences()
+    {
+        if (healthBarRect == null)
+            healthBarRect = transform as RectTransform;
+
+        if (hpFillImage == null && hpSlider != null && hpSlider.fillRect != null)
+            hpFillImage = hpSlider.fillRect.GetComponent<Image>();
+    }
+
+    private void CacheBaseView()
+    {
+        if (hasCachedBaseView)
+            return;
+
+        baseLocalPosition = transform.localPosition;
+        baseLocalScale = transform.localScale;
+        baseSizeDelta = healthBarRect != null ? healthBarRect.sizeDelta : Vector2.zero;
+        baseHpTextFontSize = hpText != null ? hpText.fontSize : 0f;
+        baseFillColor = hpFillImage != null ? hpFillImage.color : Color.white;
+        hasCachedBaseView = true;
+    }
+
+    private bool IsBossTarget()
+    {
+        return targetMonster != null && (targetMonster.isBoss || targetMonster.monsterType == MonsterType.Boss);
     }
 
     private void FaceCamera()

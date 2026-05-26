@@ -20,7 +20,6 @@ public static class InGamePanelCoordinator
         ClosePanelRoots(UnityEngine.Object.FindObjectsByType<BountyUIController>(FindObjectsInactive.Include), panel => panel.panelRoot, currentPanelRoot);
         ClosePanelRoots(UnityEngine.Object.FindObjectsByType<DivineGraveUIController>(FindObjectsInactive.Include), panel => panel.panelRoot, currentPanelRoot);
         ClosePanelRoots(UnityEngine.Object.FindObjectsByType<EnhancementUIController>(FindObjectsInactive.Include), panel => panel.enhancementPanel, currentPanelRoot);
-        ClosePanelRoots(UnityEngine.Object.FindObjectsByType<EnhancementPanelManager>(FindObjectsInactive.Include), panel => panel.enhancementPanel, currentPanelRoot);
         ClosePanelRoots(UnityEngine.Object.FindObjectsByType<UnitShardUpgradePanelUI>(FindObjectsInactive.Include), panel => panel.panelRoot, currentPanelRoot);
     }
 

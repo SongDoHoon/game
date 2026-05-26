@@ -215,7 +215,27 @@ MonoBehaviour:
   targetMonster: {fileID: 4423498962466375676}
   hpSlider: {fileID: 2324970434655997160}
   hpText: {fileID: 7219225156925539217}
+  healthBarRect: {fileID: 0}
+  hpFillImage: {fileID: 0}
   billboardToCamera: 1
+  normalView:
+    localPositionOffset: {x: 0, y: 0, z: 0}
+    localScale: {x: 1, y: 1, z: 1}
+    overrideSize: 0
+    sizeDelta: {x: 1, y: 0.15}
+    showHpText: 1
+    hpTextFontSize: 0
+    overrideFillColor: 0
+    fillColor: {r: 0, g: 1, b: 0, a: 1}
+  bossView:
+    localPositionOffset: {x: 0, y: 0, z: 0}
+    localScale: {x: 1.25, y: 1.25, z: 1}
+    overrideSize: 0
+    sizeDelta: {x: 1, y: 0.15}
+    showHpText: 1
+    hpTextFontSize: 0
+    overrideFillColor: 0
+    fillColor: {r: 0.9, g: 0.2, b: 0.2, a: 1}
 --- !u!1 &3080573128159590461
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,14 +564,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8a7149a1126f984398a9d1c31eb0888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterController
-  monsterType: 2
+  monsterType: 3
   maxHp: 1000
   currentHp: 100
   moveSpeed: 0.5
   rewardGold: 100
   isBoss: 1
+  bountyDifficulty: 0
   waypointPath: {fileID: 0}
   destroyOnGoal: 1
+  spriteRenderer: {fileID: 0}
+  animator: {fileID: 0}
+  walkAnimationSets:
+  - startWave: 1
+    endWave: 10
+    animatorController: {fileID: 0}
+  - startWave: 11
+    endWave: 20
+    animatorController: {fileID: 0}
+  - startWave: 21
+    endWave: 30
+    animatorController: {fileID: 0}
+  - startWave: 31
+    endWave: 40
+    animatorController: {fileID: 0}
+  - startWave: 41
+    endWave: 50
+    animatorController: {fileID: 0}
+  - startWave: 51
+    endWave: 60
+    animatorController: {fileID: 0}
+  - startWave: 61
+    endWave: 70
+    animatorController: {fileID: 0}
+  - startWave: 71
+    endWave: 80
+    animatorController: {fileID: 0}
+  - startWave: 81
+    endWave: 90
+    animatorController: {fileID: 0}
+  - startWave: 91
+    endWave: 100
+    animatorController: {fileID: 0}
+  faceMovementDirection: 1
+  spriteFacesRightByDefault: 1
+  horizontalFacingThreshold: 0.001
+  debugSpeedMultiplier: 1
+  debugGlobalSpeedReduction: 0
+  debugGlobalSpeedMultiplier: 1
+  debugFinalMoveSpeed: 0
 --- !u!114 &6337030838851916617
 MonoBehaviour:
   m_ObjectHideFlags: 0

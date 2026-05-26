@@ -3,7 +3,6 @@ using UnityEngine.EventSystems;
 
 public class UnitPlacementTile : MonoBehaviour
 {
-    [SerializeField] private Transform unitAnchor;
     private UnitController placedUnit;
     private UnitPlacementManager placementManager;
 
@@ -42,9 +41,6 @@ public class UnitPlacementTile : MonoBehaviour
 
     public Vector3 GetPlacePosition()
     {
-        if (unitAnchor != null)
-            return unitAnchor.position;
-
         return transform.position;
     }
 

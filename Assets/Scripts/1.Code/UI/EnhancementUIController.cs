@@ -15,29 +15,23 @@ public class EnhancementUIController : MonoBehaviour
     [Header("Magic Stone")]
     public BattleMagicStoneManager battleMagicStoneManager;
     public TMP_Text currentMagicStoneText;
-    public Image currentMagicStoneIcon;
     public Sprite magicStoneSprite;
 
     [Header("Low Grade Group")]
     public Button lowGradeButton;
     public TMP_Text lowGradeLevelText;
     public TMP_Text lowGradeCostText;
-    public Image lowGradeCostMagicStoneIcon;
 
     [Header("High Grade Group")]
     public Button highGradeButton;
     public TMP_Text highGradeLevelText;
     public TMP_Text highGradeCostText;
-    public Image highGradeCostMagicStoneIcon;
 
     [Header("Evolution Group")]
     public Button evolutionButton;
     public TMP_Text evolutionLevelText;
     public TMP_Text evolutionCostText;
-    public Image evolutionCostMagicStoneIcon;
 
-    [Header("Result")]
-    public TMP_Text resultText;
 
     [Header("Display")]
     public bool hideCurrencyNameWhenIconIsAssigned = true;
@@ -46,6 +40,11 @@ public class EnhancementUIController : MonoBehaviour
     public float iconSpacing = 6f;
 
     private float refreshTimer;
+    private Image currentMagicStoneIcon;
+    private Image lowGradeCostMagicStoneIcon;
+    private Image highGradeCostMagicStoneIcon;
+    private Image evolutionCostMagicStoneIcon;
+    private string lastCurrentMagicStoneText;
 
     private void Awake()
     {
@@ -69,6 +68,9 @@ public class EnhancementUIController : MonoBehaviour
 
     private void Update()
     {
+        if (enhancementPanel != null && !enhancementPanel.activeInHierarchy)
+            return;
+
         refreshTimer -= Time.deltaTime;
         if (refreshTimer > 0f)
             return;
@@ -95,17 +97,17 @@ public class EnhancementUIController : MonoBehaviour
 
     public void EnhanceLowGrade()
     {
-        TryEnhance(UnitEnhanceGroup.LowGradeGroup, "Low Grade");
+        TryEnhance(UnitEnhanceGroup.LowGradeGroup);
     }
 
     public void EnhanceHighGrade()
     {
-        TryEnhance(UnitEnhanceGroup.HighGradeGroup, "High Grade");
+        TryEnhance(UnitEnhanceGroup.HighGradeGroup);
     }
 
     public void EnhanceEvolution()
     {
-        TryEnhance(UnitEnhanceGroup.EvolutionGroup, "Evolution");
+        TryEnhance(UnitEnhanceGroup.EvolutionGroup);
     }
 
     public void RefreshUI()
@@ -150,28 +152,15 @@ public class EnhancementUIController : MonoBehaviour
         }
     }
 
-    private void TryEnhance(UnitEnhanceGroup group, string displayName)
+    private void TryEnhance(UnitEnhanceGroup group)
     {
         if (battleMagicStoneManager == null)
             battleMagicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
 
         if (battleMagicStoneManager == null)
-        {
-            SetResultText("?¸ê²Œ??ë§ˆì„ ë§¤ë‹ˆ?€ê°€ ë°°ì¹˜?˜ì? ?Šì•˜?µë‹ˆ??");
             return;
-        }
 
-        int beforeLevel = GameModifierState.GetEnhancementLevel(group);
-        bool success = battleMagicStoneManager.TryUpgradeGradeGroup(group);
-        int afterLevel = GameModifierState.GetEnhancementLevel(group);
-
-        if (success)
-            SetResultText($"{displayName} ê°•í™” Lv.{afterLevel}");
-        else if (beforeLevel >= GameBalanceConfig.MaxEnhancementLevel)
-            SetResultText($"{displayName}?€ ?´ë? ìµœë? ê°•í™”?…ë‹ˆ??");
-        else
-            SetResultText($"{displayName} ê°•í™”???„ìš”??ë§ˆì„??ë¶€ì¡±í•©?ˆë‹¤.");
-
+        battleMagicStoneManager.TryUpgradeGradeGroup(group);
         RefreshUI();
     }
 
@@ -188,13 +177,13 @@ public class EnhancementUIController : MonoBehaviour
         int cost = isMaxLevel ? 0 : GameModifierState.GetNextEnhancementCost(group);
 
         if (levelText != null)
-            levelText.text = $"Lv. {level}/{GameBalanceConfig.MaxEnhancementLevel}";
+            SetTextIfChanged(levelText, $"Lv. {level}/{GameBalanceConfig.MaxEnhancementLevel}");
 
-        SetIconSprite(costIcon, magicStoneSprite);
-        SetIconVisible(costIcon, !isMaxLevel && ShouldUseIcon(costIcon));
+        CurrencyDisplayUtility.SetIconSprite(costIcon, magicStoneSprite);
+        CurrencyDisplayUtility.SetIconVisible(costIcon, !isMaxLevel && CurrencyDisplayUtility.ShouldUseIcon(costIcon));
 
         if (costText != null)
-            costText.text = isMaxLevel ? "MAX" : FormatCurrencyAmount("Magic Stone", cost, costIcon);
+            SetTextIfChanged(costText, isMaxLevel ? "MAX" : CurrencyDisplayUtility.FormatAmount("Magic Stone", cost, costIcon, hideCurrencyNameWhenIconIsAssigned));
 
         if (button != null)
             button.interactable = battleMagicStoneManager != null && !isMaxLevel && battleMagicStoneManager.CurrentBattleMagicStone >= cost;
@@ -211,65 +200,36 @@ public class EnhancementUIController : MonoBehaviour
         if (currentMagicStoneText != null)
         {
             double currentMagicStone = battleMagicStoneManager != null ? battleMagicStoneManager.CurrentBattleMagicStone : 0.0;
-            currentMagicStoneIcon = EnsureIconImage(currentMagicStoneIcon, currentMagicStoneText, "Current Magic Stone Icon", magicStoneSprite);
-            SetIconSprite(currentMagicStoneIcon, magicStoneSprite);
-            currentMagicStoneText.text = FormatCurrencyAmount("Magic Stone", System.Math.Floor(currentMagicStone), currentMagicStoneIcon);
+            currentMagicStoneIcon = CurrencyDisplayUtility.EnsureIconImage(currentMagicStoneIcon, currentMagicStoneText, "Current Magic Stone Icon", magicStoneSprite, createIconWhenSpriteIsAssigned, iconSize, iconSpacing);
+            CurrencyDisplayUtility.SetIconSprite(currentMagicStoneIcon, magicStoneSprite);
+            SetTextIfChanged(currentMagicStoneText, ref lastCurrentMagicStoneText, CurrencyDisplayUtility.FormatAmount("Magic Stone", System.Math.Floor(currentMagicStone), currentMagicStoneIcon, hideCurrencyNameWhenIconIsAssigned));
         }
 
-        SetIconVisible(currentMagicStoneIcon, ShouldUseIcon(currentMagicStoneIcon));
+        CurrencyDisplayUtility.SetIconVisible(currentMagicStoneIcon, CurrencyDisplayUtility.ShouldUseIcon(currentMagicStoneIcon));
     }
 
     private void EnsureCostIcons()
     {
-        lowGradeCostMagicStoneIcon = EnsureIconImage(lowGradeCostMagicStoneIcon, lowGradeCostText, "Low Grade Magic Stone Cost Icon", magicStoneSprite);
-        highGradeCostMagicStoneIcon = EnsureIconImage(highGradeCostMagicStoneIcon, highGradeCostText, "High Grade Magic Stone Cost Icon", magicStoneSprite);
-        evolutionCostMagicStoneIcon = EnsureIconImage(evolutionCostMagicStoneIcon, evolutionCostText, "Evolution Magic Stone Cost Icon", magicStoneSprite);
-    }
-    private void SetResultText(string message)
-    {
-        if (resultText != null)
-            resultText.text = message;
+        lowGradeCostMagicStoneIcon = CurrencyDisplayUtility.EnsureIconImage(lowGradeCostMagicStoneIcon, lowGradeCostText, "Low Grade Magic Stone Cost Icon", magicStoneSprite, createIconWhenSpriteIsAssigned, iconSize, iconSpacing);
+        highGradeCostMagicStoneIcon = CurrencyDisplayUtility.EnsureIconImage(highGradeCostMagicStoneIcon, highGradeCostText, "High Grade Magic Stone Cost Icon", magicStoneSprite, createIconWhenSpriteIsAssigned, iconSize, iconSpacing);
+        evolutionCostMagicStoneIcon = CurrencyDisplayUtility.EnsureIconImage(evolutionCostMagicStoneIcon, evolutionCostText, "Evolution Magic Stone Cost Icon", magicStoneSprite, createIconWhenSpriteIsAssigned, iconSize, iconSpacing);
     }
 
-    private string FormatCurrencyAmount(string currencyName, double amount, Image icon)
+    private static bool SetTextIfChanged(TMP_Text text, string value)
     {
-        bool useIcon = ShouldUseIcon(icon);
-        string amountText = amount.ToString("0");
-        return useIcon && hideCurrencyNameWhenIconIsAssigned ? amountText : $"{currencyName} {amountText}";
+        if (text == null || text.text == value)
+            return false;
+
+        text.text = value;
+        return true;
     }
 
-    private static bool ShouldUseIcon(Image icon)
+    private static bool SetTextIfChanged(TMP_Text text, ref string cachedValue, string value)
     {
-        return icon != null && icon.sprite != null;
+        if (cachedValue == value)
+            return false;
+
+        cachedValue = value;
+        return SetTextIfChanged(text, value);
     }
-
-    private static void SetIconSprite(Image icon, Sprite sprite)
-    {
-        if (icon != null && sprite != null)
-            icon.sprite = sprite;
-    }
-
-    private static void SetIconVisible(Image icon, bool visible)
-    {
-        if (icon != null)
-            icon.gameObject.SetActive(visible);
-    }
-
-    private Image EnsureIconImage(Image icon, TMP_Text targetText, string iconObjectName, Sprite sprite)
-    {
-        if (icon != null || sprite == null || !createIconWhenSpriteIsAssigned || targetText == null)
-            return icon;
-
-        GameObject iconObject = new GameObject(iconObjectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        RectTransform iconRect = iconObject.GetComponent<RectTransform>();
-        iconRect.SetParent(targetText.transform, false);
-        iconRect.anchorMin = new Vector2(0f, 0.5f);
-        iconRect.anchorMax = new Vector2(0f, 0.5f);
-        iconRect.pivot = new Vector2(1f, 0.5f);
-        iconRect.sizeDelta = iconSize;
-        iconRect.anchoredPosition = new Vector2(-iconSpacing, 0f);
-
-        Image createdIcon = iconObject.GetComponent<Image>();
-        createdIcon.raycastTarget = false;
-        return createdIcon;
-    }}
+}

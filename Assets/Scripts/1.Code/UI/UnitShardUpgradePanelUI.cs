@@ -17,10 +17,6 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
     public TMP_Text mainGoldText;
     public TMP_Text resultText;
 
-    [Header("Currency Icons")]
-    public Image mainGoldIcon;
-    public Sprite goldSprite;
-
     [Header("Display")]
     public bool hideCurrencyNameWhenIconIsAssigned = true;
 
@@ -79,11 +75,8 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
                 slot.Refresh();
         }
 
-        SetIconSprite(mainGoldIcon, goldSprite);
-        SetIconVisible(mainGoldIcon, ShouldUseIcon(mainGoldIcon));
-
         if (mainGoldText != null && unitGrowthManager != null)
-            mainGoldText.text = FormatCurrencyAmount("Gold", unitGrowthManager.GetAvailableGrowthGold(), mainGoldIcon);
+            mainGoldText.text = CurrencyDisplayUtility.FormatAmount("Gold", unitGrowthManager.GetAvailableGrowthGold(), null, hideCurrencyNameWhenIconIsAssigned);
     }
 
     public void SetResultMessage(string message)
@@ -174,27 +167,4 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
         }
     }
 
-    private string FormatCurrencyAmount(string currencyName, int amount, Image icon)
-    {
-        bool useIcon = ShouldUseIcon(icon);
-        string amountText = amount.ToString();
-        return useIcon && hideCurrencyNameWhenIconIsAssigned ? amountText : $"{currencyName} {amountText}";
-    }
-
-    private static bool ShouldUseIcon(Image icon)
-    {
-        return icon != null && icon.sprite != null;
-    }
-
-    private static void SetIconSprite(Image icon, Sprite sprite)
-    {
-        if (icon != null && sprite != null)
-            icon.sprite = sprite;
-    }
-
-    private static void SetIconVisible(Image icon, bool visible)
-    {
-        if (icon != null)
-            icon.gameObject.SetActive(visible);
-    }
 }

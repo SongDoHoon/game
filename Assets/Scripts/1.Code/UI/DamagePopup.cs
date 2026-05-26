@@ -1,5 +1,4 @@
 using TMPro;
-using System;
 using UnityEngine;
 
 public class DamagePopup : MonoBehaviour
@@ -18,6 +17,7 @@ public class DamagePopup : MonoBehaviour
     private float elapsedTime;
     private Color baseColor = Color.white;
     private Camera cachedCamera;
+    private bool isPooled;
 
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class DamagePopup : MonoBehaviour
         }
 
         if (elapsedTime >= lifetime)
-            Destroy(gameObject);
+            ReleaseOrDestroy();
     }
 
     public void Setup(double damageAmount, Color textColor)
@@ -63,9 +63,15 @@ public class DamagePopup : MonoBehaviour
 
         if (damageText != null)
         {
-            damageText.text = Math.Ceiling(damageAmount).ToString("N0");
+            damageText.text = BattleNumberFormatter.Format(damageAmount);
             damageText.color = baseColor;
         }
+    }
+
+    public void MarkPooled()
+    {
+        isPooled = true;
+        elapsedTime = 0f;
     }
 
     private void FaceCamera()
@@ -83,5 +89,16 @@ public class DamagePopup : MonoBehaviour
             return;
 
         transform.rotation = Quaternion.LookRotation(toCamera.normalized, cameraTransform.up);
+    }
+
+    private void ReleaseOrDestroy()
+    {
+        if (isPooled)
+        {
+            DamagePopupPool.Release(this);
+            return;
+        }
+
+        Destroy(gameObject);
     }
 }

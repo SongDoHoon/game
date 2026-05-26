@@ -1,13 +1,11 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WaveUIController : MonoBehaviour
 {
     [Header("References")]
     public WaveManager waveManager;
     public TMP_Text waveText;
-    public Text legacyWaveText;
 
     [Header("Display")]
     public string prefix = "Wave: ";
@@ -41,8 +39,5 @@ public class WaveUIController : MonoBehaviour
 
         if (waveText != null)
             waveText.text = message;
-
-        if (legacyWaveText != null)
-            legacyWaveText.text = message;
     }
 }
