@@ -42,11 +42,11 @@ public class MissionSlotUI : MonoBehaviour
 
         if (state == null || state.missionData == null)
         {
-            gameObject.SetActive(false);
+            SetActiveIfChanged(gameObject, false);
             return;
         }
 
-        gameObject.SetActive(true);
+        SetActiveIfChanged(gameObject, true);
         RefreshMissionText(state);
         RefreshRequirementSlots(state);
         RefreshRewards(state.missionData);
@@ -60,8 +60,7 @@ public class MissionSlotUI : MonoBehaviour
 
     private void RefreshMissionText(RuntimeMissionState state)
     {
-        if (missionNameText != null)
-            missionNameText.text = state.missionData.missionName;
+        SetTextIfChanged(missionNameText, state.missionData.missionName);
     }
 
     private void RefreshRequirementSlots(RuntimeMissionState state)
@@ -89,18 +88,17 @@ public class MissionSlotUI : MonoBehaviour
         if (slot.unitImage != null)
         {
             Sprite icon = requirement != null ? requirement.DisplayIcon : null;
-            slot.unitImage.sprite = icon;
+            SetSpriteIfChanged(slot.unitImage, icon);
             slot.unitImage.enabled = icon != null;
         }
 
-        if (slot.unitNameText != null)
-            slot.unitNameText.text = requirement != null ? requirement.DisplayName : string.Empty;
+        SetTextIfChanged(slot.unitNameText, requirement != null ? requirement.DisplayName : string.Empty);
 
         if (slot.checkMarkImage != null)
-            slot.checkMarkImage.gameObject.SetActive(satisfied);
+            SetActiveIfChanged(slot.checkMarkImage.gameObject, satisfied);
 
         if (slot.checkMarkObject != null)
-            slot.checkMarkObject.SetActive(satisfied);
+            SetActiveIfChanged(slot.checkMarkObject, satisfied);
 
         if (slot.backgroundImage != null)
             slot.backgroundImage.color = satisfied ? satisfiedBackgroundColor : defaultBackgroundColor;
@@ -108,17 +106,15 @@ public class MissionSlotUI : MonoBehaviour
 
     private void RefreshRewards(MissionData data)
     {
-        if (rewardGoldText != null)
-            rewardGoldText.text = data.rewardGold.ToString();
+        SetTextIfChanged(rewardGoldText, data.rewardGold.ToString());
 
-        if (rewardMagicStoneText != null)
-            rewardMagicStoneText.text = data.rewardBattleMagicStone.ToString();
+        SetTextIfChanged(rewardMagicStoneText, data.rewardBattleMagicStone.ToString());
 
         if (rewardGoldIcon != null)
-            rewardGoldIcon.gameObject.SetActive(data.rewardGold > 0);
+            SetActiveIfChanged(rewardGoldIcon.gameObject, data.rewardGold > 0);
 
         if (rewardMagicStoneIcon != null)
-            rewardMagicStoneIcon.gameObject.SetActive(data.rewardBattleMagicStone > 0);
+            SetActiveIfChanged(rewardMagicStoneIcon.gameObject, data.rewardBattleMagicStone > 0);
     }
 
     private void RefreshClearText(RuntimeMissionState state)
@@ -126,19 +122,43 @@ public class MissionSlotUI : MonoBehaviour
         if (clearText == null)
             return;
 
-        clearText.gameObject.SetActive(state.isCleared);
-        clearText.text = clearLabel;
+        SetActiveIfChanged(clearText.gameObject, state.isCleared);
+        SetTextIfChanged(clearText, clearLabel);
     }
 
     private void SetSlotActive(MissionRequiredUnitSlotUI slot, bool active)
     {
         if (slot.slotRoot != null)
         {
-            slot.slotRoot.SetActive(active);
+            SetActiveIfChanged(slot.slotRoot, active);
             return;
         }
 
         if (slot.backgroundImage != null)
-            slot.backgroundImage.gameObject.SetActive(active);
+            SetActiveIfChanged(slot.backgroundImage.gameObject, active);
+    }
+
+    private static void SetTextIfChanged(TMP_Text target, string value)
+    {
+        if (target == null || target.text == value)
+            return;
+
+        target.text = value;
+    }
+
+    private static void SetSpriteIfChanged(Image image, Sprite sprite)
+    {
+        if (image == null || image.sprite == sprite)
+            return;
+
+        image.sprite = sprite;
+    }
+
+    private static void SetActiveIfChanged(GameObject target, bool value)
+    {
+        if (target == null || target.activeSelf == value)
+            return;
+
+        target.SetActive(value);
     }
 }

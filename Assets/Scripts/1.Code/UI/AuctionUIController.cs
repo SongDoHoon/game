@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class AuctionUIController : MonoBehaviour
 {
+    private static readonly WaitForSeconds CloseAfterResultWait = new(1f);
+
     private static readonly char[] KoreanFontProbeCharacters =
     {
         '\uBC31',
@@ -88,8 +90,7 @@ public class AuctionUIController : MonoBehaviour
         currentOptions = options;
         isProcessingBid = false;
 
-        if (auctionPanel != null)
-            auctionPanel.SetActive(true);
+        SetActiveIfChanged(auctionPanel, true);
 
         ShowOptionSelectionPanel();
         SetOptionButtonsInteractable(true);
@@ -110,14 +111,11 @@ public class AuctionUIController : MonoBehaviour
             closeAfterResultCoroutine = null;
         }
 
-        if (auctionPanel != null)
-            auctionPanel.SetActive(false);
+        SetActiveIfChanged(auctionPanel, false);
 
-        if (optionSelectionPanel != null)
-            optionSelectionPanel.SetActive(false);
+        SetActiveIfChanged(optionSelectionPanel, false);
 
-        if (biddingPanel != null)
-            biddingPanel.SetActive(false);
+        SetActiveIfChanged(biddingPanel, false);
     }
 
     private void BindButtonEvents()
@@ -156,8 +154,7 @@ public class AuctionUIController : MonoBehaviour
 
         for (int i = 0; i < optionBidButtons.Length; i++)
         {
-            if (optionBidButtons[i] != null)
-                optionBidButtons[i].interactable = interactable && currentOptions != null && i < currentOptions.Length;
+            SetInteractableIfChanged(optionBidButtons[i], interactable && currentOptions != null && i < currentOptions.Length);
         }
     }
 
@@ -252,11 +249,9 @@ public class AuctionUIController : MonoBehaviour
         SetResultText(message);
         SetOptionButtonsInteractable(false);
 
-        if (submitBidButton != null)
-            submitBidButton.interactable = false;
+        SetInteractableIfChanged(submitBidButton, false);
 
-        if (giveUpButton != null)
-            giveUpButton.interactable = false;
+        SetInteractableIfChanged(giveUpButton, false);
 
         if (closeAfterResultCoroutine != null)
             StopCoroutine(closeAfterResultCoroutine);
@@ -266,7 +261,7 @@ public class AuctionUIController : MonoBehaviour
 
     private IEnumerator CoCloseAfterResult()
     {
-        yield return new WaitForSeconds(1f);
+        yield return CloseAfterResultWait;
 
         CloseAuctionUI();
 
@@ -278,20 +273,16 @@ public class AuctionUIController : MonoBehaviour
     {
         selectedOptionIndex = -1;
 
-        if (optionSelectionPanel != null)
-            optionSelectionPanel.SetActive(true);
+        SetActiveIfChanged(optionSelectionPanel, true);
 
-        if (biddingPanel != null)
-            biddingPanel.SetActive(false);
+        SetActiveIfChanged(biddingPanel, false);
     }
 
     private void ShowBiddingPanel()
     {
-        if (optionSelectionPanel != null)
-            optionSelectionPanel.SetActive(false);
+        SetActiveIfChanged(optionSelectionPanel, false);
 
-        if (biddingPanel != null)
-            biddingPanel.SetActive(true);
+        SetActiveIfChanged(biddingPanel, true);
 
         RefreshBiddingPanel();
     }
@@ -304,20 +295,16 @@ public class AuctionUIController : MonoBehaviour
             return;
 
         AuctionRewardOption option = currentOptions[selectedOptionIndex];
-        if (selectedItemText != null)
-            selectedItemText.text = option.optionName;
+        SetTextIfChanged(selectedItemText, option.optionName);
 
-        if (currentPriceText != null)
-            currentPriceText.text = CurrencyDisplayUtility.FormatAmount("Current Bid:", option.currentPrice, null, hideCurrencyNameWhenIconIsAssigned);
+        SetTextIfChanged(currentPriceText, CurrencyDisplayUtility.FormatAmount("Current Bid:", option.currentPrice, null, hideCurrencyNameWhenIconIsAssigned));
 
-        if (bidInputField != null)
+        if (bidInputField != null && bidInputField.text != string.Empty)
             bidInputField.text = string.Empty;
 
-        if (submitBidButton != null)
-            submitBidButton.interactable = true;
+        SetInteractableIfChanged(submitBidButton, true);
 
-        if (giveUpButton != null)
-            giveUpButton.interactable = true;
+        SetInteractableIfChanged(giveUpButton, true);
     }
 
     private void RefreshOptionTexts()
@@ -340,13 +327,13 @@ public class AuctionUIController : MonoBehaviour
 
         if (currentOptions == null || optionIndex < 0 || optionIndex >= currentOptions.Length || currentOptions[optionIndex] == null)
         {
-            text.text = string.Empty;
+            SetTextIfChanged(text, string.Empty);
             return;
         }
 
         AuctionRewardOption option = currentOptions[optionIndex];
         Image startPriceIcon = GetOptionStartPriceIcon(optionIndex);
-        text.text = $"{option.optionName}\n{CurrencyDisplayUtility.FormatAmount("Start:", option.startPrice, startPriceIcon, hideCurrencyNameWhenIconIsAssigned)}";
+        SetTextIfChanged(text, $"{option.optionName}\n{CurrencyDisplayUtility.FormatAmount("Start:", option.startPrice, startPriceIcon, hideCurrencyNameWhenIconIsAssigned)}");
         CurrencyDisplayUtility.SetIconVisible(startPriceIcon, CurrencyDisplayUtility.ShouldUseIcon(startPriceIcon));
     }
 
@@ -355,7 +342,7 @@ public class AuctionUIController : MonoBehaviour
         if (resultText != null)
         {
             ApplyAuctionFont(resultText);
-            resultText.text = message;
+            SetTextIfChanged(resultText, message);
         }
     }
 
@@ -438,6 +425,30 @@ public class AuctionUIController : MonoBehaviour
             return null;
 
         return optionStartPriceGoldIcons[optionIndex];
+    }
+
+    private static void SetTextIfChanged(TMP_Text target, string value)
+    {
+        if (target == null || target.text == value)
+            return;
+
+        target.text = value;
+    }
+
+    private static void SetInteractableIfChanged(Button button, bool value)
+    {
+        if (button == null || button.interactable == value)
+            return;
+
+        button.interactable = value;
+    }
+
+    private static void SetActiveIfChanged(GameObject target, bool value)
+    {
+        if (target == null || target.activeSelf == value)
+            return;
+
+        target.SetActive(value);
     }
 
 }

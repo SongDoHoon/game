@@ -41,11 +41,11 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
     {
         if (displayData == null)
         {
-            gameObject.SetActive(false);
+            SetActiveIfChanged(gameObject, false);
             return;
         }
 
-        gameObject.SetActive(true);
+        SetActiveIfChanged(gameObject, true);
         bool isOwned = ownedCount > 0;
 
         RefreshImages(displayData);
@@ -59,32 +59,30 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
     {
         if (backgroundImage != null)
         {
-            backgroundImage.sprite = displayData.backgroundSprite;
+            SetSpriteIfChanged(backgroundImage, displayData.backgroundSprite);
             backgroundImage.color = defaultBackgroundColor;
         }
 
         if (itemImage != null)
         {
-            itemImage.sprite = displayData.itemSprite;
+            SetSpriteIfChanged(itemImage, displayData.itemSprite);
             itemImage.enabled = displayData.itemSprite != null;
         }
     }
 
     private void RefreshTexts(EvolutionMaterialDisplayData displayData, int ownedCount, IReadOnlyList<EvolutionRecipe> recipes)
     {
-        if (itemNameText != null)
-            itemNameText.text = displayData.DisplayName;
+        SetTextIfChanged(itemNameText, displayData.DisplayName);
 
-        if (ownedCountText != null)
-            ownedCountText.text = $"\uBCF4\uC720:{ownedCount}\uAC1C";
+        SetTextIfChanged(ownedCountText, $"\uBCF4\uC720:{ownedCount}\uAC1C");
 
-        if (acquisitionText != null)
-            acquisitionText.text = string.IsNullOrEmpty(displayData.acquisitionText)
+        SetTextIfChanged(
+            acquisitionText,
+            string.IsNullOrEmpty(displayData.acquisitionText)
                 ? DefaultAcquisitionText
-                : displayData.acquisitionText;
+                : displayData.acquisitionText);
 
-        if (ownedBadgeText != null)
-            ownedBadgeText.text = OwnedBadgeLabel;
+        SetTextIfChanged(ownedBadgeText, OwnedBadgeLabel);
 
         RefreshRecipeUnitTexts(recipes);
     }
@@ -104,7 +102,7 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
                 continue;
 
             bool hasRecipe = recipes != null && i < recipes.Count && recipes[i] != null;
-            image.sprite = hasRecipe ? displayData.itemSprite : null;
+            SetSpriteIfChanged(image, hasRecipe ? displayData.itemSprite : null);
             image.enabled = hasRecipe && displayData.itemSprite != null;
         }
     }
@@ -127,8 +125,8 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
                 continue;
 
             bool hasRecipe = recipes != null && i < recipes.Count && recipes[i] != null;
-            text.gameObject.SetActive(hasRecipe);
-            text.text = hasRecipe ? textGetter(recipes[i]) : string.Empty;
+            SetActiveIfChanged(text.gameObject, hasRecipe);
+            SetTextIfChanged(text, hasRecipe ? textGetter(recipes[i]) : string.Empty);
         }
     }
 
@@ -147,7 +145,7 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
                 ? spriteGetter(recipes[i])
                 : null;
 
-            image.sprite = sprite;
+            SetSpriteIfChanged(image, sprite);
             image.enabled = sprite != null;
         }
     }
@@ -155,16 +153,22 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
     private void RefreshOwnedState(bool isOwned)
     {
         if (lockImage != null)
-            lockImage.gameObject.SetActive(!isOwned);
+            SetActiveIfChanged(lockImage.gameObject, !isOwned);
 
         if (ownedBadgeText != null)
-            ownedBadgeText.gameObject.SetActive(isOwned);
+            SetActiveIfChanged(ownedBadgeText.gameObject, isOwned);
 
         if (canvasGroup != null)
         {
-            canvasGroup.alpha = isOwned ? 1f : lockedAlpha;
-            canvasGroup.interactable = isOwned;
-            canvasGroup.blocksRaycasts = isOwned;
+            float targetAlpha = isOwned ? 1f : lockedAlpha;
+            if (!Mathf.Approximately(canvasGroup.alpha, targetAlpha))
+                canvasGroup.alpha = targetAlpha;
+
+            if (canvasGroup.interactable != isOwned)
+                canvasGroup.interactable = isOwned;
+
+            if (canvasGroup.blocksRaycasts != isOwned)
+                canvasGroup.blocksRaycasts = isOwned;
         }
     }
 
@@ -197,10 +201,10 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
             unitImage.color = hasRequiredUnit ? ownedRecipeUnitColor : missingRecipeUnitColor;
 
         if (checkImage != null)
-            checkImage.gameObject.SetActive(hasRequiredUnit);
+            SetActiveIfChanged(checkImage.gameObject, hasRequiredUnit);
 
         if (checkObject != null)
-            checkObject.SetActive(hasRequiredUnit);
+            SetActiveIfChanged(checkObject, hasRequiredUnit);
         else if (checkImage == null)
             SetRuntimeRecipeUnitCheckMarkActive(unitImage, hasRecipe && hasRequiredUnit);
     }
@@ -242,7 +246,7 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
     {
         TMP_Text checkMarkText = GetOrCreateRuntimeRecipeUnitCheckMarkText(unitImage);
         if (checkMarkText != null)
-            checkMarkText.gameObject.SetActive(active);
+            SetActiveIfChanged(checkMarkText.gameObject, active);
     }
 
     private TMP_Text GetOrCreateRuntimeRecipeUnitCheckMarkText(Image unitImage)
@@ -263,7 +267,7 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
         rectTransform.sizeDelta = new Vector2(28f, 28f);
 
         TMP_Text checkMarkText = checkMarkTextObject.GetComponent<TMP_Text>();
-        checkMarkText.text = "V";
+        SetTextIfChanged(checkMarkText, "V");
         checkMarkText.alignment = TextAlignmentOptions.Center;
         checkMarkText.fontSize = 24f;
         checkMarkText.fontStyle = FontStyles.Bold;
@@ -315,5 +319,29 @@ public class EvolutionMaterialSlotUI : MonoBehaviour
             return MissingUnitLabel;
 
         return string.IsNullOrEmpty(unitData.unitName) ? unitData.name : unitData.unitName;
+    }
+
+    private static void SetTextIfChanged(TMP_Text target, string value)
+    {
+        if (target == null || target.text == value)
+            return;
+
+        target.text = value;
+    }
+
+    private static void SetSpriteIfChanged(Image image, Sprite sprite)
+    {
+        if (image == null || image.sprite == sprite)
+            return;
+
+        image.sprite = sprite;
+    }
+
+    private static void SetActiveIfChanged(GameObject target, bool value)
+    {
+        if (target == null || target.activeSelf == value)
+            return;
+
+        target.SetActive(value);
     }
 }

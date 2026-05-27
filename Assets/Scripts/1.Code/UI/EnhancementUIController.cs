@@ -95,6 +95,17 @@ public class EnhancementUIController : MonoBehaviour
             enhancementPanel.SetActive(false);
     }
 
+    public void TogglePanel()
+    {
+        if (enhancementPanel == null)
+            return;
+
+        if (enhancementPanel.activeSelf)
+            ClosePanel();
+        else
+            OpenPanel();
+    }
+
     public void EnhanceLowGrade()
     {
         TryEnhance(UnitEnhanceGroup.LowGradeGroup);
@@ -124,7 +135,8 @@ public class EnhancementUIController : MonoBehaviour
         if (openButton != null)
         {
             openButton.onClick.RemoveListener(OpenPanel);
-            openButton.onClick.AddListener(OpenPanel);
+            openButton.onClick.RemoveListener(TogglePanel);
+            openButton.onClick.AddListener(TogglePanel);
         }
 
         if (closeButton != null)

@@ -38,8 +38,7 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
         BuildSlots();
         Refresh();
 
-        if (panelRoot != null)
-            panelRoot.SetActive(false);
+        SetActiveIfChanged(panelRoot, false);
     }
 
     private void OnEnable()
@@ -51,8 +50,7 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
     {
         InGamePanelCoordinator.CloseOtherPanels(panelRoot);
 
-        if (panelRoot != null)
-            panelRoot.SetActive(true);
+        SetActiveIfChanged(panelRoot, true);
 
         BuildSlots();
         Refresh();
@@ -60,8 +58,7 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
 
     public void ClosePanel()
     {
-        if (panelRoot != null)
-            panelRoot.SetActive(false);
+        SetActiveIfChanged(panelRoot, false);
     }
 
     public void Refresh()
@@ -75,14 +72,13 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
                 slot.Refresh();
         }
 
-        if (mainGoldText != null && unitGrowthManager != null)
-            mainGoldText.text = CurrencyDisplayUtility.FormatAmount("Gold", unitGrowthManager.GetAvailableGrowthGold(), null, hideCurrencyNameWhenIconIsAssigned);
+        if (unitGrowthManager != null)
+            SetTextIfChanged(mainGoldText, CurrencyDisplayUtility.FormatAmount("Gold", unitGrowthManager.GetAvailableGrowthGold(), null, hideCurrencyNameWhenIconIsAssigned));
     }
 
     public void SetResultMessage(string message)
     {
-        if (resultText != null)
-            resultText.text = message;
+        SetTextIfChanged(resultText, message);
     }
 
     private void BindButtons()
@@ -165,6 +161,22 @@ public class UnitShardUpgradePanelUI : MonoBehaviour
 
             DestroyImmediate(layoutGroup);
         }
+    }
+
+    private static void SetTextIfChanged(TMP_Text target, string value)
+    {
+        if (target == null || target.text == value)
+            return;
+
+        target.text = value;
+    }
+
+    private static void SetActiveIfChanged(GameObject target, bool value)
+    {
+        if (target == null || target.activeSelf == value)
+            return;
+
+        target.SetActive(value);
     }
 
 }

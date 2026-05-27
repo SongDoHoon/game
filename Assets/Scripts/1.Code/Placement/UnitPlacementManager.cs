@@ -915,7 +915,7 @@ public class UnitPlacementManager : MonoBehaviour
         exchangeButtonText = exchangeButtonRoot.GetComponentInChildren<TMP_Text>(true);
         exchangeButtonRectTransform = exchangeButtonRoot.GetComponent<RectTransform>();
         exchangeButtonCanvasGroup = GetOrAddCanvasGroup(exchangeButtonRoot);
-        exchangeButtonRoot.SetActive(false);
+        SetActiveIfChanged(exchangeButtonRoot, false);
     }
 
     private void BindExchangeButtonEvent()
@@ -949,15 +949,19 @@ public class UnitPlacementManager : MonoBehaviour
 
     private void SetButtonState(Button button, CanvasGroup canvasGroup, bool isInteractable)
     {
-        if (button != null)
-            button.interactable = isInteractable;
+        SetInteractableIfChanged(button, isInteractable);
 
         if (canvasGroup == null)
             return;
 
-        canvasGroup.alpha = isInteractable ? enabledButtonAlpha : disabledButtonAlpha;
-        canvasGroup.interactable = isInteractable;
-        canvasGroup.blocksRaycasts = isInteractable;
+        float targetAlpha = isInteractable ? enabledButtonAlpha : disabledButtonAlpha;
+        if (!Mathf.Approximately(canvasGroup.alpha, targetAlpha))
+            canvasGroup.alpha = targetAlpha;
+        if (canvasGroup.interactable != isInteractable)
+            canvasGroup.interactable = isInteractable;
+
+        if (canvasGroup.blocksRaycasts != isInteractable)
+            canvasGroup.blocksRaycasts = isInteractable;
     }
 
     private void RefreshMergeUI()
@@ -969,13 +973,13 @@ public class UnitPlacementManager : MonoBehaviour
 
         if (inspectedUnit == null)
         {
-            mergeButtonRoot.SetActive(false);
+            SetActiveIfChanged(mergeButtonRoot, false);
             return;
         }
 
         if (inspectedUnit.HasManualSelfEnhancement())
         {
-            mergeButtonRoot.SetActive(true);
+            SetActiveIfChanged(mergeButtonRoot, true);
             RefreshManualEnhanceUI();
             return;
         }
@@ -983,12 +987,12 @@ public class UnitPlacementManager : MonoBehaviour
         bool hasEvolutionRecipe = HasEvolutionRecipe(inspectedUnit) || IsRestrictedMergeUnit(inspectedUnit.Data);
         bool canEvolve = hasEvolutionRecipe && CanEvolveUnit(inspectedUnit);
         bool canMerge = !hasEvolutionRecipe && TryGetMergeInfo(inspectedUnit, out _, out _, out _);
-        mergeButtonRoot.SetActive(true);
+        SetActiveIfChanged(mergeButtonRoot, true);
 
         if (mergeButtonText != null)
         {
             ApplyActionButtonFont(mergeButtonText);
-            mergeButtonText.text = hasEvolutionRecipe ? evolveButtonLabel : mergeButtonLabel;
+            SetTextIfChanged(mergeButtonText, hasEvolutionRecipe ? evolveButtonLabel : mergeButtonLabel);
         }
 
         SetButtonState(mergeButton, mergeButtonCanvasGroup, canEvolve || canMerge);
@@ -1003,20 +1007,22 @@ public class UnitPlacementManager : MonoBehaviour
 
         if (inspectedUnit == null || inspectedUnit.Data == null)
         {
-            exchangeButtonRoot.SetActive(false);
+            SetActiveIfChanged(exchangeButtonRoot, false);
             return;
         }
 
         bool canExchange = CanExchangeUnit(inspectedUnit.Data);
         int exchangeCost = GetUnitExchangeCost(inspectedUnit.Data);
-        exchangeButtonRoot.SetActive(true);
+        SetActiveIfChanged(exchangeButtonRoot, true);
 
         if (exchangeButtonText != null)
         {
             ApplyActionButtonFont(exchangeButtonText);
-            exchangeButtonText.text = exchangeCost >= 0
-                ? $"{exchangeButtonLabel} {exchangeCost}"
-                : exchangeUnavailableLabel;
+            SetTextIfChanged(
+                exchangeButtonText,
+                exchangeCost >= 0
+                    ? $"{exchangeButtonLabel} {exchangeCost}"
+                    : exchangeUnavailableLabel);
         }
 
         SetButtonState(exchangeButton, exchangeButtonCanvasGroup, canExchange);
@@ -1038,9 +1044,11 @@ public class UnitPlacementManager : MonoBehaviour
             int maxStack = inspectedUnit.GetManualEnhanceMaxStack();
             int cost = inspectedUnit.GetManualEnhanceCost();
             int chancePercent = Mathf.RoundToInt(inspectedUnit.GetManualEnhanceSuccessChance() * 100f);
-            mergeButtonText.text = maxStack > 0 && stack >= maxStack
-                ? $"Enhance MAX ({stack}/{maxStack})"
-                : $"Enhance {cost}G {chancePercent}% ({stack}/{maxStack})";
+            SetTextIfChanged(
+                mergeButtonText,
+                maxStack > 0 && stack >= maxStack
+                    ? $"Enhance MAX ({stack}/{maxStack})"
+                    : $"Enhance {cost}G {chancePercent}% ({stack}/{maxStack})");
         }
 
         UpdateMergeButtonPosition();
@@ -1055,6 +1063,30 @@ public class UnitPlacementManager : MonoBehaviour
             return;
 
         targetText.font = actionButtonFontAsset;
+    }
+
+    private static void SetTextIfChanged(TMP_Text target, string value)
+    {
+        if (target == null || target.text == value)
+            return;
+
+        target.text = value;
+    }
+
+    private static void SetInteractableIfChanged(Button button, bool value)
+    {
+        if (button == null || button.interactable == value)
+            return;
+
+        button.interactable = value;
+    }
+
+    private static void SetActiveIfChanged(GameObject target, bool value)
+    {
+        if (target == null || target.activeSelf == value)
+            return;
+
+        target.SetActive(value);
     }
 
     private void TryManualEnhanceInspectedUnit()

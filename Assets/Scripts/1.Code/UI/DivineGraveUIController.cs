@@ -87,6 +87,17 @@ public class DivineGraveUIController : MonoBehaviour
             panelRoot.SetActive(false);
     }
 
+    public void TogglePanel()
+    {
+        if (panelRoot == null)
+            return;
+
+        if (panelRoot.activeSelf)
+            ClosePanel();
+        else
+            OpenPanel();
+    }
+
     public void TryHireWorker()
     {
         ResolveReferences();
@@ -153,7 +164,8 @@ public class DivineGraveUIController : MonoBehaviour
         if (openButton != null)
         {
             openButton.onClick.RemoveListener(OpenPanel);
-            openButton.onClick.AddListener(OpenPanel);
+            openButton.onClick.RemoveListener(TogglePanel);
+            openButton.onClick.AddListener(TogglePanel);
         }
 
         if (closeButton != null)

@@ -204,10 +204,7 @@ MonoBehaviour:
   rewardGold: 10
   isBoss: 0
   bountyDifficulty: 0
-  waypointPath: {fileID: 0}
   destroyOnGoal: 1
-  spriteRenderer: {fileID: 0}
-  animator: {fileID: 0}
   walkAnimationSets:
   - startWave: 1
     endWave: 10
@@ -260,7 +257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterDamagePopupEmitter
   targetMonster: {fileID: 8410184121998460207}
   damagePopupPrefab: {fileID: 311199806791156502, guid: a106bf23b4f732844808d3b8ce48e0bf, type: 3}
-  popupSpawnPoint: {fileID: 0}
   worldOffset: {x: 0, y: -2, z: 0}
   randomOffsetRange: {x: 0.25, y: 0.15}
   textColor: {r: 1, g: 1, b: 1, a: 1}
@@ -747,7 +743,7 @@ RectTransform:
   m_GameObject: {fileID: 7437991139658215122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.012, y: 0.02, z: 0.01}
+  m_LocalScale: {x: 0.012, y: 0.015, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3893202604996272425}
@@ -756,7 +752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.9}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7168232317864345156
@@ -798,8 +794,6 @@ MonoBehaviour:
   targetMonster: {fileID: 8410184121998460207}
   hpSlider: {fileID: 2034816451579891104}
   hpText: {fileID: 457738177251453791}
-  healthBarRect: {fileID: 8400727045019427060}
-  hpFillImage: {fileID: 7117477350612289131}
   billboardToCamera: 1
   normalView:
     localPositionOffset: {x: 0, y: -0.1, z: 0}

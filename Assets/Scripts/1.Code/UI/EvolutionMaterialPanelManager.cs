@@ -133,7 +133,8 @@ public class EvolutionMaterialPanelManager : MonoBehaviour
         if (openButton != null)
         {
             openButton.onClick.RemoveListener(OpenPanel);
-            openButton.onClick.AddListener(OpenPanel);
+            openButton.onClick.RemoveListener(TogglePanel);
+            openButton.onClick.AddListener(TogglePanel);
         }
 
         if (closeButton != null)

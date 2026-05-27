@@ -36,6 +36,20 @@ public static class MonsterBalanceCalculator
         48.0
     };
 
+    private static readonly double[] BossHpReliefMultipliers =
+    {
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.50,
+        0.27,
+        0.12,
+        0.055,
+        0.028,
+        0.0145
+    };
+
     private static readonly float[] NormalMoveSpeeds =
     {
         1.00f,
@@ -96,7 +110,7 @@ public static class MonsterBalanceCalculator
 
     public static double GetBossHp(int wave)
     {
-        return Math.Round(GetNormalMonsterHp(wave) * GetBossHpMultiplier(wave) * BossHpDifficultyMultiplier);
+        return Math.Round(GetNormalMonsterHp(wave) * GetBossHpMultiplier(wave) * GetBossHpReliefMultiplier(wave) * BossHpDifficultyMultiplier);
     }
 
     public static float GetNormalMoveSpeed(int wave)
@@ -125,6 +139,11 @@ public static class MonsterBalanceCalculator
     private static double GetBossHpMultiplier(int wave)
     {
         return BossHpMultipliers[GetStageIndex(wave)];
+    }
+
+    private static double GetBossHpReliefMultiplier(int wave)
+    {
+        return BossHpReliefMultipliers[GetStageIndex(wave)];
     }
 
     private static int GetStageIndex(int wave)

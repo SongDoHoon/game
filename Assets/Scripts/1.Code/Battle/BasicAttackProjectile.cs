@@ -8,10 +8,13 @@ public class BasicAttackProjectile : MonoBehaviour
     private const float MinimumVisibleProjectileSize = 0.22f;
     private const float MinimumVisibleIndicatorAlpha = 0.35f;
     private const float MinimumVisibleIndicatorDuration = 0.35f;
+    private const float MaxLifetime = 30f;
 
     private static Sprite circleSprite;
     private static Material sharedSpriteMaterial;
 
+    private SpriteRenderer spriteRenderer;
+    private TrailRenderer trailRenderer;
     private UnitController attacker;
     private MonsterController target;
     private SkillData impactSkill;
@@ -24,6 +27,8 @@ public class BasicAttackProjectile : MonoBehaviour
     private float areaIndicatorDuration;
     private bool showAreaIndicator;
     private Vector3 lastTargetPosition;
+    private float lifetime;
+    private bool hasImpacted;
 
     public static void Spawn(
         UnitController attacker,
@@ -36,18 +41,13 @@ public class BasicAttackProjectile : MonoBehaviour
             return;
 
         UnitData data = attacker.Data;
-        GameObject projectileObject = new GameObject("BasicAttackProjectile");
-        projectileObject.transform.position = GetSpawnPosition(attacker.transform.position, data.projectileSpawnOffset);
-        projectileObject.transform.localScale = Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, data.projectileSize);
+        BasicAttackProjectile projectile = BasicAttackProjectilePool.Instance.Get(
+            "BasicAttackProjectile",
+            GetSpawnPosition(attacker.transform.position, data.projectileSpawnOffset),
+            Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, data.projectileSize),
+            data.projectileColor,
+            data.projectileSize);
 
-        SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = GetCircleSprite();
-        spriteRenderer.color = data.projectileColor;
-        spriteRenderer.sortingOrder = 60;
-
-        AddProjectileTrail(projectileObject, data.projectileColor, data.projectileSize);
-
-        BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
         projectile.Initialize(
             attacker,
             target,
@@ -71,18 +71,13 @@ public class BasicAttackProjectile : MonoBehaviour
         if (attacker == null || target == null || attacker.Data == null || skill == null)
             return;
 
-        GameObject projectileObject = new GameObject("SkillProjectile");
-        projectileObject.transform.position = GetSpawnPosition(attacker.transform.position, skill.projectileSpawnOffset);
-        projectileObject.transform.localScale = Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, skill.projectileSize);
+        BasicAttackProjectile projectile = BasicAttackProjectilePool.Instance.Get(
+            "SkillProjectile",
+            GetSpawnPosition(attacker.transform.position, skill.projectileSpawnOffset),
+            Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, skill.projectileSize),
+            skill.projectileColor,
+            skill.projectileSize);
 
-        SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = GetCircleSprite();
-        spriteRenderer.color = skill.projectileColor;
-        spriteRenderer.sortingOrder = 60;
-
-        AddProjectileTrail(projectileObject, skill.projectileColor, skill.projectileSize);
-
-        BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
         projectile.Initialize(
             attacker,
             target,
@@ -106,18 +101,13 @@ public class BasicAttackProjectile : MonoBehaviour
         if (attacker == null || target == null || attacker.Data == null || skill == null)
             return;
 
-        GameObject projectileObject = new GameObject("HorizontalLineSkillProjectile");
-        projectileObject.transform.position = GetSpawnPosition(attacker.transform.position, skill.projectileSpawnOffset);
-        projectileObject.transform.localScale = Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, skill.projectileSize);
+        BasicAttackProjectile projectile = BasicAttackProjectilePool.Instance.Get(
+            "HorizontalLineSkillProjectile",
+            GetSpawnPosition(attacker.transform.position, skill.projectileSpawnOffset),
+            Vector3.one * Mathf.Max(MinimumVisibleProjectileSize, skill.projectileSize),
+            skill.projectileColor,
+            skill.projectileSize);
 
-        SpriteRenderer spriteRenderer = projectileObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = GetCircleSprite();
-        spriteRenderer.color = skill.projectileColor;
-        spriteRenderer.sortingOrder = 60;
-
-        AddProjectileTrail(projectileObject, skill.projectileColor, skill.projectileSize);
-
-        BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
         projectile.Initialize(
             attacker,
             target,
@@ -154,10 +144,21 @@ public class BasicAttackProjectile : MonoBehaviour
         areaIndicatorColor = indicatorColor;
         areaIndicatorDuration = Mathf.Max(0.01f, indicatorDuration);
         lastTargetPosition = targetMonster != null ? targetMonster.transform.position : transform.position;
+        impactSkill = null;
+        isHorizontalLineImpact = false;
+        lifetime = 0f;
+        hasImpacted = false;
     }
 
     private void Update()
     {
+        lifetime += Time.deltaTime;
+        if (lifetime >= MaxLifetime)
+        {
+            ReleaseToPool();
+            return;
+        }
+
         Vector3 destination = GetDestination();
         transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
 
@@ -177,6 +178,11 @@ public class BasicAttackProjectile : MonoBehaviour
 
     private void Impact(Vector3 impactPosition)
     {
+        if (hasImpacted)
+            return;
+
+        hasImpacted = true;
+
         if (isHorizontalLineImpact)
         {
             UnitSkillHandler.DealHorizontalLineDamageAt(attacker, impactSkill, impactPosition, damage);
@@ -197,7 +203,7 @@ public class BasicAttackProjectile : MonoBehaviour
             UnitSkillHandler.ApplyCorruptionLordOnBasicAttack(attacker, target);
         }
 
-        Destroy(gameObject);
+        ReleaseToPool();
     }
 
     private void DealAreaDamage(Vector3 center)
@@ -241,19 +247,18 @@ public class BasicAttackProjectile : MonoBehaviour
 
     public static GameObject SpawnAreaIndicator(Vector3 center, float radius, Color color, float duration, bool autoDestroy = true)
     {
-        GameObject indicatorObject = new GameObject("BasicAttackAreaIndicator");
-        indicatorObject.transform.position = center;
-        indicatorObject.transform.localScale = Vector3.one * Mathf.Max(0.01f, radius * 2f);
+        return BasicAttackAreaIndicatorPool.Instance.Get(
+            center,
+            Vector3.one * Mathf.Max(0.01f, radius * 2f),
+            GetCircleSprite(),
+            GetVisibleIndicatorColor(color),
+            Mathf.Max(MinimumVisibleIndicatorDuration, duration),
+            autoDestroy);
+    }
 
-        SpriteRenderer spriteRenderer = indicatorObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = GetCircleSprite();
-        spriteRenderer.color = GetVisibleIndicatorColor(color);
-        spriteRenderer.sortingOrder = 20;
-
-        if (autoDestroy)
-            Destroy(indicatorObject, Mathf.Max(MinimumVisibleIndicatorDuration, duration));
-
-        return indicatorObject;
+    public static void ReleaseAreaIndicator(GameObject indicatorObject)
+    {
+        BasicAttackAreaIndicatorPool.ReleaseIndicator(indicatorObject);
     }
 
     private static Vector3 GetSpawnPosition(Vector3 attackerPosition, Vector3 spawnOffset)
@@ -263,9 +268,99 @@ public class BasicAttackProjectile : MonoBehaviour
         return position;
     }
 
+    public static BasicAttackProjectile CreatePooledProjectile()
+    {
+        GameObject projectileObject = new GameObject("BasicAttackProjectile");
+
+        SpriteRenderer renderer = projectileObject.AddComponent<SpriteRenderer>();
+        renderer.sprite = GetCircleSprite();
+        renderer.sortingOrder = 60;
+
+        AddProjectileTrail(projectileObject, Color.white, MinimumVisibleProjectileSize);
+
+        BasicAttackProjectile projectile = projectileObject.AddComponent<BasicAttackProjectile>();
+        projectile.CacheComponents();
+        return projectile;
+    }
+
+    public void PrepareFromPool(Vector3 position, Vector3 scale, Color projectileColor, float projectileSize)
+    {
+        CacheComponents();
+
+        transform.position = position;
+        transform.rotation = Quaternion.identity;
+        transform.localScale = scale;
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = true;
+            spriteRenderer.sprite = GetCircleSprite();
+            spriteRenderer.color = projectileColor;
+            spriteRenderer.sortingOrder = 60;
+        }
+
+        ConfigureTrail(projectileColor, projectileSize);
+        if (trailRenderer != null)
+            trailRenderer.Clear();
+    }
+
+    public void CleanupForPool()
+    {
+        StopAllCoroutines();
+
+        attacker = null;
+        target = null;
+        impactSkill = null;
+        damage = 0d;
+        isAreaAttack = false;
+        isHorizontalLineImpact = false;
+        areaRadius = 0f;
+        speed = 0f;
+        areaIndicatorColor = Color.clear;
+        areaIndicatorDuration = 0f;
+        showAreaIndicator = false;
+        lastTargetPosition = transform.position;
+        lifetime = 0f;
+        hasImpacted = false;
+
+        CacheComponents();
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = false;
+
+        if (trailRenderer != null)
+            trailRenderer.Clear();
+    }
+
+    private void ReleaseToPool()
+    {
+        BasicAttackProjectilePool.Instance.Release(this);
+    }
+
+    private void CacheComponents()
+    {
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (trailRenderer == null)
+            trailRenderer = GetComponent<TrailRenderer>();
+    }
+
     private static void AddProjectileTrail(GameObject projectileObject, Color color, float projectileSize)
     {
         TrailRenderer trailRenderer = projectileObject.AddComponent<TrailRenderer>();
+        ConfigureTrailRenderer(trailRenderer, color, projectileSize);
+    }
+
+    private void ConfigureTrail(Color color, float projectileSize)
+    {
+        if (trailRenderer == null)
+            return;
+
+        ConfigureTrailRenderer(trailRenderer, color, projectileSize);
+    }
+
+    private static void ConfigureTrailRenderer(TrailRenderer trailRenderer, Color color, float projectileSize)
+    {
         trailRenderer.time = 0.18f;
         trailRenderer.startWidth = Mathf.Max(MinimumVisibleProjectileSize, projectileSize) * 0.7f;
         trailRenderer.endWidth = 0f;

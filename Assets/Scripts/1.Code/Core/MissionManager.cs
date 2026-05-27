@@ -24,6 +24,10 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private List<RuntimeMissionState> missionStates = new();
 
     private readonly List<UnitData> cachedKnownUnits = new();
+    private readonly List<UnitData> fieldUnitsBuffer = new();
+    private readonly List<bool> satisfiedStatesBuffer = new();
+    private readonly List<bool> consumedUnitsBuffer = new();
+    private readonly Dictionary<string, int> usedMaterialsBuffer = new();
 
     private void Awake()
     {
@@ -182,12 +186,10 @@ public class MissionManager : MonoBehaviour
 
     private List<bool> EvaluateMissionSlots(RuntimeMissionState state, List<UnitData> fieldUnits)
     {
-        List<bool> satisfiedStates = new();
-        bool[] consumedUnits = new bool[fieldUnits.Count];
-        Dictionary<string, int> usedMaterials = new();
+        PrepareMissionEvaluationBuffers(state, fieldUnits);
 
         for (int i = 0; i < state.resolvedRequirements.Count; i++)
-            satisfiedStates.Add(false);
+            satisfiedStatesBuffer.Add(false);
 
         for (int i = 0; i < state.resolvedRequirements.Count; i++)
         {
@@ -195,12 +197,12 @@ public class MissionManager : MonoBehaviour
             if (requirement == null || requirement.requirementType != MissionRequirementType.SpecificUnit)
                 continue;
 
-            int unitIndex = FindAvailableSpecificUnitIndex(fieldUnits, consumedUnits, requirement);
+            int unitIndex = FindAvailableSpecificUnitIndex(fieldUnits, consumedUnitsBuffer, requirement);
             if (unitIndex < 0)
                 continue;
 
-            consumedUnits[unitIndex] = true;
-            satisfiedStates[i] = true;
+            consumedUnitsBuffer[unitIndex] = true;
+            satisfiedStatesBuffer[i] = true;
         }
 
         for (int i = 0; i < state.resolvedRequirements.Count; i++)
@@ -209,12 +211,12 @@ public class MissionManager : MonoBehaviour
             if (requirement == null || requirement.requirementType != MissionRequirementType.AnyUnitOfGrade)
                 continue;
 
-            int unitIndex = FindAvailableGradeUnitIndex(fieldUnits, consumedUnits, requirement.grade);
+            int unitIndex = FindAvailableGradeUnitIndex(fieldUnits, consumedUnitsBuffer, requirement.grade);
             if (unitIndex < 0)
                 continue;
 
-            consumedUnits[unitIndex] = true;
-            satisfiedStates[i] = true;
+            consumedUnitsBuffer[unitIndex] = true;
+            satisfiedStatesBuffer[i] = true;
         }
 
         for (int i = 0; i < state.resolvedRequirements.Count; i++)
@@ -224,15 +226,38 @@ public class MissionManager : MonoBehaviour
                 continue;
 
             string materialKey = GetMaterialKey(requirement);
-            int usedCount = usedMaterials.TryGetValue(materialKey, out int count) ? count : 0;
+            int usedCount = usedMaterialsBuffer.TryGetValue(materialKey, out int count) ? count : 0;
             if (GetOwnedMaterialCount(requirement) <= usedCount)
                 continue;
 
-            usedMaterials[materialKey] = usedCount + 1;
-            satisfiedStates[i] = true;
+            usedMaterialsBuffer[materialKey] = usedCount + 1;
+            satisfiedStatesBuffer[i] = true;
         }
 
-        return satisfiedStates;
+        return satisfiedStatesBuffer;
+    }
+
+    private void PrepareMissionEvaluationBuffers(RuntimeMissionState state, List<UnitData> fieldUnits)
+    {
+        satisfiedStatesBuffer.Clear();
+        usedMaterialsBuffer.Clear();
+        EnsureListCapacity(satisfiedStatesBuffer, state != null ? state.resolvedRequirements.Count : 0);
+        PrepareConsumedUnitsBuffer(fieldUnits != null ? fieldUnits.Count : 0);
+    }
+
+    private void PrepareConsumedUnitsBuffer(int unitCount)
+    {
+        consumedUnitsBuffer.Clear();
+        EnsureListCapacity(consumedUnitsBuffer, unitCount);
+
+        for (int i = 0; i < unitCount; i++)
+            consumedUnitsBuffer.Add(false);
+    }
+
+    private static void EnsureListCapacity<T>(List<T> list, int capacity)
+    {
+        if (list != null && list.Capacity < capacity)
+            list.Capacity = capacity;
     }
 
     private bool ApplySlotStates(RuntimeMissionState state, List<bool> nextSatisfiedStates)
@@ -272,7 +297,7 @@ public class MissionManager : MonoBehaviour
         return true;
     }
 
-    private int FindAvailableSpecificUnitIndex(List<UnitData> fieldUnits, bool[] consumedUnits, MissionRequirement requirement)
+    private int FindAvailableSpecificUnitIndex(List<UnitData> fieldUnits, List<bool> consumedUnits, MissionRequirement requirement)
     {
         for (int i = 0; i < fieldUnits.Count; i++)
         {
@@ -286,7 +311,7 @@ public class MissionManager : MonoBehaviour
         return -1;
     }
 
-    private int FindAvailableGradeUnitIndex(List<UnitData> fieldUnits, bool[] consumedUnits, UnitGrade grade)
+    private int FindAvailableGradeUnitIndex(List<UnitData> fieldUnits, List<bool> consumedUnits, UnitGrade grade)
     {
         for (int i = 0; i < fieldUnits.Count; i++)
         {
@@ -366,7 +391,7 @@ public class MissionManager : MonoBehaviour
 
     private List<UnitData> GetCurrentFieldUnits()
     {
-        List<UnitData> units = new();
+        fieldUnitsBuffer.Clear();
 
         if (placementManager == null)
             placementManager = UnitPlacementManager.Instance != null
@@ -374,16 +399,16 @@ public class MissionManager : MonoBehaviour
                 : FindAnyObjectByType<UnitPlacementManager>();
 
         if (placementManager == null)
-            return units;
+            return fieldUnitsBuffer;
 
         IReadOnlyList<UnitController> placedUnits = placementManager.GetPlacedUnits();
         foreach (UnitController unit in placedUnits)
         {
             if (unit != null && unit.Data != null)
-                units.Add(unit.Data);
+                fieldUnitsBuffer.Add(unit.Data);
         }
 
-        return units;
+        return fieldUnitsBuffer;
     }
 
     private MissionRequirement ResolveRequirement(MissionRequirement source)

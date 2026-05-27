@@ -15,7 +15,7 @@ MonoBehaviour:
   unitId: 6
   unitName: "\uBC31\uD638\uC758 \uD608\uC218"
   grade: 5
-  unitSprite: {fileID: -7859477441967624899, guid: 200f369d59cad0449a246ed245b7f635, type: 3}
+  unitSprite: {fileID: 21300000, guid: 200f369d59cad0449a246ed245b7f635, type: 3}
   portraitSprite: {fileID: -2423661615178317053, guid: 0b75525b19de4e949915451f1d68ae66, type: 3}
   useGradeTintOnSprite: 0
   animatorController: {fileID: 0}
@@ -36,5 +36,3 @@ MonoBehaviour:
   areaAttackIndicatorDuration: 0.25
   skillData: {fileID: 0}
   skillAttackLockDurationOverride: -1
-  canEvolve: 0
-  evolveKey: 

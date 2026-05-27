@@ -5337,7 +5337,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7479920533571759380, guid: fa2bfbf092fd585458dd30529df024f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fa2bfbf092fd585458dd30529df024f1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7756,7 +7756,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7583371773901204393, guid: ae036543b9520cc40a319819b8546082, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ae036543b9520cc40a319819b8546082, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10201,7 +10201,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -30
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 359165839286550733, guid: d30aae63a78990740ba05655abff4a2b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d30aae63a78990740ba05655abff4a2b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -10441,7 +10441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 187962574732071295, guid: 9746223620656704c8168feab1da2b5f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9746223620656704c8168feab1da2b5f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11303,7 +11303,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 4643005053287226389, guid: 050a70d92afe8f247bb4d7e55f1483a3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 050a70d92afe8f247bb4d7e55f1483a3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15333,7 +15333,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2264094902807984291, guid: 192971061c60981448c5bd375e16413a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 192971061c60981448c5bd375e16413a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22382,7 +22382,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8755393591572550593, guid: a4fce00283411464d804b7eb562cca36, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4fce00283411464d804b7eb562cca36, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -27382,7 +27382,7 @@ MonoBehaviour:
   isPausedForAuction: 0
   gameEnded: 0
   elapsedBattleTime: 0
-  normalMonsterCount: 1
+  normalMonsterCount: 15
   normalSpawnSpacingDistance: 0.5
   finalWave: 100
   returnToMainSceneOnGameOver: 1

@@ -6,6 +6,8 @@ public class UnitController : MonoBehaviour
     private const int CircleSegmentCount = 64;
     private const float DefaultCritDamageMultiplier = 2f;
 
+    private static Material sharedCircleRendererMaterial;
+
     public UnitData Data { get; private set; }
 
     public double CurrentAttackPower { get; private set; }
@@ -891,14 +893,27 @@ public class UnitController : MonoBehaviour
         lineRenderer.sortingOrder = 50;
 
         if (lineRenderer.sharedMaterial == null)
-        {
-            Shader spriteShader = Shader.Find("Sprites/Default");
-            if (spriteShader != null)
-                lineRenderer.material = new Material(spriteShader);
-        }
+            lineRenderer.sharedMaterial = GetSharedCircleRendererMaterial();
 
         lineRenderer.enabled = false;
         return lineRenderer;
+    }
+
+    private static Material GetSharedCircleRendererMaterial()
+    {
+        if (sharedCircleRendererMaterial != null)
+            return sharedCircleRendererMaterial;
+
+        Shader spriteShader = Shader.Find("Sprites/Default");
+        if (spriteShader == null)
+            return null;
+
+        sharedCircleRendererMaterial = new Material(spriteShader)
+        {
+            name = "UnitRangeCircleSharedMaterial"
+        };
+
+        return sharedCircleRendererMaterial;
     }
 
     private void UpdateCircleRenderer(LineRenderer lineRenderer, Vector3 center, float radius, Color color)

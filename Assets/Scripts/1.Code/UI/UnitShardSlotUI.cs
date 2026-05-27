@@ -57,34 +57,30 @@ public class UnitShardSlotUI : MonoBehaviour
 
         RefreshImage();
 
-        if (unitNameText != null)
-            unitNameText.text = !string.IsNullOrWhiteSpace(unitData.unitName) ? unitData.unitName : unitData.name;
+        SetTextIfChanged(unitNameText, !string.IsNullOrWhiteSpace(unitData.unitName) ? unitData.unitName : unitData.name);
 
-        if (unitLevelText != null)
-            unitLevelText.text = $"조각 성장 Lv.{Mathf.Max(1, currentLevel)}";
+        SetTextIfChanged(unitLevelText, $"조각 성장 Lv.{Mathf.Max(1, currentLevel)}");
 
         if (shardSlider != null)
         {
-            shardSlider.maxValue = isMaxLevel ? 1 : Mathf.Max(1, nextData.shardCost);
-            shardSlider.value = isMaxLevel ? shardSlider.maxValue : Mathf.Clamp(ownedShardCount, 0, nextData.shardCost);
+            SetSliderMaxValueIfChanged(shardSlider, isMaxLevel ? 1 : Mathf.Max(1, nextData.shardCost));
+            SetSliderValueIfChanged(shardSlider, isMaxLevel ? shardSlider.maxValue : Mathf.Clamp(ownedShardCount, 0, nextData.shardCost));
         }
 
-        if (shardCountText != null)
-            shardCountText.text = isMaxLevel ? "MAX" : $"{ownedShardCount} / {nextData.shardCost}";
+        SetTextIfChanged(shardCountText, isMaxLevel ? "MAX" : $"{ownedShardCount} / {nextData.shardCost}");
 
-        if (bonusText != null)
-            bonusText.text = isMaxLevel
+        SetTextIfChanged(
+            bonusText,
+            isMaxLevel
                 ? $"현재: {FormatBonus(currentData)}\n다음: MAX"
-                : $"현재: {FormatBonus(currentData)}\n다음: {FormatBonus(nextData)}";
+                : $"현재: {FormatBonus(currentData)}\n다음: {FormatBonus(nextData)}");
 
         CurrencyDisplayUtility.SetIconSprite(upgradeCostGoldIcon, goldSprite);
         CurrencyDisplayUtility.SetIconVisible(upgradeCostGoldIcon, !isMaxLevel && CurrencyDisplayUtility.ShouldUseIcon(upgradeCostGoldIcon));
 
-        if (upgradeCostText != null)
-            upgradeCostText.text = isMaxLevel ? "MAX" : CurrencyDisplayUtility.FormatAmount("Gold", nextData.goldCost, upgradeCostGoldIcon, hideCurrencyNameWhenIconIsAssigned);
+        SetTextIfChanged(upgradeCostText, isMaxLevel ? "MAX" : CurrencyDisplayUtility.FormatAmount("Gold", nextData.goldCost, upgradeCostGoldIcon, hideCurrencyNameWhenIconIsAssigned));
 
-        if (upgradeButton != null)
-            upgradeButton.interactable = !isMaxLevel && unitGrowthManager.CanUpgradeUnitShard(unitData.unitId);
+        SetInteractableIfChanged(upgradeButton, !isMaxLevel && unitGrowthManager.CanUpgradeUnitShard(unitData.unitId));
     }
 
     public void TryUpgrade()
@@ -103,8 +99,8 @@ public class UnitShardSlotUI : MonoBehaviour
             return;
 
         Sprite sprite = unitData.portraitSprite != null ? unitData.portraitSprite : unitData.unitSprite;
-        unitImage.sprite = sprite;
-        unitImage.gameObject.SetActive(sprite != null);
+        SetSpriteIfChanged(unitImage, sprite);
+        SetActiveIfChanged(unitImage.gameObject, sprite != null);
     }
 
     private static string FormatBonus(UnitShardUpgradeData data)
@@ -112,5 +108,53 @@ public class UnitShardSlotUI : MonoBehaviour
         int attackPercent = Mathf.RoundToInt(data.attackBonus * 100f);
         int attackSpeedPercent = Mathf.RoundToInt(data.attackSpeedBonus * 100f);
         return $"공격력 +{attackPercent}%, 공격속도 +{attackSpeedPercent}%";
+    }
+
+    private static void SetTextIfChanged(TMP_Text target, string value)
+    {
+        if (target == null || target.text == value)
+            return;
+
+        target.text = value;
+    }
+
+    private static void SetInteractableIfChanged(Button button, bool value)
+    {
+        if (button == null || button.interactable == value)
+            return;
+
+        button.interactable = value;
+    }
+
+    private static void SetSpriteIfChanged(Image image, Sprite sprite)
+    {
+        if (image == null || image.sprite == sprite)
+            return;
+
+        image.sprite = sprite;
+    }
+
+    private static void SetActiveIfChanged(GameObject target, bool value)
+    {
+        if (target == null || target.activeSelf == value)
+            return;
+
+        target.SetActive(value);
+    }
+
+    private static void SetSliderMaxValueIfChanged(Slider slider, float value)
+    {
+        if (slider == null || Mathf.Approximately(slider.maxValue, value))
+            return;
+
+        slider.maxValue = value;
+    }
+
+    private static void SetSliderValueIfChanged(Slider slider, float value)
+    {
+        if (slider == null || Mathf.Approximately(slider.value, value))
+            return;
+
+        slider.value = value;
     }
 }

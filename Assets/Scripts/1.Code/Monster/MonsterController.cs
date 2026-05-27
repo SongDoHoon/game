@@ -168,12 +168,28 @@ public class MonsterController : MonoBehaviour
         if (spriteRenderer == null)
             return;
 
-        float horizontalMovement = frameMovementDelta.x;
+        float horizontalMovement = GetFacingHorizontalDirection();
         if (Mathf.Abs(horizontalMovement) < horizontalFacingThreshold)
             return;
 
         bool movingRight = horizontalMovement > 0f;
         spriteRenderer.flipX = spriteFacesRightByDefault ? !movingRight : movingRight;
+    }
+
+    private float GetFacingHorizontalDirection()
+    {
+        if (waypointPath != null && currentWaypointIndex < waypointPath.Count)
+        {
+            Transform target = waypointPath.GetWaypoint(currentWaypointIndex);
+            if (target != null)
+            {
+                float targetDirectionX = target.position.x - transform.position.x;
+                if (Mathf.Abs(targetDirectionX) >= horizontalFacingThreshold)
+                    return targetDirectionX;
+            }
+        }
+
+        return frameMovementDelta.x;
     }
 
     private void RefreshMoveSpeedDebugFields(float globalSpeedReduction, float globalSpeedMultiplier, float finalSpeed)

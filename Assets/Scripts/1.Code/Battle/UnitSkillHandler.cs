@@ -1026,7 +1026,7 @@ public static class UnitSkillHandler
             if (!IsValidUnit(unit))
             {
                 if (areaIndicator != null)
-                    Object.Destroy(areaIndicator);
+                    BasicAttackProjectile.ReleaseAreaIndicator(areaIndicator);
 
                 yield break;
             }
@@ -1037,7 +1037,7 @@ public static class UnitSkillHandler
         }
 
         if (areaIndicator != null)
-            Object.Destroy(areaIndicator);
+            BasicAttackProjectile.ReleaseAreaIndicator(areaIndicator);
     }
 
     public static void DealHorizontalLineDamageAt(UnitController unit, SkillData skill, Vector3 origin, double finalDamage)
@@ -1134,17 +1134,13 @@ public static class UnitSkillHandler
 
     private static void SpawnLineIndicator(Vector3 origin, SkillData skill, Vector3 forward)
     {
-        GameObject indicatorObject = new GameObject("HorizontalLineSkillIndicator");
-        indicatorObject.transform.position = GetLineIndicatorCenter(origin, skill, forward);
-        indicatorObject.transform.rotation = GetLineIndicatorRotation(forward);
-        indicatorObject.transform.localScale = GetLineIndicatorScale(skill);
-
-        SpriteRenderer spriteRenderer = indicatorObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = GetSquareSprite();
-        spriteRenderer.color = skill.lineIndicatorColor;
-        spriteRenderer.sortingOrder = 20;
-
-        Object.Destroy(indicatorObject, Mathf.Max(0.01f, skill.lineIndicatorDuration));
+        SkillIndicatorPool.Instance.ShowLine(
+            GetLineIndicatorCenter(origin, skill, forward),
+            GetLineIndicatorRotation(forward),
+            GetLineIndicatorScale(skill),
+            GetSquareSprite(),
+            skill.lineIndicatorColor,
+            Mathf.Max(0.01f, skill.lineIndicatorDuration));
     }
 
     private static Vector3 GetLineIndicatorCenter(Vector3 origin, SkillData skill, Vector3 forward)
@@ -1178,53 +1174,14 @@ public static class UnitSkillHandler
         if (range <= 0f || forward.sqrMagnitude <= Mathf.Epsilon)
             return;
 
-        GameObject indicatorObject = new GameObject("ConeSkillIndicator");
-        indicatorObject.transform.position = origin;
-
-        MeshFilter meshFilter = indicatorObject.AddComponent<MeshFilter>();
-        MeshRenderer meshRenderer = indicatorObject.AddComponent<MeshRenderer>();
-        meshFilter.mesh = CreateConeMesh(forward.normalized, range, halfAngle);
-
-        Shader spriteShader = Shader.Find("Sprites/Default");
-        if (spriteShader != null)
-            meshRenderer.material = new Material(spriteShader);
-
-        if (meshRenderer.material != null)
-            meshRenderer.material.color = GetVisibleIndicatorColor(color);
-
-        meshRenderer.sortingOrder = 21;
-        Object.Destroy(indicatorObject, Mathf.Max(MinimumVisibleIndicatorDuration, duration));
-    }
-
-    private static Mesh CreateConeMesh(Vector3 forward, float range, float halfAngle)
-    {
-        Mesh mesh = new Mesh();
-        Vector3[] vertices = new Vector3[ConeIndicatorSegmentCount + 2];
-        int[] triangles = new int[ConeIndicatorSegmentCount * 3];
-
-        vertices[0] = Vector3.zero;
-        float forwardAngle = Mathf.Atan2(forward.y, forward.x) * Mathf.Rad2Deg;
-        float startAngle = forwardAngle - halfAngle;
-        float angleStep = (halfAngle * 2f) / ConeIndicatorSegmentCount;
-
-        for (int i = 0; i <= ConeIndicatorSegmentCount; i++)
-        {
-            float angle = (startAngle + angleStep * i) * Mathf.Deg2Rad;
-            vertices[i + 1] = new Vector3(Mathf.Cos(angle) * range, Mathf.Sin(angle) * range, 0f);
-        }
-
-        for (int i = 0; i < ConeIndicatorSegmentCount; i++)
-        {
-            int triangleIndex = i * 3;
-            triangles[triangleIndex] = 0;
-            triangles[triangleIndex + 1] = i + 1;
-            triangles[triangleIndex + 2] = i + 2;
-        }
-
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.RecalculateBounds();
-        return mesh;
+        SkillIndicatorPool.Instance.ShowCone(
+            origin,
+            forward.normalized,
+            range,
+            halfAngle,
+            GetVisibleIndicatorColor(color),
+            Mathf.Max(MinimumVisibleIndicatorDuration, duration),
+            ConeIndicatorSegmentCount);
     }
 
     private static Color GetVisibleIndicatorColor(Color color)
