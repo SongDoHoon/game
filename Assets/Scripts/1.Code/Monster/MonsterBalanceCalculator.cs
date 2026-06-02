@@ -43,11 +43,11 @@ public static class MonsterBalanceCalculator
         1.0,
         1.0,
         0.50,
-        0.27,
-        0.12,
-        0.055,
-        0.028,
-        0.0145
+        0.297,
+        0.132,
+        0.0605,
+        0.0308,
+        0.01595
     };
 
     private static readonly float[] NormalMoveSpeeds =

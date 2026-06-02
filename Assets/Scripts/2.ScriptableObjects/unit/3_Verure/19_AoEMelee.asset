@@ -15,7 +15,7 @@ MonoBehaviour:
   unitId: 19
   unitName: "\uC774\uB2E8 \uC131\uC5ED \uACE8\uB818"
   grade: 2
-  unitSprite: {fileID: 0}
+  unitSprite: {fileID: 21300000, guid: ecb5e06bfa315f041bbc717ed02016e6, type: 3}
   portraitSprite: {fileID: 0}
   useGradeTintOnSprite: 0
   animatorController: {fileID: 0}
