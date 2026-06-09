@@ -7,6 +7,7 @@ public static class UnitAttackHandler
         if (attacker == null || primaryTarget == null) return;
 
         UnitData data = attacker.Data;
+        attacker.PlayBasicAttackAnimation(primaryTarget);
 
         switch (data.basicAttackType)
         {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Spine.Unity;
 
 [CreateAssetMenu(menuName = "TD/Unit Data")]
 public class UnitData : ScriptableObject
@@ -13,6 +14,20 @@ public class UnitData : ScriptableObject
     public Sprite portraitSprite;
     public bool useGradeTintOnSprite;
     public RuntimeAnimatorController animatorController;
+
+    [Header("Spine Visual")]
+    public SkeletonDataAsset spineSkeletonData;
+    public bool hideSpriteWhenSpineVisual = true;
+    public Vector3 spineLocalPosition = Vector3.zero;
+    public Vector3 spineLocalScale = Vector3.one;
+    public string spineSortingLayerName = "unit";
+    public int spineSortingOrder = 100;
+    public string spineLeftSkinName = "left";
+    public string spineFrontSkinName = "front";
+    public string spineRightSkinName = "right";
+    public string spineIdleAnimationName = "idle";
+    public string spineBasicAttackAnimationName = "attack";
+    public string spineSkillAnimationName = "skill";
 
     [Header("Combat")]
     public float attackPower = 10f;

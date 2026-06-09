@@ -173,7 +173,10 @@ public static class UnitSkillHandler
             TryGainPassiveStackOnBuffSkill(unit, skill, appliedBuff);
             bool activatedAnyEffect = appliedBuff || activatedSelfBuff || activatedDeepSeaExplosion;
             if (activatedAnyEffect)
+            {
+                unit.PlaySkillAnimation(preferredTarget);
                 StartExecutedSkillCooldownAndLock(unit, skill);
+            }
 
             return activatedAnyEffect;
         }
@@ -183,6 +186,7 @@ public static class UnitSkillHandler
             if (!TryDealHorizontalLineDamage(unit, skill, preferredTarget, CalculateFinalSkillDamage(unit, skill)))
                 return false;
 
+            unit.PlaySkillAnimation(preferredTarget);
             StartExecutedSkillCooldownAndLock(unit, skill);
             return true;
         }
@@ -192,6 +196,7 @@ public static class UnitSkillHandler
             if (!TryStartRepeatedAreaDamage(unit, skill, preferredTarget, CalculateFinalSkillDamage(unit, skill)))
                 return false;
 
+            unit.PlaySkillAnimation(preferredTarget);
             StartExecutedSkillCooldownAndLock(unit, skill);
             return true;
         }
@@ -201,6 +206,7 @@ public static class UnitSkillHandler
             if (!TryDealConeDamage(unit, skill, preferredTarget, CalculateFinalSkillDamage(unit, skill)))
                 return false;
 
+            unit.PlaySkillAnimation(preferredTarget);
             StartExecutedSkillCooldownAndLock(unit, skill);
             return true;
         }
@@ -210,6 +216,7 @@ public static class UnitSkillHandler
             if (!TryDealDamageToAllTargetsInRange(unit, skill, CalculateFinalSkillDamage(unit, skill)))
                 return false;
 
+            unit.PlaySkillAnimation(preferredTarget);
             StartExecutedSkillCooldownAndLock(unit, skill);
             return true;
         }
@@ -244,6 +251,7 @@ public static class UnitSkillHandler
             ApplySkillDebuffsToTarget(unit, skill, target);
         }
 
+        unit.PlaySkillAnimation(target);
         StartExecutedSkillCooldownAndLock(unit, skill);
         return true;
     }

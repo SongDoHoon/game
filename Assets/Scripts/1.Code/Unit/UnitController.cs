@@ -48,10 +48,12 @@ public class UnitController : MonoBehaviour
     private Animator animator;
     private Sprite defaultSprite;
     private RuntimeAnimatorController defaultAnimatorController;
+    private bool defaultSpriteRendererEnabled = true;
     private bool defaultVisualCached;
     private TextMesh nameTextMesh;
     private LineRenderer attackRangeRenderer;
     private LineRenderer splashRangeRenderer;
+    private UnitSpineAnimationController spineAnimationController;
     private bool selectionVisualActive;
 
     private readonly List<BuffInstance> buffs = new();
@@ -402,6 +404,18 @@ public class UnitController : MonoBehaviour
         return Data != null ? Data.skillData : null;
     }
 
+    public void PlayBasicAttackAnimation(MonsterController target)
+    {
+        if (spineAnimationController != null)
+            spineAnimationController.PlayBasicAttack(target);
+    }
+
+    public void PlaySkillAnimation(MonsterController target)
+    {
+        if (spineAnimationController != null)
+            spineAnimationController.PlaySkill(target);
+    }
+
     public void TickSkillCooldown(float deltaTime)
     {
         if (skillCooldownTimer <= 0f)
@@ -586,6 +600,7 @@ public class UnitController : MonoBehaviour
         }
 
         ApplyAnimatorController();
+        ApplySpineVisual();
 
         transform.localScale = Vector3.one * GetUnitScale();
 
@@ -599,6 +614,29 @@ public class UnitController : MonoBehaviour
 
         if (animator != null)
             animator.runtimeAnimatorController = Data.animatorController != null ? Data.animatorController : defaultAnimatorController;
+    }
+
+    private void ApplySpineVisual()
+    {
+        if (Data != null && Data.spineSkeletonData != null)
+        {
+            if (spineAnimationController == null)
+                spineAnimationController = UnitSpineAnimationController.GetOrCreate(this);
+
+            if (spineAnimationController != null)
+                spineAnimationController.Configure(this, Data);
+
+            if (spriteRenderer != null && Data.hideSpriteWhenSpineVisual)
+                spriteRenderer.enabled = false;
+
+            return;
+        }
+
+        if (spineAnimationController != null)
+            spineAnimationController.Configure(this, Data);
+
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = defaultSpriteRendererEnabled;
     }
 
     private void EnsureVisualComponents()
@@ -619,6 +657,7 @@ public class UnitController : MonoBehaviour
             return;
 
         defaultSprite = spriteRenderer != null ? spriteRenderer.sprite : null;
+        defaultSpriteRendererEnabled = spriteRenderer == null || spriteRenderer.enabled;
         defaultAnimatorController = animator != null ? animator.runtimeAnimatorController : null;
         defaultVisualCached = true;
     }
