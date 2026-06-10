@@ -186,7 +186,7 @@ public static class GameBalanceConfig
 
     public static bool HasAuctionAtStage(int stage)
     {
-        return stage >= 10 && stage <= 90 && stage % 10 == 0;
+        return false;
     }
 
     public static int GetAuctionBasePrice(int stage)
@@ -207,16 +207,8 @@ public static class GameBalanceConfig
 
     public static AuctionRewardOption[] CreateAuctionOptions(int stage)
     {
-        if (!HasAuctionAtStage(stage))
-            return new AuctionRewardOption[0];
-
-        List<AuctionRewardOption> options = new();
-        int evolutionCount = GetEvolutionOptionCount(stage);
-        AddEvolutionOptions(options, stage, evolutionCount);
-        AddNormalOptions(options, stage, 4 - options.Count);
-        Shuffle(options);
-
-        return options.ToArray();
+        Debug.Log("[Auction] 경매 아이템 선택 로직 비활성화 완료");
+        return new AuctionRewardOption[0];
     }
 
     public static AuctionAIPersonality RollAIPersonality(int stage)

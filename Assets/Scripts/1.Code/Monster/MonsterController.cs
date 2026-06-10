@@ -140,7 +140,7 @@ public class MonsterController : MonoBehaviour
         Transform target = waypointPath.GetWaypoint(currentWaypointIndex);
         if (target == null) return;
 
-        float globalSpeedReduction = GameModifierState.MonsterMoveSpeedReduction
+        float globalSpeedReduction = GameModifierState.ContractMonsterMoveSpeedReduction
             + UnitSkillHandler.GetGlobalPassiveMonsterMoveSpeedReduction();
         float globalSpeedMultiplier = Mathf.Clamp01(1f - globalSpeedReduction);
         float finalSpeed = moveSpeed * speedMultiplier * globalSpeedMultiplier;

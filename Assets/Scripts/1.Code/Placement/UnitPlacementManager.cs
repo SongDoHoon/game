@@ -717,11 +717,7 @@ public class UnitPlacementManager : MonoBehaviour
         if (!nextGrade.HasValue)
             return null;
 
-        if (UnityEngine.Random.value > GameModifierState.MergeTwoGradeUpChance)
-            return nextGrade;
-
-        UnitGrade? twoGradeUp = GetNextMergeGrade(nextGrade.Value);
-        return twoGradeUp ?? nextGrade;
+        return nextGrade;
     }
 
     private List<WeightedUnitEntry> GetMergePool(UnitGrade grade)

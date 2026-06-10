@@ -648,9 +648,6 @@ public static class UnitSkillHandler
         UnitGrowthEntry growth = GetUnitGrowth(unit);
         float skillDamageMultiplier = UnitStatCalculator.GetSkillDamageMultiplier(growth);
 
-        if (GameModifierState.IsEvolutionGrade(unit.Data))
-            skillDamageMultiplier += GameModifierState.AngelDemonSkillDamageBonus;
-
         double baseSkillDamage = unit.CurrentAttackPower * Mathf.Max(0f, skill.baseSkillDamageMultiplier);
         double additionalSkillDamage = Mathf.Max(0f, skill.additionalSkillDamage);
         return (baseSkillDamage + additionalSkillDamage) * Mathf.Max(0f, skillDamageMultiplier);
@@ -660,9 +657,6 @@ public static class UnitSkillHandler
     {
         UnitGrowthEntry growth = GetUnitGrowth(unit);
         float cooldownReduction = UnitStatCalculator.GetSkillCooldownReduction(growth);
-
-        if (GameModifierState.IsEvolutionGrade(unit.Data))
-            cooldownReduction += GameModifierState.AngelDemonCooldownReduction;
 
         float cooldown = skill.cooldown * (1f - Mathf.Clamp01(cooldownReduction));
         cooldown -= unit.GetPassiveStack() * Mathf.Max(0f, skill.cooldownReductionPerPassiveStack);

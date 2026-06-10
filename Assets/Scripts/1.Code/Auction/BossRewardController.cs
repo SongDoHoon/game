@@ -14,18 +14,29 @@ public class BossRewardController : MonoBehaviour
 
     public void OpenBossAuction()
     {
-        if (auctionManager == null) return;
-
         int stage = waveManager != null ? waveManager.currentWave : 0;
-        if (!GameBalanceConfig.HasAuctionAtStage(stage))
+        if (!ContractManager.IsContractTriggerStage(stage))
             return;
 
         if (waveManager != null)
             waveManager.PauseForAuction();
 
-        auctionManager.SetAuctionOptionsForStage(stage);
+        ContractManager contractManager = ContractManager.EnsureInstance(waveManager);
+        if (contractManager == null)
+        {
+            if (waveManager != null)
+                waveManager.ResumeAfterContract();
 
-        if (auctionUIController != null)
-            auctionUIController.OpenAuctionUI(auctionManager.CurrentOptions);
+            return;
+        }
+
+        bool offered = contractManager.TryOfferContract(stage, () =>
+        {
+            if (waveManager != null)
+                waveManager.ResumeAfterContract();
+        });
+
+        if (!offered && waveManager != null)
+            waveManager.ResumeAfterContract();
     }
 }

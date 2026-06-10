@@ -39,7 +39,7 @@ public class SummonManager : MonoBehaviour
         float cumulativeChance = summonTable.normalChance;
 
         if (roll < cumulativeChance)
-            return TryPromoteFromNormalByAuctionBonus();
+            return UnitGrade.Normal;
 
         cumulativeChance += summonTable.rareChance;
         if (roll < cumulativeChance)
@@ -47,27 +47,6 @@ public class SummonManager : MonoBehaviour
 
         cumulativeChance += summonTable.epicChance;
         if (roll < cumulativeChance)
-            return UnitGrade.Epic;
-
-        return UnitGrade.Verure;
-    }
-
-    private UnitGrade TryPromoteFromNormalByAuctionBonus()
-    {
-        if (Random.value > GameModifierState.HigherGradeSummonChanceBonus)
-            return UnitGrade.Normal;
-
-        float higherGradeWeight = summonTable.rareChance + summonTable.epicChance + summonTable.verureChance;
-        if (higherGradeWeight <= 0f)
-            return UnitGrade.Rare;
-
-        float roll = Random.Range(0f, higherGradeWeight);
-
-        if (roll < summonTable.rareChance)
-            return UnitGrade.Rare;
-
-        roll -= summonTable.rareChance;
-        if (roll < summonTable.epicChance)
             return UnitGrade.Epic;
 
         return UnitGrade.Verure;

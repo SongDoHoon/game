@@ -62,8 +62,11 @@ public class WaveManager : MonoBehaviour
 
         CancelAutoStart();
         ResetBattleRuntimeData();
-        waveStarted = true;
-        StartNextWave();
+        ContractManager contractManager = ContractManager.EnsureInstance(this);
+        if (contractManager != null && contractManager.TryOfferContract(0, StartFirstWaveAfterContract))
+            return;
+
+        StartFirstWaveAfterContract();
     }
 
     private void Update()
@@ -189,6 +192,32 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    public void ResumeAfterContract()
+    {
+        if (gameEnded)
+            return;
+
+        if (!isPausedForAuction)
+            return;
+
+        isPausedForAuction = false;
+
+        if (aliveMonsterCount <= 0 && !waitingForNextWave)
+        {
+            waitingForNextWave = true;
+            StartNextWave();
+        }
+    }
+
+    private void StartFirstWaveAfterContract()
+    {
+        if (gameEnded)
+            return;
+
+        waveStarted = true;
+        StartNextWave();
+    }
+
     private IEnumerator CoSpawnNormalWave()
     {
         float spacingDistance = Mathf.Max(0f, normalSpawnSpacingDistance);
@@ -215,7 +244,7 @@ public class WaveManager : MonoBehaviour
 
     private void GrantStageClearGold()
     {
-        int goldAmount = GameBalanceConfig.GetStageClearGold() + GameModifierState.StageStartBonusGold;
+        int goldAmount = GameBalanceConfig.GetStageClearGold();
         if (goldAmount <= 0)
             return;
 
@@ -240,6 +269,10 @@ public class WaveManager : MonoBehaviour
             magicStoneManager.ResetForBattle();
         else
             GameModifierState.ResetBattleState();
+
+        ContractManager contractManager = ContractManager.EnsureInstance(this);
+        if (contractManager != null)
+            contractManager.ResetForBattle();
 
         bountyManager = BountyManager.EnsureInstance(this, monsterSpawner);
         if (bountyManager != null)

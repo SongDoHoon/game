@@ -19,6 +19,9 @@ public static class GameModifierState
     public static float HigherGradeSummonChanceBonus { get; private set; }
     public static float MergeTwoGradeUpChance { get; private set; }
     public static float UnitExchangeCostReduction { get; private set; }
+    public static float ContractAttackPowerBonus { get; private set; }
+    public static float ContractAttackSpeedBonus { get; private set; }
+    public static float ContractMonsterMoveSpeedReduction { get; private set; }
 
     public static void ResetBattleState()
     {
@@ -33,53 +36,24 @@ public static class GameModifierState
         HigherGradeSummonChanceBonus = 0f;
         MergeTwoGradeUpChance = 0f;
         UnitExchangeCostReduction = 0f;
+        ContractAttackPowerBonus = 0f;
+        ContractAttackSpeedBonus = 0f;
+        ContractMonsterMoveSpeedReduction = 0f;
 
         RecalculateAllUnitStats();
     }
 
     public static void ApplyAuctionReward(AuctionRewardOption option)
     {
-        if (option == null)
-            return;
+        Debug.Log("[Auction] 경매 아이템 효과 modifier 제거 완료: ApplyAuctionReward는 더 이상 효과를 적용하지 않습니다.");
+    }
 
-        switch (option.rewardType)
-        {
-            case AuctionRewardType.GlobalAttackSpeedUp:
-                GlobalAttackSpeedBonus = Mathf.Min(0.5f, GlobalAttackSpeedBonus + 0.05f);
-                break;
-
-            case AuctionRewardType.GlobalAttackPowerUp:
-                GlobalAttackPowerBonus = Mathf.Min(1f, GlobalAttackPowerBonus + 0.1f);
-                break;
-
-            case AuctionRewardType.AngelDemonCooldownReduction:
-                AngelDemonCooldownReduction = Mathf.Min(0.4f, AngelDemonCooldownReduction + 0.05f);
-                break;
-
-            case AuctionRewardType.MonsterMoveSpeedReduction:
-                MonsterMoveSpeedReduction = Mathf.Min(0.3f, MonsterMoveSpeedReduction + 0.05f);
-                break;
-
-            case AuctionRewardType.AngelDemonSkillDamageUp:
-                AngelDemonSkillDamageBonus = Mathf.Min(1f, AngelDemonSkillDamageBonus + 0.05f);
-                break;
-
-            case AuctionRewardType.StageStartBonusGold:
-                StageStartBonusGold += 10;
-                break;
-
-            case AuctionRewardType.HigherGradeSummonChanceUp:
-                HigherGradeSummonChanceBonus = Mathf.Min(0.2f, HigherGradeSummonChanceBonus + 0.02f);
-                break;
-
-            case AuctionRewardType.MergeTwoGradeUpChance:
-                MergeTwoGradeUpChance = Mathf.Min(0.15f, MergeTwoGradeUpChance + 0.03f);
-                break;
-
-            case AuctionRewardType.UnitExchangeCostReduction:
-                UnitExchangeCostReduction = Mathf.Min(0.3f, UnitExchangeCostReduction + 0.03f);
-                break;
-        }
+    public static void SetContractModifiers(float attackPowerBonus, float attackSpeedBonus, float monsterMoveSpeedReduction)
+    {
+        ContractAttackPowerBonus = attackPowerBonus;
+        ContractAttackSpeedBonus = attackSpeedBonus;
+        ContractMonsterMoveSpeedReduction = Mathf.Clamp01(monsterMoveSpeedReduction);
+        RecalculateAllUnitStats();
     }
 
     public static int GetEnhancementLevel(UnitEnhanceGroup group)
@@ -126,7 +100,7 @@ public static class GameModifierState
         if (baseCost < 0)
             return GameBalanceConfig.UnitExchangeUnavailableCost;
 
-        return Mathf.Max(1, Mathf.RoundToInt(baseCost * (1f - UnitExchangeCostReduction)));
+        return baseCost;
     }
 
     public static float GetEnhancementAttackPowerMultiplier(UnitGrade grade)

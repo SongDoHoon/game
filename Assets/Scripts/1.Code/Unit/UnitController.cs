@@ -201,8 +201,8 @@ public class UnitController : MonoBehaviour
             Data,
             unitGrowth,
             playerPassiveGrowth,
-            GameModifierState.GlobalAttackPowerBonus,
-            GameModifierState.GlobalAttackSpeedBonus,
+            GameModifierState.ContractAttackPowerBonus,
+            GameModifierState.ContractAttackSpeedBonus,
             runtimeAttackBonus,
             runtimeAttackSpeedBonus);
 
