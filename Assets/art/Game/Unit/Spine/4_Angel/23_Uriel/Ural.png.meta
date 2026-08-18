@@ -1,0 +1,845 @@
+fileFormatVersion: 2
+guid: 9933718cfa108d449b78d327f8f161bc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5847650786929721457
+    second: Ural_0
+  - first:
+      213: 8697624486749887455
+    second: Ural_1
+  - first:
+      213: 5510984569177646713
+    second: Ural_2
+  - first:
+      213: -3600239125748373492
+    second: Ural_3
+  - first:
+      213: 3881721298948464210
+    second: Ural_4
+  - first:
+      213: -8362859722236006528
+    second: Ural_5
+  - first:
+      213: 4332678943019827267
+    second: Ural_6
+  - first:
+      213: 810591706377504375
+    second: Ural_7
+  - first:
+      213: -7163778828682211481
+    second: Ural_8
+  - first:
+      213: -1504394941954836470
+    second: Ural_9
+  - first:
+      213: -4626317002294036734
+    second: Ural_10
+  - first:
+      213: 224810461918365697
+    second: Ural_11
+  - first:
+      213: 2047643079871400430
+    second: Ural_12
+  - first:
+      213: -151104488448201420
+    second: Ural_13
+  - first:
+      213: -8808647809855172336
+    second: Ural_14
+  - first:
+      213: -337577779484546623
+    second: Ural_15
+  - first:
+      213: -1104852358724524040
+    second: Ural_16
+  - first:
+      213: -6591062146507615129
+    second: Ural_17
+  - first:
+      213: 1942179280862457990
+    second: Ural_18
+  - first:
+      213: -5369675820400962997
+    second: Ural_19
+  - first:
+      213: -1297185510706452596
+    second: Ural_20
+  - first:
+      213: 3612269916059842394
+    second: Ural_21
+  - first:
+      213: 2304052500698078903
+    second: Ural_22
+  - first:
+      213: -7968316023398779046
+    second: Ural_23
+  - first:
+      213: -6198404690174261751
+    second: Ural_24
+  - first:
+      213: 7649356411977577198
+    second: Ural_25
+  - first:
+      213: 1375788962106771414
+    second: Ural_26
+  - first:
+      213: 9159517317363764206
+    second: Ural_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Ural_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 94
+        width: 50
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 170ca759867072150800000000000000
+      internalID: 5847650786929721457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_1
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 67
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdb5772836b24b870800000000000000
+      internalID: 8697624486749887455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_2
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 94
+        width: 51
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9762e786443fa7c40800000000000000
+      internalID: 5510984569177646713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_3
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 89
+        width: 47
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c082e4b0791690ec0800000000000000
+      internalID: -3600239125748373492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_4
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 87
+        width: 31
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25e14e484f4aed530800000000000000
+      internalID: 3881721298948464210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_5
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 86
+        width: 55
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08f63b5146721fb80800000000000000
+      internalID: -8362859722236006528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_6
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 85
+        width: 58
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 340038c0b84c02c30800000000000000
+      internalID: 4332678943019827267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_7
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 83
+        width: 53
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 776428cbcdccf3b00800000000000000
+      internalID: 810591706377504375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_8
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 78
+        width: 54
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76fcee25c15259c90800000000000000
+      internalID: -7163778828682211481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_9
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 1
+        width: 64
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0833ea55c05f1be0800000000000000
+      internalID: -1504394941954836470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_10
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 67
+        width: 38
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 207f9eb92350ccfb0800000000000000
+      internalID: -4626317002294036734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_11
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 1
+        width: 53
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1088f6c8cefae1300800000000000000
+      internalID: 224810461918365697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_12
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 67
+        width: 37
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee985824880ba6c10800000000000000
+      internalID: 2047643079871400430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_13
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 60
+        width: 34
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43de312b44b27edf0800000000000000
+      internalID: -151104488448201420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_14
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 48
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0115f06bc7561c580800000000000000
+      internalID: -8808647809855172336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_15
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 48
+        width: 24
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c922c15ccea05bf0800000000000000
+      internalID: -337577779484546623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_16
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 48
+        width: 24
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f7e8fc22a6caa0f0800000000000000
+      internalID: -1104852358724524040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_17
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 48
+        width: 27
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 764d3e016e7d784a0800000000000000
+      internalID: -6591062146507615129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_18
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 48
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6803eed04c104fa10800000000000000
+      internalID: 1942179280862457990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_19
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 47
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b421ff58a441b75b0800000000000000
+      internalID: -5369675820400962997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_20
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 47
+        width: 26
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c87ee8a96a87ffde0800000000000000
+      internalID: -1297185510706452596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_21
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 1
+        width: 54
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a57b39b995c512230800000000000000
+      internalID: 3612269916059842394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_22
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 1
+        width: 63
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7be95ffba83a9ff10800000000000000
+      internalID: 2304052500698078903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_23
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 1
+        width: 63
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a57334f6bcada6190800000000000000
+      internalID: -7968316023398779046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_24
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 1
+        width: 50
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9064c0c56c7daf9a0800000000000000
+      internalID: -6198404690174261751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_25
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 26
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee2b740f029f72a60800000000000000
+      internalID: 7649356411977577198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_26
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 1
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d7074495c8c71310800000000000000
+      internalID: 1375788962106771414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ural_27
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 1
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeb818f88742d1f70800000000000000
+      internalID: 9159517317363764206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Ural_0: 5847650786929721457
+      Ural_1: 8697624486749887455
+      Ural_10: -4626317002294036734
+      Ural_11: 224810461918365697
+      Ural_12: 2047643079871400430
+      Ural_13: -151104488448201420
+      Ural_14: -8808647809855172336
+      Ural_15: -337577779484546623
+      Ural_16: -1104852358724524040
+      Ural_17: -6591062146507615129
+      Ural_18: 1942179280862457990
+      Ural_19: -5369675820400962997
+      Ural_2: 5510984569177646713
+      Ural_20: -1297185510706452596
+      Ural_21: 3612269916059842394
+      Ural_22: 2304052500698078903
+      Ural_23: -7968316023398779046
+      Ural_24: -6198404690174261751
+      Ural_25: 7649356411977577198
+      Ural_26: 1375788962106771414
+      Ural_27: 9159517317363764206
+      Ural_3: -3600239125748373492
+      Ural_4: 3881721298948464210
+      Ural_5: -8362859722236006528
+      Ural_6: 4332678943019827267
+      Ural_7: 810591706377504375
+      Ural_8: -7163778828682211481
+      Ural_9: -1504394941954836470
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

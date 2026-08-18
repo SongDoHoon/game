@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: 07a9abe1a5f7e70489e1d51b72e9d0da
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7948504333420243849
+    second: blood_tiger_0
+  - first:
+      213: -5379496411413186865
+    second: blood_tiger_1
+  - first:
+      213: -8859723294730078332
+    second: blood_tiger_2
+  - first:
+      213: 3215296965949514046
+    second: blood_tiger_3
+  - first:
+      213: -5379534183579109049
+    second: blood_tiger_4
+  - first:
+      213: -4623272675455458303
+    second: blood_tiger_5
+  - first:
+      213: 246034791323993988
+    second: blood_tiger_6
+  - first:
+      213: -5717777812050076934
+    second: blood_tiger_7
+  - first:
+      213: 5959333094833037452
+    second: blood_tiger_8
+  - first:
+      213: -848871239506650239
+    second: blood_tiger_9
+  - first:
+      213: -1358647131662474940
+    second: blood_tiger_10
+  - first:
+      213: -8048617546915754056
+    second: blood_tiger_11
+  - first:
+      213: 189299507688591501
+    second: blood_tiger_12
+  - first:
+      213: -5363936388468503151
+    second: blood_tiger_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: blood_tiger_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 49
+        width: 70
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98baa290492ce4e60800000000000000
+      internalID: 7948504333420243849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_1
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 50
+        width: 77
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc67a3ff3803855b0800000000000000
+      internalID: -5379496411413186865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_2
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 50
+        width: 77
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4873c51ba90fb0580800000000000000
+      internalID: -8859723294730078332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_3
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 51
+        width: 80
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e31efce1e870f9c20800000000000000
+      internalID: 3215296965949514046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_4
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 13
+        width: 43
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74932ba792e0855b0800000000000000
+      internalID: -5379534183579109049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_5
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 51
+        width: 79
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10425bf2ff5d6dfb0800000000000000
+      internalID: -4623272675455458303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_6
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 13
+        width: 48
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4870143d6571a6300800000000000000
+      internalID: 246034791323993988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_7
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 13
+        width: 96
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afa1520cf5f56a0b0800000000000000
+      internalID: -5717777812050076934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_8
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 14
+        width: 44
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c80a0c730edc3b250800000000000000
+      internalID: 5959333094833037452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 13
+        width: 49
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18b192dea143834f0800000000000000
+      internalID: -848871239506650239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_10
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 13
+        width: 49
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 441a726d1ad152de0800000000000000
+      internalID: -1358647131662474940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_11
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 13
+        width: 45
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bf4c170cf09d4090800000000000000
+      internalID: -8048617546915754056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_12
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 13
+        width: 61
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d805fe736e680a200800000000000000
+      internalID: 189299507688591501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blood_tiger_13
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 13
+        width: 61
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19d0b8726487f85b0800000000000000
+      internalID: -5363936388468503151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      blood_tiger_0: 7948504333420243849
+      blood_tiger_1: -5379496411413186865
+      blood_tiger_10: -1358647131662474940
+      blood_tiger_11: -8048617546915754056
+      blood_tiger_12: 189299507688591501
+      blood_tiger_13: -5363936388468503151
+      blood_tiger_2: -8859723294730078332
+      blood_tiger_3: 3215296965949514046
+      blood_tiger_4: -5379534183579109049
+      blood_tiger_5: -4623272675455458303
+      blood_tiger_6: 246034791323993988
+      blood_tiger_7: -5717777812050076934
+      blood_tiger_8: 5959333094833037452
+      blood_tiger_9: -848871239506650239
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

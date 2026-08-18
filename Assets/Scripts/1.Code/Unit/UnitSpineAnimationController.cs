@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitSpineAnimationController : MonoBehaviour
 {
     private const string SpineVisualObjectName = "UnitSpineVisual";
+    private const float DefaultAttackAnimationDuration = 0.5f;
 
     private UnitController owner;
     private UnitData data;
@@ -57,6 +58,19 @@ public class UnitSpineAnimationController : MonoBehaviour
         UnitSpineFacingDirection direction = ResolveDirection(target);
         ApplySkin(direction);
         PlayAnimation(data.spineBasicAttackAnimationName, false, true);
+    }
+
+    public float GetBasicAttackAnimationDuration()
+    {
+        if (!CanPlay() || string.IsNullOrWhiteSpace(data.spineBasicAttackAnimationName))
+            return DefaultAttackAnimationDuration;
+
+        Spine.Animation animation = skeletonAnimation.Skeleton.Data.FindAnimation(data.spineBasicAttackAnimationName);
+        if (animation == null)
+            return DefaultAttackAnimationDuration;
+
+        float animationTimeScale = Mathf.Max(0.0001f, skeletonAnimation.timeScale);
+        return Mathf.Max(0f, animation.Duration / animationTimeScale);
     }
 
     public void PlaySkill(MonsterController target)

@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 8c501db23d432e447b99f87847d1cfba
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9200128343351424149
+    second: bailiff_0
+  - first:
+      213: 8904082790993544042
+    second: bailiff_1
+  - first:
+      213: -637883430407784192
+    second: bailiff_2
+  - first:
+      213: 3676141885477046561
+    second: bailiff_3
+  - first:
+      213: -2422600515994133560
+    second: bailiff_4
+  - first:
+      213: 184907932207875683
+    second: bailiff_5
+  - first:
+      213: -5389054287174965689
+    second: bailiff_6
+  - first:
+      213: 3437874827465327962
+    second: bailiff_7
+  - first:
+      213: -1745655507380189771
+    second: bailiff_8
+  - first:
+      213: 5000166814788253641
+    second: bailiff_9
+  - first:
+      213: -5005114339578798400
+    second: bailiff_10
+  - first:
+      213: 3638247712710690377
+    second: bailiff_11
+  - first:
+      213: 4714820753285338578
+    second: bailiff_12
+  - first:
+      213: 7283970320933393158
+    second: bailiff_13
+  - first:
+      213: -204261484965167206
+    second: bailiff_14
+  - first:
+      213: 2697005840684777218
+    second: bailiff_15
+  - first:
+      213: 7742415532220931209
+    second: bailiff_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bailiff_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 95
+        width: 54
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 594f671ebfb6daf70800000000000000
+      internalID: 9200128343351424149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_1
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 95
+        width: 53
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a63c6df5f18a19b70800000000000000
+      internalID: 8904082790993544042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_2
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 85
+        width: 54
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 009bf625668c527f0800000000000000
+      internalID: -637883430407784192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_3
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 69
+        width: 78
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1294bcb5197440330800000000000000
+      internalID: 3676141885477046561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_4
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 56
+        width: 50
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cbdd7b8aa1316ed0800000000000000
+      internalID: -2422600515994133560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_5
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 52
+        width: 44
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 366076fd8cce09200800000000000000
+      internalID: 184907932207875683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_6
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 107
+        width: 53
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 746e3a1adab3635b0800000000000000
+      internalID: -5389054287174965689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_7
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 52
+        width: 44
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a550451e0f8c5bf20800000000000000
+      internalID: 3437874827465327962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_8
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 99
+        width: 39
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b5466e909f26c7e0800000000000000
+      internalID: -1745655507380189771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 73
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c7762dd939246540800000000000000
+      internalID: 5000166814788253641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_10
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 1
+        width: 73
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ce1131c6034a8ab0800000000000000
+      internalID: -5005114339578798400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_11
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 1
+        width: 63
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9468ff8b407ad7230800000000000000
+      internalID: 3638247712710690377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_12
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 1
+        width: 76
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d55633be786e6140800000000000000
+      internalID: 4714820753285338578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_13
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 1
+        width: 58
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60319bd2a6cd51560800000000000000
+      internalID: 7283970320933393158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_14
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 1
+        width: 45
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9f7b5bf2415a2df0800000000000000
+      internalID: -204261484965167206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_15
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 52
+        width: 43
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20f7b23d580bd6520800000000000000
+      internalID: 2697005840684777218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bailiff_16
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 1
+        width: 33
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98cde7dc7e5927b60800000000000000
+      internalID: 7742415532220931209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      bailiff_0: 9200128343351424149
+      bailiff_1: 8904082790993544042
+      bailiff_10: -5005114339578798400
+      bailiff_11: 3638247712710690377
+      bailiff_12: 4714820753285338578
+      bailiff_13: 7283970320933393158
+      bailiff_14: -204261484965167206
+      bailiff_15: 2697005840684777218
+      bailiff_16: 7742415532220931209
+      bailiff_2: -637883430407784192
+      bailiff_3: 3676141885477046561
+      bailiff_4: -2422600515994133560
+      bailiff_5: 184907932207875683
+      bailiff_6: -5389054287174965689
+      bailiff_7: 3437874827465327962
+      bailiff_8: -1745655507380189771
+      bailiff_9: 5000166814788253641
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -6,11 +6,42 @@ public class EnhancementUIController : MonoBehaviour
 {
     private const float RefreshInterval = 0.1f;
 
+    [System.Serializable]
+    private sealed class EnhancementGroupImageUI
+    {
+        public Image groupPanelImage;
+        public Sprite groupPanelSprite;
+        public Image enhanceButtonImage;
+        public Sprite enhanceButtonSprite;
+        public Image gradeTextBackgroundImage;
+        public Sprite gradeTextBackgroundSprite;
+        public TMP_Text gradeText;
+        public string gradeTextValue;
+    }
+
     [Header("Panel")]
     public GameObject enhancementPanel;
     public Button openButton;
     public Button closeButton;
     public bool closeOnStart = true;
+
+    [Header("Image Based Panel")]
+    [SerializeField] private Image enhancementPanelImage;
+    [SerializeField] private Sprite enhancementPanelSprite;
+
+    [Header("Image Based Grade Groups")]
+    [SerializeField] private EnhancementGroupImageUI lowGradeImageUI = new()
+    {
+        gradeTextValue = "노멀 ~ 레어"
+    };
+    [SerializeField] private EnhancementGroupImageUI highGradeImageUI = new()
+    {
+        gradeTextValue = "에픽 ~ 베르어"
+    };
+    [SerializeField] private EnhancementGroupImageUI evolutionImageUI = new()
+    {
+        gradeTextValue = "대천사 ~ 대악마"
+    };
 
     [Header("Magic Stone")]
     public BattleMagicStoneManager battleMagicStoneManager;
@@ -54,6 +85,7 @@ public class EnhancementUIController : MonoBehaviour
         if (battleMagicStoneManager == null)
             battleMagicStoneManager = FindAnyObjectByType<BattleMagicStoneManager>();
 
+        ApplyImageLayout();
         BindButtonEvents();
         RefreshUI();
 
@@ -63,7 +95,13 @@ public class EnhancementUIController : MonoBehaviour
 
     private void OnEnable()
     {
+        ApplyImageLayout();
         RefreshUI();
+    }
+
+    private void OnValidate()
+    {
+        ApplyImageLayout();
     }
 
     private void Update()
@@ -225,6 +263,40 @@ public class EnhancementUIController : MonoBehaviour
         lowGradeCostMagicStoneIcon = CurrencyDisplayUtility.EnsureIconImage(lowGradeCostMagicStoneIcon, lowGradeCostText, "Low Grade Magic Stone Cost Icon", magicStoneSprite, createIconWhenSpriteIsAssigned, iconSize, iconSpacing);
         highGradeCostMagicStoneIcon = CurrencyDisplayUtility.EnsureIconImage(highGradeCostMagicStoneIcon, highGradeCostText, "High Grade Magic Stone Cost Icon", magicStoneSprite, createIconWhenSpriteIsAssigned, iconSize, iconSpacing);
         evolutionCostMagicStoneIcon = CurrencyDisplayUtility.EnsureIconImage(evolutionCostMagicStoneIcon, evolutionCostText, "Evolution Magic Stone Cost Icon", magicStoneSprite, createIconWhenSpriteIsAssigned, iconSize, iconSpacing);
+    }
+
+    private void ApplyImageLayout()
+    {
+        if (enhancementPanelImage == null && enhancementPanel != null)
+            enhancementPanelImage = enhancementPanel.GetComponent<Image>();
+
+        ApplySprite(enhancementPanelImage, enhancementPanelSprite);
+        ApplyGroupImageUI(lowGradeImageUI, lowGradeButton);
+        ApplyGroupImageUI(highGradeImageUI, highGradeButton);
+        ApplyGroupImageUI(evolutionImageUI, evolutionButton);
+    }
+
+    private static void ApplyGroupImageUI(EnhancementGroupImageUI imageUI, Button enhanceButton)
+    {
+        if (imageUI == null)
+            return;
+
+        ApplySprite(imageUI.groupPanelImage, imageUI.groupPanelSprite);
+        ApplySprite(
+            imageUI.enhanceButtonImage != null ? imageUI.enhanceButtonImage : enhanceButton != null ? enhanceButton.image : null,
+            imageUI.enhanceButtonSprite);
+        ApplySprite(imageUI.gradeTextBackgroundImage, imageUI.gradeTextBackgroundSprite);
+
+        if (imageUI.gradeText != null)
+            SetTextIfChanged(imageUI.gradeText, imageUI.gradeTextValue);
+    }
+
+    private static void ApplySprite(Image image, Sprite sprite)
+    {
+        if (image == null || sprite == null || image.sprite == sprite)
+            return;
+
+        image.sprite = sprite;
     }
 
     private static bool SetTextIfChanged(TMP_Text text, string value)

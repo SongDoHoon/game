@@ -1,0 +1,481 @@
+fileFormatVersion: 2
+guid: 744cf24e7eb6f744eaf893509a3a1b12
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6600671368663040028
+    second: destruction_lord_0
+  - first:
+      213: 1989654661744646832
+    second: destruction_lord_1
+  - first:
+      213: -1293008381439310809
+    second: destruction_lord_2
+  - first:
+      213: 5500930391319630658
+    second: destruction_lord_3
+  - first:
+      213: 3598469810614830731
+    second: destruction_lord_4
+  - first:
+      213: -1974117154045231574
+    second: destruction_lord_5
+  - first:
+      213: 945462869432524707
+    second: destruction_lord_6
+  - first:
+      213: -1004010217865201859
+    second: destruction_lord_7
+  - first:
+      213: -7979927343946022351
+    second: destruction_lord_8
+  - first:
+      213: 9152387098729442854
+    second: destruction_lord_9
+  - first:
+      213: 6870950674511737534
+    second: destruction_lord_10
+  - first:
+      213: -1688067789360539335
+    second: destruction_lord_11
+  - first:
+      213: 8599422011769507136
+    second: destruction_lord_12
+  - first:
+      213: 6555267218066856879
+    second: destruction_lord_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: destruction_lord_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 84
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c10804053ab4a9b50800000000000000
+      internalID: 6600671368663040028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_1
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 89
+        width: 56
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba5dfa8f5cac9b10800000000000000
+      internalID: 1989654661744646832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_2
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 89
+        width: 54
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72405bc4abf4e0ee0800000000000000
+      internalID: -1293008381439310809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_3
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 79
+        width: 68
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 243d1c4bb0b375c40800000000000000
+      internalID: 5500930391319630658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_4
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 67
+        width: 64
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b860aac2a3550f130800000000000000
+      internalID: 3598469810614830731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_5
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 67
+        width: 45
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2ef02068e68a94e0800000000000000
+      internalID: -1974117154045231574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_6
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 57
+        width: 41
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3afd8d07875fe1d00800000000000000
+      internalID: 945462869432524707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_7
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 2
+        width: 83
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d37384db60a0112f0800000000000000
+      internalID: -1004010217865201859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_8
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 1
+        width: 67
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 132cba23c5a914190800000000000000
+      internalID: -7979927343946022351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_9
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 1
+        width: 62
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62ee2aa239fc30f70800000000000000
+      internalID: 9152387098729442854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_10
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 1
+        width: 47
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb2b08f0c358a5f50800000000000000
+      internalID: 6870950674511737534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_11
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 1
+        width: 43
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 939d2621a47c298e0800000000000000
+      internalID: -1688067789360539335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_12
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 1
+        width: 57
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04d423d02c8475770800000000000000
+      internalID: 8599422011769507136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: destruction_lord_13
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 1
+        width: 54
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fab53a4bdccf8fa50800000000000000
+      internalID: 6555267218066856879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      destruction_lord_0: 6600671368663040028
+      destruction_lord_1: 1989654661744646832
+      destruction_lord_10: 6870950674511737534
+      destruction_lord_11: -1688067789360539335
+      destruction_lord_12: 8599422011769507136
+      destruction_lord_13: 6555267218066856879
+      destruction_lord_2: -1293008381439310809
+      destruction_lord_3: 5500930391319630658
+      destruction_lord_4: 3598469810614830731
+      destruction_lord_5: -1974117154045231574
+      destruction_lord_6: 945462869432524707
+      destruction_lord_7: -1004010217865201859
+      destruction_lord_8: -7979927343946022351
+      destruction_lord_9: 9152387098729442854
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

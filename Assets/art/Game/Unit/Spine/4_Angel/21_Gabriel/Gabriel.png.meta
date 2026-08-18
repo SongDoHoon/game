@@ -1,0 +1,793 @@
+fileFormatVersion: 2
+guid: d3aa34acd850cb1468c78cc5e5ba9412
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4276463694950988455
+    second: Gabriel_0
+  - first:
+      213: 5205188034338472881
+    second: Gabriel_1
+  - first:
+      213: 1475062654591042566
+    second: Gabriel_2
+  - first:
+      213: 1212740013208197758
+    second: Gabriel_3
+  - first:
+      213: -4448959013097167637
+    second: Gabriel_4
+  - first:
+      213: 4265159355891933789
+    second: Gabriel_5
+  - first:
+      213: 4448007880707504928
+    second: Gabriel_6
+  - first:
+      213: -8463148406365727398
+    second: Gabriel_7
+  - first:
+      213: 1000545129815529391
+    second: Gabriel_8
+  - first:
+      213: 8412224002894011019
+    second: Gabriel_9
+  - first:
+      213: 2124287885678715959
+    second: Gabriel_10
+  - first:
+      213: 6401527619082651625
+    second: Gabriel_11
+  - first:
+      213: 4405077702478498081
+    second: Gabriel_12
+  - first:
+      213: -3038989219987235004
+    second: Gabriel_13
+  - first:
+      213: -2381245911006003648
+    second: Gabriel_14
+  - first:
+      213: -8954221670644299306
+    second: Gabriel_15
+  - first:
+      213: -177231684653119417
+    second: Gabriel_16
+  - first:
+      213: -6950438489659059328
+    second: Gabriel_17
+  - first:
+      213: 2394178179810611722
+    second: Gabriel_18
+  - first:
+      213: -5465982245057497371
+    second: Gabriel_19
+  - first:
+      213: -2545389157501647184
+    second: Gabriel_20
+  - first:
+      213: 4105603978487131548
+    second: Gabriel_21
+  - first:
+      213: -6756231414391117476
+    second: Gabriel_22
+  - first:
+      213: 382964246342299769
+    second: Gabriel_23
+  - first:
+      213: 3109341649967995267
+    second: Gabriel_24
+  - first:
+      213: -3167841575432013825
+    second: Gabriel_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Gabriel_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 30
+        width: 75
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7aa7868a21d095b30800000000000000
+      internalID: 4276463694950988455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_1
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 30
+        width: 79
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b3cbdf50fa8c3840800000000000000
+      internalID: 5205188034338472881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_2
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 36
+        width: 99
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 604085c4ba9787410800000000000000
+      internalID: 1475062654591042566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_3
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 45
+        width: 108
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7a5d2cdd9484d010800000000000000
+      internalID: 1212740013208197758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_4
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 10
+        width: 41
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be42214695f1242c0800000000000000
+      internalID: -4448959013097167637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_5
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 10
+        width: 52
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d526f5e16d3e03b30800000000000000
+      internalID: 4265159355891933789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_6
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 10
+        width: 55
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02b75b7d99f7abd30800000000000000
+      internalID: 4448007880707504928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_7
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 10
+        width: 51
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5558253d5bdc8a80800000000000000
+      internalID: -8463148406365727398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_8
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 10
+        width: 45
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa7d6649e76a2ed00800000000000000
+      internalID: 1000545129815529391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_9
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 10
+        width: 51
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8a138729293eb470800000000000000
+      internalID: 8412224002894011019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_10
+      rect:
+        serializedVersion: 2
+        x: 645
+        y: 10
+        width: 47
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 734ab8ab39cfa7d10800000000000000
+      internalID: 2124287885678715959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_11
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 10
+        width: 51
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e7064be37bc6d850800000000000000
+      internalID: 6401527619082651625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_12
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 10
+        width: 63
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1298930d4daf12d30800000000000000
+      internalID: 4405077702478498081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_13
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 10
+        width: 62
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44f5b6ad76753d5d0800000000000000
+      internalID: -3038989219987235004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_14
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 10
+        width: 68
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04eb2a7d57d14fed0800000000000000
+      internalID: -2381245911006003648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_15
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 10
+        width: 69
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d9442105d63cb380800000000000000
+      internalID: -8954221670644299306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 10
+        width: 31
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7488e49c8b85a8df0800000000000000
+      internalID: -177231684653119417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_17
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 10
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0835ba6c4051b8f90800000000000000
+      internalID: -6950438489659059328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_18
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 10
+        width: 47
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a025a90ae54d93120800000000000000
+      internalID: 2394178179810611722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_19
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 10
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e671ceab1ee424b0800000000000000
+      internalID: -5465982245057497371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_20
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 10
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b6cbfb1c06fcacd0800000000000000
+      internalID: -2545389157501647184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_21
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 10
+        width: 30
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9de726e0190af830800000000000000
+      internalID: 4105603978487131548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_22
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 10
+        width: 36
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c59e1ec135b0d32a0800000000000000
+      internalID: -6756231414391117476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_23
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 10
+        width: 47
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97078e8f3ff805500800000000000000
+      internalID: 382964246342299769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_24
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 10
+        width: 46
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3895ba3b1c9962b20800000000000000
+      internalID: 3109341649967995267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gabriel_25
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 10
+        width: 47
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff739affed09904d0800000000000000
+      internalID: -3167841575432013825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Gabriel_0: 4276463694950988455
+      Gabriel_1: 5205188034338472881
+      Gabriel_10: 2124287885678715959
+      Gabriel_11: 6401527619082651625
+      Gabriel_12: 4405077702478498081
+      Gabriel_13: -3038989219987235004
+      Gabriel_14: -2381245911006003648
+      Gabriel_15: -8954221670644299306
+      Gabriel_16: -177231684653119417
+      Gabriel_17: -6950438489659059328
+      Gabriel_18: 2394178179810611722
+      Gabriel_19: -5465982245057497371
+      Gabriel_2: 1475062654591042566
+      Gabriel_20: -2545389157501647184
+      Gabriel_21: 4105603978487131548
+      Gabriel_22: -6756231414391117476
+      Gabriel_23: 382964246342299769
+      Gabriel_24: 3109341649967995267
+      Gabriel_25: -3167841575432013825
+      Gabriel_3: 1212740013208197758
+      Gabriel_4: -4448959013097167637
+      Gabriel_5: 4265159355891933789
+      Gabriel_6: 4448007880707504928
+      Gabriel_7: -8463148406365727398
+      Gabriel_8: 1000545129815529391
+      Gabriel_9: 8412224002894011019
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

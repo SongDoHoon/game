@@ -1,0 +1,637 @@
+fileFormatVersion: 2
+guid: 62da7ae291424234f97ee30f13065693
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 587056553391083284
+    second: Veiled_0
+  - first:
+      213: 1640751280396934340
+    second: Veiled_1
+  - first:
+      213: -2580677113842773534
+    second: Veiled_2
+  - first:
+      213: 700390799655843574
+    second: Veiled_3
+  - first:
+      213: 6988281406705668988
+    second: Veiled_4
+  - first:
+      213: 2139751015725114818
+    second: Veiled_5
+  - first:
+      213: 9004534300381077729
+    second: Veiled_6
+  - first:
+      213: -2859957615774445969
+    second: Veiled_7
+  - first:
+      213: -2510053401594699146
+    second: Veiled_8
+  - first:
+      213: -2782504330061709967
+    second: Veiled_9
+  - first:
+      213: -4199161672264114818
+    second: Veiled_10
+  - first:
+      213: 7511885425762283207
+    second: Veiled_11
+  - first:
+      213: 8244692644436140853
+    second: Veiled_12
+  - first:
+      213: 6277212315379289262
+    second: Veiled_13
+  - first:
+      213: 7694989304317965852
+    second: Veiled_14
+  - first:
+      213: 2058461589398707827
+    second: Veiled_15
+  - first:
+      213: 7796624179210921281
+    second: Veiled_16
+  - first:
+      213: 1149711063335627186
+    second: Veiled_17
+  - first:
+      213: 4674371726005820210
+    second: Veiled_18
+  - first:
+      213: -5074459183521919413
+    second: Veiled_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Veiled_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 37
+        width: 40
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41fc0ff23d4a52800800000000000000
+      internalID: 587056553391083284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_1
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 41
+        width: 85
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cc93d0b89e15c610800000000000000
+      internalID: 1640751280396934340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_2
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 45
+        width: 50
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e1db6586d79f2cd0800000000000000
+      internalID: -2580677113842773534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_3
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 48
+        width: 58
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f63071b8b948b900800000000000000
+      internalID: 700390799655843574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_4
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 49
+        width: 69
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c739825f9ec5bf060800000000000000
+      internalID: 6988281406705668988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_5
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 49
+        width: 96
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c5a310463ce1bd10800000000000000
+      internalID: 2139751015725114818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_6
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 56
+        width: 96
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e0e806fc3886fc70800000000000000
+      internalID: 9004534300381077729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_7
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 17
+        width: 35
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6e471f73b36f48d0800000000000000
+      internalID: -2859957615774445969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 17
+        width: 68
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 672efa6eabf7a2dd0800000000000000
+      internalID: -2510053401594699146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_9
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 17
+        width: 32
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d7facdd0f8269d0800000000000000
+      internalID: -2782504330061709967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_10
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 17
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7d134a05b499b5c0800000000000000
+      internalID: -4199161672264114818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_11
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 17
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ceaefbbef39f3860800000000000000
+      internalID: 7511885425762283207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_12
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 17
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53364e127480b6270800000000000000
+      internalID: 8244692644436140853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_13
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 17
+        width: 34
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eacc3edb7532d1750800000000000000
+      internalID: 6277212315379289262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_14
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 17
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c167d42a0081aca60800000000000000
+      internalID: 7694989304317965852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_15
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 17
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37e55ebc8ef119c10800000000000000
+      internalID: 2058461589398707827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_16
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 17
+        width: 82
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 145a619f16c233c60800000000000000
+      internalID: 7796624179210921281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_17
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 17
+        width: 41
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b9e474ee1894ff00800000000000000
+      internalID: 1149711063335627186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_18
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 17
+        width: 41
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23bd4b4a154bed040800000000000000
+      internalID: 4674371726005820210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Veiled_19
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 17
+        width: 36
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4e05fa1246e399b0800000000000000
+      internalID: -5074459183521919413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Veiled_0: 587056553391083284
+      Veiled_1: 1640751280396934340
+      Veiled_10: -4199161672264114818
+      Veiled_11: 7511885425762283207
+      Veiled_12: 8244692644436140853
+      Veiled_13: 6277212315379289262
+      Veiled_14: 7694989304317965852
+      Veiled_15: 2058461589398707827
+      Veiled_16: 7796624179210921281
+      Veiled_17: 1149711063335627186
+      Veiled_18: 4674371726005820210
+      Veiled_19: -5074459183521919413
+      Veiled_2: -2580677113842773534
+      Veiled_3: 700390799655843574
+      Veiled_4: 6988281406705668988
+      Veiled_5: 2139751015725114818
+      Veiled_6: 9004534300381077729
+      Veiled_7: -2859957615774445969
+      Veiled_8: -2510053401594699146
+      Veiled_9: -2782504330061709967
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

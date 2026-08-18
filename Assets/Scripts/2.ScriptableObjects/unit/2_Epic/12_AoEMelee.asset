@@ -19,6 +19,18 @@ MonoBehaviour:
   portraitSprite: {fileID: 111537666977625885, guid: c0eec3070defad741a48ba18ff61b199, type: 3}
   useGradeTintOnSprite: 0
   animatorController: {fileID: 0}
+  spineSkeletonData: {fileID: 11400000, guid: b3269849f025b7f4a89b9d27c042c6a8, type: 2}
+  hideSpriteWhenSpineVisual: 1
+  spineLocalPosition: {x: 0, y: -0.4, z: 0}
+  spineLocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  spineSortingLayerName: unit
+  spineSortingOrder: 100
+  spineLeftSkinName: left
+  spineFrontSkinName: front
+  spineRightSkinName: right
+  spineIdleAnimationName: idle
+  spineBasicAttackAnimationName: attack
+  spineSkillAnimationName: skill
   attackPower: 65
   attackSpeed: 1.15
   attackRange: 2

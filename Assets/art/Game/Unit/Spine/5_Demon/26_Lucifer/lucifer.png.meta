@@ -1,0 +1,871 @@
+fileFormatVersion: 2
+guid: 8daac96418cd105478a84f2d56903c52
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5666041778152302455
+    second: lucifer_0
+  - first:
+      213: 6793735467864006430
+    second: lucifer_1
+  - first:
+      213: -4649229128942634715
+    second: lucifer_2
+  - first:
+      213: 7142559740867385288
+    second: lucifer_3
+  - first:
+      213: 1516913203471445975
+    second: lucifer_4
+  - first:
+      213: -7093804648373550982
+    second: lucifer_5
+  - first:
+      213: 5261144970086778243
+    second: lucifer_6
+  - first:
+      213: -2081099982513837032
+    second: lucifer_7
+  - first:
+      213: 8472154253262522470
+    second: lucifer_8
+  - first:
+      213: 4345320537551114641
+    second: lucifer_9
+  - first:
+      213: -5254732382223561112
+    second: lucifer_10
+  - first:
+      213: 4881053801026277512
+    second: lucifer_11
+  - first:
+      213: 1015704327200364464
+    second: lucifer_12
+  - first:
+      213: 3515399060735725652
+    second: lucifer_13
+  - first:
+      213: 2471917027060017839
+    second: lucifer_14
+  - first:
+      213: -7255918050344482450
+    second: lucifer_15
+  - first:
+      213: -4434008961455247922
+    second: lucifer_16
+  - first:
+      213: 6323481698532169713
+    second: lucifer_17
+  - first:
+      213: 5335271674452486623
+    second: lucifer_18
+  - first:
+      213: 5143806599210989399
+    second: lucifer_19
+  - first:
+      213: -7600546186966562769
+    second: lucifer_20
+  - first:
+      213: -6711465600267185568
+    second: lucifer_21
+  - first:
+      213: 8698837341826042073
+    second: lucifer_22
+  - first:
+      213: -6986878634777589054
+    second: lucifer_23
+  - first:
+      213: -8144028852725558750
+    second: lucifer_24
+  - first:
+      213: -9155464414832600427
+    second: lucifer_25
+  - first:
+      213: 6196203643363272713
+    second: lucifer_26
+  - first:
+      213: -2559149795952468376
+    second: lucifer_27
+  - first:
+      213: 9206438192780594088
+    second: lucifer_28
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: lucifer_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 30
+        width: 54
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7776a4d2af2d1ae40800000000000000
+      internalID: 5666041778152302455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_1
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 31
+        width: 78
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1f910cc962384e50800000000000000
+      internalID: 6793735467864006430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_2
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 43
+        width: 86
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 529b9f96dbe9a7fb0800000000000000
+      internalID: -4649229128942634715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_3
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 46
+        width: 74
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c7186dcd387f1360800000000000000
+      internalID: 7142559740867385288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_4
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 52
+        width: 89
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dfe30885882d0510800000000000000
+      internalID: 1516913203471445975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_5
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 54
+        width: 85
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a700ea3c14ebd8d90800000000000000
+      internalID: -7093804648373550982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_6
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 54
+        width: 87
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3850bddb977530940800000000000000
+      internalID: 5261144970086778243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_7
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 56
+        width: 94
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81ce03097927e13e0800000000000000
+      internalID: -2081099982513837032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_8
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 11
+        width: 87
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 668070ce763239570800000000000000
+      internalID: 8472154253262522470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_9
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 56
+        width: 84
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19191f3a10ead4c30800000000000000
+      internalID: 4345320537551114641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_10
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 11
+        width: 46
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86e82d73db07317b0800000000000000
+      internalID: -5254732382223561112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_11
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 11
+        width: 87
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 880ddb3329cfcb340800000000000000
+      internalID: 4881053801026277512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_12
+      rect:
+        serializedVersion: 2
+        x: 826
+        y: 11
+        width: 46
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b7da9344b1881e00800000000000000
+      internalID: 1015704327200364464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_13
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 11
+        width: 52
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45015e202d439c030800000000000000
+      internalID: 3515399060735725652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_14
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 11
+        width: 71
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faae62870730e4220800000000000000
+      internalID: 2471917027060017839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 11
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e694fd90afccd4b90800000000000000
+      internalID: -7255918050344482450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_16
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 11
+        width: 30
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecdaf89875c3772c0800000000000000
+      internalID: -4434008961455247922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_17
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 11
+        width: 36
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f791b00a1581c750800000000000000
+      internalID: 6323481698532169713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_18
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 11
+        width: 26
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd9a1f70251ba0a40800000000000000
+      internalID: 5335271674452486623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_19
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 11
+        width: 26
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 757f74359d8726740800000000000000
+      internalID: 5143806599210989399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_20
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 11
+        width: 26
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2888ea238f658690800000000000000
+      internalID: -7600546186966562769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_21
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 11
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06212dd68951cd2a0800000000000000
+      internalID: -6711465600267185568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_22
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 11
+        width: 62
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d8c176597a78b870800000000000000
+      internalID: 8698837341826042073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_23
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 11
+        width: 49
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cac05556ee990f90800000000000000
+      internalID: -6986878634777589054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_24
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 11
+        width: 53
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 222d2c848e89afe80800000000000000
+      internalID: -8144028852725558750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_25
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 11
+        width: 55
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59a5c285f9141f080800000000000000
+      internalID: -9155464414832600427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_26
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 11
+        width: 61
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90826ae72665df550800000000000000
+      internalID: 6196203643363272713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_27
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 11
+        width: 60
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86e5d3dc1d21c7cd0800000000000000
+      internalID: -2559149795952468376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lucifer_28
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 11
+        width: 78
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8abc64f22c6d3cf70800000000000000
+      internalID: 9206438192780594088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      lucifer_0: 5666041778152302455
+      lucifer_1: 6793735467864006430
+      lucifer_10: -5254732382223561112
+      lucifer_11: 4881053801026277512
+      lucifer_12: 1015704327200364464
+      lucifer_13: 3515399060735725652
+      lucifer_14: 2471917027060017839
+      lucifer_15: -7255918050344482450
+      lucifer_16: -4434008961455247922
+      lucifer_17: 6323481698532169713
+      lucifer_18: 5335271674452486623
+      lucifer_19: 5143806599210989399
+      lucifer_2: -4649229128942634715
+      lucifer_20: -7600546186966562769
+      lucifer_21: -6711465600267185568
+      lucifer_22: 8698837341826042073
+      lucifer_23: -6986878634777589054
+      lucifer_24: -8144028852725558750
+      lucifer_25: -9155464414832600427
+      lucifer_26: 6196203643363272713
+      lucifer_27: -2559149795952468376
+      lucifer_28: 9206438192780594088
+      lucifer_3: 7142559740867385288
+      lucifer_4: 1516913203471445975
+      lucifer_5: -7093804648373550982
+      lucifer_6: 5261144970086778243
+      lucifer_7: -2081099982513837032
+      lucifer_8: 8472154253262522470
+      lucifer_9: 4345320537551114641
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

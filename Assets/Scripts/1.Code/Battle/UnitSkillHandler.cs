@@ -7,6 +7,7 @@ public static class UnitSkillHandler
     private const int ConeIndicatorSegmentCount = 24;
     private const float MinimumVisibleIndicatorAlpha = 0.35f;
     private const float MinimumVisibleIndicatorDuration = 0.35f;
+    private const float MinimumSkillAttackLockDuration = 0.5f;
 
     private static Sprite squareSprite;
 
@@ -37,7 +38,7 @@ public static class UnitSkillHandler
         if (triggerTarget == null && !CanExecuteWithoutTriggerTarget(skill))
             return;
 
-        TryExecuteSkill(unit, skill, triggerTarget);
+        TryExecuteSkillAfterBasicAttack(unit, skill, triggerTarget);
     }
 
     public static void ApplyPassiveOnStart(UnitController unit)
@@ -71,7 +72,7 @@ public static class UnitSkillHandler
         {
             case SkillTriggerType.BasicAttackChance:
                 if (Random.value <= Mathf.Clamp01(skill.triggerChance)
-                    && TryExecuteSkill(unit, skill, target))
+                    && TryExecuteSkillAfterBasicAttack(unit, skill, target))
                 {
                     unit.ResetSkillBasicAttackCount();
                 }
@@ -79,7 +80,7 @@ public static class UnitSkillHandler
 
             case SkillTriggerType.BasicAttackCount:
                 if (unit.GetSkillBasicAttackCount() >= Mathf.Max(1, skill.requiredBasicAttackCount)
-                    && TryExecuteSkill(unit, skill, target))
+                    && TryExecuteSkillAfterBasicAttack(unit, skill, target))
                 {
                     unit.ResetSkillBasicAttackCount();
                 }
@@ -158,7 +159,35 @@ public static class UnitSkillHandler
         if (triggerTarget == null && !CanExecuteWithoutTriggerTarget(skill))
             return;
 
-        TryExecuteSkill(unit, skill, triggerTarget);
+        TryExecuteSkillAfterBasicAttack(unit, skill, triggerTarget);
+    }
+
+    private static bool TryExecuteSkillAfterBasicAttack(UnitController unit, SkillData skill, MonsterController preferredTarget)
+    {
+        if (!unit.IsBasicAttackAnimationPlaying())
+            return TryExecuteSkill(unit, skill, preferredTarget);
+
+        if (!unit.TryReserveSkillAfterBasicAttack())
+            return false;
+
+        unit.StartCoroutine(CoExecuteSkillAfterBasicAttack(unit, skill, preferredTarget));
+        return true;
+    }
+
+    private static IEnumerator CoExecuteSkillAfterBasicAttack(UnitController unit, SkillData skill, MonsterController preferredTarget)
+    {
+        while (unit != null && unit.IsBasicAttackAnimationPlaying())
+            yield return null;
+
+        if (unit == null)
+            yield break;
+
+        unit.ReleaseSkillAfterBasicAttackReservation();
+
+        if (!IsValidUnit(unit) || unit.GetSkillData() != skill || !IsUsableSkill(skill) || !unit.IsSkillCooldownReady())
+            yield break;
+
+        TryExecuteSkill(unit, skill, preferredTarget);
     }
 
     private static bool TryExecuteSkill(UnitController unit, SkillData skill, MonsterController preferredTarget)
@@ -265,10 +294,14 @@ public static class UnitSkillHandler
 
     private static float GetAttackLockDurationOnCast(UnitController unit, SkillData skill)
     {
-        if (unit != null && unit.Data != null && unit.Data.skillAttackLockDurationOverride >= 0f)
-            return unit.Data.skillAttackLockDurationOverride;
+        float configuredDuration;
 
-        return skill != null ? skill.attackLockDurationOnCast : 0f;
+        if (unit != null && unit.Data != null && unit.Data.skillAttackLockDurationOverride >= 0f)
+            configuredDuration = unit.Data.skillAttackLockDurationOverride;
+        else
+            configuredDuration = skill != null ? skill.attackLockDurationOnCast : 0f;
+
+        return Mathf.Max(MinimumSkillAttackLockDuration, configuredDuration);
     }
 
     public static float GetGlobalPassiveAttackPowerBonus()

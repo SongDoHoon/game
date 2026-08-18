@@ -1,0 +1,975 @@
+fileFormatVersion: 2
+guid: ba14ba1eb8323d14ba46b406d8fc217a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7859763477076379650
+    second: mamon_0
+  - first:
+      213: -3486524681526428705
+    second: mamon_1
+  - first:
+      213: 3547189349011967756
+    second: mamon_2
+  - first:
+      213: 1696030900111297295
+    second: mamon_3
+  - first:
+      213: -6715666759984407128
+    second: mamon_4
+  - first:
+      213: 7073966561346908703
+    second: mamon_5
+  - first:
+      213: -8072249564115954759
+    second: mamon_6
+  - first:
+      213: 188088761602976845
+    second: mamon_7
+  - first:
+      213: -6205027991250011451
+    second: mamon_8
+  - first:
+      213: 5490602462548593221
+    second: mamon_9
+  - first:
+      213: -8433935030793601502
+    second: mamon_10
+  - first:
+      213: -2939702538046494630
+    second: mamon_11
+  - first:
+      213: 958703746688673276
+    second: mamon_12
+  - first:
+      213: 6663978753393875340
+    second: mamon_13
+  - first:
+      213: -5917611303121771570
+    second: mamon_14
+  - first:
+      213: 881863250182614528
+    second: mamon_15
+  - first:
+      213: -6099720198450172376
+    second: mamon_16
+  - first:
+      213: 1472358874116195687
+    second: mamon_17
+  - first:
+      213: 8835455972396673455
+    second: mamon_18
+  - first:
+      213: 4165840131423849322
+    second: mamon_19
+  - first:
+      213: -1952520026282104321
+    second: mamon_20
+  - first:
+      213: 7677861418039193792
+    second: mamon_21
+  - first:
+      213: 6183210771450078155
+    second: mamon_22
+  - first:
+      213: -2178889160759157343
+    second: mamon_23
+  - first:
+      213: -7453062671908463980
+    second: mamon_24
+  - first:
+      213: -3290935620754193350
+    second: mamon_25
+  - first:
+      213: -5860654285915478840
+    second: mamon_26
+  - first:
+      213: -5764713015860534068
+    second: mamon_27
+  - first:
+      213: 1584614955387997514
+    second: mamon_28
+  - first:
+      213: -5509294592271554982
+    second: mamon_29
+  - first:
+      213: 6881527938176371023
+    second: mamon_30
+  - first:
+      213: 488688879398855310
+    second: mamon_31
+  - first:
+      213: 7567167329937688211
+    second: mamon_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: mamon_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 39
+        width: 29
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2080ab55d3d731d60800000000000000
+      internalID: 7859763477076379650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_1
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 29
+        width: 45
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdb3cf846406d9fc0800000000000000
+      internalID: -3486524681526428705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_2
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 32
+        width: 45
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0f48ea4be52a3130800000000000000
+      internalID: 3547189349011967756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_3
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 42
+        width: 29
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0b48312e13898710800000000000000
+      internalID: 1696030900111297295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_4
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 32
+        width: 86
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ad1b35b9a82dc2a0800000000000000
+      internalID: -6715666759984407128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_5
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 39
+        width: 69
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f12f21aab17cb2260800000000000000
+      internalID: 7073966561346908703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_6
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 41
+        width: 69
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b311904acb99ff80800000000000000
+      internalID: -8072249564115954759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_7
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 41
+        width: 83
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ca69d6bb93c9200800000000000000
+      internalID: 188088761602976845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_8
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 43
+        width: 77
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5caff28eaef43e9a0800000000000000
+      internalID: -6205027991250011451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_9
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 47
+        width: 77
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54a081769d9823c40800000000000000
+      internalID: 5490602462548593221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_10
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 49
+        width: 109
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22ef2de36c4a4fa80800000000000000
+      internalID: -8433935030793601502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_11
+      rect:
+        serializedVersion: 2
+        x: 781
+        y: 52
+        width: 94
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a58ac6aed141437d0800000000000000
+      internalID: -2939702538046494630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_12
+      rect:
+        serializedVersion: 2
+        x: 875
+        y: 56
+        width: 94
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf5e63a6afffd4d00800000000000000
+      internalID: 958703746688673276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_13
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 7
+        width: 86
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c89dac27e553b7c50800000000000000
+      internalID: 6663978753393875340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 7
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec327966fdb60eda0800000000000000
+      internalID: -5917611303121771570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_15
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 7
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00e2b9724f10d3c00800000000000000
+      internalID: 881863250182614528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_16
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 7
+        width: 51
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82e2a161cc0795ba0800000000000000
+      internalID: -6099720198450172376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_17
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 7
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7650799589ede6410800000000000000
+      internalID: 1472358874116195687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_18
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 7
+        width: 27
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa9ae470568dd9a70800000000000000
+      internalID: 8835455972396673455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_19
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 7
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6bc598278900d930800000000000000
+      internalID: 4165840131423849322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_20
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 7
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff96e98816147e4e0800000000000000
+      internalID: -1952520026282104321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_21
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 7
+        width: 59
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c037e8d74e3d8a60800000000000000
+      internalID: 7677861418039193792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_22
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 7
+        width: 59
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc3a6a3cf6d2fc550800000000000000
+      internalID: 6183210771450078155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_23
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 7
+        width: 41
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ad50004ad703c1e0800000000000000
+      internalID: -2178889160759157343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_24
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 7
+        width: 57
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49a1c28ecf6619890800000000000000
+      internalID: -7453062671908463980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_25
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 7
+        width: 54
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3444423d7f3452d0800000000000000
+      internalID: -3290935620754193350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_26
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 7
+        width: 54
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c423a06af5caaea0800000000000000
+      internalID: -5860654285915478840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_27
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 7
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc4ef890e00afffa0800000000000000
+      internalID: -5764713015860534068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_28
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 7
+        width: 38
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4d4ca108eeadf510800000000000000
+      internalID: 1584614955387997514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_29
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 7
+        width: 99
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a566ca002cd0b83b0800000000000000
+      internalID: -5509294592271554982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_30
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 7
+        width: 47
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f49cdea2339108f50800000000000000
+      internalID: 6881527938176371023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_31
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 7
+        width: 47
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e82a04652fb28c600800000000000000
+      internalID: 488688879398855310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: mamon_32
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 7
+        width: 55
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39680e0189af30960800000000000000
+      internalID: 7567167329937688211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      mamon_0: 7859763477076379650
+      mamon_1: -3486524681526428705
+      mamon_10: -8433935030793601502
+      mamon_11: -2939702538046494630
+      mamon_12: 958703746688673276
+      mamon_13: 6663978753393875340
+      mamon_14: -5917611303121771570
+      mamon_15: 881863250182614528
+      mamon_16: -6099720198450172376
+      mamon_17: 1472358874116195687
+      mamon_18: 8835455972396673455
+      mamon_19: 4165840131423849322
+      mamon_2: 3547189349011967756
+      mamon_20: -1952520026282104321
+      mamon_21: 7677861418039193792
+      mamon_22: 6183210771450078155
+      mamon_23: -2178889160759157343
+      mamon_24: -7453062671908463980
+      mamon_25: -3290935620754193350
+      mamon_26: -5860654285915478840
+      mamon_27: -5764713015860534068
+      mamon_28: 1584614955387997514
+      mamon_29: -5509294592271554982
+      mamon_3: 1696030900111297295
+      mamon_30: 6881527938176371023
+      mamon_31: 488688879398855310
+      mamon_32: 7567167329937688211
+      mamon_4: -6715666759984407128
+      mamon_5: 7073966561346908703
+      mamon_6: -8072249564115954759
+      mamon_7: 188088761602976845
+      mamon_8: -6205027991250011451
+      mamon_9: 5490602462548593221
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -5,6 +5,7 @@ public class UnitController : MonoBehaviour
 {
     private const int CircleSegmentCount = 64;
     private const float DefaultCritDamageMultiplier = 2f;
+    private const float DefaultBasicAttackAnimationDuration = 0.5f;
 
     private static Material sharedCircleRendererMaterial;
 
@@ -37,12 +38,14 @@ public class UnitController : MonoBehaviour
     private float attackTimer;
     private float skillCooldownTimer;
     private float skillAttackLockTimer;
+    private float basicAttackAnimationTimer;
     private float activeSelfSkillBuffTimer;
     private int skillBasicAttackCount;
     private int passiveStack;
     private int manualEnhanceStack;
     private int manualEnhanceSuccessCount;
     private bool passiveMaxStackBuffActive;
+    private bool pendingSkillAfterBasicAttack;
     private MonsterController currentTarget;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -64,12 +67,14 @@ public class UnitController : MonoBehaviour
         attackTimer = 0f;
         skillCooldownTimer = 0f;
         skillAttackLockTimer = 0f;
+        basicAttackAnimationTimer = 0f;
         activeSelfSkillBuffTimer = 0f;
         skillBasicAttackCount = 0;
         passiveStack = 0;
         manualEnhanceStack = 0;
         manualEnhanceSuccessCount = 0;
         passiveMaxStackBuffActive = false;
+        pendingSkillAfterBasicAttack = false;
         buffs.Clear();
 
         RecalculateStats();
@@ -87,6 +92,7 @@ public class UnitController : MonoBehaviour
 
         UpdateBuffs();
         TickSkillAttackLock(Time.deltaTime);
+        TickBasicAttackAnimation(Time.deltaTime);
         TickActiveSelfSkillBuff(Time.deltaTime);
         UpdateTarget();
         UnitSkillHandler.UpdateContinuousEffects(this);
@@ -117,11 +123,12 @@ public class UnitController : MonoBehaviour
 
     private void UpdateAttack()
     {
+        if (IsBasicAttackLockedBySkill()) return;
+
         float delay = Mathf.Max(UnitGrowthBalanceConfig.MinimumAttackInterval, CurrentAttackInterval);
         attackTimer = Mathf.Min(delay, attackTimer + Time.deltaTime);
 
         if (currentTarget == null) return;
-        if (IsBasicAttackLockedBySkill()) return;
 
         if (attackTimer >= delay)
         {
@@ -408,6 +415,10 @@ public class UnitController : MonoBehaviour
     {
         if (spineAnimationController != null)
             spineAnimationController.PlayBasicAttack(target);
+
+        basicAttackAnimationTimer = spineAnimationController != null && spineAnimationController.HasSpineVisual
+            ? spineAnimationController.GetBasicAttackAnimationDuration()
+            : DefaultBasicAttackAnimationDuration;
     }
 
     public void PlaySkillAnimation(MonsterController target)
@@ -443,7 +454,7 @@ public class UnitController : MonoBehaviour
 
     public bool IsBasicAttackLockedBySkill()
     {
-        return skillAttackLockTimer > 0f;
+        return skillAttackLockTimer > 0f || pendingSkillAfterBasicAttack;
     }
 
     private void TickSkillAttackLock(float deltaTime)
@@ -452,6 +463,33 @@ public class UnitController : MonoBehaviour
             return;
 
         skillAttackLockTimer = Mathf.Max(0f, skillAttackLockTimer - Mathf.Max(0f, deltaTime));
+    }
+
+    private void TickBasicAttackAnimation(float deltaTime)
+    {
+        if (basicAttackAnimationTimer <= 0f)
+            return;
+
+        basicAttackAnimationTimer = Mathf.Max(0f, basicAttackAnimationTimer - Mathf.Max(0f, deltaTime));
+    }
+
+    public bool IsBasicAttackAnimationPlaying()
+    {
+        return basicAttackAnimationTimer > 0f;
+    }
+
+    public bool TryReserveSkillAfterBasicAttack()
+    {
+        if (pendingSkillAfterBasicAttack)
+            return false;
+
+        pendingSkillAfterBasicAttack = true;
+        return true;
+    }
+
+    public void ReleaseSkillAfterBasicAttackReservation()
+    {
+        pendingSkillAfterBasicAttack = false;
     }
 
     private void TickActiveSelfSkillBuff(float deltaTime)
@@ -604,8 +642,7 @@ public class UnitController : MonoBehaviour
 
         transform.localScale = Vector3.one * GetUnitScale();
 
-        EnsureNameText();
-        RefreshNameText();
+        HideNameText();
     }
 
     private void ApplyAnimatorController()
@@ -740,6 +777,19 @@ public class UnitController : MonoBehaviour
         MeshRenderer meshRenderer = labelObject.GetComponent<MeshRenderer>();
         if (meshRenderer != null)
             meshRenderer.sortingOrder = 20;
+    }
+
+    private void HideNameText()
+    {
+        if (nameTextMesh == null)
+        {
+            Transform existing = transform.Find("UnitNameText");
+            if (existing != null)
+                nameTextMesh = existing.GetComponent<TextMesh>();
+        }
+
+        if (nameTextMesh != null)
+            nameTextMesh.gameObject.SetActive(false);
     }
 
     private void RefreshNameText()

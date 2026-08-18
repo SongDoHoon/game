@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: b24d73dff7bfaae42807de74ca72039d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9052410680947241596
+    second: Belphegor_0
+  - first:
+      213: 4575447546728929628
+    second: Belphegor_1
+  - first:
+      213: -2527419463397656986
+    second: Belphegor_2
+  - first:
+      213: 684416692804761320
+    second: Belphegor_3
+  - first:
+      213: 5099469663992004355
+    second: Belphegor_4
+  - first:
+      213: 1462315135968263104
+    second: Belphegor_5
+  - first:
+      213: 5873518288507451817
+    second: Belphegor_6
+  - first:
+      213: 126201943369867871
+    second: Belphegor_7
+  - first:
+      213: -376347121039097557
+    second: Belphegor_8
+  - first:
+      213: -8796228648756080056
+    second: Belphegor_9
+  - first:
+      213: -8727458116128196364
+    second: Belphegor_10
+  - first:
+      213: -8972769152896800258
+    second: Belphegor_11
+  - first:
+      213: 1971114066687723883
+    second: Belphegor_12
+  - first:
+      213: 5582422071775240483
+    second: Belphegor_13
+  - first:
+      213: -667575825443175394
+    second: Belphegor_14
+  - first:
+      213: -1840818642679378677
+    second: Belphegor_15
+  - first:
+      213: 4349398734320108587
+    second: Belphegor_16
+  - first:
+      213: 5362504014512297129
+    second: Belphegor_17
+  - first:
+      213: 435646030482672736
+    second: Belphegor_18
+  - first:
+      213: 797201267591744220
+    second: Belphegor_19
+  - first:
+      213: -1562170671295144420
+    second: Belphegor_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Belphegor_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 112
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48d003982706f5280800000000000000
+      internalID: -9052410680947241596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_1
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 107
+        width: 27
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c59d53f4d414f7f30800000000000000
+      internalID: 4575447546728929628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_2
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 1
+        width: 94
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66636cd836dccecd0800000000000000
+      internalID: -2527419463397656986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_3
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 107
+        width: 34
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e6b9fc1b598f7900800000000000000
+      internalID: 684416692804761320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_4
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 107
+        width: 34
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30fbf1924a4f4c640800000000000000
+      internalID: 5099469663992004355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_5
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 106
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cbb0155edf2b4410800000000000000
+      internalID: 1462315135968263104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_6
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 87
+        width: 51
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a93f30a3cde28150800000000000000
+      internalID: 5873518288507451817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_7
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 87
+        width: 49
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f526684bffb50c100800000000000000
+      internalID: 126201943369867871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_8
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 84
+        width: 51
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2149329942f6caf0800000000000000
+      internalID: -376347121039097557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_9
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 84
+        width: 46
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84297cbf5a48de580800000000000000
+      internalID: -8796228648756080056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_10
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 73
+        width: 60
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f8341c5517d1e680800000000000000
+      internalID: -8727458116128196364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_11
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 99
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef9e006cef15a7380800000000000000
+      internalID: -8972769152896800258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_12
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 99
+        width: 23
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6982bcdccdca5b10800000000000000
+      internalID: 1971114066687723883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_13
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 87
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 321a67e1c4fb87d40800000000000000
+      internalID: 5582422071775240483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_14
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 1
+        width: 107
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1442dfd25b4cb6f0800000000000000
+      internalID: -667575825443175394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_15
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 51
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0dcd2392391476e0800000000000000
+      internalID: -1840818642679378677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_16
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 1
+        width: 85
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b240fa1da1b2c5c30800000000000000
+      internalID: 4349398734320108587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_17
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 1
+        width: 107
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a49c9b4df07b6a40800000000000000
+      internalID: 5362504014512297129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_18
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 51
+        width: 49
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06c8abea1c9bb0600800000000000000
+      internalID: 435646030482672736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_19
+      rect:
+        serializedVersion: 2
+        x: 421
+        y: 1
+        width: 112
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cda0c41445a301b00800000000000000
+      internalID: 797201267591744220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Belphegor_20
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 1
+        width: 35
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1e5bea1d0e025ae0800000000000000
+      internalID: -1562170671295144420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Belphegor_0: -9052410680947241596
+      Belphegor_1: 4575447546728929628
+      Belphegor_10: -8727458116128196364
+      Belphegor_11: -8972769152896800258
+      Belphegor_12: 1971114066687723883
+      Belphegor_13: 5582422071775240483
+      Belphegor_14: -667575825443175394
+      Belphegor_15: -1840818642679378677
+      Belphegor_16: 4349398734320108587
+      Belphegor_17: 5362504014512297129
+      Belphegor_18: 435646030482672736
+      Belphegor_19: 797201267591744220
+      Belphegor_2: -2527419463397656986
+      Belphegor_20: -1562170671295144420
+      Belphegor_3: 684416692804761320
+      Belphegor_4: 5099469663992004355
+      Belphegor_5: 1462315135968263104
+      Belphegor_6: 5873518288507451817
+      Belphegor_7: 126201943369867871
+      Belphegor_8: -376347121039097557
+      Belphegor_9: -8796228648756080056
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

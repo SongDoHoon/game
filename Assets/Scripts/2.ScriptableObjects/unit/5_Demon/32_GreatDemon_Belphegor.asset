@@ -19,6 +19,18 @@ MonoBehaviour:
   portraitSprite: {fileID: 0}
   useGradeTintOnSprite: 0
   animatorController: {fileID: 0}
+  spineSkeletonData: {fileID: 11400000, guid: 23297638773e05c4f96ec43e5e7b29e4, type: 2}
+  hideSpriteWhenSpineVisual: 1
+  spineLocalPosition: {x: 0, y: -0.4, z: 0}
+  spineLocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  spineSortingLayerName: unit
+  spineSortingOrder: 100
+  spineLeftSkinName: left
+  spineFrontSkinName: front
+  spineRightSkinName: right
+  spineIdleAnimationName: idle
+  spineBasicAttackAnimationName: attack
+  spineSkillAnimationName: skill
   attackPower: 0
   attackSpeed: 0
   attackRange: 4.5
@@ -36,5 +48,3 @@ MonoBehaviour:
   areaAttackIndicatorDuration: 0.25
   skillData: {fileID: 11400000, guid: d3e1b5690e8c8894b98e3a646d0dbdbe, type: 2}
   skillAttackLockDurationOverride: -1
-  canEvolve: 0
-  evolveKey: 

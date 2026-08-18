@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: 2b162e288a7c106478d678a84678f03d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8469153547780032363
+    second: Heretic_Golem_0
+  - first:
+      213: -1288109749237406151
+    second: Heretic_Golem_1
+  - first:
+      213: 6824164455345603896
+    second: Heretic_Golem_2
+  - first:
+      213: -2282645060182948883
+    second: Heretic_Golem_3
+  - first:
+      213: 4520973496029541627
+    second: Heretic_Golem_4
+  - first:
+      213: -9139254097885014841
+    second: Heretic_Golem_5
+  - first:
+      213: 3099059529942311174
+    second: Heretic_Golem_6
+  - first:
+      213: 2457267042470377134
+    second: Heretic_Golem_7
+  - first:
+      213: -1116217631104267161
+    second: Heretic_Golem_8
+  - first:
+      213: -7954065132150913635
+    second: Heretic_Golem_9
+  - first:
+      213: 5297275536969986469
+    second: Heretic_Golem_10
+  - first:
+      213: 8932145223945533146
+    second: Heretic_Golem_11
+  - first:
+      213: -7958227879085325822
+    second: Heretic_Golem_12
+  - first:
+      213: 5140459055573447401
+    second: Heretic_Golem_13
+  - first:
+      213: 4731093608439654733
+    second: Heretic_Golem_14
+  - first:
+      213: 2391880758253225889
+    second: Heretic_Golem_15
+  - first:
+      213: -2434571424049716078
+    second: Heretic_Golem_16
+  - first:
+      213: -289645796091768407
+    second: Heretic_Golem_17
+  - first:
+      213: -6947091845870387390
+    second: Heretic_Golem_18
+  - first:
+      213: 7692118884376069199
+    second: Heretic_Golem_19
+  - first:
+      213: -4071178722618030542
+    second: Heretic_Golem_20
+  - first:
+      213: 332253911527280596
+    second: Heretic_Golem_21
+  - first:
+      213: -4706821071081358741
+    second: Heretic_Golem_22
+  - first:
+      213: 7755784155278292974
+    second: Heretic_Golem_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Heretic_Golem_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 41
+        width: 70
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b670babb74a788570800000000000000
+      internalID: 8469153547780032363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_1
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 43
+        width: 71
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 936acfcf107bf1ee0800000000000000
+      internalID: -1288109749237406151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_2
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 42
+        width: 78
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 835c8b98a6d44be50800000000000000
+      internalID: 6824164455345603896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_3
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 42
+        width: 78
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de3ce77696a6250e0800000000000000
+      internalID: -2282645060182948883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_4
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 47
+        width: 99
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf4fbc50179bdbe30800000000000000
+      internalID: 4520973496029541627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_5
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 48
+        width: 99
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c4d78fd1d8da2180800000000000000
+      internalID: -9139254097885014841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_6
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 6
+        width: 48
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60120041932120b20800000000000000
+      internalID: 3099059529942311174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_7
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 48
+        width: 101
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea6b8b02b57f91220800000000000000
+      internalID: 2457267042470377134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_8
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 6
+        width: 70
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76c800e7af56280f0800000000000000
+      internalID: -1116217631104267161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_9
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 6
+        width: 48
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9503dd97eb7d9190800000000000000
+      internalID: -7954065132150913635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_10
+      rect:
+        serializedVersion: 2
+        x: 625
+        y: 6
+        width: 69
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a17672e804b38940800000000000000
+      internalID: 5297275536969986469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_11
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 6
+        width: 74
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad6b973b1ca55fb70800000000000000
+      internalID: 8932145223945533146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_12
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 6
+        width: 74
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 202428198e1be8190800000000000000
+      internalID: -7958227879085325822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_13
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 6
+        width: 79
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e235e59644965740800000000000000
+      internalID: 5140459055573447401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_14
+      rect:
+        serializedVersion: 2
+        x: 921
+        y: 6
+        width: 79
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d49aa2a029838a140800000000000000
+      internalID: 4731093608439654733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 6
+        width: 51
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a786cc70eaa13120800000000000000
+      internalID: 2391880758253225889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_16
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 6
+        width: 51
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2942331503aa63ed0800000000000000
+      internalID: -2434571424049716078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_17
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 6
+        width: 49
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a1d34ddea8fafbf0800000000000000
+      internalID: -289645796091768407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_18
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 6
+        width: 49
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24ff1e006c8f69f90800000000000000
+      internalID: -6947091845870387390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_19
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 6
+        width: 51
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f444f49ee55efba60800000000000000
+      internalID: 7692118884376069199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_20
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 6
+        width: 51
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 236493595844087c0800000000000000
+      internalID: -4071178722618030542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_21
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 6
+        width: 48
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4df41d31c276c9400800000000000000
+      internalID: 332253911527280596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_22
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 6
+        width: 54
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6a3fd47c230eaeb0800000000000000
+      internalID: -4706821071081358741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Heretic_Golem_23
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 6
+        width: 54
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee737f9e89412ab60800000000000000
+      internalID: 7755784155278292974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Heretic_Golem_0: 8469153547780032363
+      Heretic_Golem_1: -1288109749237406151
+      Heretic_Golem_10: 5297275536969986469
+      Heretic_Golem_11: 8932145223945533146
+      Heretic_Golem_12: -7958227879085325822
+      Heretic_Golem_13: 5140459055573447401
+      Heretic_Golem_14: 4731093608439654733
+      Heretic_Golem_15: 2391880758253225889
+      Heretic_Golem_16: -2434571424049716078
+      Heretic_Golem_17: -289645796091768407
+      Heretic_Golem_18: -6947091845870387390
+      Heretic_Golem_19: 7692118884376069199
+      Heretic_Golem_2: 6824164455345603896
+      Heretic_Golem_20: -4071178722618030542
+      Heretic_Golem_21: 332253911527280596
+      Heretic_Golem_22: -4706821071081358741
+      Heretic_Golem_23: 7755784155278292974
+      Heretic_Golem_3: -2282645060182948883
+      Heretic_Golem_4: 4520973496029541627
+      Heretic_Golem_5: -9139254097885014841
+      Heretic_Golem_6: 3099059529942311174
+      Heretic_Golem_7: 2457267042470377134
+      Heretic_Golem_8: -1116217631104267161
+      Heretic_Golem_9: -7954065132150913635
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,637 @@
+fileFormatVersion: 2
+guid: 34626fd2acfcefb4793473144a8d465c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7540967966534810019
+    second: Raguel_0
+  - first:
+      213: -6005855130464684202
+    second: Raguel_1
+  - first:
+      213: -7132202610868623421
+    second: Raguel_2
+  - first:
+      213: -7612801026642554285
+    second: Raguel_3
+  - first:
+      213: 8514354952138538010
+    second: Raguel_4
+  - first:
+      213: -4488577302619640729
+    second: Raguel_5
+  - first:
+      213: 6637465062927175016
+    second: Raguel_6
+  - first:
+      213: 5728247290866907059
+    second: Raguel_7
+  - first:
+      213: 111352272296490490
+    second: Raguel_8
+  - first:
+      213: 9010766750632828485
+    second: Raguel_9
+  - first:
+      213: -5248838744007055541
+    second: Raguel_10
+  - first:
+      213: 6970959143845484538
+    second: Raguel_11
+  - first:
+      213: 6079734515435177152
+    second: Raguel_12
+  - first:
+      213: 4120834065417874870
+    second: Raguel_13
+  - first:
+      213: -7162648635860526352
+    second: Raguel_14
+  - first:
+      213: 6329936259491432114
+    second: Raguel_15
+  - first:
+      213: -6345954344172362092
+    second: Raguel_16
+  - first:
+      213: -7686860132135156413
+    second: Raguel_17
+  - first:
+      213: 5361785223721720154
+    second: Raguel_18
+  - first:
+      213: 7733393347644155201
+    second: Raguel_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Raguel_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 39
+        width: 104
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d56c7149699195790800000000000000
+      internalID: -7540967966534810019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_1
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 45
+        width: 95
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 657f138449ae6aca0800000000000000
+      internalID: -6005855130464684202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_2
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 16
+        width: 67
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c7ef017383550d90800000000000000
+      internalID: -7132202610868623421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_3
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 16
+        width: 67
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 352dd35fcc5e95690800000000000000
+      internalID: -7612801026642554285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_4
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 16
+        width: 71
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1c3ecdc7b0192670800000000000000
+      internalID: 8514354952138538010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_5
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 16
+        width: 51
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76ca97a89be55b1c0800000000000000
+      internalID: -4488577302619640729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_6
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 16
+        width: 47
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86d07d4de430d1c50800000000000000
+      internalID: 6637465062927175016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 16
+        width: 69
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b737bdbf82de7f40800000000000000
+      internalID: 5728247290866907059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_8
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 16
+        width: 69
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af53a2b3d4a9b8100800000000000000
+      internalID: 111352272296490490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_9
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 16
+        width: 69
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54ede5d5e9cac0d70800000000000000
+      internalID: 9010766750632828485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_10
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 16
+        width: 72
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b47e62cc8f06827b0800000000000000
+      internalID: -5248838744007055541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_11
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 16
+        width: 77
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af7dba85862ddb060800000000000000
+      internalID: 6970959143845484538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_12
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 16
+        width: 83
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c40239745e8f5450800000000000000
+      internalID: 6079734515435177152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_13
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 16
+        width: 83
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bdaf87dfb4203930800000000000000
+      internalID: 4120834065417874870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fad898d309299c90800000000000000
+      internalID: -7162648635860526352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_15
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 16
+        width: 21
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b60ad59d7378d750800000000000000
+      internalID: 6329936259491432114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_16
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 16
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49662c27524aee7a0800000000000000
+      internalID: -6345954344172362092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_17
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 16
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 345c8f1cf69c25590800000000000000
+      internalID: -7686860132135156413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_18
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 16
+        width: 34
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a591fd5c043e86a40800000000000000
+      internalID: 5361785223721720154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Raguel_19
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 16
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 145e2b2c648825b60800000000000000
+      internalID: 7733393347644155201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Raguel_0: -7540967966534810019
+      Raguel_1: -6005855130464684202
+      Raguel_10: -5248838744007055541
+      Raguel_11: 6970959143845484538
+      Raguel_12: 6079734515435177152
+      Raguel_13: 4120834065417874870
+      Raguel_14: -7162648635860526352
+      Raguel_15: 6329936259491432114
+      Raguel_16: -6345954344172362092
+      Raguel_17: -7686860132135156413
+      Raguel_18: 5361785223721720154
+      Raguel_19: 7733393347644155201
+      Raguel_2: -7132202610868623421
+      Raguel_3: -7612801026642554285
+      Raguel_4: 8514354952138538010
+      Raguel_5: -4488577302619640729
+      Raguel_6: 6637465062927175016
+      Raguel_7: 5728247290866907059
+      Raguel_8: 111352272296490490
+      Raguel_9: 9010766750632828485
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

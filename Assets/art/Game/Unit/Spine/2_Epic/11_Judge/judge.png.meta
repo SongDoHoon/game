@@ -1,0 +1,637 @@
+fileFormatVersion: 2
+guid: 9959fef2ca05d6141bc07e76e191dd70
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5395760312536377712
+    second: judge_0
+  - first:
+      213: 3390351578190030586
+    second: judge_1
+  - first:
+      213: 101415732654060756
+    second: judge_2
+  - first:
+      213: -1048012794035350591
+    second: judge_3
+  - first:
+      213: 2767182027815592236
+    second: judge_4
+  - first:
+      213: -5030750000581477215
+    second: judge_5
+  - first:
+      213: 1552391727826919558
+    second: judge_6
+  - first:
+      213: 8890744700054540156
+    second: judge_7
+  - first:
+      213: -8525759539161723876
+    second: judge_8
+  - first:
+      213: 6427730312171264884
+    second: judge_9
+  - first:
+      213: 7541395232769293530
+    second: judge_10
+  - first:
+      213: -5587482805131482897
+    second: judge_11
+  - first:
+      213: -1670169451948669296
+    second: judge_12
+  - first:
+      213: 7935996918351922242
+    second: judge_13
+  - first:
+      213: 4912663401144192830
+    second: judge_14
+  - first:
+      213: -7519789551039746826
+    second: judge_15
+  - first:
+      213: -77245374689654728
+    second: judge_16
+  - first:
+      213: -7239488374204866938
+    second: judge_17
+  - first:
+      213: -9174665076200554952
+    second: judge_18
+  - first:
+      213: 3849484197064211884
+    second: judge_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: judge_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 47
+        width: 69
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 079a1e19a6791ea40800000000000000
+      internalID: 5395760312536377712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_1
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 51
+        width: 67
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af6a3b92cc2fc0f20800000000000000
+      internalID: 3390351578190030586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 52
+        width: 69
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d43b7f421d486100800000000000000
+      internalID: 101415732654060756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_3
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 53
+        width: 56
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c3557b9ae5b471f0800000000000000
+      internalID: -1048012794035350591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_4
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 56
+        width: 78
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c212bc4a461076620800000000000000
+      internalID: 2767182027815592236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_5
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 63
+        width: 93
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ac7b8d478f2f2ab0800000000000000
+      internalID: -5030750000581477215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_6
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 26
+        width: 70
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 680e0613d043b8510800000000000000
+      internalID: 1552391727826919558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_7
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 26
+        width: 47
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7f00731335426b70800000000000000
+      internalID: 8890744700054540156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 26
+        width: 34
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1c0edbdeda6ea980800000000000000
+      internalID: -8525759539161723876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_9
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 26
+        width: 35
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47b9af0d9a2e33950800000000000000
+      internalID: 6427730312171264884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_10
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 26
+        width: 33
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adcb908120b68a860800000000000000
+      internalID: 7541395232769293530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_11
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 26
+        width: 28
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe8e8831ef54572b0800000000000000
+      internalID: -5587482805131482897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_12
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 26
+        width: 28
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09604ed7bbd52d8e0800000000000000
+      internalID: -1670169451948669296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_13
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 26
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24406f88623522e60800000000000000
+      internalID: 7935996918351922242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_14
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 26
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3f034eb5594d2440800000000000000
+      internalID: 4912663401144192830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_15
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 26
+        width: 27
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fce490be3754a790800000000000000
+      internalID: -7519789551039746826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_16
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 26
+        width: 28
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 838c411bdb19deef0800000000000000
+      internalID: -77245374689654728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_17
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 26
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68ed2fb1eab288b90800000000000000
+      internalID: -7239488374204866938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_18
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 26
+        width: 44
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83e32eff8ba0da080800000000000000
+      internalID: -9174665076200554952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: judge_19
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 26
+        width: 44
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cadfd765b7d1c6530800000000000000
+      internalID: 3849484197064211884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      judge_0: 5395760312536377712
+      judge_1: 3390351578190030586
+      judge_10: 7541395232769293530
+      judge_11: -5587482805131482897
+      judge_12: -1670169451948669296
+      judge_13: 7935996918351922242
+      judge_14: 4912663401144192830
+      judge_15: -7519789551039746826
+      judge_16: -77245374689654728
+      judge_17: -7239488374204866938
+      judge_18: -9174665076200554952
+      judge_19: 3849484197064211884
+      judge_2: 101415732654060756
+      judge_3: -1048012794035350591
+      judge_4: 2767182027815592236
+      judge_5: -5030750000581477215
+      judge_6: 1552391727826919558
+      judge_7: 8890744700054540156
+      judge_8: -8525759539161723876
+      judge_9: 6427730312171264884
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

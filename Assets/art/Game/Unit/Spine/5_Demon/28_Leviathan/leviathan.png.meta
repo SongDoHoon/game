@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 9c6a09e2cec2f684798af43d08ba6549
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3359040965647250944
+    second: leviathan_0
+  - first:
+      213: -6572770258152784097
+    second: leviathan_1
+  - first:
+      213: -5959472138908467740
+    second: leviathan_2
+  - first:
+      213: -8741539213147396465
+    second: leviathan_3
+  - first:
+      213: -1356752176031826408
+    second: leviathan_4
+  - first:
+      213: -3349549225968585440
+    second: leviathan_5
+  - first:
+      213: -4677187473050162090
+    second: leviathan_6
+  - first:
+      213: 1104336064855347313
+    second: leviathan_7
+  - first:
+      213: 5810702362508246064
+    second: leviathan_8
+  - first:
+      213: -8179210617520955357
+    second: leviathan_9
+  - first:
+      213: -8405725341255073982
+    second: leviathan_10
+  - first:
+      213: -7373931935925025020
+    second: leviathan_11
+  - first:
+      213: -6899750235323426210
+    second: leviathan_12
+  - first:
+      213: -5176332991362927176
+    second: leviathan_13
+  - first:
+      213: 6897825810550931119
+    second: leviathan_14
+  - first:
+      213: -5224812444931931953
+    second: leviathan_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: leviathan_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 58
+        width: 74
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00a4c98e90a4261d0800000000000000
+      internalID: -3359040965647250944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_1
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 23
+        width: 40
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1ffc843644d8c4a0800000000000000
+      internalID: -6572770258152784097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_2
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 23
+        width: 47
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4edf58f0aa3bb4da0800000000000000
+      internalID: -5959472138908467740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_3
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 23
+        width: 49
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f86a33a7660dfa680800000000000000
+      internalID: -8741539213147396465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_4
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 23
+        width: 51
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81e72639519db2de0800000000000000
+      internalID: -1356752176031826408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_5
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 23
+        width: 77
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0253574c9b20481d0800000000000000
+      internalID: -3349549225968585440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_6
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 23
+        width: 64
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65c20f826ca471fb0800000000000000
+      internalID: -4677187473050162090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_7
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 23
+        width: 63
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1701b5accc3635f00800000000000000
+      internalID: 1104336064855347313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_8
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 23
+        width: 74
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03cb3d42303c3a050800000000000000
+      internalID: 5810702362508246064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_9
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 23
+        width: 89
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3206f87574b9d7e80800000000000000
+      internalID: -8179210617520955357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_10
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 23
+        width: 110
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24ffdfa665dd85b80800000000000000
+      internalID: -8405725341255073982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_11
+      rect:
+        serializedVersion: 2
+        x: 734
+        y: 23
+        width: 72
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 407c74919f78aa990800000000000000
+      internalID: -7373931935925025020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_12
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 23
+        width: 105
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5a11a8a7b92f30a0800000000000000
+      internalID: -6899750235323426210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_13
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 23
+        width: 78
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b57daad198f928b0800000000000000
+      internalID: -5176332991362927176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 23
+        width: 34
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faeb86847000abf50800000000000000
+      internalID: 6897825810550931119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: leviathan_15
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 23
+        width: 35
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc0cac973ccbd77b0800000000000000
+      internalID: -5224812444931931953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      leviathan_0: -3359040965647250944
+      leviathan_1: -6572770258152784097
+      leviathan_10: -8405725341255073982
+      leviathan_11: -7373931935925025020
+      leviathan_12: -6899750235323426210
+      leviathan_13: -5176332991362927176
+      leviathan_14: 6897825810550931119
+      leviathan_15: -5224812444931931953
+      leviathan_2: -5959472138908467740
+      leviathan_3: -8741539213147396465
+      leviathan_4: -1356752176031826408
+      leviathan_5: -3349549225968585440
+      leviathan_6: -4677187473050162090
+      leviathan_7: 1104336064855347313
+      leviathan_8: 5810702362508246064
+      leviathan_9: -8179210617520955357
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
