@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class UnitPlacementManager : MonoBehaviour
 {
-    private static readonly Rect UnitPanelRect = new Rect(10f, 50f, 300f, 420f);
-
     public SummonManager summonManager;
     public GameObject unitPrefab;
     public UnitPlacementTile[] placementTiles;
@@ -35,12 +33,6 @@ public class UnitPlacementManager : MonoBehaviour
 
     public static UnitPlacementManager Instance { get; private set; }
 
-    private readonly List<UnitData> selectableUnits = new();
-    private Vector2 unitScrollPosition;
-    private UnitData selectedPlacementUnit;
-    private bool showUnitSelectionUI = true;
-    private bool hasPendingUnitSelectionUIToggle;
-    private bool showAllUnitRanges;
     private UnitController inspectedUnit;
     private RectTransform mergeButtonRectTransform;
     private CanvasGroup mergeButtonCanvasGroup;
@@ -63,7 +55,6 @@ public class UnitPlacementManager : MonoBehaviour
             goldManager = FindAnyObjectByType<GoldManager>();
 
         ResolveEvolutionService();
-        RefreshSelectableUnits();
         RefreshRangeVisuals();
         CreateExchangeButtonUI();
         BindMergeButtonEvent();
@@ -118,9 +109,6 @@ public class UnitPlacementManager : MonoBehaviour
     {
         if (tile == null || tile.IsOccupied) return false;
         if (unitPrefab == null) return false;
-
-        if (selectedPlacementUnit != null)
-            return tile.PlaceNewUnit(unitPrefab, selectedPlacementUnit);
 
         if (summonManager == null) return false;
 
@@ -238,162 +226,7 @@ public class UnitPlacementManager : MonoBehaviour
         if (unit == null)
             return false;
 
-        return showAllUnitRanges || inspectedUnit == unit;
-    }
-
-    private void RefreshSelectableUnits()
-    {
-        selectableUnits.Clear();
-
-        if (summonManager != null && summonManager.summonTable != null)
-        {
-            AddUnitsFromEntries(summonManager.summonTable.normalUnits);
-            AddUnitsFromEntries(summonManager.summonTable.rareUnits);
-            AddUnitsFromEntries(summonManager.summonTable.epicUnits);
-            AddUnitsFromEntries(summonManager.summonTable.verureUnits);
-        }
-
-        UnitGrowthManager unitGrowthManager = UnitGrowthManager.Instance;
-        if (unitGrowthManager == null)
-            unitGrowthManager = FindAnyObjectByType<UnitGrowthManager>();
-
-        if (unitGrowthManager != null)
-            AddUnitsFromDatabase(unitGrowthManager.unitDatabase);
-
-        EvolutionManager evolutionManager = FindAnyObjectByType<EvolutionManager>();
-        if (evolutionManager != null)
-        {
-            foreach (EvolutionRecipe recipe in evolutionManager.recipes)
-            {
-                if (recipe == null) continue;
-
-                AddSelectableUnit(recipe.requiredBaseUnit);
-                AddSelectableUnit(recipe.resultUnit);
-            }
-        }
-
-        selectableUnits.Sort(CompareUnitData);
-    }
-
-    private void AddUnitsFromEntries(List<WeightedUnitEntry> entries)
-    {
-        if (entries == null)
-            return;
-
-        foreach (WeightedUnitEntry entry in entries)
-        {
-            if (entry == null) continue;
-            AddSelectableUnit(entry.unitData);
-        }
-    }
-
-    private void AddUnitsFromDatabase(UnitData[] unitDatabase)
-    {
-        if (unitDatabase == null)
-            return;
-
-        foreach (UnitData unitData in unitDatabase)
-            AddSelectableUnit(unitData);
-    }
-
-    private void AddSelectableUnit(UnitData unitData)
-    {
-        if (unitData == null)
-            return;
-
-        if (selectableUnits.Contains(unitData))
-            return;
-
-        selectableUnits.Add(unitData);
-    }
-
-    private int CompareUnitData(UnitData left, UnitData right)
-    {
-        if (left == right)
-            return 0;
-
-        if (left == null)
-            return 1;
-
-        if (right == null)
-            return -1;
-
-        int gradeCompare = ((int)left.grade).CompareTo((int)right.grade);
-        if (gradeCompare != 0)
-            return gradeCompare;
-
-        bool leftIdParsed = int.TryParse(left.unitId, out int leftId);
-        bool rightIdParsed = int.TryParse(right.unitId, out int rightId);
-
-        if (leftIdParsed && rightIdParsed)
-        {
-            int idCompare = leftId.CompareTo(rightId);
-            if (idCompare != 0)
-                return idCompare;
-        }
-
-        return string.Compare(left.unitName, right.unitName, System.StringComparison.Ordinal);
-    }
-
-    private void OnGUI()
-    {
-        if (Event.current.type == EventType.Layout && hasPendingUnitSelectionUIToggle)
-        {
-            showUnitSelectionUI = !showUnitSelectionUI;
-            hasPendingUnitSelectionUIToggle = false;
-        }
-
-        DrawUnitSelectionToggle();
-
-        if (!showUnitSelectionUI)
-            return;
-
-        GUILayout.BeginArea(UnitPanelRect, "Unit Placement", GUI.skin.window);
-        GUILayout.Label(selectedPlacementUnit != null
-            ? $"Selected: {selectedPlacementUnit.unitName}"
-            : "Selected: Random Summon");
-        GUILayout.Label(selectedPlacementUnit != null
-            ? "Empty tile click: selected unit direct placement"
-            : "Empty tile click: summon table random placement");
-
-        GUILayout.BeginHorizontal();
-
-        if (GUILayout.Button("Random Summon Mode", GUILayout.Height(28f)))
-            selectedPlacementUnit = null;
-
-        if (GUILayout.Button("Refresh List", GUILayout.Height(28f)))
-            RefreshSelectableUnits();
-
-        GUILayout.EndHorizontal();
-
-        bool nextShowAllRanges = GUILayout.Toggle(showAllUnitRanges, "Show All Unit Ranges");
-        if (nextShowAllRanges != showAllUnitRanges)
-        {
-            showAllUnitRanges = nextShowAllRanges;
-            RefreshRangeVisuals();
-        }
-
-        if (GUILayout.Button("Clear Range Focus", GUILayout.Height(24f)))
-            ClearInspectedUnit();
-
-        GUILayout.Label(inspectedUnit != null
-            ? $"Range Focus: {(inspectedUnit.Data != null ? inspectedUnit.Data.unitName : inspectedUnit.name)}"
-            : "Range Focus: None");
-
-        unitScrollPosition = GUILayout.BeginScrollView(unitScrollPosition, GUILayout.ExpandHeight(true));
-
-        foreach (UnitData unitData in selectableUnits)
-        {
-            if (unitData == null)
-                continue;
-
-            string label = $"[{unitData.grade}] {unitData.unitName}";
-            if (GUILayout.Button(label, GUILayout.Height(28f)))
-                selectedPlacementUnit = unitData;
-        }
-
-        GUILayout.EndScrollView();
-        GUILayout.EndArea();
+        return inspectedUnit == unit;
     }
 
     public void TryMergeInspectedUnit()
@@ -459,54 +292,6 @@ public class UnitPlacementManager : MonoBehaviour
         }
 
         RefreshMergeUI();
-    }
-
-    private void DrawUnitSelectionToggle()
-    {
-        Rect toggleRect = new Rect(10f, 10f, 150f, 30f);
-        string buttonLabel = showUnitSelectionUI ? "Hide Unit UI" : "Show Unit UI";
-
-        if (GUI.Button(toggleRect, buttonLabel))
-            hasPendingUnitSelectionUIToggle = true;
-    }
-
-    private void DrawSelectedUnitOverlay()
-    {
-        if (inspectedUnit == null)
-            return;
-
-        Camera targetCamera = Camera.main;
-        if (targetCamera == null)
-            return;
-
-        bool canMerge = TryGetMergeInfo(inspectedUnit, out UnitController materialUnit, out UnitData mergeResult, out string reason);
-        Vector3 worldPosition = inspectedUnit.transform.position + new Vector3(0f, 1.35f, 0f);
-        Vector3 screenPoint = targetCamera.WorldToScreenPoint(worldPosition);
-
-        if (screenPoint.z <= 0f)
-            return;
-
-        float guiX = screenPoint.x - 90f;
-        float guiY = Screen.height - screenPoint.y - 44f;
-        Rect overlayRect = new Rect(guiX, guiY, 180f, 72f);
-
-        if (showUnitSelectionUI && overlayRect.Overlaps(UnitPanelRect))
-            guiX = UnitPanelRect.xMax + 12f;
-
-        overlayRect.x = Mathf.Clamp(guiX, 0f, Mathf.Max(0f, Screen.width - overlayRect.width));
-        overlayRect.y = Mathf.Clamp(guiY, 0f, Mathf.Max(0f, Screen.height - overlayRect.height));
-
-        GUILayout.BeginArea(overlayRect, GUI.skin.window);
-        GUILayout.Label(canMerge ? "Merge" : reason);
-
-        bool previousGuiEnabled = GUI.enabled;
-        GUI.enabled = canMerge && materialUnit != null;
-
-        if (GUILayout.Button("Merge", GUILayout.Height(28f)))
-            TryMergeInspectedUnit();
-
-        GUI.enabled = previousGuiEnabled;
-        GUILayout.EndArea();
     }
 
     private bool TryGetMergeInfo(UnitController baseUnit, out UnitController materialUnit, out UnitData mergeResult, out string reason)
@@ -795,8 +580,7 @@ public class UnitPlacementManager : MonoBehaviour
         if (unitData == null)
             return GameBalanceConfig.UnitExchangeUnavailableCost;
 
-        int baseCost = GameBalanceConfig.GetUnitExchangeBaseCost(unitData.grade);
-        return GameModifierState.GetReducedUnitExchangeCost(baseCost);
+        return GameBalanceConfig.GetUnitExchangeBaseCost(unitData.grade);
     }
 
     private bool IsValidExchangeCandidate(WeightedUnitEntry entry, UnitData currentUnit)
@@ -879,7 +663,7 @@ public class UnitPlacementManager : MonoBehaviour
             if (unit == null)
                 continue;
 
-            bool shouldShow = !clearOnly && (showAllUnitRanges || unit == inspectedUnit);
+            bool shouldShow = !clearOnly && unit == inspectedUnit;
             unit.SetSelectionVisualActive(shouldShow);
         }
     }

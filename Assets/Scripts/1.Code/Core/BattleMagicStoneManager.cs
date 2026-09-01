@@ -19,7 +19,6 @@ public class BattleMagicStoneManager : MonoBehaviour
 
     [Header("Gold")]
     public GoldManager goldManager;
-    private WaveManager waveManager;
 
     [Header("Runtime")]
     [SerializeField] private double currentBattleMagicStone;
@@ -43,9 +42,6 @@ public class BattleMagicStoneManager : MonoBehaviour
         if (goldManager == null)
             goldManager = FindAnyObjectByType<GoldManager>();
 
-        if (waveManager == null)
-            waveManager = FindAnyObjectByType<WaveManager>();
-
         ResetForBattle();
     }
 
@@ -58,9 +54,6 @@ public class BattleMagicStoneManager : MonoBehaviour
     private void Update()
     {
         if (workerCount <= 0)
-            return;
-
-        if (IsProductionPaused())
             return;
 
         currentBattleMagicStone += MagicStonePerSecond * Time.deltaTime;
@@ -180,13 +173,5 @@ public class BattleMagicStoneManager : MonoBehaviour
     public UnitEnhanceGroup GetGroupByUnitGrade(UnitGrade grade)
     {
         return GameModifierState.GetEnhancementGroup(grade);
-    }
-
-    private bool IsProductionPaused()
-    {
-        if (waveManager == null)
-            waveManager = FindAnyObjectByType<WaveManager>();
-
-        return waveManager != null && waveManager.isPausedForAuction;
     }
 }

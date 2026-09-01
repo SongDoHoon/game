@@ -4,8 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class WaveManager : MonoBehaviour
 {
+    private const float DefaultAutoStartDelay = 5f;
     private static bool autoStartRequested;
-    private static float requestedAutoStartDelay = 5f;
+    private static float requestedAutoStartDelay = DefaultAutoStartDelay;
 
     [Header("Spawner")]
     public MonsterSpawner monsterSpawner;
@@ -17,7 +18,6 @@ public class WaveManager : MonoBehaviour
     public int currentWave = 0;
     public bool waveStarted = false;
     public bool waitingForNextWave = false;
-    public bool isPausedForAuction = false;
     public bool gameEnded = false;
     public float elapsedBattleTime = 0f;
 
@@ -41,10 +41,7 @@ public class WaveManager : MonoBehaviour
     {
         ResolveBattleLifeManager();
 
-        if (!autoStartRequested)
-            return;
-
-        float delay = requestedAutoStartDelay;
+        float delay = autoStartRequested ? requestedAutoStartDelay : DefaultAutoStartDelay;
         autoStartRequested = false;
         autoStartCoroutine = StartCoroutine(CoStartFirstWaveAfterDelay(delay));
     }
@@ -62,11 +59,8 @@ public class WaveManager : MonoBehaviour
 
         CancelAutoStart();
         ResetBattleRuntimeData();
-        ContractManager contractManager = ContractManager.EnsureInstance(this);
-        if (contractManager != null && contractManager.TryOfferContract(0, StartFirstWaveAfterContract))
-            return;
-
-        StartFirstWaveAfterContract();
+        waveStarted = true;
+        StartNextWave();
     }
 
     private void Update()
@@ -80,7 +74,6 @@ public class WaveManager : MonoBehaviour
     public void StartNextWave()
     {
         if (monsterSpawner == null) return;
-        if (isPausedForAuction) return;
         if (gameEnded) return;
         if (currentWave >= finalWave) return;
 
@@ -122,7 +115,7 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        if (aliveMonsterCount <= 0 && !waitingForNextWave && !isPausedForAuction && currentWave < finalWave)
+        if (aliveMonsterCount <= 0 && !waitingForNextWave && currentWave < finalWave)
         {
             GrantStageClearGold();
             waitingForNextWave = true;
@@ -152,70 +145,11 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        if (aliveMonsterCount <= 0 && !waitingForNextWave && !isPausedForAuction && currentWave < finalWave)
+        if (aliveMonsterCount <= 0 && !waitingForNextWave && currentWave < finalWave)
         {
             waitingForNextWave = true;
             Invoke(nameof(StartNextWave), 1.5f);
         }
-    }
-
-    public void PauseForAuction()
-    {
-        if (gameEnded)
-            return;
-
-        isPausedForAuction = true;
-        waitingForNextWave = false;
-        CancelInvoke(nameof(StartNextWave));
-
-        if (spawnWaveCoroutine != null)
-        {
-            StopCoroutine(spawnWaveCoroutine);
-            spawnWaveCoroutine = null;
-        }
-    }
-
-    public void ResumeAfterAuction()
-    {
-        if (gameEnded)
-            return;
-
-        if (!isPausedForAuction)
-            return;
-
-        isPausedForAuction = false;
-
-        if (aliveMonsterCount <= 0 && !waitingForNextWave)
-        {
-            waitingForNextWave = true;
-            Invoke(nameof(StartNextWave), 1.5f);
-        }
-    }
-
-    public void ResumeAfterContract()
-    {
-        if (gameEnded)
-            return;
-
-        if (!isPausedForAuction)
-            return;
-
-        isPausedForAuction = false;
-
-        if (aliveMonsterCount <= 0 && !waitingForNextWave)
-        {
-            waitingForNextWave = true;
-            StartNextWave();
-        }
-    }
-
-    private void StartFirstWaveAfterContract()
-    {
-        if (gameEnded)
-            return;
-
-        waveStarted = true;
-        StartNextWave();
     }
 
     private IEnumerator CoSpawnNormalWave()
@@ -224,9 +158,6 @@ public class WaveManager : MonoBehaviour
 
         for (int i = 0; i < normalMonsterCount; i++)
         {
-            if (isPausedForAuction)
-                yield break;
-
             MonsterController spawnedMonster = monsterSpawner.SpawnNormalForWave(this);
 
             if (i < normalMonsterCount - 1)
@@ -270,10 +201,6 @@ public class WaveManager : MonoBehaviour
         else
             GameModifierState.ResetBattleState();
 
-        ContractManager contractManager = ContractManager.EnsureInstance(this);
-        if (contractManager != null)
-            contractManager.ResetForBattle();
-
         bountyManager = BountyManager.EnsureInstance(this, monsterSpawner);
         if (bountyManager != null)
             bountyManager.ResetBountyForBattleStart();
@@ -295,7 +222,6 @@ public class WaveManager : MonoBehaviour
         gameEnded = true;
         waveStarted = false;
         waitingForNextWave = false;
-        isPausedForAuction = false;
         CancelInvoke(nameof(StartNextWave));
 
         if (spawnWaveCoroutine != null)

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitController : MonoBehaviour
@@ -208,8 +208,8 @@ public class UnitController : MonoBehaviour
             Data,
             unitGrowth,
             playerPassiveGrowth,
-            GameModifierState.ContractAttackPowerBonus,
-            GameModifierState.ContractAttackSpeedBonus,
+            0f,
+            0f,
             runtimeAttackBonus,
             runtimeAttackSpeedBonus);
 

@@ -226,8 +226,8 @@ public class EnhancementUIController : MonoBehaviour
         bool isMaxLevel = level >= GameBalanceConfig.MaxEnhancementLevel;
         int cost = isMaxLevel ? 0 : GameModifierState.GetNextEnhancementCost(group);
 
-        if (levelText != null)
-            SetTextIfChanged(levelText, $"Lv. {level}/{GameBalanceConfig.MaxEnhancementLevel}");
+        if (levelText != null && SetTextIfChanged(levelText, $"Lv.{level}"))
+            levelText.ForceMeshUpdate();
 
         CurrencyDisplayUtility.SetIconSprite(costIcon, magicStoneSprite);
         CurrencyDisplayUtility.SetIconVisible(costIcon, !isMaxLevel && CurrencyDisplayUtility.ShouldUseIcon(costIcon));

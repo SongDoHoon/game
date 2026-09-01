@@ -1,0 +1,585 @@
+fileFormatVersion: 2
+guid: d2f767e39fa5c054db8ffe89bec15dbf
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4928284627056355153
+    second: fire_bird_0
+  - first:
+      213: -3131745350150931174
+    second: fire_bird_1
+  - first:
+      213: 361715733467552294
+    second: fire_bird_2
+  - first:
+      213: 812208686528923816
+    second: fire_bird_3
+  - first:
+      213: 3562535161995079548
+    second: fire_bird_4
+  - first:
+      213: -6230418270808418981
+    second: fire_bird_5
+  - first:
+      213: -877083968905631490
+    second: fire_bird_6
+  - first:
+      213: 8751980975870737836
+    second: fire_bird_7
+  - first:
+      213: -2190288601210184190
+    second: fire_bird_8
+  - first:
+      213: 6352551464449738760
+    second: fire_bird_9
+  - first:
+      213: 4355425621460211917
+    second: fire_bird_10
+  - first:
+      213: -6262971340790430001
+    second: fire_bird_11
+  - first:
+      213: 6933156094905074245
+    second: fire_bird_12
+  - first:
+      213: 4752536364028027003
+    second: fire_bird_13
+  - first:
+      213: -3434965237002840828
+    second: fire_bird_14
+  - first:
+      213: -3690198267424582868
+    second: fire_bird_15
+  - first:
+      213: 2550391761979292482
+    second: fire_bird_16
+  - first:
+      213: -6460257791707067224
+    second: fire_bird_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: fire_bird_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 34
+        width: 75
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa8994c2e373b9bb0800000000000000
+      internalID: -4928284627056355153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_1
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 36
+        width: 86
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1db54d523ec984d0800000000000000
+      internalID: -3131745350150931174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_2
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 46
+        width: 99
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62ad00b0b82150500800000000000000
+      internalID: 361715733467552294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_3
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 1
+        width: 67
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a80b044f7b854b00800000000000000
+      internalID: 812208686528923816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_4
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 1
+        width: 68
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7f2e8ecadaa07130800000000000000
+      internalID: 3562535161995079548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_5
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 1
+        width: 49
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b555c56c79b1989a0800000000000000
+      internalID: -6230418270808418981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_6
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 1
+        width: 71
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef8a03bf6c8f3d3f0800000000000000
+      internalID: -877083968905631490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_7
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 1
+        width: 63
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cad70cbd358457970800000000000000
+      internalID: 8751980975870737836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_8
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 1
+        width: 74
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20e97413f188a91e0800000000000000
+      internalID: -2190288601210184190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_9
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 1
+        width: 67
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8080aef46ebc82850800000000000000
+      internalID: 6352551464449738760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_10
+      rect:
+        serializedVersion: 2
+        x: 794
+        y: 1
+        width: 65
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc855c4d684917c30800000000000000
+      internalID: 4355425621460211917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_11
+      rect:
+        serializedVersion: 2
+        x: 859
+        y: 1
+        width: 78
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc60cb98fb47519a0800000000000000
+      internalID: -6262971340790430001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_12
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 1
+        width: 66
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 542c6212cb4873060800000000000000
+      internalID: 6933156094905074245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_13
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 66
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b706400a4a664f140800000000000000
+      internalID: 4752536364028027003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_14
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 1
+        width: 64
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40551a0f05d8450d0800000000000000
+      internalID: -3434965237002840828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_15
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 1
+        width: 51
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c23556f2a38c9ccc0800000000000000
+      internalID: -3690198267424582868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_16
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 1
+        width: 79
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24bbbd28bcfc46320800000000000000
+      internalID: 2550391761979292482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fire_bird_17
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 1
+        width: 74
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8acc9df24cd8856a0800000000000000
+      internalID: -6460257791707067224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      fire_bird_0: -4928284627056355153
+      fire_bird_1: -3131745350150931174
+      fire_bird_10: 4355425621460211917
+      fire_bird_11: -6262971340790430001
+      fire_bird_12: 6933156094905074245
+      fire_bird_13: 4752536364028027003
+      fire_bird_14: -3434965237002840828
+      fire_bird_15: -3690198267424582868
+      fire_bird_16: 2550391761979292482
+      fire_bird_17: -6460257791707067224
+      fire_bird_2: 361715733467552294
+      fire_bird_3: 812208686528923816
+      fire_bird_4: 3562535161995079548
+      fire_bird_5: -6230418270808418981
+      fire_bird_6: -877083968905631490
+      fire_bird_7: 8751980975870737836
+      fire_bird_8: -2190288601210184190
+      fire_bird_9: 6352551464449738760
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

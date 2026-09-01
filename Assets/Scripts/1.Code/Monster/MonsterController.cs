@@ -135,13 +135,11 @@ public class MonsterController : MonoBehaviour
     {
         if (waypointPath == null) return;
         if (isStunned) return;
-        if (waveManager != null && waveManager.isPausedForAuction) return;
 
         Transform target = waypointPath.GetWaypoint(currentWaypointIndex);
         if (target == null) return;
 
-        float globalSpeedReduction = GameModifierState.ContractMonsterMoveSpeedReduction
-            + UnitSkillHandler.GetGlobalPassiveMonsterMoveSpeedReduction();
+        float globalSpeedReduction = UnitSkillHandler.GetGlobalPassiveMonsterMoveSpeedReduction();
         float globalSpeedMultiplier = Mathf.Clamp01(1f - globalSpeedReduction);
         float finalSpeed = moveSpeed * speedMultiplier * globalSpeedMultiplier;
         RefreshMoveSpeedDebugFields(globalSpeedReduction, globalSpeedMultiplier, finalSpeed);
@@ -480,22 +478,6 @@ public class MonsterController : MonoBehaviour
         if (waveManager != null)
         {
             waveManager.NotifyMonsterDead();
-        }
-
-        if (isBoss)
-        {
-            if (waveManager != null && waveManager.gameEnded)
-            {
-                gameObject.SetActive(false);
-                Destroy(gameObject);
-                return;
-            }
-
-            BossRewardController bossRewardController = FindAnyObjectByType<BossRewardController>();
-            if (bossRewardController != null)
-            {
-                bossRewardController.OpenBossAuction();
-            }
         }
 
         gameObject.SetActive(false);

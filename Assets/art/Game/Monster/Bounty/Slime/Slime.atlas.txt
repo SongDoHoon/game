@@ -1,0 +1,5 @@
+Slime.png
+size:128,128
+filter:Linear,Linear
+L_Body
+bounds:2,2,78,78

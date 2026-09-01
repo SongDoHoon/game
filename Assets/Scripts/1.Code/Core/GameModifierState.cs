@@ -10,49 +10,10 @@ public static class GameModifierState
         { UnitEnhanceGroup.EvolutionGroup, 0 }
     };
 
-    public static float GlobalAttackSpeedBonus { get; private set; }
-    public static float GlobalAttackPowerBonus { get; private set; }
-    public static float AngelDemonCooldownReduction { get; private set; }
-    public static float MonsterMoveSpeedReduction { get; private set; }
-    public static float AngelDemonSkillDamageBonus { get; private set; }
-    public static int StageStartBonusGold { get; private set; }
-    public static float HigherGradeSummonChanceBonus { get; private set; }
-    public static float MergeTwoGradeUpChance { get; private set; }
-    public static float UnitExchangeCostReduction { get; private set; }
-    public static float ContractAttackPowerBonus { get; private set; }
-    public static float ContractAttackSpeedBonus { get; private set; }
-    public static float ContractMonsterMoveSpeedReduction { get; private set; }
-
     public static void ResetBattleState()
     {
         ResetEnhancementLevels();
 
-        GlobalAttackSpeedBonus = 0f;
-        GlobalAttackPowerBonus = 0f;
-        AngelDemonCooldownReduction = 0f;
-        MonsterMoveSpeedReduction = 0f;
-        AngelDemonSkillDamageBonus = 0f;
-        StageStartBonusGold = 0;
-        HigherGradeSummonChanceBonus = 0f;
-        MergeTwoGradeUpChance = 0f;
-        UnitExchangeCostReduction = 0f;
-        ContractAttackPowerBonus = 0f;
-        ContractAttackSpeedBonus = 0f;
-        ContractMonsterMoveSpeedReduction = 0f;
-
-        RecalculateAllUnitStats();
-    }
-
-    public static void ApplyAuctionReward(AuctionRewardOption option)
-    {
-        Debug.Log("[Auction] 경매 아이템 효과 modifier 제거 완료: ApplyAuctionReward는 더 이상 효과를 적용하지 않습니다.");
-    }
-
-    public static void SetContractModifiers(float attackPowerBonus, float attackSpeedBonus, float monsterMoveSpeedReduction)
-    {
-        ContractAttackPowerBonus = attackPowerBonus;
-        ContractAttackSpeedBonus = attackSpeedBonus;
-        ContractMonsterMoveSpeedReduction = Mathf.Clamp01(monsterMoveSpeedReduction);
         RecalculateAllUnitStats();
     }
 
@@ -95,14 +56,6 @@ public static class GameModifierState
         return GameBalanceConfig.GetEnhanceGroup(grade);
     }
 
-    public static int GetReducedUnitExchangeCost(int baseCost)
-    {
-        if (baseCost < 0)
-            return GameBalanceConfig.UnitExchangeUnavailableCost;
-
-        return baseCost;
-    }
-
     public static float GetEnhancementAttackPowerMultiplier(UnitGrade grade)
     {
         UnitEnhanceGroup group = GameBalanceConfig.GetEnhanceGroup(grade);
@@ -121,12 +74,6 @@ public static class GameModifierState
         return GameBalanceConfig.TryGetEnhancementData(group, level, out EnhancementLevelData data)
             ? data.attackSpeedMultiplier
             : 1f;
-    }
-
-    public static bool IsEvolutionGrade(UnitData unitData)
-    {
-        return unitData != null
-            && (unitData.grade == UnitGrade.ArchAngel || unitData.grade == UnitGrade.GreatDemon);
     }
 
     private static void RecalculateAllUnitStats()

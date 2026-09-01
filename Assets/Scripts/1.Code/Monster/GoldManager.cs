@@ -31,9 +31,4 @@ public class GoldManager : MonoBehaviour
     {
         return GameModifierState.GetNextEnhancementCost(group);
     }
-
-    public int GetReducedUnitExchangeCost(int baseCost)
-    {
-        return GameModifierState.GetReducedUnitExchangeCost(baseCost);
-    }
 }

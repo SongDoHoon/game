@@ -19,7 +19,7 @@ MonoBehaviour:
   portraitSprite: {fileID: 0}
   useGradeTintOnSprite: 0
   animatorController: {fileID: 0}
-  spineSkeletonData: {fileID: 0}
+  spineSkeletonData: {fileID: 11400000, guid: 8a371697f08046b47aa6b2d470bce6de, type: 2}
   hideSpriteWhenSpineVisual: 1
   spineLocalPosition: {x: 0, y: 0, z: 0}
   spineLocalScale: {x: 0.9, y: 0.9, z: 0.9}

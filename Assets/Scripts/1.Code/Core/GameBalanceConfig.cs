@@ -5,50 +5,9 @@ public static class GameBalanceConfig
 {
     public const int MaxEnhancementLevel = 30;
     public const int StageClearGold = 10;
-    public const int EvolutionAuctionStartStage = 30;
     public const int UnitExchangeUnavailableCost = -1;
 
     private static readonly int[] BossClearGoldByStage = { 50, 100, 200, 250, 300, 350, 400, 450, 500, 0 };
-    private static readonly int[] AuctionBasePriceByStage = { 20, 40, 75, 95, 120, 145, 170, 200, 240, 0 };
-
-    private static readonly AuctionRewardType[] NormalAuctionRewards =
-    {
-        AuctionRewardType.GlobalAttackSpeedUp,
-        AuctionRewardType.GlobalAttackPowerUp,
-        AuctionRewardType.AngelDemonCooldownReduction,
-        AuctionRewardType.MonsterMoveSpeedReduction,
-        AuctionRewardType.AngelDemonSkillDamageUp,
-        AuctionRewardType.StageStartBonusGold,
-        AuctionRewardType.HigherGradeSummonChanceUp,
-        AuctionRewardType.MergeTwoGradeUpChance,
-        AuctionRewardType.UnitExchangeCostReduction
-    };
-
-    private static readonly EvolutionItemType[] EvolutionAuctionRewards =
-    {
-        EvolutionItemType.Baekho,
-        EvolutionItemType.Cheongryong,
-        EvolutionItemType.Hyeonmu,
-        EvolutionItemType.Jujak,
-        EvolutionItemType.Taotie,
-        EvolutionItemType.Qiongqi,
-        EvolutionItemType.Taowu,
-        EvolutionItemType.Hundun
-    };
-
-    private static readonly Dictionary<AuctionRewardType, float> AuctionPriceMultipliers = new()
-    {
-        { AuctionRewardType.GlobalAttackSpeedUp, 1f },
-        { AuctionRewardType.GlobalAttackPowerUp, 1.15f },
-        { AuctionRewardType.AngelDemonCooldownReduction, 1.05f },
-        { AuctionRewardType.MonsterMoveSpeedReduction, 0.95f },
-        { AuctionRewardType.AngelDemonSkillDamageUp, 1.05f },
-        { AuctionRewardType.StageStartBonusGold, 1.2f },
-        { AuctionRewardType.HigherGradeSummonChanceUp, 1.25f },
-        { AuctionRewardType.MergeTwoGradeUpChance, 1.35f },
-        { AuctionRewardType.UnitExchangeCostReduction, 0.85f },
-        { AuctionRewardType.EvolutionItem, 1.5f }
-    };
 
     private static readonly Dictionary<UnitEnhanceGroup, EnhancementLevelData[]> EnhancementTables = new()
     {
@@ -184,76 +143,6 @@ public static class GameBalanceConfig
         return index >= 0 ? BossClearGoldByStage[index] : 0;
     }
 
-    public static bool HasAuctionAtStage(int stage)
-    {
-        return false;
-    }
-
-    public static int GetAuctionBasePrice(int stage)
-    {
-        int index = GetBossStageIndex(stage);
-        return index >= 0 ? AuctionBasePriceByStage[index] : 0;
-    }
-
-    public static float GetAuctionPriceMultiplier(AuctionRewardType rewardType)
-    {
-        return AuctionPriceMultipliers.TryGetValue(rewardType, out float multiplier) ? multiplier : 1f;
-    }
-
-    public static int GetAuctionStartPrice(int stage, AuctionRewardType rewardType)
-    {
-        return Mathf.RoundToInt(GetAuctionBasePrice(stage) * GetAuctionPriceMultiplier(rewardType));
-    }
-
-    public static AuctionRewardOption[] CreateAuctionOptions(int stage)
-    {
-        Debug.Log("[Auction] 경매 아이템 선택 로직 비활성화 완료");
-        return new AuctionRewardOption[0];
-    }
-
-    public static AuctionAIPersonality RollAIPersonality(int stage)
-    {
-        float roll = Random.value;
-
-        if (stage <= 20)
-            return roll < 0.4f ? AuctionAIPersonality.Passive : roll < 0.85f ? AuctionAIPersonality.Normal : AuctionAIPersonality.Aggressive;
-
-        if (stage <= 60)
-            return roll < 0.25f ? AuctionAIPersonality.Passive : roll < 0.75f ? AuctionAIPersonality.Normal : AuctionAIPersonality.Aggressive;
-
-        return roll < 0.15f ? AuctionAIPersonality.Passive : roll < 0.6f ? AuctionAIPersonality.Normal : AuctionAIPersonality.Aggressive;
-    }
-
-    public static float GetAIBudgetMultiplier(AuctionAIPersonality personality)
-    {
-        return personality switch
-        {
-            AuctionAIPersonality.Passive => 1.25f,
-            AuctionAIPersonality.Normal => 1.6f,
-            AuctionAIPersonality.Aggressive => 2.1f,
-            _ => 1.25f
-        };
-    }
-
-    public static float GetAIRebidChance(float burdenRate)
-    {
-        if (burdenRate > 1f) return 0f;
-        if (burdenRate <= 0.6f) return 0.9f;
-        if (burdenRate <= 0.75f) return 0.7f;
-        if (burdenRate <= 0.9f) return 0.45f;
-        return 0.2f;
-    }
-
-    public static int GetMinBidIncrease(int currentPrice)
-    {
-        if (currentPrice < 20) return 1;
-        if (currentPrice < 50) return 3;
-        if (currentPrice < 100) return 5;
-        if (currentPrice < 300) return 10;
-        if (currentPrice < 800) return 25;
-        return 50;
-    }
-
     public static bool TryGetEnhancementData(UnitEnhanceGroup group, int level, out EnhancementLevelData data)
     {
         data = default;
@@ -324,55 +213,7 @@ public static class GameBalanceConfig
         return (stage / 10) - 1;
     }
 
-    private static int GetEvolutionOptionCount(int stage)
-    {
-        if (stage < EvolutionAuctionStartStage)
-            return 0;
 
-        if (stage <= 60)
-            return 2;
-
-        return Random.Range(2, 4);
-    }
-
-    private static void AddEvolutionOptions(List<AuctionRewardOption> options, int stage, int count)
-    {
-        List<EvolutionItemType> pool = new(EvolutionAuctionRewards);
-
-        for (int i = 0; i < count && pool.Count > 0; i++)
-        {
-            int index = Random.Range(0, pool.Count);
-            EvolutionItemType item = pool[index];
-            pool.RemoveAt(index);
-
-            options.Add(AuctionRewardOption.CreateEvolutionItem(item, stage));
-        }
-    }
-
-    private static void AddNormalOptions(List<AuctionRewardOption> options, int stage, int count)
-    {
-        List<AuctionRewardType> pool = new(NormalAuctionRewards);
-
-        for (int i = 0; i < count && pool.Count > 0; i++)
-        {
-            int index = Random.Range(0, pool.Count);
-            AuctionRewardType rewardType = pool[index];
-            pool.RemoveAt(index);
-
-            options.Add(AuctionRewardOption.CreateReward(rewardType, stage));
-        }
-    }
-
-    private static void Shuffle<T>(List<T> list)
-    {
-        for (int i = 0; i < list.Count; i++)
-        {
-            int swapIndex = Random.Range(i, list.Count);
-            T temp = list[i];
-            list[i] = list[swapIndex];
-            list[swapIndex] = temp;
-        }
-    }
 }
 
 public struct EnhancementLevelData

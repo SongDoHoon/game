@@ -12,10 +12,24 @@ public class BossWaveConfig
 
 public class MonsterSpawner : MonoBehaviour
 {
+    private static readonly string[] BountyNames =
+    {
+        "고블린",
+        "슬라임",
+        "성전기사",
+        "골렘",
+        "처형관",
+        "감시군주"
+    };
+
     [Header("Spawn Settings")]
     public GameObject monsterPrefab;
     public GameObject bossPrefab;
     public WaypointPath waypointPath;
+
+    [Header("Bounty Spine Appearances")]
+    public BountySpineAppearance[] bountySpineAppearances =
+        new BountySpineAppearance[BountyManager.MaxBountyDifficulty];
 
     [Header("Wave Scaling")]
     public float normalHpMultiplierPerWave = 0.15f;
@@ -27,12 +41,14 @@ public class MonsterSpawner : MonoBehaviour
     private void Awake()
     {
         EnsureBossWaveConfigs();
+        EnsureBountySpineAppearances();
     }
 
 #if UNITY_EDITOR
     private void OnValidate()
     {
         EnsureBossWaveConfigs();
+        EnsureBountySpineAppearances();
     }
 #endif
 
@@ -124,7 +140,39 @@ public class MonsterSpawner : MonoBehaviour
         if (prefab == monsterPrefab)
             monster.SetAppearanceForWave(1);
 
+        ApplyBountySpineAppearance(monster, data.difficulty);
+
         return monster;
+    }
+
+    private void ApplyBountySpineAppearance(MonsterController monster, int difficulty)
+    {
+        if (monster == null)
+            return;
+
+        BountySpineAppearance appearance = GetBountySpineAppearance(difficulty);
+        if (appearance == null || appearance.skeletonData == null)
+            return;
+
+        BountySpineAnimationController controller =
+            BountySpineAnimationController.GetOrCreate(monster);
+
+        if (controller != null)
+            controller.Configure(monster, appearance);
+    }
+
+    private BountySpineAppearance GetBountySpineAppearance(int difficulty)
+    {
+        if (bountySpineAppearances == null)
+            return null;
+
+        foreach (BountySpineAppearance appearance in bountySpineAppearances)
+        {
+            if (appearance != null && appearance.difficulty == difficulty)
+                return appearance;
+        }
+
+        return null;
     }
 
     private void ApplyWaveStat(MonsterController monster, int wave, bool isBoss)
@@ -193,6 +241,35 @@ public class MonsterSpawner : MonoBehaviour
                 bossWaveConfigs[i] = CreateDefaultBossWaveConfig(i);
 
             bossWaveConfigs[i].waveNumber = (i + 1) * 10;
+        }
+    }
+
+    private void EnsureBountySpineAppearances()
+    {
+        int appearanceCount = BountyManager.MaxBountyDifficulty;
+
+        if (bountySpineAppearances == null || bountySpineAppearances.Length != appearanceCount)
+        {
+            BountySpineAppearance[] resizedAppearances =
+                new BountySpineAppearance[appearanceCount];
+
+            if (bountySpineAppearances != null)
+            {
+                int copyCount = Mathf.Min(bountySpineAppearances.Length, resizedAppearances.Length);
+                for (int i = 0; i < copyCount; i++)
+                    resizedAppearances[i] = bountySpineAppearances[i];
+            }
+
+            bountySpineAppearances = resizedAppearances;
+        }
+
+        for (int i = 0; i < bountySpineAppearances.Length; i++)
+        {
+            if (bountySpineAppearances[i] == null)
+                bountySpineAppearances[i] = new BountySpineAppearance();
+
+            bountySpineAppearances[i].difficulty = i + BountyManager.MinBountyDifficulty;
+            bountySpineAppearances[i].bountyName = BountyNames[i];
         }
     }
 

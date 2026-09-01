@@ -185,8 +185,8 @@ public class UnitGrowthManager : MonoBehaviour
             unitData,
             entry,
             playerPassiveGrowthData,
-            GameModifierState.ContractAttackPowerBonus,
-            GameModifierState.ContractAttackSpeedBonus);
+            0f,
+            0f);
     }
 
     public UnitGrowthEntry GetUnitGrowth(string unitId)

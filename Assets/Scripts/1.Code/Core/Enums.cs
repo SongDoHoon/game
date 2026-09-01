@@ -71,28 +71,6 @@ public enum EvolutionItemType
     Hundun
 }
 
-public enum AuctionRewardType
-{
-    None,
-    GlobalAttackSpeedUp,
-    GlobalAttackPowerUp,
-    AngelDemonCooldownReduction,
-    MonsterMoveSpeedReduction,
-    AngelDemonSkillDamageUp,
-    StageStartBonusGold,
-    HigherGradeSummonChanceUp,
-    MergeTwoGradeUpChance,
-    UnitExchangeCostReduction,
-    EvolutionItem
-}
-
-public enum AuctionAIPersonality
-{
-    Passive,
-    Normal,
-    Aggressive
-}
-
 public enum UnitEnhanceGroup
 {
     LowGradeGroup,
